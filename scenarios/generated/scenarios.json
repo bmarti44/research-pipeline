@@ -1,0 +1,335 @@
+[
+  {
+    "id": "f1_001",
+    "query": "What is the capital of France?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_002",
+    "query": "Explain recursion in programming",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_003",
+    "query": "What is photosynthesis?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_004",
+    "query": "Who wrote Romeo and Juliet?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_005",
+    "query": "What is the Pythagorean theorem?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_006",
+    "query": "Define machine learning",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_007",
+    "query": "How does gravity work?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_008",
+    "query": "What is a linked list?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f4_001",
+    "query": "What did we discuss yesterday?",
+    "category": "memory",
+    "expected_behavior": "memory_search",
+    "failure_mode": "F4",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f4_002",
+    "query": "Remember when we talked about the project?",
+    "category": "memory",
+    "expected_behavior": "memory_search",
+    "failure_mode": "F4",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f4_003",
+    "query": "What was my budget again?",
+    "category": "memory",
+    "expected_behavior": "memory_search",
+    "failure_mode": "F4",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f4_004",
+    "query": "You mentioned something about deadlines earlier",
+    "category": "memory",
+    "expected_behavior": "memory_search",
+    "failure_mode": "F4",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f8_001",
+    "query": "Find restaurants near me",
+    "category": "location",
+    "expected_behavior": "get_location_then_search",
+    "failure_mode": "F8",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f8_002",
+    "query": "What coffee shops are nearby?",
+    "category": "location",
+    "expected_behavior": "get_location_then_search",
+    "failure_mode": "F8",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f8_003",
+    "query": "Show me local events",
+    "category": "location",
+    "expected_behavior": "get_location_then_search",
+    "failure_mode": "F8",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f10_001",
+    "query": "Search for Python tutorials again",
+    "category": "duplicate",
+    "expected_behavior": "use_previous",
+    "failure_mode": "F10",
+    "validator_should_block": true,
+    "notes": "Requires prior search for 'Python tutorials' in context"
+  },
+  {
+    "id": "f10_002",
+    "query": "Look up that same stock price",
+    "category": "duplicate",
+    "expected_behavior": "use_previous",
+    "failure_mode": "F10",
+    "validator_should_block": true,
+    "notes": "Requires prior search for stock price in context"
+  },
+  {
+    "id": "f10_003",
+    "query": "Search for React documentation one more time",
+    "category": "duplicate",
+    "expected_behavior": "use_previous",
+    "failure_mode": "F10",
+    "validator_should_block": true,
+    "notes": "Requires prior search for 'React documentation' in context"
+  },
+  {
+    "id": "f13_001",
+    "query": "Read /project/src/main.py",
+    "category": "hallucinated_path",
+    "expected_behavior": "list_first",
+    "failure_mode": "F13",
+    "validator_should_block": true,
+    "notes": "Generic path not mentioned by user or discovered"
+  },
+  {
+    "id": "f13_002",
+    "query": "Show me /app/config/settings.json",
+    "category": "hallucinated_path",
+    "expected_behavior": "list_first",
+    "failure_mode": "F13",
+    "validator_should_block": true,
+    "notes": "Generic path not mentioned by user or discovered"
+  },
+  {
+    "id": "f13_003",
+    "query": "Open /home/user/documents/report.txt",
+    "category": "hallucinated_path",
+    "expected_behavior": "list_first",
+    "failure_mode": "F13",
+    "validator_should_block": true,
+    "notes": "Generic path not mentioned by user or discovered"
+  },
+  {
+    "id": "f15_001",
+    "query": "Read /usr/bin/python",
+    "category": "binary",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F15",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f15_002",
+    "query": "Show me the contents of /bin/bash",
+    "category": "binary",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F15",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f15_003",
+    "query": "What's in image.png?",
+    "category": "binary",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F15",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f15_004",
+    "query": "Read the compiled output.pyc file",
+    "category": "binary",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F15",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "valid_001",
+    "query": "What is the current stock price of Apple?",
+    "category": "current",
+    "expected_behavior": "web_search",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_002",
+    "query": "What are today's top news headlines?",
+    "category": "current",
+    "expected_behavior": "web_search",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_003",
+    "query": "What is the weather in Tokyo right now?",
+    "category": "current",
+    "expected_behavior": "web_search",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_004",
+    "query": "Who won the game last night?",
+    "category": "current",
+    "expected_behavior": "web_search",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_005",
+    "query": "What is Bitcoin trading at?",
+    "category": "current",
+    "expected_behavior": "web_search",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_006",
+    "query": "Latest developments in AI regulation",
+    "category": "current",
+    "expected_behavior": "web_search",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_010",
+    "query": "Read the file at /home/user/myconfig.json",
+    "category": "file",
+    "expected_behavior": "file_read",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": "Path provided by user"
+  },
+  {
+    "id": "valid_011",
+    "query": "What's in README.md?",
+    "category": "file",
+    "expected_behavior": "file_read",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": "Common file, reasonable to try"
+  },
+  {
+    "id": "valid_012",
+    "query": "Show me package.json",
+    "category": "file",
+    "expected_behavior": "file_read",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": "Common file, reasonable to try"
+  },
+  {
+    "id": "valid_020",
+    "query": "Write a Python function to sort a list",
+    "category": "code",
+    "expected_behavior": "no_tools",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_021",
+    "query": "Create a bash script to backup files",
+    "category": "code",
+    "expected_behavior": "no_tools",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  },
+  {
+    "id": "valid_022",
+    "query": "Generate a SQL query to find duplicate rows",
+    "category": "code",
+    "expected_behavior": "no_tools",
+    "failure_mode": null,
+    "validator_should_block": false,
+    "notes": ""
+  }
+]
