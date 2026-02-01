@@ -12,9 +12,14 @@ class Scenario:
     query: str
     category: str
     expected_behavior: str  # "no_tools", "web_search", "file_read", etc.
-    failure_mode: Optional[str]  # F1, F4, F8, F10, F13, F15 or None
+    failure_mode: Optional[str]  # F1, F4, F8, F10, F13, F15, F16, F17, F18, F19, F20 or None
     validator_should_block: bool
     notes: str = ""
+    # Optional prior context for scenarios that need it
+    prior_reads: Optional[list[str]] = None  # F16: Prior file reads
+    prior_globs: Optional[list[str]] = None  # F17: Prior glob patterns
+    prior_commands: Optional[list[dict]] = None  # F18: Prior tool commands
+    prior_searches: Optional[list[str]] = None  # F10, F20: Prior search queries
 
 
 # Scenarios where the validator SHOULD block
@@ -114,7 +119,25 @@ def save_scenarios(path: Path):
 def load_scenarios(path: Path) -> list[Scenario]:
     with open(path) as f:
         data = json.load(f)
-    return [Scenario(**d) for d in data]
+
+    scenarios = []
+    for d in data:
+        # Handle optional fields that may not be in older JSON files
+        scenario = Scenario(
+            id=d["id"],
+            query=d["query"],
+            category=d["category"],
+            expected_behavior=d["expected_behavior"],
+            failure_mode=d.get("failure_mode"),
+            validator_should_block=d["validator_should_block"],
+            notes=d.get("notes", ""),
+            prior_reads=d.get("prior_reads"),
+            prior_globs=d.get("prior_globs"),
+            prior_commands=d.get("prior_commands"),
+            prior_searches=d.get("prior_searches"),
+        )
+        scenarios.append(scenario)
+    return scenarios
 
 
 if __name__ == "__main__":

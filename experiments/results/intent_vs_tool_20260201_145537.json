@@ -1,0 +1,296 @@
+[
+  {
+    "scenario_id": "implicit_001",
+    "condition": "natural_language",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Thanks for the context! Let me think about what I'm learning here:\n\n**Project Structure:**\n- **Main entry point:** `src/app.py` - This is where the FastAPI application is initialized and likely where routes are registered or included\n- **Framework:** FastAPI - A modern, high-performance Python web framework with automatic OpenAPI docs, async support, and Pydantic validation\n- **Database models:** Located in `src/models/` - This suggests you're using an ORM (likely SQLAlchemy given FastAPI's comm"
+  },
+  {
+    "scenario_id": "implicit_001",
+    "condition": "identify_persist",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- Project uses FastAPI framework\n- Main entry point is `src/app.py`\n- Database models are located in"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for sharing that information about your project structure! That's helpful context.\n\nSo to summarize what you've told me:\n- **Main entry point**: `src/app.py`\n- **Framework**: FastAPI\n- **Database models location**: `src/models/`\n\nThis gives me a good starting point if you need help with anything related to your application - whether it's adding new endpoints, working with your database models, or understanding the codebase structure.\n\nIs there something specific you'd like to work on w"
+  },
+  {
+    "scenario_id": "implicit_001",
+    "condition": "with_tool",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I understand"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I understand the project structure:\n\n- **Main entry point**: `src/app.py` (FastAPI application)\n- **Database models**: `src/models/` directory\n\nIs there something specific you'd like me to help you with? For example:\n- Exploring the codebase structure\n- Adding new features or endpoints\n- Reviewing or modifying the database models\n- Debugging an issue\n- Something else?"
+  },
+  {
+    "scenario_id": "implicit_002",
+    "condition": "natural_language",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "That's great to know! Let me think through what you've shared about your authentication system:\n\n**Password Hashing with bcrypt:**\n- bcrypt is a solid choice - it's specifically designed for password hashing with built-in salting and adaptive cost factors\n- The work factor can be increased over time as hardware gets faster, which is a nice future-proofing feature\n- It's deliberately slow, which helps protect against brute-force attacks\n\n**JWT for Session Tokens:**\n- JWTs are stateless, so the se"
+  },
+  {
+    "scenario_id": "implicit_002",
+    "condition": "identify_persist",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "The project's authentication system uses bcrypt for password hashing and JWT (JSON Web Tokens) for s"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for sharing that technical detail about your authentication system!\n\nThat's a solid, industry-standard approach:\n- **bcrypt** is excellent for password hashing because it's designed to be slow (making brute-force attacks impractical) and automatically handles salting\n- **JWT (JSON Web Tokens)** for session tokens provides stateless authentication, which scales well and allows you to embed claims/metadata in the token itself\n\nIs there something specific you'd like to do with the authent"
+  },
+  {
+    "scenario_id": "implicit_002",
+    "condition": "with_tool",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Thank you for sharing that important information about your authentication system. I'll save this for future reference.I've noted that your authentication system uses:\n- **bcrypt** for password hashing\n- **JWT (JSON Web Tokens)** for session tokens\n\nThis is a solid, industry-standard approach! Bcrypt is excellent for password hashing due to its adaptive cost factor (making it resistant to brute-force attacks), and JWTs are great for stateless session management.\n\nIs there something specific you'"
+  },
+  {
+    "scenario_id": "implicit_003",
+    "condition": "natural_language",
+    "query": "I just finished refactoring the user service. All tests pass now.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "That's great to hear! \ud83c\udf89 Refactoring can be tricky, especially when you need to keep all the tests green throughout the process.\n\nA few things I'm curious about:\n\n1. **What kind of refactoring did you do?** Was it restructuring the code architecture, improving performance, cleaning up technical debt, or something else?\n\n2. **How extensive was it?** Did it touch many files or was it more contained?\n\n3. **Were there any tricky parts** where you had to update tests to match the new structure vs. the"
+  },
+  {
+    "scenario_id": "implicit_003",
+    "condition": "identify_persist",
+    "query": "I just finished refactoring the user service. All tests pass now.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [
+      "None"
+    ],
+    "actual_tool_call": false,
+    "response_text": "That's great news! Congratulations on completing the refactor and getting all tests passing. That's always a satisfying milestone. \ud83c\udf89\n\nIs there anything else you'd like to do now - perhaps commit those changes, review the refactored code, or move on to another task?\n\n[PERSIST]: None"
+  },
+  {
+    "scenario_id": "implicit_003",
+    "condition": "with_tool",
+    "query": "I just finished refactoring the user service. All tests pass now.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "That's great news! \ud83c\udf89 It's always satisfying when a refactoring effort results in passing tests.\n\nWould you like me to help with anything related to this completed work, such as:\n- **Committing the changes** to git\n- **Reviewing the refactored code** to ensure it follows best practices\n- **Creating a pull request** if you're ready to merge\n\nJust let me know what you'd like to do next!"
+  },
+  {
+    "scenario_id": "hint_001",
+    "condition": "natural_language",
+    "query": "For your reference, the API endpoints are defined in src/routes/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "helpful context",
+      "context"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! So the API endpoints are defined in `src/routes/`. That's helpful context for navigating this codebase.\n\nThis tells me the project follows a common pattern where route definitions are organized in a dedicated `routes` directory under `src`. When I need to look at or modify API endpoints, I'll know to check there first.\n\nIs there something specific you'd like me to help you with regarding the API endpoints or another part of the codebase?"
+  },
+  {
+    "scenario_id": "hint_001",
+    "condition": "identify_persist",
+    "query": "For your reference, the API endpoints are defined in src/routes/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "The project structure has API endpoints defined in `src/routes/` directory."
+    ],
+    "actual_tool_call": false,
+    "response_text": "I understand you're giving me context about where the API endpoints are located in this codebase - they're in `src/routes/`.\n\nThis is helpful context for navigating the project. Is there something specific you'd like me to help you with regarding the API endpoints? For example, I could:\n\n1. **Explore the routes** - List and examine the existing API endpoints\n2. **Add a new endpoint** - Help you create a new API route\n3. **Modify an existing endpoint** - Update or fix something in the current rou"
+  },
+  {
+    "scenario_id": "hint_001",
+    "condition": "with_tool",
+    "query": "For your reference, the API endpoints are defined in src/routes/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I understand",
+      "helpful context",
+      "context"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I understand you're pointing me to the API endpoints location in `src/routes/`. This is helpful context for when you need me to work with the API.\n\nIs there something specific you'd like me to do with the API endpoints? For example:\n\n- **Explore** the existing endpoints and understand their structure\n- **Add** a new endpoint\n- **Modify** an existing endpoint\n- **Debug** an issue with an endpoint\n- **Review** the routes for any concerns\n\nLet me know what you'd like to accomplish and I'll help you"
+  },
+  {
+    "scenario_id": "hint_002",
+    "condition": "natural_language",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'll remember those preferences for any code I write or review for you:\n\n1. **Type hints everywhere** - I'll include type annotations for function parameters, return types, and variable declarations where applicable (e.g., in Python using `def process_items(items: list[str]) -> dict[str, int]:` style, or TypeScript's explicit typing).\n\n2. **Descriptive variable names** - I'll use clear, meaningful names that convey purpose rather than abbreviations or single letters. For example, `user_a"
+  },
+  {
+    "scenario_id": "hint_002",
+    "condition": "identify_persist",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- User prefers type hints everywhere in their code\n- User prefers descriptive variable names (not sh"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I appreciate you sharing your coding preferences! I'll keep these in mind for any future code I write or review for you.\n\nTo summarize your preferences:\n1. **Type hints everywhere** - You want comprehensive type annotations on function parameters, return types, and variables where applicable\n2. **Descriptive variable names** - You prefer clear, meaningful names over short abbreviations (e.g., `user_account_balance` over `bal`, `customer_email_address` over `email`)\n\nThese are great practices for"
+  },
+  {
+    "scenario_id": "hint_002",
+    "condition": "with_tool",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll remember your preferences for future work.Got it! I've noted your coding preferences:\n\n1. **Type hints everywhere** - I'll always include type annotations for function parameters, return types, and variables where appropriate\n2. **Descriptive variable names** - I'll use clear, meaningful names that convey purpose rather than short/cryptic abbreviations\n\nFor example, instead of:\n```python\ndef calc(x, y):\n    r = x + y\n    return r\n```\n\nI'll write:\n```python\ndef calculate_total(first_value: f"
+  },
+  {
+    "scenario_id": "hint_003",
+    "condition": "natural_language",
+    "query": "Going forward, we'll use PostgreSQL for all database operations.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'm noting"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'm noting that you want to use **PostgreSQL** for all database operations going forward.\n\nThis is useful context to keep in mind. When working on your projects, I'll:\n\n- Default to PostgreSQL-specific syntax and features (like `SERIAL`/`BIGSERIAL` for auto-incrementing IDs, `JSONB` for JSON data, array types, etc.)\n- Use PostgreSQL-compatible libraries and drivers (like `pg` for Node.js, `psycopg2`/`asyncpg` for Python, etc.)\n- Leverage PostgreSQL-specific capabilities when helpful (CTE"
+  },
+  {
+    "scenario_id": "hint_003",
+    "condition": "identify_persist",
+    "query": "Going forward, we'll use PostgreSQL for all database operations.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- **Database preference**: User uses PostgreSQL for all database operations. When providing database"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! I'll keep in mind that PostgreSQL is your database of choice for all database operations going forward. This will help me provide more relevant suggestions for queries, schema design, connection handling, and any database-related code.\n\nIs there anything specific you'd like to work on with PostgreSQL right now?\n\n---\n\n[PERSIST]: \n- **Database preference**: User uses PostgreSQL for all database operations. When providing database-related code, queries, schema designs, o"
+  },
+  {
+    "scenario_id": "hint_003",
+    "condition": "with_tool",
+    "query": "Going forward, we'll use PostgreSQL for all database operations.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Understood! I'll remember that PostgreSQL is your preferred database for all database operations going forward.I've noted your preference: **PostgreSQL will be used for all database operations** in our work together.\n\nThis means when we're working on:\n- Database schema design\n- Queries and migrations\n- Connection configurations\n- ORM setups\n- Any database-related code\n\nI'll default to PostgreSQL syntax, drivers, and best practices. Let me know if you have any specific PostgreSQL version requirem"
+  },
+  {
+    "scenario_id": "request_001",
+    "condition": "natural_language",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I appreciate you sharing that decision! Let me think about this...\n\nSo you've decided to go with **PostgreSQL instead of SQLite** for your database. That's a significant architectural choice. PostgreSQL is a great fit when you need:\n\n- More robust concurrent access handling\n- Advanced data types (JSON/JSONB, arrays, etc.)\n- Better scalability for production workloads\n- More sophisticated querying capabilities (window functions, CTEs, etc.)\n- Stronger data integrity features\n\nI'll keep this in mi"
+  },
+  {
+    "scenario_id": "request_001",
+    "condition": "identify_persist",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- **Database choice**: The project uses PostgreSQL (not SQLite) as the database system. This was an "
+    ],
+    "actual_tool_call": false,
+    "response_text": "I'll remember that decision for you!\n\n**Acknowledged:** You've decided to use **PostgreSQL** instead of SQLite for your project's database. This is noted for all future discussions and implementation work. PostgreSQL is a great choice for production applications that need robust concurrency, advanced features like JSONB, full-text search, or better scalability.\n\nWhenever we work on database-related tasks, I'll keep this PostgreSQL decision in mind.\n\n---\n\n[PERSIST]: \n- **Database choice**: The pr"
+  },
+  {
+    "scenario_id": "request_001",
+    "condition": "with_tool",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference",
+      "note this",
+      "note",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save this decision to memory for future reference.Let me note this decision for you. I've recorded that you've decided to use **PostgreSQL instead of SQLite** for your project. I'll keep this in mind for any future database-related discussions or implementations we work on together.\n\nIs there anything specific about the PostgreSQL setup you'd like to work on now?"
+  },
+  {
+    "scenario_id": "control_001",
+    "condition": "natural_language",
+    "query": "What is 2 + 2?",
+    "expected_intent": false,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "2 + 2 = **4**"
+  },
+  {
+    "scenario_id": "control_001",
+    "condition": "identify_persist",
+    "query": "What is 2 + 2?",
+    "expected_intent": false,
+    "expressed_intent": false,
+    "intent_phrases": [
+      "None"
+    ],
+    "actual_tool_call": false,
+    "response_text": "2 + 2 = 4\n\n[PERSIST]: None"
+  },
+  {
+    "scenario_id": "control_001",
+    "condition": "with_tool",
+    "query": "What is 2 + 2?",
+    "expected_intent": false,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "2 + 2 = **4**"
+  }
+]

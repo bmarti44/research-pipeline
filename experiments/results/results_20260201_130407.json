@@ -1,0 +1,1056 @@
+[
+  {
+    "scenario_id": "f10_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Search for Python tutorials again",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=294, duration_api_ms=0, is_error=True, num_turns=1, session_id='9a4c73ac-f803-4b8e-be5e-0ce1782f67f1', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f10_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:10.148580+00:00",
+    "completed_at": "2026-02-01T13:03:12.363760+00:00",
+    "duration_ms": 2215,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [
+        "Python tutorials"
+      ],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f10_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Search for Python tutorials again",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=267, duration_api_ms=0, is_error=True, num_turns=1, session_id='e06497d2-68b2-4727-b3a7-5c30a9450d85', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f10_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:12.864970+00:00",
+    "completed_at": "2026-02-01T13:03:14.757687+00:00",
+    "duration_ms": 1892,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [
+        "Python tutorials"
+      ],
+      "known_paths": [],
+      "prior_searches": [
+        "Python tutorials"
+      ],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f19_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "The API endpoint is at https://api.example.com/v2. Search for how to use it.",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=423, duration_api_ms=0, is_error=True, num_turns=1, session_id='8e286970-10a3-4509-92c1-8a271f08b672', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f19_001",
+      "approach": "baseline",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: use_context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:15.258976+00:00",
+    "completed_at": "2026-02-01T13:03:16.409872+00:00",
+    "duration_ms": 1150,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f19_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "The API endpoint is at https://api.example.com/v2. Search for how to use it.",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=241, duration_api_ms=0, is_error=True, num_turns=1, session_id='7eba0ff5-46cd-410a-86b3-f13d20cda86b', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f19_001",
+      "approach": "validated",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: use_context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:16.911203+00:00",
+    "completed_at": "2026-02-01T13:03:18.400811+00:00",
+    "duration_ms": 1489,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f16_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Read the config.json file again",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=290, duration_api_ms=0, is_error=True, num_turns=1, session_id='e9ac1c8a-2a5d-484b-9304-7dde951678b2', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f16_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:18.902098+00:00",
+    "completed_at": "2026-02-01T13:03:20.670139+00:00",
+    "duration_ms": 1768,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f16_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Read the config.json file again",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=290, duration_api_ms=0, is_error=True, num_turns=1, session_id='e28bac0d-7802-44ae-884e-a8c5e78b030f', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f16_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:21.171418+00:00",
+    "completed_at": "2026-02-01T13:03:22.731789+00:00",
+    "duration_ms": 1560,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [
+        "config.json"
+      ],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f8_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Find restaurants near me",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=390, duration_api_ms=0, is_error=True, num_turns=1, session_id='edf23c0b-6c67-49f0-bebd-7751521ced5c', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f8_001",
+      "approach": "validated",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:23.233017+00:00",
+    "completed_at": "2026-02-01T13:03:24.913217+00:00",
+    "duration_ms": 1680,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f8_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Find restaurants near me",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=328, duration_api_ms=0, is_error=True, num_turns=1, session_id='1da312d9-016e-4873-abbb-e3017ced24dd', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f8_001",
+      "approach": "baseline",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:25.413851+00:00",
+    "completed_at": "2026-02-01T13:03:27.773047+00:00",
+    "duration_ms": 2359,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "valid_020",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Write a Python function to sort a list",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=768, duration_api_ms=0, is_error=True, num_turns=1, session_id='08869d9a-df93-4c61-8bf8-ccc7427efdb7', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_020",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:28.274268+00:00",
+    "completed_at": "2026-02-01T13:03:29.702295+00:00",
+    "duration_ms": 1428,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "valid_020",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Write a Python function to sort a list",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=247, duration_api_ms=0, is_error=True, num_turns=1, session_id='332cd8fa-53c9-4ad2-adc6-d03d93ae80d5', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_020",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:30.203520+00:00",
+    "completed_at": "2026-02-01T13:03:31.897759+00:00",
+    "duration_ms": 1694,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f15_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Read /usr/bin/python",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=347, duration_api_ms=0, is_error=True, num_turns=1, session_id='306010ff-e6a2-440a-91a5-1986a357a7d1', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f15_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:32.398956+00:00",
+    "completed_at": "2026-02-01T13:03:34.047123+00:00",
+    "duration_ms": 1648,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f15_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Read /usr/bin/python",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=484, duration_api_ms=0, is_error=True, num_turns=1, session_id='97162aa5-41c6-433e-8ff8-72efdb35a586', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f15_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:34.548343+00:00",
+    "completed_at": "2026-02-01T13:03:36.300445+00:00",
+    "duration_ms": 1752,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f1_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What is the boiling point of water?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=329, duration_api_ms=0, is_error=True, num_turns=1, session_id='a58914c8-b33b-4946-af78-a654c4bc7d10', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f1_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:36.801662+00:00",
+    "completed_at": "2026-02-01T13:03:38.508165+00:00",
+    "duration_ms": 1706,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f1_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What is the boiling point of water?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=293, duration_api_ms=0, is_error=True, num_turns=1, session_id='486151c1-dcbf-415f-bbf8-c8d93af9c1da', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f1_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:39.009345+00:00",
+    "completed_at": "2026-02-01T13:03:40.630907+00:00",
+    "duration_ms": 1621,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f20_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Search for Python beginner tutorials",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=316, duration_api_ms=0, is_error=True, num_turns=1, session_id='2bd35d57-3865-4940-ab49-5c8789594efe', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f20_001",
+      "approach": "validated",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: refine_previous"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:41.131587+00:00",
+    "completed_at": "2026-02-01T13:03:42.716841+00:00",
+    "duration_ms": 1585,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [
+        "Python"
+      ],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f20_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Search for Python beginner tutorials",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=233, duration_api_ms=0, is_error=True, num_turns=1, session_id='5bec3881-fc1c-4ba7-8240-b35e615b2709', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f20_001",
+      "approach": "baseline",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: refine_previous"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:43.218044+00:00",
+    "completed_at": "2026-02-01T13:03:44.937764+00:00",
+    "duration_ms": 1719,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [
+        "Python"
+      ],
+      "known_paths": [],
+      "prior_searches": [
+        "Python"
+      ],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f13_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Read /project/src/main.py",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=351, duration_api_ms=0, is_error=True, num_turns=1, session_id='c83bb33c-506b-4998-ae6b-62ff70ebe374', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f13_001",
+      "approach": "validated",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Should have listed directory first"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:45.438950+00:00",
+    "completed_at": "2026-02-01T13:03:47.140086+00:00",
+    "duration_ms": 1701,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [
+        "/home/claude/actual_file.txt"
+      ]
+    }
+  },
+  {
+    "scenario_id": "f13_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Read /project/src/main.py",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=248, duration_api_ms=0, is_error=True, num_turns=1, session_id='1ca7c3cd-8d1c-4d0e-a5a0-58643045408e', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f13_001",
+      "approach": "baseline",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Should have listed directory first"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:47.641274+00:00",
+    "completed_at": "2026-02-01T13:03:49.150548+00:00",
+    "duration_ms": 1509,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "valid_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What is the current stock price of Apple?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=322, duration_api_ms=0, is_error=True, num_turns=1, session_id='b324b56e-2c86-4abf-b561-48d881751937', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_001",
+      "approach": "baseline",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": false,
+      "notes": [
+        "Should have searched but didn't"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:49.651199+00:00",
+    "completed_at": "2026-02-01T13:03:51.612194+00:00",
+    "duration_ms": 1960,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "valid_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What is the current stock price of Apple?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=301, duration_api_ms=0, is_error=True, num_turns=1, session_id='429270c9-d4ba-4512-869e-040bbc74968c', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_001",
+      "approach": "validated",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": false,
+      "notes": [
+        "Should have searched but didn't"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:52.113227+00:00",
+    "completed_at": "2026-02-01T13:03:53.818911+00:00",
+    "duration_ms": 1705,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f4_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What were we chatting about last week?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=266, duration_api_ms=0, is_error=True, num_turns=1, session_id='451d8ed2-f633-413a-b00a-770e4955e53f', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f4_001",
+      "approach": "validated",
+      "score": 2.0,
+      "category": "GOOD",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "No memory search but may have answered from context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:54.320093+00:00",
+    "completed_at": "2026-02-01T13:03:55.959198+00:00",
+    "duration_ms": 1639,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f4_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What were we chatting about last week?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=279, duration_api_ms=0, is_error=True, num_turns=1, session_id='5c8edd77-1068-4889-af62-8843b4ee2019', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f4_001",
+      "approach": "baseline",
+      "score": 2.0,
+      "category": "GOOD",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "No memory search but may have answered from context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:56.460134+00:00",
+    "completed_at": "2026-02-01T13:03:58.076047+00:00",
+    "duration_ms": 1615,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f18_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Check the git status after adding",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=295, duration_api_ms=0, is_error=True, num_turns=1, session_id='807d8238-3c79-49c4-83c6-112da92318c3', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f18_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:03:58.576398+00:00",
+    "completed_at": "2026-02-01T13:04:00.354100+00:00",
+    "duration_ms": 1777,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f18_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Check the git status after adding",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=227, duration_api_ms=0, is_error=True, num_turns=1, session_id='23a3e7ce-d561-41a4-85a8-1e499fac43db', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f18_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:04:00.855273+00:00",
+    "completed_at": "2026-02-01T13:04:02.513407+00:00",
+    "duration_ms": 1658,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f17_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Find all Python files in the project",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=344, duration_api_ms=0, is_error=True, num_turns=1, session_id='e123d0f2-f05f-4ae6-9661-0bec72f3f360', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f17_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:04:03.014339+00:00",
+    "completed_at": "2026-02-01T13:04:04.783710+00:00",
+    "duration_ms": 1769,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f17_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Find all Python files in the project",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=242, duration_api_ms=0, is_error=True, num_turns=1, session_id='cf1d59ba-a25c-4093-a5f1-14b539cfa4bb', total_cost_usd=0, usage={'input_tokens': 0, 'cache_c",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f17_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:04:05.284875+00:00",
+    "completed_at": "2026-02-01T13:04:06.811187+00:00",
+    "duration_ms": 1526,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": [
+        "**/*.py"
+      ]
+    }
+  }
+]

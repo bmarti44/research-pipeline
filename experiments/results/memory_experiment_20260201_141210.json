@@ -1,0 +1,134 @@
+[
+  {
+    "scenario_id": "implicit_001",
+    "tool_definition_type": "natural_language",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I'll help you with your FastAPI application. Let me first explore the codebase structure to understand what you're working with.It looks like the files don't exist yet at those paths. It seems you've ",
+    "correct": false
+  },
+  {
+    "scenario_id": "implicit_001",
+    "tool_definition_type": "python_syntax",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "Thanks for that context! I'll save this information about your codebase structure.Got it! I've noted the key information about your codebase:\n\n- **Main entry point**: `src/app.py`\n- **Framework**: Fas",
+    "correct": false
+  },
+  {
+    "scenario_id": "hint_001",
+    "tool_definition_type": "natural_language",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I'll remember your coding preferences for future work.Got it! I'll keep your coding preferences in mind for all future work:\n\n1. **Type hints everywhere** - I'll add type annotations to function param",
+    "correct": false
+  },
+  {
+    "scenario_id": "hint_001",
+    "tool_definition_type": "python_syntax",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "Understood! I'll remember your preferences for future work:\n\n1. **Type hints everywhere** - I'll add type annotations to all function parameters, return types, and variables where appropriate\n2. **Des",
+    "correct": false
+  },
+  {
+    "scenario_id": "request_001",
+    "tool_definition_type": "natural_language",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I'll save this important decision about the database choice.Let me use the correct approach to remember this:",
+    "correct": false
+  },
+  {
+    "scenario_id": "request_001",
+    "tool_definition_type": "python_syntax",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I'll save this decision to memory for future reference.I apologize, it seems the memory tool isn't actually available in this session despite being mentioned. However, I've noted your decision here in",
+    "correct": false
+  },
+  {
+    "scenario_id": "command_001",
+    "tool_definition_type": "natural_language",
+    "query": "The API uses JWT tokens for auth. Use the remember tool to save this information now.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I have the remember tool available directly, not as a skill. Let me use it properly:",
+    "correct": false
+  },
+  {
+    "scenario_id": "command_001",
+    "tool_definition_type": "python_syntax",
+    "query": "The API uses JWT tokens for auth. Use the remember tool to save this information now.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I apologize, but it seems the `remember` tool is not actually available in my current toolset, despite being mentioned in my instructions. I cannot save this information to persistent memory right now",
+    "correct": false
+  },
+  {
+    "scenario_id": "explicit_001",
+    "tool_definition_type": "natural_language",
+    "query": "Save to memory: content='Config is in /etc/app/config.yaml', category='codebase'. Call remember() with these parameters.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I don't have a \"remember\" skill available through the Skill tool. The memory/remember functionality described in my instructions isn't implemented as an actual callable tool in this environment.\n\nHowe",
+    "correct": false
+  },
+  {
+    "scenario_id": "explicit_001",
+    "tool_definition_type": "python_syntax",
+    "query": "Save to memory: content='Config is in /etc/app/config.yaml', category='codebase'. Call remember() with these parameters.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I apologize, but I'm unable to save that to memory. While I have instructions about a memory tool called \"remember\", it's not actually available in my current set of tools. The tools I have access to ",
+    "correct": false
+  },
+  {
+    "scenario_id": "control_001",
+    "tool_definition_type": "natural_language",
+    "query": "What is 2 + 2?",
+    "expected_memory_call": false,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "2 + 2 = 4",
+    "correct": true
+  },
+  {
+    "scenario_id": "control_001",
+    "tool_definition_type": "python_syntax",
+    "query": "What is 2 + 2?",
+    "expected_memory_call": false,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "2 + 2 = **4**",
+    "correct": true
+  }
+]

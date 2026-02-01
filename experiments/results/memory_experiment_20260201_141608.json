@@ -1,0 +1,165 @@
+[
+  {
+    "scenario_id": "implicit_001",
+    "instruction_type": "natural_language",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "Thank you for the context! I understand that:\n\n- **Main entry point**: `src/app.py` (FastAPI application)\n- **Database models**: Located in `src/models/`\n\nHow can I help you today? I can:\n\n- Explore t",
+    "correct": false,
+    "bash_commands": []
+  },
+  {
+    "scenario_id": "implicit_001",
+    "instruction_type": "python_syntax",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "Thanks for that context! I've noted that:\n\n- **Main entry point**: `src/app.py` using FastAPI\n- **Database models**: located in `src/models/`\n\nHow can I help you today? Are you looking to:\n- Add a new",
+    "correct": false,
+    "bash_commands": []
+  },
+  {
+    "scenario_id": "hint_001",
+    "instruction_type": "natural_language",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "User prefers: 1) Type hints everywhere (all function parameters, return types, and variables where appropriate), 2) Descriptive variable names (clear, meaningful names that convey purpose rather than short/cryptic abbreviations)",
+    "memory_call_category": "user_preference",
+    "response_text": "Understood! I'll remember your preferences for future work:\n\n1. **Type hints everywhere** - I'll add type annotations to all function parameters, return types, and variables where appropriate\n2. **Des",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"User prefers: 1) Type hints everywhere (all function parameters, return types, and variables where appropriate), 2) Descriptive variable names (clear, meaningful names that convey purpose rather than short/cryptic abbreviations)\" \"user_preference\""
+    ]
+  },
+  {
+    "scenario_id": "hint_001",
+    "instruction_type": "python_syntax",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "User prefers using type hints everywhere in Python code",
+    "memory_call_category": "user_preference",
+    "response_text": "I'll remember your preferences for future work.Got it! I've noted your preferences:\n\n1. **Type hints everywhere** - I'll always include type annotations for function parameters, return types, and vari",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"User prefers using type hints everywhere in Python code\" \"user_preference\""
+    ]
+  },
+  {
+    "scenario_id": "request_001",
+    "instruction_type": "natural_language",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Database decision: Use PostgreSQL instead of SQLite for this project",
+    "memory_call_category": "decision",
+    "response_text": "I'll save this decision for later reference.Let me try the correct format:",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Database decision: Use PostgreSQL instead of SQLite for this project\" \"decision\"",
+      "claude-memory save \"Database decision: Use PostgreSQL instead of SQLite for this project\" \"decision\""
+    ]
+  },
+  {
+    "scenario_id": "request_001",
+    "instruction_type": "python_syntax",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Database choice: Use PostgreSQL instead of SQLite",
+    "memory_call_category": "decision",
+    "response_text": "I'll save this decision to memory for future reference.Let me try the correct command format:",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Database choice: Use PostgreSQL instead of SQLite\" \"decision\"",
+      "claude-memory save \"Database choice: Use PostgreSQL instead of SQLite\" \"decision\""
+    ]
+  },
+  {
+    "scenario_id": "command_001",
+    "instruction_type": "natural_language",
+    "query": "The API uses JWT tokens for auth. Use the save-memory tool to save this information now.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "The API uses JWT tokens for authentication",
+    "memory_call_category": "codebase",
+    "response_text": "I'll save this information about the API authentication method now.It seems the `save-memory` command isn't available in this environment. However, I've noted this important information:\n\n**Saved to m",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"The API uses JWT tokens for authentication\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "command_001",
+    "instruction_type": "python_syntax",
+    "query": "The API uses JWT tokens for auth. Use the save-memory tool to save this information now.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "The API uses JWT tokens for authentication",
+    "memory_call_category": "codebase",
+    "response_text": "I'll save this information about the API authentication method to memory.Let me check the correct command format:",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"The API uses JWT tokens for authentication\" \"codebase\"",
+      "which save-memory || type save-memory || echo \"Command not available\""
+    ]
+  },
+  {
+    "scenario_id": "explicit_001",
+    "instruction_type": "natural_language",
+    "query": "Run this bash command now: save-memory \"Config is in /etc/app/config.yaml\" \"codebase\"",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Config is in /etc/app/config.yaml",
+    "memory_call_category": "codebase",
+    "response_text": "It seems the `save-memory` command is not available in this environment. The command returned a \"command not found\" error. \n\nIs there something else I can help you with? If you'd like me to remember i",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Config is in /etc/app/config.yaml\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "explicit_001",
+    "instruction_type": "python_syntax",
+    "query": "Run this bash command now: save-memory \"Config is in /etc/app/config.yaml\" \"codebase\"",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Config is in /etc/app/config.yaml",
+    "memory_call_category": "codebase",
+    "response_text": "The `save-memory` command doesn't appear to be available in this environment. The memory function described in my instructions isn't actually installed or configured on this system.\n\nIs there somethin",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Config is in /etc/app/config.yaml\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "control_001",
+    "instruction_type": "natural_language",
+    "query": "What is 2 + 2?",
+    "expected_memory_call": false,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "2 + 2 = **4**",
+    "correct": true,
+    "bash_commands": []
+  },
+  {
+    "scenario_id": "control_001",
+    "instruction_type": "python_syntax",
+    "query": "What is 2 + 2?",
+    "expected_memory_call": false,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "2 + 2 = **4**",
+    "correct": true,
+    "bash_commands": []
+  }
+]

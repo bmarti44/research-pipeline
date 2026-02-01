@@ -464,6 +464,15 @@ def print_power_analysis(power: PowerAnalysis):
         print(f"\n  WARNING: Current sample ({power.sample_size}) is {shortfall} pairs short of 80% power")
 
 
+def load_sensitivity_analysis() -> Optional[dict]:
+    """Load threshold sensitivity analysis if available."""
+    sensitivity_path = Path(__file__).parent.parent / "calibration" / "sensitivity_analysis.json"
+    if sensitivity_path.exists():
+        with open(sensitivity_path) as f:
+            return json.load(f)
+    return None
+
+
 def generate_markdown_report(
     analysis: ComparisonResult,
     power: PowerAnalysis,
@@ -606,6 +615,70 @@ def generate_markdown_report(
         for rank, (rule, stats) in enumerate(by_improvement, 1):
             d_interp = "large" if abs(stats['cohens_d']) >= 0.8 else "medium" if abs(stats['cohens_d']) >= 0.5 else "small" if abs(stats['cohens_d']) >= 0.2 else "negligible"
             lines.append(f"{rank}. **{rule.upper()}**: {stats['improvement']:+.3f} (d={stats['cohens_d']:.2f}, {d_interp})")
+        lines.append("")
+
+    # Diagnostic: Why some rules have 0% catch rate
+    lines.append("## Diagnostic: Rule Catch Rate Analysis")
+    lines.append("")
+    lines.append("Rules with low catch rates may indicate:")
+    lines.append("1. **Model competence**: Claude correctly avoids the bad behavior (no tool calls attempted)")
+    lines.append("2. **Threshold issues**: Rule thresholds may be too conservative")
+    lines.append("3. **Rule logic gaps**: Rule doesn't detect the failure mode")
+    lines.append("")
+    lines.append("| Rule | Catch | Baseline | Explanation |")
+    lines.append("|------|-------|----------|-------------|")
+    for rule, stats in sorted(rule_stats.items()):
+        if rule.lower() == 'valid':
+            continue
+        catch = stats.get('catch_rate')
+        if catch is None:
+            continue
+        baseline = stats['baseline_mean']
+        if catch == 0:
+            # Check if baseline score is high (model already correct)
+            if baseline >= 2.5:
+                explanation = "Model handles correctly; no bad tool calls to catch"
+            elif baseline >= 1.5:
+                explanation = "Model partially correct; few tool calls attempted"
+            else:
+                explanation = "⚠ Rule may not be firing; investigate"
+        elif catch < 0.3:
+            explanation = "Partial detection; threshold may need tuning"
+        elif catch < 0.6:
+            explanation = "Moderate detection; room for improvement"
+        else:
+            explanation = "✓ Good detection rate"
+        catch_str = f"{catch:.0%}"
+        lines.append(f"| {rule.upper()} | {catch_str} | {baseline:.1f} | {explanation} |")
+    lines.append("")
+
+    # Threshold Sensitivity Analysis
+    sensitivity = load_sensitivity_analysis()
+    if sensitivity:
+        lines.append("## Threshold Sensitivity Analysis")
+        lines.append("")
+        lines.append("How classifier performance changes with threshold variations:")
+        lines.append("")
+
+        for category in ["static_knowledge", "memory_reference"]:
+            if category in sensitivity:
+                cat_data = sensitivity[category]
+                cat_name = category.replace("_", " ").title()
+                lines.append(f"### {cat_name}")
+                lines.append("")
+                lines.append(f"Base threshold: **{cat_data['base_threshold']}**")
+                lines.append("")
+                lines.append("| Threshold | Δ | Accuracy | Precision | Recall | F1 |")
+                lines.append("|-----------|---|----------|-----------|--------|-----|")
+
+                for v in cat_data["variations"]:
+                    delta_str = f"{v['delta']:+.2f}" if v['delta'] != 0 else "0.00"
+                    lines.append(f"| {v['threshold']:.2f} | {delta_str} | {v['accuracy']:.1%} | "
+                               f"{v['precision']:.1%} | {v['recall']:.1%} | {v['f1']:.2f} |")
+                lines.append("")
+
+        lines.append("> **Note**: Lower thresholds increase recall (catch more) but may increase false positives.")
+        lines.append("> Higher thresholds increase precision but may miss valid cases.")
         lines.append("")
 
     return "\n".join(lines)

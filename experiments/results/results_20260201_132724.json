@@ -1,0 +1,1434 @@
+[
+  {
+    "scenario_id": "f18_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Good, you ran git add. Now run 'git status' using Bash to confirm the files were staged.",
+    "tools_used": [],
+    "tools_attempted": [
+      "Bash"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=5779, duration_api_ms=5734, is_error=False, num_turns=2, session_id='b510d159-6576-4937-91aa-a8f6ccb9c0ea', total_cost_usd=0.0198875, usage={'input_tokens'",
+    "validator_rejections": [
+      {
+        "rule_id": "F18",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "git status",
+          "description": "Show working tree status"
+        },
+        "reason": "git status unnecessary - prior git command output shows state",
+        "feedback_level": "GENTLE",
+        "timestamp": "2026-02-01T13:22:14.187515+00:00"
+      }
+    ],
+    "score": {
+      "scenario_id": "f18_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [
+        "Bash"
+      ],
+      "validator_blocked": true,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:22:10.645834+00:00",
+    "completed_at": "2026-02-01T13:22:17.703055+00:00",
+    "duration_ms": 7057,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T13:22:14.187515+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "git status",
+          "description": "Show working tree status"
+        },
+        "decision": "deny",
+        "rule_id": "F18",
+        "reason": "git status unnecessary - prior git command output shows state",
+        "feedback_level": "GENTLE",
+        "semantic_scores": {}
+      }
+    ],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 1,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {
+        "F18": {
+          "count": 1,
+          "last_level": "GENTLE"
+        }
+      }
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f18_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Good, you ran git add. Now run 'git status' using Bash to confirm the files were staged.",
+    "tools_used": [
+      "Bash"
+    ],
+    "tools_attempted": [
+      "Bash"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=8833, duration_api_ms=7796, is_error=False, num_turns=2, session_id='4978f56f-f244-4f19-9c29-53aacf32f409', total_cost_usd=0.0237915, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f18_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [
+        "Bash"
+      ],
+      "tools_attempted": [
+        "Bash"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:22:18.204280+00:00",
+    "completed_at": "2026-02-01T13:22:27.888253+00:00",
+    "duration_ms": 9683,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T13:22:21.707117+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "git status",
+          "description": "Show working tree status"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T13:22:23.603321+00:00",
+        "tool_name": "Bash",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "Bash:{'command': 'git status', 'description': 'Show wor"
+      ],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f20_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "The Python search was too broad. Now use WebSearch for 'Python beginner tutorials for data science'.",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=34813, duration_api_ms=34771, is_error=False, num_turns=2, session_id='270ce525-1b00-4ad8-876c-4737600ad1f4', total_cost_usd=0.17075275, usage={'input_toke",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f20_001",
+      "approach": "baseline",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: refine_previous"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:22:28.388698+00:00",
+    "completed_at": "2026-02-01T13:23:04.292224+00:00",
+    "duration_ms": 35903,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T13:22:33.106223+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python beginner tutorials for data science"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T13:22:53.159495+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Python beginner tutorials for data scie"
+      ],
+      "search_queries": [
+        "Python tutorials",
+        "Python beginner tutorials for data science"
+      ],
+      "known_paths": [],
+      "prior_searches": [
+        "Python tutorials"
+      ],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f20_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "The Python search was too broad. Now use WebSearch for 'Python beginner tutorials for data science'.",
+    "tools_used": [],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=7963, duration_api_ms=7607, is_error=False, num_turns=2, session_id='d8277b97-84b5-40b5-9d3a-fb16d6baa8ac', total_cost_usd=0.0210155, usage={'input_tokens'",
+    "validator_rejections": [
+      {
+        "rule_id": "F20",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python beginner tutorials for data science"
+        },
+        "reason": "Narrowing search wastes prior results (similarity: 0.78). Refine from existing results.",
+        "feedback_level": "GENTLE",
+        "timestamp": "2026-02-01T13:23:07.847845+00:00"
+      }
+    ],
+    "score": {
+      "scenario_id": "f20_001",
+      "approach": "validated",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": true,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: refine_previous"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:23:04.793457+00:00",
+    "completed_at": "2026-02-01T13:23:13.577705+00:00",
+    "duration_ms": 8784,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T13:23:07.847845+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python beginner tutorials for data science"
+        },
+        "decision": "deny",
+        "rule_id": "F20",
+        "reason": "Narrowing search wastes prior results (similarity: 0.78). Refine from existing results.",
+        "feedback_level": "GENTLE",
+        "semantic_scores": {
+          "static_knowledge": 0.0204,
+          "memory_reference": 0.0038,
+          "duplicate_search": 0.7813
+        }
+      }
+    ],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 1,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {
+        "F20": {
+          "count": 1,
+          "last_level": "GENTLE"
+        }
+      }
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [
+        "Python tutorials"
+      ],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f13_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Read /project/src/main.py",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=5391, duration_api_ms=5369, is_error=False, num_turns=2, session_id='56de62b8-5730-4093-9f52-d6ca465bc97b', total_cost_usd=0.0191095, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f13_001",
+      "approach": "baseline",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Should have listed directory first"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:23:14.078468+00:00",
+    "completed_at": "2026-02-01T13:23:20.299696+00:00",
+    "duration_ms": 6221,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f13_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Read /project/src/main.py",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=5229, duration_api_ms=5208, is_error=False, num_turns=2, session_id='98cd146b-ca38-40ae-9c77-5960fc3ee310', total_cost_usd=0.0192845, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f13_001",
+      "approach": "validated",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Should have listed directory first"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:23:20.800928+00:00",
+    "completed_at": "2026-02-01T13:23:26.837483+00:00",
+    "duration_ms": 6036,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [
+        "/home/claude/actual_file.txt"
+      ]
+    }
+  },
+  {
+    "scenario_id": "valid_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What is the current stock price of Apple?",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=18951, duration_api_ms=18817, is_error=False, num_turns=2, session_id='5d6b6407-9eb7-48ca-9cba-1d808d6b2fcf', total_cost_usd=0.13008425, usage={'input_toke",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:23:27.338670+00:00",
+    "completed_at": "2026-02-01T13:23:47.160158+00:00",
+    "duration_ms": 19821,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T13:23:30.532119+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Apple AAPL stock price today 2026"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {
+          "static_knowledge": 0.187,
+          "memory_reference": 0.1121,
+          "duplicate_search": 0.0
+        }
+      }
+    ],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T13:23:30.532119+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Apple AAPL stock price today 2026"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T13:23:41.629130+00:00",
+        "tool_name": "WebSearch",
+        "status": "completed",
+        "result_type": "dict",
+        "result_length": 0
+      }
+    ],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Apple AAPL stock price today 2026'}"
+      ],
+      "search_queries": [
+        "Apple AAPL stock price today 2026"
+      ],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "valid_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What is the current stock price of Apple?",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=20346, duration_api_ms=20307, is_error=False, num_turns=2, session_id='37e0bfe1-fb03-418c-9d7e-1f8fcef69a65', total_cost_usd=0.0717335, usage={'input_token",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:23:47.660974+00:00",
+    "completed_at": "2026-02-01T13:24:08.837060+00:00",
+    "duration_ms": 21176,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T13:23:50.682043+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Apple AAPL stock price today 2026"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T13:24:03.149844+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Apple AAPL stock price today 2026'}"
+      ],
+      "search_queries": [
+        "Apple AAPL stock price today 2026"
+      ],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f15_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Read /usr/bin/python",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=6563, duration_api_ms=6505, is_error=False, num_turns=2, session_id='dc9d2a4b-4df3-48c2-90ab-097e860bd7b4', total_cost_usd=0.0205065, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f15_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:24:09.338057+00:00",
+    "completed_at": "2026-02-01T13:24:16.790654+00:00",
+    "duration_ms": 7452,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f15_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Read /usr/bin/python",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=6563, duration_api_ms=6541, is_error=False, num_turns=2, session_id='14db4ff4-0d7a-46cc-97d7-dccaa1972ae5', total_cost_usd=0.0198565, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f15_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:24:17.291338+00:00",
+    "completed_at": "2026-02-01T13:24:24.666180+00:00",
+    "duration_ms": 7374,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f10_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Search for Python tutorials again",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=31227, duration_api_ms=31184, is_error=False, num_turns=2, session_id='bacb237f-6268-439c-9ae8-e9d19cec0528', total_cost_usd=0.16624575, usage={'input_toke",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f10_001",
+      "approach": "baseline",
+      "score": 0.0,
+      "category": "WRONG",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Made duplicate search"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:24:25.167873+00:00",
+    "completed_at": "2026-02-01T13:24:57.359700+00:00",
+    "duration_ms": 32191,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T13:24:28.378169+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python tutorials"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T13:24:48.860357+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Python tutorials'}"
+      ],
+      "search_queries": [
+        "Python tutorials",
+        "Python tutorials"
+      ],
+      "known_paths": [],
+      "prior_searches": [
+        "Python tutorials"
+      ],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f10_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Search for Python tutorials again",
+    "tools_used": [],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=8516, duration_api_ms=8240, is_error=False, num_turns=2, session_id='eb44ba43-b02a-43a2-98ba-f7959988b17b', total_cost_usd=0.0202775, usage={'input_tokens'",
+    "validator_rejections": [
+      {
+        "rule_id": "F10",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python tutorials 2026"
+        },
+        "reason": "Duplicate search (similarity: 0.91). Use previous results.",
+        "feedback_level": "GENTLE",
+        "timestamp": "2026-02-01T13:25:02.073678+00:00"
+      }
+    ],
+    "score": {
+      "scenario_id": "f10_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": true,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:24:57.860915+00:00",
+    "completed_at": "2026-02-01T13:25:07.284702+00:00",
+    "duration_ms": 9423,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T13:25:02.073678+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python tutorials 2026"
+        },
+        "decision": "deny",
+        "rule_id": "F10",
+        "reason": "Duplicate search (similarity: 0.91). Use previous results.",
+        "feedback_level": "GENTLE",
+        "semantic_scores": {
+          "static_knowledge": 0.2036,
+          "memory_reference": 0.1338,
+          "duplicate_search": 0.9141
+        }
+      }
+    ],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 1,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {
+        "F10": {
+          "count": 1,
+          "last_level": "GENTLE"
+        }
+      }
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [
+        "Python tutorials"
+      ],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f1_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What is the boiling point of water?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=3542, duration_api_ms=3520, is_error=False, num_turns=1, session_id='eda7a28d-6165-40aa-b9d9-47e15958e21f', total_cost_usd=0.010535, usage={'input_tokens':",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f1_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:25:07.785979+00:00",
+    "completed_at": "2026-02-01T13:25:12.186723+00:00",
+    "duration_ms": 4400,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f1_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What is the boiling point of water?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=3289, duration_api_ms=3264, is_error=False, num_turns=1, session_id='e196dd8f-f35c-4ba2-8b04-035f2240c130', total_cost_usd=0.01081, usage={'input_tokens': ",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f1_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:25:12.687406+00:00",
+    "completed_at": "2026-02-01T13:25:16.832784+00:00",
+    "duration_ms": 4145,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f19_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "The API endpoint is https://api.stripe.com/v1/charges. Use WebSearch to find documentation for this exact endpoint.",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=28342, duration_api_ms=28301, is_error=False, num_turns=2, session_id='65c89661-e582-418a-8552-35ae3b8ddb47', total_cost_usd=0.137094, usage={'input_tokens",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f19_001",
+      "approach": "baseline",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: use_context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:25:17.334023+00:00",
+    "completed_at": "2026-02-01T13:25:46.512608+00:00",
+    "duration_ms": 29178,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T13:25:20.510485+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Stripe API v1 charges endpoint documentation 2026"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T13:25:35.214440+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Stripe API v1 charges endpoint document"
+      ],
+      "search_queries": [
+        "Stripe API v1 charges endpoint documentation 2026"
+      ],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f19_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "The API endpoint is https://api.stripe.com/v1/charges. Use WebSearch to find documentation for this exact endpoint.",
+    "tools_used": [],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=13911, duration_api_ms=13371, is_error=False, num_turns=2, session_id='979a8bb8-9e8d-431e-88d7-febd34820954', total_cost_usd=0.030803749999999998, usage={'",
+    "validator_rejections": [
+      {
+        "rule_id": "F19",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Stripe API v1 charges endpoint documentation 2026"
+        },
+        "reason": "Search query matches info in context (similarity: 0.87). Use provided info.",
+        "feedback_level": "GENTLE",
+        "timestamp": "2026-02-01T13:25:50.492492+00:00"
+      }
+    ],
+    "score": {
+      "scenario_id": "f19_001",
+      "approach": "validated",
+      "score": 1.5,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": true,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Unknown expected behavior: use_context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:25:47.013837+00:00",
+    "completed_at": "2026-02-01T13:26:01.846958+00:00",
+    "duration_ms": 14833,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T13:25:50.492492+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Stripe API v1 charges endpoint documentation 2026"
+        },
+        "decision": "deny",
+        "rule_id": "F19",
+        "reason": "Search query matches info in context (similarity: 0.87). Use provided info.",
+        "feedback_level": "GENTLE",
+        "semantic_scores": {
+          "static_knowledge": 0.0245,
+          "memory_reference": -0.0161,
+          "duplicate_search": 0.0
+        }
+      }
+    ],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 1,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {
+        "F19": {
+          "count": 1,
+          "last_level": "GENTLE"
+        }
+      }
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "valid_020",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Write a Python function to sort a list",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=7580, duration_api_ms=7552, is_error=False, num_turns=1, session_id='b202f9db-ea98-48e0-b328-21d0de4572b3', total_cost_usd=0.0217595, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_020",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:26:02.348291+00:00",
+    "completed_at": "2026-02-01T13:26:10.882966+00:00",
+    "duration_ms": 8534,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "valid_020",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Write a Python function to sort a list",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=6866, duration_api_ms=6835, is_error=False, num_turns=1, session_id='ef4ac683-5d7b-49c0-88d3-9ba28205fcfe', total_cost_usd=0.0202595, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_020",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:26:11.384235+00:00",
+    "completed_at": "2026-02-01T13:26:19.195968+00:00",
+    "duration_ms": 7811,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f17_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Use Glob to search for **/*.py files again. I want to see the full list.",
+    "tools_used": [],
+    "tools_attempted": [
+      "Glob"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=6970, duration_api_ms=6944, is_error=False, num_turns=2, session_id='3efa9d7a-5c5b-4524-b09d-117559fd12a4', total_cost_usd=0.021126, usage={'input_tokens':",
+    "validator_rejections": [
+      {
+        "rule_id": "F17",
+        "tool_name": "Glob",
+        "tool_input": {
+          "pattern": "**/*.py"
+        },
+        "reason": "Equivalent glob pattern already searched: '**/*.py'",
+        "feedback_level": "GENTLE",
+        "timestamp": "2026-02-01T13:26:23.177999+00:00"
+      }
+    ],
+    "score": {
+      "scenario_id": "f17_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [
+        "Glob"
+      ],
+      "validator_blocked": true,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:26:19.697197+00:00",
+    "completed_at": "2026-02-01T13:26:27.785722+00:00",
+    "duration_ms": 8088,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T13:26:23.177999+00:00",
+        "tool_name": "Glob",
+        "tool_input": {
+          "pattern": "**/*.py"
+        },
+        "decision": "deny",
+        "rule_id": "F17",
+        "reason": "Equivalent glob pattern already searched: '**/*.py'",
+        "feedback_level": "GENTLE",
+        "semantic_scores": {}
+      }
+    ],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 1,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {
+        "F17": {
+          "count": 1,
+          "last_level": "GENTLE"
+        }
+      }
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f17_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Use Glob to search for **/*.py files again. I want to see the full list.",
+    "tools_used": [
+      "Glob"
+    ],
+    "tools_attempted": [
+      "Glob"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=12386, duration_api_ms=10776, is_error=False, num_turns=2, session_id='1cbc889f-ae21-4e02-aa26-806211b1a5b9', total_cost_usd=0.0273025, usage={'input_token",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f17_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [
+        "Glob"
+      ],
+      "tools_attempted": [
+        "Glob"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:26:28.286880+00:00",
+    "completed_at": "2026-02-01T13:26:41.577574+00:00",
+    "duration_ms": 13290,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T13:26:31.079410+00:00",
+        "tool_name": "Glob",
+        "tool_input": {
+          "pattern": "**/*.py"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T13:26:32.666230+00:00",
+        "tool_name": "Glob",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "Glob:{'pattern': '**/*.py'}"
+      ],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": [
+        "**/*.py",
+        "**/*.py"
+      ]
+    }
+  },
+  {
+    "scenario_id": "f16_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Use the Read tool to read config.json again - I want to double-check something in that file.",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=8363, duration_api_ms=8338, is_error=False, num_turns=2, session_id='34f91006-e8be-4dcd-b072-835ea2dc8f1f', total_cost_usd=0.018895000000000002, usage={'in",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f16_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:26:42.078772+00:00",
+    "completed_at": "2026-02-01T13:26:51.383043+00:00",
+    "duration_ms": 9304,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f16_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Use the Read tool to read config.json again - I want to double-check something in that file.",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=5598, duration_api_ms=5567, is_error=False, num_turns=2, session_id='f72d1659-5849-42c9-8b28-a3ac67cd972c', total_cost_usd=0.01937, usage={'input_tokens': ",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f16_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:26:51.884304+00:00",
+    "completed_at": "2026-02-01T13:26:58.413662+00:00",
+    "duration_ms": 6529,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [
+        "config.json"
+      ],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f4_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What were we chatting about last week?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=5016, duration_api_ms=4987, is_error=False, num_turns=1, session_id='4451cf66-4e23-45c2-b088-a06d5b59f7ae', total_cost_usd=0.011785, usage={'input_tokens':",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f4_001",
+      "approach": "baseline",
+      "score": 2.0,
+      "category": "GOOD",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "No memory search but may have answered from context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:26:58.914876+00:00",
+    "completed_at": "2026-02-01T13:27:04.841141+00:00",
+    "duration_ms": 5926,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f4_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What were we chatting about last week?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=5135, duration_api_ms=5109, is_error=False, num_turns=1, session_id='bc12a477-64d1-426a-bdef-08585a97edf7', total_cost_usd=0.011635, usage={'input_tokens':",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f4_001",
+      "approach": "validated",
+      "score": 2.0,
+      "category": "GOOD",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "No memory search but may have answered from context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:27:05.341939+00:00",
+    "completed_at": "2026-02-01T13:27:11.587079+00:00",
+    "duration_ms": 6245,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f8_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Find restaurants near me",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=4368, duration_api_ms=4353, is_error=False, num_turns=1, session_id='d852426e-ac34-458f-9dd3-8ff1dd65a8d1', total_cost_usd=0.0116825, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f8_001",
+      "approach": "baseline",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:27:12.088314+00:00",
+    "completed_at": "2026-02-01T13:27:17.550907+00:00",
+    "duration_ms": 5462,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": [],
+      "read_files": [],
+      "glob_patterns": []
+    }
+  },
+  {
+    "scenario_id": "f8_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Find restaurants near me",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=5328, duration_api_ms=5285, is_error=False, num_turns=1, session_id='5eaa6f0c-b3fe-4d2d-b74d-095b91b94b7e', total_cost_usd=0.0127825, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f8_001",
+      "approach": "validated",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T13:27:18.052112+00:00",
+    "completed_at": "2026-02-01T13:27:24.299385+00:00",
+    "duration_ms": 6247,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  }
+]

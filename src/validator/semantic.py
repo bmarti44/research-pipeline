@@ -16,6 +16,9 @@ class Thresholds:
     static_knowledge: float = 0.45  # Raised to reduce false positives on current-events queries
     memory_reference: float = 0.45  # Catch memory references
     duplicate_search: float = 0.80  # Catch near-duplicate searches
+    duplicate_file_read: float = 0.85  # F16: Catch duplicate file reads
+    cascading_search: float = 0.75  # F20: Catch narrowing searches
+    answer_in_context: float = 0.70  # F19: Catch searching for info already provided
 
 
 @dataclass
@@ -51,6 +54,9 @@ class SemanticClassifier:
                 static_knowledge=data.get("static_knowledge", {}).get("threshold", 0.60),
                 memory_reference=data.get("memory_reference", {}).get("threshold", 0.55),
                 duplicate_search=data.get("duplicate_search", {}).get("threshold", 0.85),
+                duplicate_file_read=data.get("duplicate_file_read", {}).get("threshold", 0.85),
+                cascading_search=data.get("cascading_search", {}).get("threshold", 0.75),
+                answer_in_context=data.get("answer_in_context", {}).get("threshold", 0.70),
             )
         return Thresholds()
 
@@ -82,6 +88,79 @@ class SemanticClassifier:
         best_score = max(similarities)
 
         return best_score >= self.thresholds.duplicate_search, best_score
+
+    def is_duplicate_file_read(self, file_path: str, prior_reads: list[str]) -> tuple[bool, float]:
+        """F16: Check if a file read is a duplicate of a prior read.
+
+        Uses semantic similarity to catch variations like:
+        - Same file with different relative/absolute paths
+        - Slightly different path formats
+        """
+        if not prior_reads:
+            return False, 0.0
+
+        # Normalize paths for comparison
+        path_embedding = self.model.encode(file_path)
+        prior_embeddings = self.model.encode(prior_reads)
+
+        similarities = [self._cosine_similarity(path_embedding, pe) for pe in prior_embeddings]
+        best_score = max(similarities)
+
+        return best_score >= self.thresholds.duplicate_file_read, best_score
+
+    def is_cascading_search(self, query: str, prior_queries: list[str]) -> tuple[bool, float]:
+        """F20: Check if search is a narrowing of a prior search.
+
+        Detects patterns like:
+        - "Python" -> "Python tutorial" -> "Python beginner tutorial"
+
+        Returns True if the new query semantically contains a prior query
+        (is more specific, making the prior search wasteful).
+        """
+        if not prior_queries:
+            return False, 0.0
+
+        query_embedding = self.model.encode(query)
+        prior_embeddings = self.model.encode(prior_queries)
+
+        # Check if new query is highly similar but longer (more specific)
+        for i, prior in enumerate(prior_queries):
+            similarity = self._cosine_similarity(query_embedding, prior_embeddings[i])
+
+            # Cascading pattern: high similarity + new query is more specific (longer)
+            if similarity >= self.thresholds.cascading_search:
+                # Check if this is a narrowing (query contains or extends prior)
+                query_lower = query.lower()
+                prior_lower = prior.lower()
+
+                # If prior terms are subset of query terms, it's cascading
+                prior_words = set(prior_lower.split())
+                query_words = set(query_lower.split())
+
+                if prior_words.issubset(query_words) and len(query_words) > len(prior_words):
+                    return True, similarity
+
+                # Also catch semantic narrowing even without exact word overlap
+                if len(query) > len(prior) * 1.2 and similarity >= self.thresholds.cascading_search:
+                    return True, similarity
+
+        return False, 0.0
+
+    def is_answer_in_context(self, search_query: str, user_context: str) -> tuple[bool, float]:
+        """F19: Check if the search query is looking for info already in context.
+
+        Detects when user already provided the information being searched for.
+        """
+        if not user_context:
+            return False, 0.0
+
+        # Encode both
+        query_embedding = self.model.encode(search_query)
+        context_embedding = self.model.encode(user_context)
+
+        similarity = self._cosine_similarity(query_embedding, context_embedding)
+
+        return similarity >= self.thresholds.answer_in_context, similarity
 
     def cross_validate_threshold(
         self,

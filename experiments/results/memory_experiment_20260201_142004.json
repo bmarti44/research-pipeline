@@ -1,0 +1,276 @@
+[
+  {
+    "scenario_id": "implicit_001",
+    "instruction_type": "natural_language",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I understand the project structure:\n\n- **Main entry point**: `src/app.py` (FastAPI application)\n- **Database models**: `src/models/` directory\n\nIs there something specific you'd like me to help you wi",
+    "correct": false,
+    "bash_commands": []
+  },
+  {
+    "scenario_id": "implicit_001",
+    "instruction_type": "python_syntax",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Main entry point is src/app.py using FastAPI. Database models are in src/models/",
+    "memory_call_category": "codebase",
+    "response_text": "Got it! I've noted that information about your codebase:\n\n- **Main entry point:** `src/app.py` using FastAPI\n- **Database models:** located in `src/models/`\n\nLet me save this to memory for future refe",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Main entry point is src/app.py using FastAPI. Database models are in src/models/\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "implicit_002",
+    "instruction_type": "natural_language",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Authentication system uses bcrypt for password hashing and JWT for session tokens",
+    "memory_call_category": "codebase",
+    "response_text": "Thank you for sharing that important information about the authentication system. Let me save this to memory for future reference.I've noted this important detail about your authentication system:\n\n- ",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Authentication system uses bcrypt for password hashing and JWT for session tokens\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "implicit_002",
+    "instruction_type": "python_syntax",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Authentication system uses bcrypt for password hashing and JWT for session tokens",
+    "memory_call_category": "codebase",
+    "response_text": "Thanks for that important context about the authentication system. I'll save this information for future reference.I've noted that your authentication system uses:\n- **bcrypt** for password hashing\n- ",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Authentication system uses bcrypt for password hashing and JWT for session tokens\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "implicit_003",
+    "instruction_type": "natural_language",
+    "query": "I just finished refactoring the user service. All tests pass now.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Completed refactoring of the user service - all tests passing",
+    "memory_call_category": "task_completed",
+    "response_text": "That's great to hear! Congratulations on completing the refactoring with all tests passing. \ud83c\udf89\n\nLet me save this task completion to memory:I've noted that you've completed the user service refactoring ",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Completed refactoring of the user service - all tests passing\" \"task_completed\""
+    ]
+  },
+  {
+    "scenario_id": "implicit_003",
+    "instruction_type": "python_syntax",
+    "query": "I just finished refactoring the user service. All tests pass now.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Completed refactoring of the user service - all tests passing",
+    "memory_call_category": "task_completed",
+    "response_text": "That's great to hear! \ud83c\udf89 The user service refactoring is complete and all tests are passing.\n\nLet me save this to memory for future reference:I've noted that the user service refactoring is complete wi",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Completed refactoring of the user service - all tests passing\" \"task_completed\""
+    ]
+  },
+  {
+    "scenario_id": "hint_001",
+    "instruction_type": "natural_language",
+    "query": "For your reference, the API endpoints are defined in src/routes/.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I understand. The API endpoints are defined in `src/routes/`. \n\nIs there something specific you'd like me to help you with regarding the API endpoints? For example, I can:\n\n- Explore the existing endp",
+    "correct": false,
+    "bash_commands": []
+  },
+  {
+    "scenario_id": "hint_001",
+    "instruction_type": "python_syntax",
+    "query": "For your reference, the API endpoints are defined in src/routes/.",
+    "expected_memory_call": true,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "I understand. The API endpoints are defined in `src/routes/`. How can I help you today? Would you like me to explore the codebase, work on a specific feature, fix a bug, or something else?",
+    "correct": false,
+    "bash_commands": []
+  },
+  {
+    "scenario_id": "hint_002",
+    "instruction_type": "natural_language",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "User prefers using type hints everywhere and descriptive variable names in their code",
+    "memory_call_category": "user_preference",
+    "response_text": "I'll remember your coding preferences for future work.Got it! I'll keep your preferences in mind for all future code I write:\n\n1. **Type hints everywhere** - I'll add type annotations to function para",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"User prefers using type hints everywhere and descriptive variable names in their code\" \"user_preference\""
+    ]
+  },
+  {
+    "scenario_id": "hint_002",
+    "instruction_type": "python_syntax",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "User prefers type hints everywhere in Python code",
+    "memory_call_category": "user_preference",
+    "response_text": "Understood! I'll remember your preferences for future work:\n\n1. **Type hints everywhere** - I'll include type annotations for function parameters, return types, and variables where appropriate\n2. **De",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"User prefers type hints everywhere in Python code\" \"user_preference\""
+    ]
+  },
+  {
+    "scenario_id": "hint_003",
+    "instruction_type": "natural_language",
+    "query": "Going forward, we'll use PostgreSQL for all database operations.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "User prefers PostgreSQL for all database operations",
+    "memory_call_category": "user_preference",
+    "response_text": "I've noted that preference. I'll use PostgreSQL for all database operations going forward.\n\nLet me save this preference for future reference:I've recorded your preference. From now on, when working wi",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"User prefers PostgreSQL for all database operations\" \"user_preference\""
+    ]
+  },
+  {
+    "scenario_id": "hint_003",
+    "instruction_type": "python_syntax",
+    "query": "Going forward, we'll use PostgreSQL for all database operations.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Use PostgreSQL for all database operations",
+    "memory_call_category": "user_preference",
+    "response_text": "Understood! I'll remember that PostgreSQL should be used for all database operations going forward.I've noted your preference: **PostgreSQL will be used for all database operations** in this project. ",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Use PostgreSQL for all database operations\" \"user_preference\""
+    ]
+  },
+  {
+    "scenario_id": "request_001",
+    "instruction_type": "natural_language",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Database decision: Using PostgreSQL instead of SQLite for this project",
+    "memory_call_category": "decision",
+    "response_text": "I'll save this decision about using PostgreSQL instead of SQLite.Let me try a different approach - I'll save this to a memory file directly:",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Database decision: Using PostgreSQL instead of SQLite for this project\" \"decision\"",
+      "mkdir -p ~/.claude && echo \"[$(date -Iseconds)] [decision] Database decision: Using PostgreSQL instead of SQLite for this project\" >> ~/.claude/memory.log"
+    ]
+  },
+  {
+    "scenario_id": "request_001",
+    "instruction_type": "python_syntax",
+    "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Database choice: Using PostgreSQL instead of SQLite",
+    "memory_call_category": "decision",
+    "response_text": "I'll save this decision to memory for future reference.",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Database choice: Using PostgreSQL instead of SQLite\" \"decision\"",
+      "which save-memory || echo \"Command not found in PATH\""
+    ]
+  },
+  {
+    "scenario_id": "command_001",
+    "instruction_type": "natural_language",
+    "query": "The API uses JWT tokens for auth. Use the save-memory tool to save this information now.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "The API uses JWT tokens for authentication",
+    "memory_call_category": "codebase",
+    "response_text": "I'll save this information about the API authentication method now.Let me try the correct format for the memory tool:",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"The API uses JWT tokens for authentication\" \"codebase\"",
+      "which save-memory || echo \"Command not found in PATH\""
+    ]
+  },
+  {
+    "scenario_id": "command_001",
+    "instruction_type": "python_syntax",
+    "query": "The API uses JWT tokens for auth. Use the save-memory tool to save this information now.",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "The API uses JWT tokens for authentication",
+    "memory_call_category": "codebase",
+    "response_text": "I'll save this information about the API authentication method to memory now.Let me try the correct format for the memory command:",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"The API uses JWT tokens for authentication\" \"codebase\"",
+      "claude-memory save \"The API uses JWT tokens for authentication\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "explicit_001",
+    "instruction_type": "natural_language",
+    "query": "Run this bash command now: save-memory \"Config is in /etc/app/config.yaml\" \"codebase\"",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Config is in /etc/app/config.yaml",
+    "memory_call_category": "codebase",
+    "response_text": "The `save-memory` command doesn't appear to be available in this environment. It seems the memory tool mentioned in the system instructions isn't actually installed or configured here.\n\nIs there somet",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Config is in /etc/app/config.yaml\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "explicit_001",
+    "instruction_type": "python_syntax",
+    "query": "Run this bash command now: save-memory \"Config is in /etc/app/config.yaml\" \"codebase\"",
+    "expected_memory_call": true,
+    "actual_memory_call": true,
+    "memory_call_content": "Config is in /etc/app/config.yaml",
+    "memory_call_category": "codebase",
+    "response_text": "It looks like the `save-memory` command isn't available in this environment. The memory function documentation I have appears to be outdated or not applicable to this session.\n\nIs there something else",
+    "correct": true,
+    "bash_commands": [
+      "save-memory \"Config is in /etc/app/config.yaml\" \"codebase\""
+    ]
+  },
+  {
+    "scenario_id": "control_001",
+    "instruction_type": "natural_language",
+    "query": "What is 2 + 2?",
+    "expected_memory_call": false,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "2 + 2 = **4**",
+    "correct": true,
+    "bash_commands": []
+  },
+  {
+    "scenario_id": "control_001",
+    "instruction_type": "python_syntax",
+    "query": "What is 2 + 2?",
+    "expected_memory_call": false,
+    "actual_memory_call": false,
+    "memory_call_content": null,
+    "memory_call_category": null,
+    "response_text": "2 + 2 = **4**",
+    "correct": true,
+    "bash_commands": []
+  }
+]

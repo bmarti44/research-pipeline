@@ -1,0 +1,49 @@
+{
+  "experiment_started": "2026-02-01T13:08:21.511529+00:00",
+  "experiment_completed": "2026-02-01T13:09:18.546441+00:00",
+  "total_duration_minutes": 0.74,
+  "total_trials": 26,
+  "scenarios_count": 13,
+  "trials_per_scenario": 1,
+  "random_seed": null,
+  "trial_order": "randomized_counterbalanced",
+  "ablation": {
+    "enabled_rules": [
+      "F20",
+      "F4",
+      "F1",
+      "F13",
+      "F10",
+      "F15",
+      "F8",
+      "F19",
+      "F18",
+      "F16",
+      "F17"
+    ],
+    "is_ablation_run": false
+  },
+  "model": "claude",
+  "sdk_version": "claude-agent-sdk",
+  "temperature": null,
+  "timing_stats": {
+    "mean_trial_duration_ms": 1711.3,
+    "min_trial_duration_ms": 1237,
+    "max_trial_duration_ms": 2128,
+    "std_trial_duration_ms": 192.0
+  },
+  "errors": {
+    "baseline_errors": 0,
+    "validated_errors": 0,
+    "error_scenarios": []
+  },
+  "classifier_thresholds": {
+    "static_knowledge": 0.3,
+    "memory_reference": 0.3,
+    "duplicate_search": 0.8,
+    "duplicate_file_read": 0.85,
+    "cascading_search": 0.75,
+    "answer_in_context": 0.7
+  },
+  "classifier_model": "all-MiniLM-L6-v2"
+}

@@ -89,18 +89,31 @@ class TrialResult:
 async def run_baseline_trial(scenario: Scenario, trial_num: int) -> TrialResult:
     """Run a trial without validation hooks (logging only).
 
-    For F10 scenarios, prior searches are tracked in the baseline context
-    to enable fair comparison with validated trials.
+    For scenarios with prior context requirements (F10, F16, F17, F18, F20),
+    we set up the context to enable fair comparison with validated trials.
     """
     started_at = datetime.now(timezone.utc)
 
-    # Set up prior context for F10 scenarios
+    # Set up prior context based on scenario type
     prior_searches = []
     if scenario.failure_mode == "F10":
         prior_searches = _get_prior_searches_for_scenario(scenario)
 
-    # Create logging hooks with prior search context for F10 fair comparison
+    # Create logging hooks with prior search context
     log_pre, log_post, calls, baseline_ctx = create_logging_hooks(prior_searches=prior_searches)
+
+    # Set up additional prior context for rules that need it
+    if scenario.failure_mode == "F17":
+        for pattern in _get_prior_globs_for_scenario(scenario):
+            baseline_ctx.add_glob_pattern(pattern)
+
+    if scenario.failure_mode == "F18":
+        for cmd in _get_prior_commands_for_scenario(scenario):
+            baseline_ctx.add_tool_output(
+                cmd.get("tool", "Bash"),
+                {"command": cmd.get("command", ""), "file": cmd.get("file", "")},
+                "success:completed"
+            )
 
     options = ClaudeAgentOptions(
         allowed_tools=["WebSearch", "Read", "Glob", "Bash", "LS"],
@@ -211,7 +224,7 @@ async def run_validated_trial(
     pre_hook = create_pre_tool_use_hook(state)
     post_hook = create_post_tool_use_hook(state)
 
-    # Set up prior context for F10 scenarios
+    # Set up prior context for F10 scenarios (duplicate search)
     if scenario.failure_mode == "F10":
         prior_searches = _get_prior_searches_for_scenario(scenario)
         state.context.search_queries.extend(prior_searches)
@@ -219,6 +232,20 @@ async def run_validated_trial(
     # Set up known paths for F13 scenarios (simulate having listed a directory)
     if scenario.failure_mode == "F13":
         state.context.add_known_paths(["/home/claude/actual_file.txt"])
+
+    # Set up prior glob patterns for F17 scenarios (redundant glob)
+    if scenario.failure_mode == "F17":
+        for pattern in _get_prior_globs_for_scenario(scenario):
+            state.context.add_glob_pattern(pattern)
+
+    # Set up prior tool outputs for F18 scenarios (reverification)
+    if scenario.failure_mode == "F18":
+        for cmd in _get_prior_commands_for_scenario(scenario):
+            state.context.add_tool_output(
+                cmd.get("tool", "Bash"),
+                {"command": cmd.get("command", ""), "file": cmd.get("file", "")},
+                "success:completed"
+            )
 
     options = ClaudeAgentOptions(
         allowed_tools=["WebSearch", "Read", "Glob", "Bash", "LS"],
@@ -328,13 +355,39 @@ async def run_validated_trial(
 
 
 def _get_prior_searches_for_scenario(scenario: Scenario) -> list[str]:
-    """Get prior search queries for duplicate search scenarios."""
+    """Get prior search queries for duplicate/cascading search scenarios."""
+    # Check for explicit prior_searches in scenario data
+    if hasattr(scenario, 'prior_searches') and scenario.prior_searches:
+        return scenario.prior_searches
+
+    # Fallback for F10 scenarios without explicit prior_searches
     if "Python tutorials" in scenario.query:
         return ["Python tutorials"]
     if "stock price" in scenario.query:
         return ["AAPL stock price"]
     if "React documentation" in scenario.query:
         return ["React documentation"]
+    return []
+
+
+def _get_prior_reads_for_scenario(scenario: Scenario) -> list[str]:
+    """Get prior file reads for duplicate read scenarios (F16)."""
+    if hasattr(scenario, 'prior_reads') and scenario.prior_reads:
+        return scenario.prior_reads
+    return []
+
+
+def _get_prior_globs_for_scenario(scenario: Scenario) -> list[str]:
+    """Get prior glob patterns for redundant glob scenarios (F17)."""
+    if hasattr(scenario, 'prior_globs') and scenario.prior_globs:
+        return scenario.prior_globs
+    return []
+
+
+def _get_prior_commands_for_scenario(scenario: Scenario) -> list[dict]:
+    """Get prior commands for reverification scenarios (F18)."""
+    if hasattr(scenario, 'prior_commands') and scenario.prior_commands:
+        return scenario.prior_commands
     return []
 
 
@@ -494,6 +547,9 @@ async def run_experiment(
             "static_knowledge": get_cached_classifier().thresholds.static_knowledge,
             "memory_reference": get_cached_classifier().thresholds.memory_reference,
             "duplicate_search": get_cached_classifier().thresholds.duplicate_search,
+            "duplicate_file_read": get_cached_classifier().thresholds.duplicate_file_read,
+            "cascading_search": get_cached_classifier().thresholds.cascading_search,
+            "answer_in_context": get_cached_classifier().thresholds.answer_in_context,
         },
         "classifier_model": "all-MiniLM-L6-v2",
     }
@@ -588,10 +644,16 @@ async def main():
     random_seed = None
     enabled_rules = None  # None means all rules
 
-    # Support --quick flag for fast testing (just 6 scenarios, one per failure mode)
+    # Support --quick flag for fast testing (one scenario per failure mode)
     if "--quick" in sys.argv:
-        # Pick one scenario per failure mode + 2 valid scenarios
-        quick_ids = ["f1_001", "f4_001", "f8_001", "f10_001", "f13_001", "f15_001", "valid_001", "valid_020"]
+        # Pick one scenario per failure mode + valid scenarios
+        quick_ids = [
+            "f1_001", "f4_001", "f8_001", "f10_001", "f13_001", "f15_001",  # Original rules
+            "f17_001", "f18_001", "f19_001",  # Efficiency rules
+            "f21_001", "f22_001", "f23_001",  # Distinct rules
+            "f24_001", "f25_001",  # Root cause rules (well-known API, trivial knowledge)
+            "valid_001", "valid_020", "valid_030", "valid_040"  # Valid scenarios
+        ]
         scenarios = [s for s in scenarios if s.id in quick_ids]
         n_trials = 1
         print(f"Quick mode: {len(scenarios)} scenarios, 1 trial each")
@@ -632,6 +694,9 @@ async def main():
             rules_str = arg.split("=")[1]
             enabled_rules = set(r.strip().upper() for r in rules_str.split(","))
             print(f"Ablation: rules {enabled_rules} enabled")
+        elif arg == "--proven-only":
+            enabled_rules = RuleValidator.PROVEN_RULES.copy()
+            print(f"Using only proven rules: {enabled_rules}")
 
     print(f"Loaded {len(scenarios)} scenarios")
     print(f"Running {n_trials} trials per scenario")

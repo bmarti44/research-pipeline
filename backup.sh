@@ -1,81 +1,72 @@
 #!/bin/bash
 
 # File Backup Script
-# Usage: ./backup.sh <source_directory> <backup_destination>
+# Usage: ./backup.sh [source_directory] [backup_directory]
 
 # Color codes for output
-RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Function to display usage
 usage() {
-    echo "Usage: $0 <source_directory> <backup_destination>"
+    echo "Usage: $0 [source_directory] [backup_directory]"
     echo "Example: $0 /home/user/documents /home/user/backups"
     exit 1
 }
 
-# Check if correct number of arguments provided
+# Check if arguments are provided
 if [ $# -ne 2 ]; then
     echo -e "${RED}Error: Invalid number of arguments${NC}"
     usage
 fi
 
 SOURCE_DIR="$1"
-BACKUP_DEST="$2"
+BACKUP_DIR="$2"
 
-# Validate source directory exists
+# Verify source directory exists
 if [ ! -d "$SOURCE_DIR" ]; then
     echo -e "${RED}Error: Source directory '$SOURCE_DIR' does not exist${NC}"
     exit 1
 fi
 
-# Create backup destination if it doesn't exist
-if [ ! -d "$BACKUP_DEST" ]; then
-    echo -e "${YELLOW}Backup destination does not exist. Creating it...${NC}"
-    mkdir -p "$BACKUP_DEST"
-    if [ $? -ne 0 ]; then
-        echo -e "${RED}Error: Failed to create backup destination${NC}"
-        exit 1
-    fi
+# Create backup directory if it doesn't exist
+if [ ! -d "$BACKUP_DIR" ]; then
+    echo -e "${YELLOW}Creating backup directory: $BACKUP_DIR${NC}"
+    mkdir -p "$BACKUP_DIR"
 fi
 
-# Generate timestamp for backup folder
+# Create timestamp for backup
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-BACKUP_NAME="backup_${TIMESTAMP}"
-BACKUP_PATH="${BACKUP_DEST}/${BACKUP_NAME}"
+BACKUP_NAME="backup_$TIMESTAMP.tar.gz"
+BACKUP_PATH="$BACKUP_DIR/$BACKUP_NAME"
 
-# Create backup
+# Display backup information
 echo -e "${GREEN}Starting backup...${NC}"
 echo "Source: $SOURCE_DIR"
 echo "Destination: $BACKUP_PATH"
 echo ""
 
-# Create the backup using tar with compression
-TAR_FILE="${BACKUP_PATH}.tar.gz"
-tar -czf "$TAR_FILE" -C "$(dirname "$SOURCE_DIR")" "$(basename "$SOURCE_DIR")" 2>/dev/null
+# Create the backup
+tar -czf "$BACKUP_PATH" -C "$(dirname "$SOURCE_DIR")" "$(basename "$SOURCE_DIR")" 2>/dev/null
 
+# Check if backup was successful
 if [ $? -eq 0 ]; then
-    BACKUP_SIZE=$(du -h "$TAR_FILE" | cut -f1)
+    BACKUP_SIZE=$(du -h "$BACKUP_PATH" | cut -f1)
     echo -e "${GREEN}✓ Backup completed successfully!${NC}"
-    echo "Backup file: $TAR_FILE"
-    echo "Backup size: $BACKUP_SIZE"
+    echo "Backup file: $BACKUP_PATH"
+    echo "Size: $BACKUP_SIZE"
 
-    # Create a symlink to the latest backup
-    LATEST_LINK="${BACKUP_DEST}/latest_backup.tar.gz"
-    ln -sf "$TAR_FILE" "$LATEST_LINK"
-    echo "Latest backup link: $LATEST_LINK"
+    # Keep only last 5 backups
+    echo ""
+    echo -e "${YELLOW}Cleaning old backups (keeping last 5)...${NC}"
+    cd "$BACKUP_DIR"
+    ls -t backup_*.tar.gz 2>/dev/null | tail -n +6 | xargs -r rm -f
 
-    # Optional: Keep only last N backups (uncomment to enable)
-    # MAX_BACKUPS=5
-    # cd "$BACKUP_DEST"
-    # ls -t backup_*.tar.gz | tail -n +$((MAX_BACKUPS + 1)) | xargs -r rm
-    # echo "Cleaned up old backups (keeping last $MAX_BACKUPS)"
-
+    REMAINING=$(ls -1 backup_*.tar.gz 2>/dev/null | wc -l)
+    echo "Total backups in directory: $REMAINING"
 else
     echo -e "${RED}✗ Backup failed!${NC}"
     exit 1
 fi
-
-echo -e "${GREEN}Backup process completed!${NC}"
