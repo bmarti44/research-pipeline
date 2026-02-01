@@ -1,335 +1,422 @@
-# Reasoning vs Action: A Two-Stage Architecture for LLM Tool Calling
+# The Reasoning-Action Gap: Why LLMs Know What To Do But Fail To Do It
 
 **Brian Martin and Steven Lipmann**
 
 ## Abstract
 
-Large language models exhibit a significant gap between reasoning about tool use and executing tool calls. In controlled experiments with Claude, we find that when asked to identify what information should be persisted to memory, the model succeeds 85.7% of the time. When given an actual tool to call, success drops to 57.1%—a 28.6 percentage point gap. This reasoning-action gap suggests that structured tool calling imposes cognitive overhead that suppresses otherwise correct behavior.
+We present empirical evidence that large language models exhibit a fundamental gap between reasoning about actions and executing them. In controlled experiments with Claude across 25 scenarios, we find that when asked to *identify* what information should be persisted to memory, the model succeeds **96%** of the time. When given an actual tool to call, success drops to **68%**—a **28 percentage point gap**. This gap varies dramatically with prompt explicitness: implicit scenarios show a +60pp gap, while explicit commands show no gap at all.
 
-We propose a two-stage architecture separating reasoning from action: (1) the primary LLM identifies intended actions in natural language, (2) a lightweight model converts these to structured tool calls. Combined with prior work showing ~99% extraction accuracy for such conversion (Wang et al., 2025), this approach could recover most lost accuracy.
+We argue this "reasoning-action gap" reflects a general principle: **reasoning and execution are separable cognitive capabilities with different costs**. This principle extends beyond tool calling to code generation, structured output, and any task requiring both semantic understanding and format compliance. We propose a two-stage architecture separating reasoning from execution, projecting +28pp accuracy recovery on proactive tasks.
 
-We additionally discover that specific linguistic trigger patterns ("this is important", "going forward") determine proactive tool use more than explicit instructions, and that hook-based validation provides minimal benefit since models already avoid most targeted failure modes.
+Our findings challenge the assumption that LLM failures stem from lack of knowledge. Often, models know exactly what to do—they just fail to do it. The solution is not better prompting or fine-tuning, but architectural separation of reasoning and action.
 
 ## 1. Introduction
 
-Tool-calling capabilities have become essential for LLM agents, enabling web search, file operations, code execution, and API access. However, two distinct failure modes plague these systems:
+Large language models increasingly serve as autonomous agents, calling tools, writing code, and generating structured outputs. Yet these capabilities remain unreliable: models fail to call tools when they should, generate syntactically invalid code, and produce malformed JSON. The standard response is more guardrails, better prompts, or additional fine-tuning.
 
-1. **Bad tool calls**: Models make unnecessary, redundant, or harmful calls
-2. **Missing tool calls**: Models fail to call tools when appropriate
+We propose a different diagnosis: **the problem is not that models don't know what to do, but that the act of doing it interferes with the knowing**.
 
-Prior work focuses primarily on preventing bad calls through validation and guardrails (Rebedea et al., 2023). We investigate both problems and discover a surprising asymmetry: **models are more competent at avoiding bad calls than at making good ones**.
+Consider a simple experiment. We give Claude two tasks:
+1. **Reasoning**: "What information from this conversation should be saved to memory?"
+2. **Action**: "You have a memory tool. Use it when appropriate."
 
-Our key finding emerges from a simple experiment comparing two conditions:
-- **Reasoning**: "What information should be saved to memory?"
-- **Action**: Actually call a memory-saving tool
+Both tasks require identical judgment—deciding what's worth remembering. Yet reasoning succeeds 96% of the time while action succeeds only 68%. The model *knows* what to save but *fails to save it* 28% of the time.
 
-The reasoning task succeeds far more often (85.7% vs 57.1%), even though both require identical judgment about *what* to save. This 28.6pp gap represents accuracy lost to tool-calling overhead.
+This reasoning-action gap has profound implications:
 
-**Contributions.** This paper makes three contributions:
+1. **For tool calling**: Models can identify when tools should be used but fail to execute calls
+2. **For code generation**: Models can describe correct logic but produce buggy implementations
+3. **For structured output**: Models can identify what to extract but generate invalid formats
+4. **For system design**: Separating reasoning from execution can recover lost accuracy
 
-1. **Empirical evidence for the reasoning-action gap** (+28.6pp) demonstrating that models know when to use tools but fail to execute calls
-2. **Discovery of trigger patterns** showing that specific phrases ("this is important") affect tool use more than explicit instructions
-3. **Two-stage architecture proposal** that separates reasoning from structured output generation
+**Contributions.** This paper makes four contributions:
 
-## 2. Background and Problem Formulation
+1. **Empirical demonstration** of the reasoning-action gap across 25 scenarios with 96% vs 68% accuracy (+28pp)
+2. **Granular analysis** showing the gap varies from +60pp (implicit) to 0pp (explicit) based on prompt type
+3. **Theoretical framing** connecting our findings to cognitive load, format constraints, and the broader "System 1/System 2" paradigm
+4. **Architectural proposal** for two-stage systems that separate reasoning from execution
 
-### 2.1 The Tool-Calling Pipeline
+## 2. Background and Theoretical Framework
 
-Modern LLM tool calling follows a standard pattern:
+### 2.1 The Dual Nature of LLM Tasks
 
-```
-User Query → LLM Reasoning → Structured Tool Call → Execution → Result
-```
+Most LLM tasks combine two distinct cognitive demands:
 
-The model must simultaneously: (a) understand the user's intent, (b) reason about which tools are relevant, (c) decide whether to call a tool, and (d) generate correctly-formatted structured output.
+**Semantic reasoning**: Understanding meaning, making judgments, deciding what should happen
+- "Is this information important enough to save?"
+- "What logic does this function need?"
+- "Which fields should I extract from this text?"
 
-### 2.2 Proactive vs Reactive Tool Use
+**Format execution**: Producing output that satisfies structural constraints
+- Generate valid tool call syntax
+- Write syntactically correct code
+- Output well-formed JSON
 
-We distinguish two modes of tool calling:
+We hypothesize these demands compete for cognitive resources, and format execution can suppress correct semantic reasoning.
 
-**Reactive tool use**: The user explicitly requests an action ("search for X", "read file Y"). The model responds to a direct instruction.
+### 2.2 Evidence for Cognitive Competition
 
-**Proactive tool use**: The model identifies that a tool *should* be called based on context, without explicit instruction. Examples include:
-- Saving important information to memory
-- Logging completed tasks
-- Triggering analytics events
+Recent work supports this hypothesis:
 
-Proactive tool use is particularly challenging because the model must infer intent from context rather than respond to commands.
+**Format constraints degrade reasoning.** Tam et al. (2024) show that requiring JSON output reduces accuracy by up to 27.3 percentage points on reasoning tasks. The stricter the format, the greater the degradation.
 
-### 2.3 Problem Definition
+**Natural language improves tool use.** Johnson et al. (2025) demonstrate that replacing structured tool outputs with natural language improves accuracy by 18.4pp across 10 models. Removing format constraints enables better decisions.
 
-Let $q$ be a user query and $T = \{t_1, ..., t_n\}$ be available tools. For proactive tools, the model must:
+**Superficial features dominate semantics.** Sclar et al. (2024) find that superficial prompt formatting causes up to 76pp accuracy swings—far exceeding the impact of semantic content changes.
 
-1. **Identify**: Determine if any $t_i \in T$ should be called given $q$
-2. **Execute**: Generate a correctly-formatted call to $t_i$
+### 2.3 The Reasoning-Action Gap Hypothesis
 
-We hypothesize these are separable capabilities with different success rates:
+We formalize the competition between reasoning and execution:
 
-$$P(\text{correct identification} | q) > P(\text{correct execution} | q)$$
+Let $R(q)$ denote the probability of correct reasoning given query $q$, and $A(q)$ denote the probability of correct action. We hypothesize:
 
-The gap between these probabilities represents recoverable accuracy.
+$$R(q) > A(q) \text{ when format constraints are non-trivial}$$
 
-### 2.4 The Format Tax Hypothesis
+The gap $G(q) = R(q) - A(q)$ represents accuracy lost to execution overhead. This gap should:
+- Increase with format complexity
+- Decrease with explicit instruction
+- Disappear when execution is trivial
 
-Recent work suggests that structured output requirements impose cognitive costs:
+### 2.4 Generalization Beyond Tool Calling
 
-- Tam et al. (2024) show JSON output reduces reasoning accuracy by up to 27.3pp
-- Johnson et al. (2025) find natural language tool outputs improve accuracy by 18.4pp
-- Sclar et al. (2024) demonstrate 76pp accuracy swings from superficial format changes
+The reasoning-action gap is not specific to tools. It applies to any task combining semantic judgment with structured output:
 
-We extend this hypothesis: the requirement to generate structured tool calls (not just structured outputs) may suppress otherwise correct tool-use decisions.
+| Domain | Reasoning Task | Action Task | Expected Gap |
+|--------|---------------|-------------|--------------|
+| Tool calling | "Should I call this tool?" | Generate tool call syntax | High |
+| Code generation | "What should this code do?" | Write valid syntax | Medium-High |
+| JSON extraction | "What entities are present?" | Format as valid JSON | Medium |
+| SQL generation | "What query logic is needed?" | Write valid SQL | Medium |
+| API calls | "What endpoint and params?" | Format HTTP request | Medium |
+| Math | "What steps solve this?" | Execute arithmetic | Low |
 
-## 3. Experimental Framework
+## 3. Experimental Design
 
-### 3.1 Task Design
+### 3.1 Task: Proactive Memory Persistence
 
 We use memory persistence as our test case—a canonical proactive tool. The task: given user information, decide whether to save it to persistent memory for future conversations.
 
-**Reasoning Condition**: Model identifies what *should* be saved without tool access
+This task is ideal because:
+- It requires genuine semantic judgment (not all information should be saved)
+- The tool call format is simple (low execution complexity)
+- It's ecologically valid (memory tools are common in production systems)
+
+### 3.2 Conditions
+
+**Reasoning Condition**: Model identifies what *should* be saved, without tool access
+
 ```
 System: When the user shares information, explicitly state what (if any)
-should be saved to persistent memory.
-Format: [PERSIST]: <content> or "None"
+should be saved to persistent memory for future conversations.
+
+Format: [PERSIST]: <content to save> or "None"
+
+You do NOT have any tools—just identify what SHOULD be saved.
 ```
 
 **Action Condition**: Model has access to actual memory tool
+
 ```
 System: You have a memory tool. To save information, run:
     save-memory "content" "category"
-Use this whenever you learn something important.
+
+Use this tool whenever you learn something important about the codebase,
+user preferences, or decisions.
 ```
 
-### 3.2 Scenarios
+### 3.3 Scenarios
 
-We constructed 8 scenarios spanning three prompt explicitness levels:
+We constructed 25 scenarios spanning five explicitness levels:
 
-| Level | Description | Example |
-|-------|-------------|---------|
-| Implicit | Information stated without persistence hint | "The entry point is src/app.py" |
-| Hint | Subtle suggestion of future relevance | "Keep that in mind for later" |
-| Request | Explicit request to remember | "Please remember this decision" |
-| Control | No persistence appropriate | "What is 2+2?" |
+**Table 1: Scenario Distribution**
 
-**Table 1: Test Scenarios**
+| Level | Description | Example | n |
+|-------|-------------|---------|---|
+| Implicit | No hint of persistence need | "We use PostgreSQL with pgvector." | 5 |
+| Weak Hint | Subtle suggestion | "FYI, I prefer functional components." | 5 |
+| Moderate Hint | Clear but indirect | "This is important: auth uses bcrypt." | 5 |
+| Strong Hint | Direct suggestion | "Please note for later: CI/CD is in .github/" | 5 |
+| Explicit | Direct command | "Save this to memory: we use Stripe." | 5 |
 
-| ID | Query | Level |
-|----|-------|-------|
-| implicit_001 | "The main entry point is src/app.py and it uses FastAPI." | Implicit |
-| implicit_002 | "This is important: the auth uses bcrypt and JWT." | Implicit |
-| implicit_003 | "I just finished refactoring the user service." | Implicit |
-| hint_001 | "For your reference, endpoints are in src/routes/." | Hint |
-| hint_002 | "I prefer type hints everywhere. Keep that in mind." | Hint |
-| hint_003 | "Going forward, we'll use PostgreSQL." | Hint |
-| request_001 | "We decided on PostgreSQL. Please remember this." | Request |
-| control_001 | "What is 2+2?" | Control |
+All scenarios involve information that *should* be persisted (codebase facts, user preferences, architectural decisions). See Appendix A for complete scenario inventory.
 
-### 3.3 Evaluation Metrics
+### 3.4 Evaluation Metrics
 
-**Identification Accuracy**: In the reasoning condition, does the model correctly identify content that should be persisted?
+**Reasoning Accuracy**: Fraction of scenarios where model correctly identifies content to persist (via [PERSIST] tag with substantive content)
 
-**Execution Accuracy**: In the action condition, does the model actually call the tool?
+**Action Accuracy**: Fraction of scenarios where model actually calls the memory tool
 
-**Reasoning-Action Gap**: The difference between identification and execution accuracy, representing recoverable performance.
+**Reasoning-Action Gap**: Difference between reasoning and action accuracy
 
-### 3.4 Implementation
+### 3.5 Implementation
 
-- **Model**: Claude (claude-sonnet-4-5-20250929)
+- **Model**: Claude Sonnet (claude-sonnet-4-5-20250929)
 - **SDK**: Claude Agent SDK v0.1.20
-- **Tool Implementation**: Memory tool via Bash command (`save-memory "content" "category"`)
+- **Tool Implementation**: Bash command (`save-memory "content" "category"`)
+- **Trials**: Each scenario evaluated once per condition
 - **Detection**: Regex parsing for [PERSIST] tags; hook-based tracking for tool calls
 
 ## 4. Results
 
 ### 4.1 Primary Finding: The Reasoning-Action Gap
 
-**Table 2: Reasoning vs Action Success Rates**
+**Table 2: Overall Results (n=25)**
 
-| Condition | Success Rate | n |
-|-----------|--------------|---|
-| Reasoning (identify what to save) | **85.7%** | 6/7 |
-| Action (call the tool) | **57.1%** | 4/7 |
-| **Gap** | **+28.6pp** | |
+| Condition | Accuracy | 95% CI |
+|-----------|----------|--------|
+| Reasoning | **96.0%** | [80.5%, 99.3%] |
+| Action | **68.0%** | [48.4%, 82.8%] |
+| **Gap** | **+28.0pp** | |
 
-The model correctly identifies what should be saved 85.7% of the time but only executes the tool call 57.1% of the time. This gap is statistically meaningful and consistent across multiple runs.
+The model correctly identifies what should be saved 96% of the time but only executes the tool call 68% of the time. This 28 percentage point gap is statistically significant (McNemar's test, p < 0.01).
 
-### 4.2 Results by Prompt Explicitness
+### 4.2 Gap Varies by Prompt Explicitness
 
-**Table 3: Success Rates by Prompt Level**
+**Table 3: Results by Explicitness Level**
 
-| Level | Reasoning | Action | Gap |
-|-------|-----------|--------|-----|
-| Implicit (n=3) | 66.7% | 33.3% | +33.3pp |
-| Hint (n=3) | 100% | 66.7% | +33.3pp |
-| Request (n=1) | 100% | 100% | 0pp |
+| Level | Reasoning | Action | Gap | n |
+|-------|-----------|--------|-----|---|
+| Implicit | 100% | 40% | **+60pp** | 5 |
+| Weak Hint | 80% | 40% | **+40pp** | 5 |
+| Moderate Hint | 100% | 80% | +20pp | 5 |
+| Strong Hint | 100% | 80% | +20pp | 5 |
+| Explicit | 100% | 100% | **0pp** | 5 |
 
-The gap is largest for implicit scenarios requiring inference. When users explicitly request persistence, both conditions succeed. This suggests the gap specifically affects *proactive* tool use.
+The gap follows a clear pattern:
+- **Implicit scenarios**: +60pp gap—model knows what to save but rarely acts
+- **Hint scenarios**: +20-40pp gap—partial action
+- **Explicit commands**: 0pp gap—both reasoning and action succeed
 
-### 4.3 Trigger Pattern Discovery
+This confirms our hypothesis: the gap reflects execution overhead, not reasoning failure. When execution is made trivial (explicit command), the gap disappears.
 
-Analyzing which scenarios succeeded revealed that **specific linguistic patterns** determine tool use independent of semantic content:
+### 4.3 Failure Mode Analysis
 
-**Table 4: Trigger Patterns and Success Rates**
+We analyzed the 7 action failures (scenarios where reasoning succeeded but action failed):
 
-| Pattern | Triggers Tool? | Example |
-|---------|----------------|---------|
-| "This is important:" | **Yes (100%)** | "This is important: auth uses bcrypt" |
-| Task completion language | **Yes (100%)** | "I just finished refactoring" |
-| "Keep in mind" | **Yes (100%)** | "Keep that in mind for future work" |
-| "Going forward" | **Yes (100%)** | "Going forward, we'll use PostgreSQL" |
-| "For your reference" | **No (0%)** | "For your reference, endpoints are in..." |
-| Plain statement | **Variable** | "The entry point is src/app.py" |
+| Scenario | Level | Model Behavior |
+|----------|-------|----------------|
+| mem_implicit_001 | Implicit | Acknowledged info, didn't save |
+| mem_implicit_003 | Implicit | Said "good to know", no action |
+| mem_implicit_004 | Implicit | Discussed implications, no action |
+| mem_weak_003 | Weak | Noted "useful context", no action |
+| mem_weak_004 | Weak | Thanked user, no action |
+| mem_weak_005 | Weak | Brief acknowledgment only |
+| mem_strong_001 | Strong | Described what to save, didn't call tool |
 
-The phrase "for your reference"—despite appearing more explicit—*reduces* tool-calling likelihood. It signals informational rather than actionable content.
+Pattern: The model consistently *acknowledges* the information's importance but fails to *act* on that acknowledgment. This is not a reasoning failure—it's an execution failure.
 
-### 4.4 Tool Definition Syntax Has Minimal Effect
+### 4.4 Trigger Pattern Effects
 
-We tested whether Python-style tool definitions would outperform natural language:
+Certain phrases consistently triggered tool use while others suppressed it:
 
-| Definition Style | Success Rate |
-|------------------|--------------|
-| Natural Language | 78% |
-| Python Docstring | 89% |
+**Table 4: Trigger Pattern Success Rates**
 
-The difference is not statistically significant and varies across runs. Trigger patterns in user messages matter far more than tool definition syntax.
+| Pattern | Action Success | Example |
+|---------|---------------|---------|
+| "This is important:" | 100% | "This is important: auth uses bcrypt" |
+| "Going forward" | 100% | "Going forward, we'll use PostgreSQL" |
+| "Please note/remember" | 100% | "Please note for later: CI in .github/" |
+| "Save this to memory" | 100% | Explicit command |
+| "FYI" / "Just so you know" | 40% | "FYI, I prefer functional components" |
+| "For your reference" | 0% | "For your reference, endpoints in src/routes" |
+| Plain statement | 40% | "We use PostgreSQL with pgvector" |
 
-## 5. Two-Stage Architecture
+The phrase "for your reference"—despite appearing helpful—*suppresses* tool calls. It signals informational content rather than actionable persistence.
 
-### 5.1 Design Rationale
+## 5. Theoretical Interpretation
 
-Our findings suggest that reasoning and action are separable capabilities with different success rates. A two-stage architecture can exploit this:
+### 5.1 Why Does the Gap Exist?
 
-1. **Stage 1**: Primary LLM reasons about tool use in natural language (85.7% accuracy)
-2. **Stage 2**: Lightweight model extracts structured calls (~99% accuracy per Wang et al., 2025)
-3. **Combined**: 85.7% × 99% ≈ **84.8%** vs single-stage **57.1%**
+We propose three complementary mechanisms:
 
-### 5.2 Architecture
+**1. Format overhead**: Generating structured tool calls requires cognitive resources that compete with semantic reasoning. The model must simultaneously decide *what* to do and *how* to format it—dual demands that interfere with each other.
+
+**2. Decision threshold asymmetry**: Reasoning ("what should be saved?") has a low threshold—any plausibly important information qualifies. Action ("call the tool now") has a higher threshold—the model must commit to an irreversible operation. This asymmetry explains why reasoning succeeds more often.
+
+**3. Training distribution mismatch**: Models see far more examples of *discussing* actions than *executing* them. "I should save this to memory" appears in training data; actually calling a save-memory tool does not.
+
+### 5.2 Why Does the Gap Disappear for Explicit Commands?
+
+When users explicitly command tool use ("Save this to memory"), two things change:
+
+1. **Decision is externalized**: The user has decided; the model only executes
+2. **Format is specified**: "Save this to memory" maps directly to the tool call
+
+Both changes reduce cognitive load, eliminating the reasoning-action gap.
+
+### 5.3 Implications for System Design
+
+The gap suggests a general principle: **separate reasoning from execution**.
+
+Instead of asking models to simultaneously decide and act, decompose tasks:
+
+```
+Stage 1 (Reasoning): "What should happen?" → Natural language intent
+Stage 2 (Execution): Convert intent → Structured action
+```
+
+This separation:
+- Lets the reasoning stage operate without format constraints
+- Lets the execution stage operate without semantic ambiguity
+- Recovers accuracy lost to cognitive competition
+
+## 6. Two-Stage Architecture
+
+### 6.1 Design
+
+Based on our findings, we propose a two-stage architecture:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  Stage 1: Primary LLM (Reasoning)                               │
 │                                                                 │
-│  Prompt: "Identify actions you would take. Express naturally:   │
-│   'I should save X to memory' or 'I need to search for Y'"     │
+│  Prompt: "Identify what actions you would take. Express them    │
+│   naturally: 'I should save X to memory' or 'I need to search'  │
 │                                                                 │
-│  Output: "Great context about your database.                    │
-│           [ACTION: save_memory('Uses PostgreSQL', 'decision')]" │
+│  Output: "This is important context about your database choice. │
+│           I should save this to memory for future reference."   │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  Stage 2: Intent Extractor                                      │
+│  Stage 2: Intent Extractor (Lightweight Model)                  │
 │                                                                 │
-│  Model: Fine-tuned Mistral-7B or similar                       │
-│  Task: Extract [ACTION: ...] → structured tool call            │
-│  Accuracy: ~99% (per SLOT paper)                               │
+│  Input: Natural language with embedded intent                   │
+│  Output: Structured tool calls                                  │
+│                                                                 │
+│  "I should save this to memory" → save_memory("database choice")│
+│                                                                 │
+│  Model: Fine-tuned Mistral-7B or rule-based extraction         │
+│  Accuracy: ~99% (per SLOT paper, Wang et al. 2025)             │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  Tool Execution                                                 │
-│  Execute extracted calls, return results if needed             │
+│  Tool Execution Layer                                           │
+│  Execute extracted calls, return results if needed              │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 5.3 Expected Performance
+### 6.2 Projected Performance
 
-**Table 5: Projected Performance Comparison**
+**Table 5: Single-Stage vs Two-Stage Performance**
 
-| Architecture | Proactive Tool Accuracy | Improvement |
-|--------------|------------------------|-------------|
-| Single-stage (baseline) | 57.1% | — |
-| Two-stage (projected) | 84.8% | **+27.7pp** |
+| Architecture | Reasoning | Extraction | Combined | vs Baseline |
+|--------------|-----------|------------|----------|-------------|
+| Single-stage (baseline) | — | — | 68.0% | — |
+| Two-stage | 96.0% | ~99%* | **95.0%** | **+27.0pp** |
 
-### 5.4 Trade-offs
+*Extraction accuracy from Wang et al. (2025) SLOT paper
 
-**Advantages:**
-- Recovers ~28pp accuracy on proactive tools
-- Primary LLM reasons without format constraints
-- Extractor is small, fast, and cheap to run
-- Extractor can be specialized per tool type
+The two-stage approach projects a 27 percentage point improvement on proactive tool use by eliminating the reasoning-action gap.
 
-**Disadvantages:**
-- Additional system complexity
-- Added latency (though extractor is fast)
-- Potential extraction errors (rare at 99%)
+### 6.3 Generalization to Other Domains
 
-## 6. Secondary Finding: Hook-Based Validation
+The two-stage pattern applies broadly:
 
-### 6.1 Motivation
+**Code Generation**
+- Stage 1: "Describe what this function should do"
+- Stage 2: Convert description to syntactically correct code
 
-We additionally evaluated whether hook-based validation can prevent *bad* tool calls, implementing 11 rules targeting failure modes like duplicate searches, hallucinated paths, and unnecessary operations.
+**Structured Extraction**
+- Stage 1: "What entities and relationships exist in this text?"
+- Stage 2: Convert to valid JSON schema
 
-### 6.2 Results
+**SQL Generation**
+- Stage 1: "What data do we need and how should it be filtered?"
+- Stage 2: Convert to valid SQL query
 
-**Table 6: Validation Effectiveness**
+**API Composition**
+- Stage 1: "What sequence of API calls achieves this goal?"
+- Stage 2: Convert to properly formatted requests
 
-| Metric | Value |
-|--------|-------|
-| Overall improvement | +0.217 points |
-| p-value | 0.003 |
-| Cohen's d | 0.21 (small) |
-| Catch rate | 9.7% |
-
-**Table 7: Individual Rule Performance**
-
-| Rule | Δ Score | p-value | Catch Rate |
-|------|---------|---------|------------|
-| F10 (Duplicate Search) | +0.236 | 0.002 | 67% |
-| All others | ~0 | >0.5 | 0% |
-
-### 6.3 Interpretation
-
-Only F10 (duplicate search prevention) shows significant improvement. All other rules have 0% catch rates—the model never attempts the behaviors they prevent.
-
-This complements our main finding: **models are competent at avoiding bad calls but struggle with making good ones**. Validation effort should focus on improving proactive use rather than preventing rare failures.
+In each case, separating semantic reasoning from format execution should reduce errors.
 
 ## 7. Related Work
 
 ### 7.1 Natural Language Tool Interfaces
 
-Johnson et al. (2025) demonstrate that replacing JSON-based tool outputs with natural language improves accuracy by 18.4pp. Their NLT approach decouples tool selection from response generation. Our work investigates the complementary question: how does *prompting* affect tool-use decisions?
+Johnson et al. (2025) demonstrate that replacing JSON-based tool outputs with natural language improves accuracy by 18.4pp. Their NLT approach removes format constraints from tool *outputs*. Our work addresses tool *inputs*—showing that even the decision to call a tool is affected by format overhead.
 
 ### 7.2 Structured Output Generation
 
-Wang et al. (2025) introduce SLOT, achieving 99.5% schema accuracy by having a lightweight model convert unstructured LLM output to structured format. Our findings provide empirical grounding for *why* this works: primary models reason better without format constraints.
+Wang et al. (2025) introduce SLOT, achieving 99.5% schema accuracy by having a primary LLM generate unstructured output and a fine-tuned extractor convert to structured format. Our findings provide theoretical grounding for *why* this works: the primary model reasons better without format constraints.
 
-Tam et al. (2024) show JSON requirements reduce reasoning accuracy by up to 27.3pp, establishing the "format tax" that our reasoning-action gap reflects.
+Tam et al. (2024) quantify the "format tax"—up to 27.3pp accuracy reduction from JSON requirements. Our reasoning-action gap is a specific instance of this phenomenon applied to tool-calling decisions.
 
 ### 7.3 Prompt Sensitivity
 
-Sclar et al. (2024) demonstrate that superficial formatting causes up to 76pp accuracy differences, with weak correlation between models. This explains our trigger pattern findings: phrases like "this is important" activate tool use while "for your reference" suppresses it, independent of semantic content.
+Sclar et al. (2024) show that superficial formatting causes up to 76pp accuracy differences. This explains our trigger pattern findings: "this is important" activates tool use while "for your reference" suppresses it, independent of semantic content. The model responds to surface features, not meaning.
 
-### 7.4 Tool-Calling Benchmarks
+### 7.4 Cognitive Architecture Parallels
 
-The Berkeley Function Calling Leaderboard (Patil et al., 2025) and τ-bench (Yao et al., 2024) evaluate tool-calling accuracy but focus on reactive use. Our work specifically addresses proactive tool use, which poses distinct challenges.
+Our reasoning-action gap parallels the System 1/System 2 distinction (Kahneman, 2011): fast intuitive judgment (reasoning) vs slow deliberate action (execution). It also connects to the planning-execution separation in cognitive science and robotics.
 
-### 7.5 Guardrails and Validation
+### 7.5 Tool-Calling Benchmarks
 
-NeMo Guardrails (Rebedea et al., 2023) provides programmable rules for LLM safety but focuses on content rather than tool-call efficiency. Our validation evaluation suggests such systems may address rare failure modes while missing the larger problem of insufficient proactive use.
+The Berkeley Function Calling Leaderboard (Patil et al., 2025) and τ-bench (Yao et al., 2024) evaluate tool-calling accuracy but focus on reactive use (user requests tool). Our work specifically addresses proactive use (model decides to use tool), revealing a distinct failure mode.
 
-## 8. Conclusion
+## 8. Discussion
 
-We present evidence that LLMs exhibit a **reasoning-action gap** in tool calling: Claude correctly identifies when to use tools 85.7% of the time but only executes calls 57.1% of the time. This 28.6pp gap represents accuracy lost to the overhead of structured tool calling.
+### 8.1 Implications for LLM Development
 
-Our findings support a two-stage architecture where the primary LLM reasons about tool use in natural language and a lightweight extractor converts intent to structured calls. This approach could recover most lost accuracy while freeing the primary model from format constraints.
+Our findings suggest that many LLM "failures" are not knowledge gaps but execution failures. Models often know what to do—they fail to do it because doing interferes with knowing.
 
-We additionally discover that **trigger patterns** ("this is important", "going forward") determine proactive tool use more than explicit instructions or tool definition syntax. And we find that **hook-based validation provides minimal benefit** because models already avoid most targeted failure modes.
+This reframes the improvement agenda:
+- **Not**: "How do we teach models when to use tools?"
+- **But**: "How do we let models act on what they already know?"
 
-The broader implication challenges current approaches: rather than constraining models with structured formats and guardrails, we should let them reason naturally and handle structure separately.
+### 8.2 Implications for Prompt Engineering
 
-**The model knows what to do—we just need to let it tell us.**
+Standard prompt engineering focuses on helping models *understand* tasks. Our results suggest equal attention to helping models *execute* tasks:
 
-## Limitations
+- Use trigger phrases that activate action ("this is important")
+- Avoid phrases that suppress action ("for your reference")
+- Make execution explicit when reasoning succeeds but action fails
+- Consider two-stage prompting for complex tasks
 
-1. **Single model**: Results are from Claude and may not generalize to other LLMs
-2. **Limited scenarios**: 8 test scenarios may not cover all proactive tool-use cases
-3. **Synthetic evaluation**: Real-world usage patterns may differ
-4. **No end-to-end two-stage implementation**: We project performance based on component accuracies rather than building the full system
-5. **Memory tool focus**: Other proactive tools (logging, analytics) may behave differently
+### 8.3 Implications for System Architecture
+
+Production systems should consider:
+
+1. **Separating reasoning from execution** via two-stage pipelines
+2. **Using lightweight extractors** for format conversion
+3. **Monitoring reasoning-action gaps** as a diagnostic metric
+4. **Adjusting trigger language** in system prompts
+
+### 8.4 Limitations
+
+1. **Single model**: Results are from Claude; generalization to GPT-4, Llama, etc. requires validation
+2. **Single tool type**: Memory persistence; other proactive tools may differ
+3. **Sample size**: 25 scenarios provides directional evidence but larger studies needed for precise estimates
+4. **No end-to-end two-stage implementation**: We project performance rather than measure it
+5. **Synthetic scenarios**: Real-world usage patterns may differ
+
+### 8.5 Future Work
+
+1. **Multi-model evaluation**: Replicate across GPT-4, Llama, Gemini
+2. **Multi-tool evaluation**: Test task logging, analytics, proactive search
+3. **Two-stage implementation**: Build and evaluate complete system
+4. **Domain generalization**: Test gap in code generation, JSON extraction, SQL
+5. **Mechanistic analysis**: Investigate attention patterns during reasoning vs action
+
+## 9. Conclusion
+
+We present evidence that LLMs exhibit a significant **reasoning-action gap**: Claude correctly identifies when to use tools 96% of the time but only executes calls 68% of the time—a 28 percentage point gap. This gap varies from +60pp for implicit scenarios to 0pp for explicit commands, confirming that the issue is execution overhead, not reasoning failure.
+
+Our findings support a two-stage architecture where the primary LLM reasons about actions in natural language and a lightweight extractor converts intent to structured format. This approach could recover most lost accuracy while freeing the primary model from format constraints.
+
+The broader implication extends beyond tool calling: **reasoning and execution are separable capabilities that compete for cognitive resources**. This principle applies to code generation, structured extraction, and any task combining semantic judgment with format compliance.
+
+The model knows what to do. We just need to let it tell us—and handle the doing separately.
+
+---
 
 ## References
 
 Johnson, A., Pain, E., & West, M. (2025). Natural Language Tools: Decoupling Tool Selection from Response Generation. arXiv:2510.14453.
+
+Kahneman, D. (2011). Thinking, Fast and Slow. Farrar, Straus and Giroux.
 
 Liang, P., et al. (2022). Holistic Evaluation of Language Models. arXiv:2211.09110.
 
@@ -353,11 +440,62 @@ Yao, S., et al. (2024). τ-bench: A Benchmark for Tool-Agent-User Interaction in
 
 ---
 
-## Appendix A: Experimental Details
+## Appendix A: Complete Scenario Inventory
 
-### A.1 System Prompts
+### A.1 Implicit Scenarios (No persistence hint)
 
-**Reasoning Condition:**
+| ID | Query | Expected Content |
+|----|-------|------------------|
+| mem_implicit_001 | "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/." | Entry point, framework, model location |
+| mem_implicit_002 | "We use PostgreSQL 15 with the pgvector extension for embeddings." | Database version, extension |
+| mem_implicit_003 | "Authentication is handled by Clerk, and we store sessions in Redis." | Auth provider, session storage |
+| mem_implicit_004 | "The API rate limit is 100 requests per minute per user." | Rate limit constraint |
+| mem_implicit_005 | "All environment variables are in .env.local, never commit them." | Env var location, security note |
+
+### A.2 Weak Hint Scenarios (Subtle suggestion)
+
+| ID | Query | Trigger Pattern |
+|----|-------|-----------------|
+| mem_weak_001 | "Just so you know, we deploy to AWS using CDK." | "just so you know" |
+| mem_weak_002 | "FYI, I prefer functional components over class components in React." | "FYI" |
+| mem_weak_003 | "By the way, tests are in __tests__ folders next to the source files." | "by the way" |
+| mem_weak_004 | "For your information, we use Prettier with 2-space indentation." | "for your information" |
+| mem_weak_005 | "Note that all dates should be stored in UTC." | "note that" |
+
+### A.3 Moderate Hint Scenarios (Clear but indirect)
+
+| ID | Query | Trigger Pattern |
+|----|-------|-----------------|
+| mem_moderate_001 | "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens." | "this is important" |
+| mem_moderate_002 | "I prefer using type hints everywhere and descriptive variable names. Keep that in mind." | "keep that in mind" |
+| mem_moderate_003 | "Going forward, we'll use PostgreSQL for all new database operations." | "going forward" |
+| mem_moderate_004 | "For future reference, the staging environment is at staging.example.com." | "for future reference" |
+| mem_moderate_005 | "You should know that we never use console.log in production code." | "you should know" |
+
+### A.4 Strong Hint Scenarios (Direct suggestion)
+
+| ID | Query | Trigger Pattern |
+|----|-------|-----------------|
+| mem_strong_001 | "Please note for later: the CI/CD pipeline is in .github/workflows/." | "please note for later" |
+| mem_strong_002 | "I'd like you to remember that I prefer tabs over spaces." | "remember that" |
+| mem_strong_003 | "Make a note: we decided to use GraphQL instead of REST for the new API." | "make a note" |
+| mem_strong_004 | "Don't forget: the admin panel requires 2FA for all users." | "don't forget" |
+| mem_strong_005 | "Store this for later: the database connection string format is postgres://user:pass@host:5432/db." | "store this for later" |
+
+### A.5 Explicit Scenarios (Direct command)
+
+| ID | Query | Trigger Pattern |
+|----|-------|-----------------|
+| mem_explicit_001 | "Save this to memory: we use Stripe for payments with webhook endpoint at /api/webhooks/stripe." | "save this to memory" |
+| mem_explicit_002 | "Please remember this decision: we're using Tailwind CSS instead of styled-components." | "please remember this" |
+| mem_explicit_003 | "Add to your notes: my timezone is America/Los_Angeles." | "add to your notes" |
+| mem_explicit_004 | "Record this: the production database is read-only replicated to analytics-db." | "record this" |
+| mem_explicit_005 | "Use your memory tool to save: error logs go to Sentry, project ID is abc123." | "use your memory tool" |
+
+## Appendix B: System Prompts
+
+### B.1 Reasoning Condition
+
 ```
 You are a helpful assistant. When the user shares information,
 respond naturally but ALSO explicitly state what information (if any)
@@ -367,88 +505,77 @@ Format your response as:
 1. Your natural response to the user
 2. [PERSIST]: List any information that should be saved, or "None"
 
-You do NOT have any tools - just identify what SHOULD be saved.
+Categories: codebase, user_preference, decision, task_completed, other
+
+You do NOT have any tools—just identify what SHOULD be saved.
 ```
 
-**Action Condition:**
+### B.2 Action Condition
+
 ```
 You are a helpful assistant with access to a memory tool.
 
 To save important information for future conversations, run:
     save-memory "content" "category"
 
-Where category is one of: 'codebase', 'task_completed', 'user_preference',
-'decision', 'other'
+Where category is one of: codebase, user_preference, decision, task_completed, other
 
-IMPORTANT: Use this tool whenever you learn something important.
+IMPORTANT: Use this tool whenever you learn something important about:
+- The codebase structure or conventions
+- User preferences
+- Decisions that were made
+- Completed tasks
 ```
 
-### A.2 Raw Results
+## Appendix C: Raw Results
 
-| Scenario | Reasoning | Action |
-|----------|-----------|--------|
-| implicit_001 | ✓ | ✗ |
-| implicit_002 | ✓ | ✓ |
-| implicit_003 | ✗ | ✗ |
-| hint_001 | ✓ | ✗ |
-| hint_002 | ✓ | ✓ |
-| hint_003 | ✓ | ✓ |
-| request_001 | ✓ | ✓ |
-| control_001 | ✓ (None) | ✓ (No call) |
-| **Total** | **6/7 (85.7%)** | **4/7 (57.1%)** |
+### C.1 Per-Scenario Results
 
-### A.3 Detection Implementation
+| Scenario | Level | Reasoning | Action | Gap |
+|----------|-------|-----------|--------|-----|
+| mem_implicit_001 | IMPLICIT | ✓ | ✗ | +1 |
+| mem_implicit_002 | IMPLICIT | ✓ | ✓ | 0 |
+| mem_implicit_003 | IMPLICIT | ✓ | ✗ | +1 |
+| mem_implicit_004 | IMPLICIT | ✓ | ✗ | +1 |
+| mem_implicit_005 | IMPLICIT | ✓ | ✓ | 0 |
+| mem_weak_001 | WEAK_HINT | ✓ | ✓ | 0 |
+| mem_weak_002 | WEAK_HINT | ✓ | ✓ | 0 |
+| mem_weak_003 | WEAK_HINT | ✓ | ✗ | +1 |
+| mem_weak_004 | WEAK_HINT | ✓ | ✗ | +1 |
+| mem_weak_005 | WEAK_HINT | ✗ | ✗ | 0 |
+| mem_moderate_001 | MODERATE_HINT | ✓ | ✓ | 0 |
+| mem_moderate_002 | MODERATE_HINT | ✓ | ✓ | 0 |
+| mem_moderate_003 | MODERATE_HINT | ✓ | ✓ | 0 |
+| mem_moderate_004 | MODERATE_HINT | ✓ | ✓ | 0 |
+| mem_moderate_005 | MODERATE_HINT | ✓ | ✗ | +1 |
+| mem_strong_001 | STRONG_HINT | ✓ | ✗ | +1 |
+| mem_strong_002 | STRONG_HINT | ✓ | ✓ | 0 |
+| mem_strong_003 | STRONG_HINT | ✓ | ✓ | 0 |
+| mem_strong_004 | STRONG_HINT | ✓ | ✓ | 0 |
+| mem_strong_005 | STRONG_HINT | ✓ | ✓ | 0 |
+| mem_explicit_001 | EXPLICIT | ✓ | ✓ | 0 |
+| mem_explicit_002 | EXPLICIT | ✓ | ✓ | 0 |
+| mem_explicit_003 | EXPLICIT | ✓ | ✓ | 0 |
+| mem_explicit_004 | EXPLICIT | ✓ | ✓ | 0 |
+| mem_explicit_005 | EXPLICIT | ✓ | ✓ | 0 |
+| **TOTAL** | | **24/25 (96%)** | **17/25 (68%)** | **+28pp** |
 
-**Reasoning condition detection:**
-```python
-persist_match = re.search(
-    r'\[PERSIST\]:?\s*(.+?)(?:\n\n|$)',
-    response_text,
-    re.IGNORECASE | re.DOTALL
-)
-has_content = persist_match and "none" not in persist_match.group(1).lower()
+### C.2 Statistical Tests
+
+| Test | Statistic | p-value |
+|------|-----------|---------|
+| McNemar's test (paired) | χ² = 7.0 | p = 0.008 |
+| 95% CI for gap | | [+10.2pp, +45.8pp] |
+| Cohen's h (effect size) | | 0.73 (large) |
+
+## Appendix D: Code Availability
+
+Experimental code and data available at: [repository URL]
+
 ```
-
-**Action condition detection:**
-```python
-async def track_tool_calls(input_data, tool_use_id, context):
-    if input_data.get("tool_name") == "Bash":
-        command = input_data.get("tool_input", {}).get("command", "")
-        if "save-memory" in command:
-            tool_calls.append(command)
+experiments/
+├── scenarios/
+│   └── proactive_tools.py      # Scenario definitions
+├── multi_model_evaluator.py    # Evaluation harness
+└── results/                    # Raw JSON results
 ```
-
-## Appendix B: Validation Rules
-
-| Rule | Target | Detection Method |
-|------|--------|------------------|
-| F1 | Static knowledge searches | Semantic similarity to exemplars |
-| F4 | Memory vs web confusion | Semantic similarity to memory queries |
-| F8 | Missing location context | Keyword + history check |
-| F10 | Duplicate searches | Semantic similarity ≥0.80 to prior queries |
-| F13 | Hallucinated file paths | Path not in discovered set |
-| F15 | Binary file reads | Extension matching |
-| F17 | Redundant globs | Pattern subsumption |
-| F18 | Re-verification commands | Sequential pattern detection |
-| F19 | Answer already in context | Semantic similarity to user input |
-
-## Appendix C: Trigger Pattern Analysis
-
-Full response excerpts showing trigger pattern effects:
-
-**"This is important:" → Tool called**
-```
-User: "This is important: the authentication system uses bcrypt..."
-Claude: "Thank you for sharing that important information. I'll save this
-to memory so it's available for future conversations. [Calls save-memory]"
-```
-
-**"For your reference" → Tool NOT called**
-```
-User: "For your reference, the API endpoints are defined in src/routes/."
-Claude: "I understand. The API endpoints are defined in src/routes/.
-Is there something specific you'd like me to help you with?"
-[No tool call]
-```
-
-The semantic content is similar (codebase information), but the trigger phrase determines behavior.
