@@ -1,20 +1,41 @@
 """
-Experiment: Does Claude express tool intent more often in natural language
-than it actually makes tool calls?
+Experiment: Does natural language intent outperform structured tool calling?
 
-Hypothesis: Claude will express intent to save/remember information more frequently
-when it can use natural language vs when it must make structured tool calls.
+Research Question: With identical guidance on WHEN to save and equally explicit
+instructions on HOW to save, does output format affect the model's ability to
+recognize when to save information from VAGUE user messages?
 
-This tests the "decoupled tool calling" approach suggested by NLT and SLOT papers.
+Hypothesis: Structured tool calling may impose cognitive overhead that suppresses
+action, even when the model would express intent naturally. If true, this supports
+a two-stage architecture: NL intent → structured extraction.
+
+DESIGN (v4 - Simplified):
+- WHEN to save: Identical guidance for both conditions
+- HOW to save: Equally explicit examples for both conditions
+  - NL: Natural English ("I'll save X to the codebase category")
+  - Structured: Tool call (save-memory "content" "category")
+- SCENARIOS:
+  - Implicit: Very vague statements ("pg is db", "app.ts in ./src")
+  - Control: Should NOT save (questions, chitchat, temporary info)
+  - 1 Explicit: Sanity check (both conditions should succeed)
+
+KEY INSIGHT: Intermediate levels (weak/moderate/strong) add noise without
+testing the core hypothesis. The interesting question is whether NL handles
+truly ambiguous cases better than structured tool calling.
+
+FIDELITY: Also measures quality of saved content (completeness, context, specificity)
+to test whether NL captures higher-fidelity information when it does save.
 """
 
 import asyncio
 import json
+import random
 import re
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
+from collections import defaultdict
 
 from claude_agent_sdk import (
     ClaudeSDKClient,
@@ -26,197 +47,401 @@ from claude_agent_sdk import (
     ResultMessage,
 )
 
-
-# Intent detection patterns - what Claude might say naturally
-MEMORY_INTENT_PATTERNS = [
-    # Direct statements
-    r"I should (save|remember|store|note|record)",
-    r"I('ll| will) (save|remember|store|note|record)",
-    r"(save|remember|store|note|record) this",
-    r"worth (remembering|saving|noting|recording)",
-    r"important to (remember|save|note|record)",
-    r"keep (this|that) in mind",
-    r"I'll keep .* in mind",
-    r"note (this|that) (down|for later)",
-    r"for future reference",
-    r"(adding|add) (this|that) to memory",
-    r"(storing|store) (this|that)",
-    # Passive acknowledgment patterns (Claude without tools)
-    r"I'm noting",
-    r"noting (this|that)",
-    r"useful (context|information) for .* future",
-    r"good to know",
-    r"helpful (context|to know)",
-    r"I understand",
-    # Conditional/hypothetical
-    r"would (save|remember|store|note)",
-    r"should be (saved|remembered|stored|noted)",
-    r"(this|that) is (important|notable|significant)",
-    r"key (information|detail|point)",
-    # Task completion
-    r"task (completed|done|finished)",
-    r"(completed|finished|done) (the|this) task",
-    r"successfully (completed|finished)",
-]
-
-# Stricter patterns - actual persistence intent
-STRONG_INTENT_PATTERNS = [
-    r"I('ll| will) (save|remember|store)",
-    r"(save|saving) (this|that|it) to memory",
-    r"let me (save|store|record)",
-    r"I should (save|remember|store)",
-]
-
-STRONG_INTENT_REGEX = re.compile(
-    "|".join(f"({p})" for p in STRONG_INTENT_PATTERNS),
-    re.IGNORECASE
-)
-
-# Compile patterns for efficiency
-INTENT_REGEX = re.compile(
-    "|".join(f"({p})" for p in MEMORY_INTENT_PATTERNS),
-    re.IGNORECASE
+from experiments.scenarios.proactive_tools import (
+    MEMORY_SCENARIOS as PROACTIVE_MEMORY_SCENARIOS,
+    CONTROL_SCENARIOS as PROACTIVE_CONTROL_SCENARIOS,
+    ExplicitnessLevel,
 )
 
 
-# Same scenarios as the memory tool experiment
-SCENARIOS = [
-    {
-        "id": "implicit_001",
-        "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
-        "expected_intent": True,
-        "prompt_level": "implicit",
-    },
-    {
-        "id": "implicit_002",
-        "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
-        "expected_intent": True,
-        "prompt_level": "implicit",
-    },
-    {
-        "id": "implicit_003",
-        "query": "I just finished refactoring the user service. All tests pass now.",
-        "expected_intent": True,
-        "prompt_level": "implicit",
-    },
-    {
-        "id": "hint_001",
-        "query": "For your reference, the API endpoints are defined in src/routes/.",
-        "expected_intent": True,
-        "prompt_level": "hint",
-    },
-    {
-        "id": "hint_002",
-        "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
-        "expected_intent": True,
-        "prompt_level": "hint",
-    },
-    {
-        "id": "hint_003",
-        "query": "Going forward, we'll use PostgreSQL for all database operations.",
-        "expected_intent": True,
-        "prompt_level": "hint",
-    },
-    {
-        "id": "request_001",
-        "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
-        "expected_intent": True,
-        "prompt_level": "request",
-    },
-    {
-        "id": "control_001",
-        "query": "What is 2 + 2?",
-        "expected_intent": False,
-        "prompt_level": "control",
-    },
+# =============================================================================
+# PROMPTS - The key experimental manipulation
+# =============================================================================
+
+# WHEN to save - identical guidance for all conditions
+# The vagueness comes from the SCENARIOS (user messages), not from these instructions
+WHEN_TO_SAVE = """You have a persistent memory system for future conversations.
+
+Save information when the user shares something worth remembering:
+- Codebase structure, conventions, or technical details
+- User preferences (coding style, tools, workflows)
+- Important decisions or constraints
+- Anything that would be useful context in future conversations
+
+Use your judgment about what's important enough to save."""
+
+# Condition 1: Natural Language Intent
+# HOW to save - express intent naturally in plain English
+PROMPT_NL = f"""You are a helpful assistant with access to a memory tool. Do not use tools as you normally would - use natural language.
+
+{WHEN_TO_SAVE}
+
+## How to Save Information
+When you want to save something, simply say so with natural language, detail how you would do it, and be concise but descriptive.
+
+Examples:
+- "I'll save that your configuration file is src/configuration.ts."
+- "Let me remember your preference for using tabs."
+- "I'll note that the content service can have max 10 threads."
+
+If nothing needs to be saved, just respond normally."""
+
+# Condition 2: Structured Tool Call
+# HOW to save is explicit - call a tool in a specific way
+PROMPT_STRUCTURED = f"""You are a helpful assistant with access to a memory tool.
+
+{WHEN_TO_SAVE}
+
+## How to Save Information
+To save information, use this XML:
+
+    <save-memory category="<category>">content</save-memory>
+
+Categories: codebase, user_preference, decision, constraint, other
+
+Examples:
+- <save-memory category="codebase">Configuration file is src/configuration.ts</save-memory>
+- <save-memory category="user_preference">Use tabs</save-memory>
+- <save-memory category="constraint">Content service can have max of 10 threads.</save-memory>
+
+If nothing needs to be saved, respond normally."""
+
+
+# =============================================================================
+# Intent Detection - XML and Natural Language patterns
+# =============================================================================
+
+# XML pattern for save-memory tags (used by both conditions)
+SAVE_MEMORY_XML_PATTERN = re.compile(
+    r'<save-memory\s+category=["\'](\w+)["\']>(.+?)</save-memory>',
+    re.IGNORECASE | re.DOTALL
+)
+
+# Detect natural language expressions of save intent
+# These patterns match how humans naturally express "I'm saving this"
+NL_SAVE_PATTERNS = [
+    # Direct save/store statements
+    r"I'll save\b",
+    r"I will save\b",
+    r"I'm saving\b",
+    r"saving (this|that|the|your)",
+    r"save (this|that|the|your)",
+    r"let me save\b",
+
+    # Remember/note variations
+    r"I'll remember\b",
+    r"I will remember\b",
+    r"I'm remembering\b",
+    r"let me remember\b",
+    r"I'll note\b",
+    r"I will note\b",
+    r"I'm noting\b",
+    r"let me note\b",
+    r"noting (this|that|the|your)",
+
+    # Record/store variations
+    r"I'll record\b",
+    r"I will record\b",
+    r"I'm recording\b",
+    r"let me record\b",
+    r"I'll store\b",
+    r"I will store\b",
+    r"storing (this|that|the|your)",
+
+    # Category-specific patterns
+    r"to the (codebase|user_preference|decision|constraint|other) category",
+    r"(codebase|user_preference|decision|constraint|other) category",
+    r"save .* to (codebase|user_preference|decision|constraint|other)",
+    r"remember .* (as|for) (codebase|user_preference|decision|constraint|other)",
 ]
 
-
-@dataclass
-class IntentTrialResult:
-    scenario_id: str
-    condition: str  # "natural_language" or "with_tool"
-    query: str
-    expected_intent: bool
-    # Natural language condition
-    expressed_intent: bool
-    intent_phrases: list
-    # Tool condition (for comparison)
-    actual_tool_call: bool
-    # Full response
-    response_text: str
+NL_SAVE_REGEX = re.compile(
+    "|".join(f"({p})" for p in NL_SAVE_PATTERNS),
+    re.IGNORECASE
+)
 
 
-async def run_natural_language_trial(scenario: dict) -> IntentTrialResult:
-    """Run trial where Claude has NO tools - just responds naturally."""
-
-    system_prompt = """You are a helpful assistant. When the user shares information,
-respond naturally and think aloud about what you're learning and what might be
-useful to remember for future conversations.
-
-You do NOT have any tools available - just respond in natural language."""
-
-    options = ClaudeAgentOptions(
-        allowed_tools=[],  # NO TOOLS
-        max_turns=1,
-        permission_mode="acceptEdits",
-        system_prompt=system_prompt,
-    )
-
-    response_text = ""
-
-    try:
-        async with ClaudeSDKClient(options=options) as client:
-            await client.query(scenario["query"])
-
-            async for message in client.receive_response():
-                if isinstance(message, AssistantMessage):
-                    for block in message.content:
-                        if isinstance(block, TextBlock):
-                            response_text += block.text
-
-    except Exception as e:
-        response_text = f"Error: {e}"
-
-    # Detect intent expressions
-    matches = INTENT_REGEX.findall(response_text)
-    intent_phrases = [m for group in matches for m in group if m]
-    expressed_intent = len(intent_phrases) > 0
-
-    # Also check strong intent
-    strong_matches = STRONG_INTENT_REGEX.findall(response_text)
-    strong_phrases = [m for group in strong_matches for m in group if m]
-
-    return IntentTrialResult(
-        scenario_id=scenario["id"],
-        condition="natural_language",
-        query=scenario["query"],
-        expected_intent=scenario["expected_intent"],
-        expressed_intent=expressed_intent,
-        intent_phrases=intent_phrases,
-        actual_tool_call=False,
-        response_text=response_text[:500],
-    )
+def extract_xml_save_content(text: str) -> list[dict]:
+    """Extract content from <save-memory> XML tags."""
+    matches = SAVE_MEMORY_XML_PATTERN.findall(text)
+    return [{"category": cat, "content": content.strip()} for cat, content in matches]
 
 
-async def run_explicit_persistence_trial(scenario: dict) -> IntentTrialResult:
-    """Run trial asking Claude to IDENTIFY what should be persisted (reasoning task)."""
+# =============================================================================
+# Fidelity Evaluation - Head-to-Head Comparison
+# =============================================================================
 
-    system_prompt = """You are a helpful assistant. When the user shares information,
-respond naturally but ALSO explicitly state what information (if any) should be
-saved to a persistent memory system for future conversations.
+FIDELITY_JUDGE_PROMPT = """Given two prompt-response pairs from the same LLM, determine which response more accurately captures the information from the user's message.
 
-Format your response as:
-1. Your natural response to the user
-2. [PERSIST]: List any information that should be saved, or "None" if nothing needs saving
+Both responses are attempts to save information to a memory system for future reference.
 
-You do NOT have any tools - just identify what SHOULD be saved."""
+Evaluate:
+1. **Accuracy**: Does the response correctly represent what the user said?
+2. **Completeness**: Did it capture the key information without missing important details?
+3. **No hallucination**: Did it avoid adding information not in the original message?
+
+Respond in exactly this format:
+WINNER: <A, B, or TIE>
+REASON: <one sentence explanation>"""
+
+
+async def judge_fidelity_comparison(
+    user_query: str,
+    nl_response: str,
+    structured_response: str,
+) -> dict:
+    """Compare NL vs Structured responses head-to-head.
+
+    Returns dict with 'winner' ('nl', 'structured', or 'tie') and 'reason'.
+    """
+
+    judge_query = f"""## Prompt (User Message)
+{user_query}
+
+## Response A
+{nl_response}
+
+## Response B
+{structured_response}
+
+Which response more accurately captures the information from the user's message?"""
 
     options = ClaudeAgentOptions(
         allowed_tools=[],
         max_turns=1,
         permission_mode="acceptEdits",
-        system_prompt=system_prompt,
+        system_prompt=FIDELITY_JUDGE_PROMPT,
+    )
+
+    response_text = ""
+
+    try:
+        async with ClaudeSDKClient(options=options) as client:
+            await client.query(judge_query)
+
+            async for message in client.receive_response():
+                if isinstance(message, AssistantMessage):
+                    for block in message.content:
+                        if isinstance(block, TextBlock):
+                            response_text += block.text
+
+    except Exception as e:
+        return {"winner": "error", "reason": str(e)}
+
+    # Parse winner
+    winner_match = re.search(r'WINNER:\s*(A|B|TIE)', response_text, re.IGNORECASE)
+    reason_match = re.search(r'REASON:\s*(.+?)(?:\n|$)', response_text, re.IGNORECASE)
+
+    if winner_match:
+        winner_raw = winner_match.group(1).upper()
+        winner = "nl" if winner_raw == "A" else "structured" if winner_raw == "B" else "tie"
+    else:
+        winner = "unknown"
+
+    reason = reason_match.group(1).strip() if reason_match else "No reason provided"
+
+    return {"winner": winner, "reason": reason}
+
+
+# =============================================================================
+# Scenario Loading
+# =============================================================================
+
+LEVEL_TO_PROMPT_LEVEL: dict[ExplicitnessLevel, str] = {
+    ExplicitnessLevel.IMPLICIT: "implicit",
+    ExplicitnessLevel.EXPLICIT: "explicit",
+    ExplicitnessLevel.CONTROL: "control",
+}
+
+
+def build_scenarios(
+    include_controls: bool = True,
+    include_sanity_check: bool = True,
+    tags_filter: Optional[list[str]] = None,
+) -> list[dict]:
+    """Build scenarios from proactive_tools.py.
+
+    By default includes:
+    - IMPLICIT scenarios (the hard test - vague user messages)
+    - CONTROL scenarios (should NOT save - for false positive rate)
+    - ONE explicit scenario (sanity check - both conditions should succeed)
+
+    The intermediate levels (weak, moderate, strong) are excluded as they
+    add noise without testing the core hypothesis.
+
+    Args:
+        include_controls: Include negative examples for false positive testing.
+        include_sanity_check: Include one explicit scenario as sanity check.
+        tags_filter: If provided, only include scenarios with at least one matching tag.
+    """
+    scenarios = []
+
+    # Include all implicit scenarios (the interesting hard cases)
+    for scenario in PROACTIVE_MEMORY_SCENARIOS:
+        if scenario.level == ExplicitnessLevel.IMPLICIT:
+            # Filter by tags if specified
+            if tags_filter:
+                if not any(tag in scenario.tags for tag in tags_filter):
+                    continue
+            scenarios.append({
+                "id": scenario.id,
+                "query": scenario.query,
+                "expected_action": scenario.expected_action,
+                "prompt_level": LEVEL_TO_PROMPT_LEVEL.get(scenario.level, "unknown"),
+                "trigger_pattern": scenario.trigger_pattern,
+                "category": scenario.category,
+                "tags": scenario.tags,
+                "is_control": False,
+            })
+
+    # Include ONE explicit scenario as sanity check (only if no tag filter)
+    if include_sanity_check and not tags_filter:
+        explicit_scenarios = [s for s in PROACTIVE_MEMORY_SCENARIOS
+                             if s.level == ExplicitnessLevel.EXPLICIT]
+        if explicit_scenarios:
+            scenario = explicit_scenarios[0]  # Just the first one
+            scenarios.append({
+                "id": scenario.id,
+                "query": scenario.query,
+                "expected_action": scenario.expected_action,
+                "prompt_level": "sanity_check",
+                "trigger_pattern": scenario.trigger_pattern,
+                "category": scenario.category,
+                "tags": scenario.tags,
+                "is_control": False,
+            })
+
+    if include_controls and not tags_filter:
+        for scenario in PROACTIVE_CONTROL_SCENARIOS:
+            scenarios.append({
+                "id": scenario.id,
+                "query": scenario.query,
+                "expected_action": scenario.expected_action,
+                "prompt_level": LEVEL_TO_PROMPT_LEVEL.get(scenario.level, "control"),
+                "trigger_pattern": scenario.trigger_pattern,
+                "category": scenario.category,
+                "tags": scenario.tags,
+                "is_control": True,
+            })
+
+    return scenarios
+
+
+# =============================================================================
+# Trial Result
+# =============================================================================
+
+@dataclass
+class TrialResult:
+    scenario_id: str
+    condition: str  # "nl_vague", "structured_vague", "structured_explicit"
+    query: str
+    expected_action: bool
+    # What happened
+    detected_intent: bool  # For NL condition: did we detect save intent?
+    tool_called: bool      # For structured conditions: was tool called?
+    success: bool          # Did the right thing happen?
+    # Details
+    intent_phrases: list   # NL phrases detected
+    tool_content: Optional[str]  # What was saved (if tool called)
+    response_text: str
+    is_control: bool
+    trial_number: int = 1
+    # Confusion matrix
+    is_true_positive: bool = False
+    is_false_positive: bool = False
+    is_true_negative: bool = False
+    is_false_negative: bool = False
+    # Fidelity scores (1-5 scale, None if nothing was saved)
+    fidelity_completeness: Optional[float] = None
+    fidelity_context: Optional[float] = None
+    fidelity_specificity: Optional[float] = None
+    fidelity_overall: Optional[float] = None
+    saved_content_extracted: Optional[str] = None  # What was actually saved
+
+
+# =============================================================================
+# Trial Runners
+# =============================================================================
+
+async def run_nl_trial(scenario: dict) -> TrialResult:
+    """Natural language condition: express intent naturally (e.g., 'I'll save...', 'Let me remember...')."""
+
+    options = ClaudeAgentOptions(
+        allowed_tools=[],  # No tools
+        max_turns=1,
+        permission_mode="acceptEdits",
+        system_prompt=PROMPT_NL,
+    )
+
+    response_text = ""
+
+    try:
+        async with ClaudeSDKClient(options=options) as client:
+            await client.query(scenario["query"])
+
+            async for message in client.receive_response():
+                if isinstance(message, AssistantMessage):
+                    for block in message.content:
+                        if isinstance(block, TextBlock):
+                            response_text += block.text
+                        elif isinstance(block, ToolUseBlock):
+                            # Model tried to use a tool even though none available
+                            response_text += f"[TOOL_ATTEMPT: {block.name}]"
+
+    except Exception as e:
+        response_text = f"Error: {e}"
+
+    # Debug: if response is empty, note it
+    if not response_text.strip():
+        response_text = "[EMPTY RESPONSE]"
+
+    # Detect save intent - only check natural language patterns (not XML)
+    # NL condition should express intent naturally, not use structured XML
+    nl_matches = NL_SAVE_REGEX.findall(response_text)
+    # Flatten NL matches (regex groups) and filter empty strings
+    intent_phrases = [m for group in nl_matches for m in group if m and len(m) > 2]
+
+    # Intent detected if NL phrases found
+    detected_intent = len(intent_phrases) > 0
+
+    # Extract what the model said it would save (for fidelity comparison)
+    tool_content = None
+    if detected_intent:
+        # Try to extract the content being saved from the response
+        # Look for phrases like "I'll save that X" or "remembering X"
+        tool_content = response_text[:200]  # Use response snippet for comparison
+
+    expected = scenario["expected_action"]
+    success = (detected_intent == expected)
+
+    return TrialResult(
+        scenario_id=scenario["id"],
+        condition="nl",
+        query=scenario["query"],
+        expected_action=expected,
+        detected_intent=detected_intent,
+        tool_called=False,
+        success=success,
+        intent_phrases=intent_phrases[:5],
+        tool_content=tool_content,
+        response_text=response_text[:1500],
+        is_control=scenario.get("is_control", False),
+        is_true_positive=(expected and detected_intent),
+        is_false_positive=(not expected and detected_intent),
+        is_true_negative=(not expected and not detected_intent),
+        is_false_negative=(expected and not detected_intent),
+    )
+
+
+async def run_structured_trial(scenario: dict) -> TrialResult:
+    """Structured condition: use XML tags to save information."""
+
+    options = ClaudeAgentOptions(
+        allowed_tools=[],  # No tools - just XML in response
+        max_turns=1,
+        permission_mode="acceptEdits",
+        system_prompt=PROMPT_STRUCTURED,
     )
 
     response_text = ""
@@ -234,211 +459,552 @@ You do NOT have any tools - just identify what SHOULD be saved."""
     except Exception as e:
         response_text = f"Error: {e}"
 
-    # Check for [PERSIST] section with actual content
-    persist_match = re.search(r'\[PERSIST\]:?\s*(.+?)(?:\n\n|$)', response_text, re.IGNORECASE | re.DOTALL)
-    has_persist_content = False
-    persist_content = ""
-    if persist_match:
-        persist_content = persist_match.group(1).strip()
-        has_persist_content = persist_content.lower() not in ["none", "nothing", "n/a", ""] and "nothing" not in persist_content.lower()
+    # Detect XML save-memory tags
+    xml_saves = extract_xml_save_content(response_text)
+    tool_called = len(xml_saves) > 0
 
-    return IntentTrialResult(
+    # Extract content for fidelity comparison
+    tool_content = None
+    if xml_saves:
+        tool_content = f"<save-memory category=\"{xml_saves[0]['category']}\">{xml_saves[0]['content']}</save-memory>"
+
+    expected = scenario["expected_action"]
+    success = (tool_called == expected)
+
+    return TrialResult(
         scenario_id=scenario["id"],
-        condition="identify_persist",
+        condition="structured",
         query=scenario["query"],
-        expected_intent=scenario["expected_intent"],
-        expressed_intent=has_persist_content,
-        intent_phrases=[persist_content[:100]] if persist_content else [],
-        actual_tool_call=False,
-        response_text=response_text[:500],
+        expected_action=expected,
+        detected_intent=False,
+        tool_called=tool_called,
+        success=success,
+        intent_phrases=[],
+        tool_content=tool_content,
+        response_text=response_text[:1500],
+        is_control=scenario.get("is_control", False),
+        is_true_positive=(expected and tool_called),
+        is_false_positive=(not expected and tool_called),
+        is_true_negative=(not expected and not tool_called),
+        is_false_negative=(expected and not tool_called),
     )
 
 
-async def run_tool_trial(scenario: dict) -> IntentTrialResult:
-    """Run trial where Claude HAS the memory tool available."""
+# =============================================================================
+# Statistical Utilities
+# =============================================================================
 
-    tool_calls = []
+def compute_ci(successes: int, total: int) -> tuple[float, float]:
+    """Wilson score 95% confidence interval."""
+    if total == 0:
+        return (0.0, 0.0)
 
-    async def track_tool_calls(input_data, tool_use_id, context):
-        tool_name = input_data.get("tool_name", "")
-        if tool_name == "Bash":
-            command = input_data.get("tool_input", {}).get("command", "")
-            if "save-memory" in command:
-                tool_calls.append(command)
-                return {"result": "Memory saved successfully."}
-        return {}
+    from math import sqrt
+    z = 1.96
+    p = successes / total
 
-    system_prompt = """You are a helpful assistant with access to a memory tool.
+    denom = 1 + z**2 / total
+    center = (p + z**2 / (2 * total)) / denom
+    margin = z * sqrt((p * (1 - p) + z**2 / (4 * total)) / total) / denom
 
-## Memory Tool
-To save important information for future conversations, run:
-    save-memory "content" "category"
+    return (max(0, center - margin), min(1, center + margin))
 
-Where category is one of: 'codebase', 'task_completed', 'user_preference', 'decision', 'other'
 
-IMPORTANT: Use this tool whenever you learn something important that should be remembered."""
+def mcnemar_test(b: int, c: int) -> tuple[float, float]:
+    """McNemar's test. b = A wins, c = B wins."""
+    if b + c == 0:
+        return (0.0, 1.0)
 
-    options = ClaudeAgentOptions(
-        allowed_tools=["Bash"],
-        max_turns=2,
-        permission_mode="acceptEdits",
-        system_prompt=system_prompt,
-        hooks={
-            "PreToolUse": [
-                HookMatcher(matcher="*", hooks=[track_tool_calls])
-            ],
-        }
+    from math import exp
+    chi_sq = (abs(b - c) - 1)**2 / (b + c)
+    p_value = exp(-chi_sq / 2) if chi_sq < 10 else 0.0001
+
+    return (chi_sq, p_value)
+
+
+# =============================================================================
+# Main Experiment
+# =============================================================================
+
+async def run_experiment(
+    num_trials: int = 5,
+    include_controls: bool = True,
+    include_sanity_check: bool = True,
+    randomize_order: bool = True,
+    seed: Optional[int] = None,
+    scenario_ids: Optional[list[str]] = None,
+    evaluate_fidelity: bool = True,
+    tags_filter: Optional[list[str]] = None,
+) -> list[TrialResult]:
+    """
+    Test whether natural language intent outperforms structured tool calling.
+
+    Both conditions receive IDENTICAL guidance on WHEN to save.
+    Both conditions receive EQUALLY EXPLICIT instructions on HOW to save.
+    The only difference is the OUTPUT FORMAT:
+      - NL: [SAVE: category] content
+      - Structured: save-memory "content" "category"
+
+    Vagueness comes from the SCENARIOS (user messages), not the system prompts.
+    Scenarios range from implicit ("We use PostgreSQL") to explicit ("Save this to memory").
+    """
+    if seed is not None:
+        random.seed(seed)
+
+    scenarios = build_scenarios(
+        include_controls=include_controls,
+        include_sanity_check=include_sanity_check,
+        tags_filter=tags_filter,
     )
 
-    response_text = ""
+    # Filter to specific scenarios if requested
+    if scenario_ids:
+        scenarios = [s for s in scenarios if s["id"] in scenario_ids]
+        if not scenarios:
+            print(f"No scenarios found matching IDs: {scenario_ids}")
+            return []
+    results: list[TrialResult] = []
 
-    try:
-        async with ClaudeSDKClient(options=options) as client:
-            await client.query(scenario["query"])
+    n_positive = sum(1 for s in scenarios if s["expected_action"])
+    n_negative = sum(1 for s in scenarios if not s["expected_action"])
 
-            async for message in client.receive_response():
-                if isinstance(message, AssistantMessage):
-                    for block in message.content:
-                        if isinstance(block, TextBlock):
-                            response_text += block.text[:500]
+    print("=" * 76)
+    print("NATURAL LANGUAGE vs STRUCTURED TOOL CALLING EXPERIMENT")
+    print("=" * 76)
+    print()
+    print("Research Question: With identical guidance, does output format affect")
+    print("                   the model's ability to recognize when to save?")
+    print()
+    n_implicit = sum(1 for s in scenarios if s["prompt_level"] == "implicit")
+    n_sanity = sum(1 for s in scenarios if s["prompt_level"] == "sanity_check")
 
-    except Exception as e:
-        response_text = f"Error: {e}"
+    print("Design:")
+    print("  - WHEN to save: Identical guidance for both conditions")
+    print("  - HOW to save: Equally explicit for both")
+    print("  - Scenarios: Implicit (vague) + Control + 1 sanity check")
+    print()
+    print("Conditions:")
+    print("  1. nl:         Express intent naturally ('I'll save...')")
+    print("  2. structured: Call save-memory tool")
+    print()
+    print(f"Configuration:")
+    print(f"  Trials per scenario: {num_trials}")
+    print(f"  Implicit scenarios:  {n_implicit} (vague - the hard test)")
+    print(f"  Sanity check:        {n_sanity} (explicit - both should pass)")
+    print(f"  Control scenarios:   {n_negative} (should NOT save)")
+    print(f"  Total observations:  {len(scenarios) * num_trials * 2}")
+    print(f"  Fidelity evaluation: {'ON' if evaluate_fidelity else 'OFF'}")
+    print("=" * 76)
 
-    # Also check for intent in the response (even if tool was called)
-    matches = INTENT_REGEX.findall(response_text)
-    intent_phrases = [m for group in matches for m in group if m]
+    # Track fidelity comparisons
+    fidelity_comparisons: list[dict] = []
 
-    return IntentTrialResult(
-        scenario_id=scenario["id"],
-        condition="with_tool",
-        query=scenario["query"],
-        expected_intent=scenario["expected_intent"],
-        expressed_intent=len(intent_phrases) > 0,
-        intent_phrases=intent_phrases,
-        actual_tool_call=len(tool_calls) > 0,
-        response_text=response_text[:500],
-    )
+    for scenario in scenarios:
+        print(f"\n--- {scenario['id']} ({scenario['prompt_level']}) ---")
+        print(f"Query: {scenario['query'][:50]}...")
+        print(f"Expected: {'SAVE' if scenario['expected_action'] else 'NO SAVE'}")
 
+        for trial in range(1, num_trials + 1):
+            if num_trials > 1:
+                print(f"\n  Trial {trial}/{num_trials}")
 
-async def run_experiment():
-    """Compare natural language intent expression vs actual tool calls."""
+            # Run both conditions and collect results
+            trial_results: dict[str, TrialResult] = {}
 
-    results = []
+            # Randomize condition order
+            conditions = ["nl", "structured"]
+            if randomize_order:
+                random.shuffle(conditions)
 
-    print("=" * 70)
-    print("NATURAL LANGUAGE INTENT vs TOOL CALL EXPERIMENT")
-    print("Testing: Does Claude express intent more often than it calls tools?")
-    print("=" * 70)
+            for cond_name in conditions:
+                if cond_name == "nl":
+                    result = await run_nl_trial(scenario)
+                    action = f"intent={'Yes' if result.detected_intent else 'No'}"
+                    # Show the response text containing the intent (or start of response if none)
+                    if result.detected_intent and result.intent_phrases:
+                        # Find the sentence containing the first intent phrase
+                        phrase = result.intent_phrases[0]
+                        idx = result.response_text.lower().find(phrase.lower())
+                        if idx >= 0:
+                            # Show context around the intent phrase
+                            start = max(0, idx - 10)
+                            end = min(len(result.response_text), idx + 80)
+                            snippet = result.response_text[start:end].replace('\n', ' ').strip()
+                        else:
+                            snippet = result.response_text[:80].replace('\n', ' ')
+                    else:
+                        # Show first bit of response to see what was said
+                        snippet = result.response_text[:80].replace('\n', ' ')
+                else:
+                    result = await run_structured_trial(scenario)
+                    action = f"tool={'Yes' if result.tool_called else 'No'}"
+                    # Show tool call or snippet of response
+                    if result.tool_called and result.tool_content:
+                        snippet = result.tool_content[:80]
+                    else:
+                        snippet = result.response_text[:80].replace('\n', ' ')
 
-    for scenario in SCENARIOS:
-        print(f"\n--- Scenario: {scenario['id']} ({scenario['prompt_level']}) ---")
-        print(f"Query: {scenario['query'][:60]}...")
+                result.trial_number = trial
+                trial_results[cond_name] = result
 
-        # Condition 1: Natural language only (no tools)
-        print("\n  [1. Natural Language - No Tools]")
-        result_nl = await run_natural_language_trial(scenario)
-        print(f"    Expressed intent: {result_nl.expressed_intent}")
-        if result_nl.intent_phrases:
-            print(f"    Phrases: {result_nl.intent_phrases[:3]}")
-        results.append(result_nl)
+                status = "✓" if result.success else "✗"
+                print(f"    [{cond_name:12}] {status} ({action})")
+                print(f"                   → {snippet}...")
 
-        await asyncio.sleep(1)
+                results.append(result)
+                await asyncio.sleep(0.3)
 
-        # Condition 2: Identify what should be persisted (reasoning task)
-        print("\n  [2. Identify Persist - Reasoning Task]")
-        result_explicit = await run_explicit_persistence_trial(scenario)
-        print(f"    Identified persist: {result_explicit.expressed_intent}")
-        if result_explicit.intent_phrases and result_explicit.intent_phrases[0]:
-            print(f"    Content: {result_explicit.intent_phrases[0][:60]}...")
-        results.append(result_explicit)
+            # Head-to-head fidelity comparison if both produced saves
+            nl_res = trial_results.get("nl")
+            st_res = trial_results.get("structured")
 
-        await asyncio.sleep(1)
+            if (evaluate_fidelity and nl_res and st_res and
+                (nl_res.detected_intent or nl_res.tool_called) and
+                (st_res.detected_intent or st_res.tool_called)):
 
-        # Condition 3: With tool available
-        print("\n  [3. With Memory Tool]")
-        result_tool = await run_tool_trial(scenario)
-        print(f"    Tool called: {result_tool.actual_tool_call}")
-        print(f"    Also expressed intent: {result_tool.expressed_intent}")
-        results.append(result_tool)
+                comparison = await judge_fidelity_comparison(
+                    scenario["query"],
+                    nl_res.response_text,
+                    st_res.tool_content or st_res.response_text,
+                )
+                fidelity_comparisons.append({
+                    "scenario_id": scenario["id"],
+                    "trial": trial,
+                    "winner": comparison["winner"],
+                    "reason": comparison["reason"],
+                })
+                winner_symbol = "🏆" if comparison["winner"] != "tie" else "🤝"
+                print(f"    {winner_symbol} Fidelity: {comparison['winner'].upper()} - {comparison['reason'][:60]}...")
 
-        await asyncio.sleep(1)
-
+    # ==========================================================================
     # Analysis
-    print("\n" + "=" * 70)
-    print("RESULTS SUMMARY")
-    print("=" * 70)
+    # ==========================================================================
+    print("\n" + "=" * 76)
+    print("RESULTS ANALYSIS")
+    print("=" * 76)
 
-    nl_results = [r for r in results if r.condition == "natural_language"]
-    explicit_results = [r for r in results if r.condition == "identify_persist"]
-    tool_results = [r for r in results if r.condition == "with_tool"]
+    # Group by condition
+    by_condition: dict[str, list[TrialResult]] = defaultdict(list)
+    for r in results:
+        by_condition[r.condition].append(r)
 
-    # Filter to scenarios where we expect intent
-    nl_should_intent = [r for r in nl_results if r.expected_intent]
-    explicit_should = [r for r in explicit_results if r.expected_intent]
-    tool_should_call = [r for r in tool_results if r.expected_intent]
+    # Calculate metrics for each condition
+    def calc_metrics(cond_results: list[TrialResult]) -> dict:
+        positives = [r for r in cond_results if r.expected_action]
+        negatives = [r for r in cond_results if not r.expected_action]
 
-    nl_expressed = sum(1 for r in nl_should_intent if r.expressed_intent)
-    explicit_identified = sum(1 for r in explicit_should if r.expressed_intent)
-    tool_called = sum(1 for r in tool_should_call if r.actual_tool_call)
-    tool_expressed = sum(1 for r in tool_should_call if r.expressed_intent)
+        tp = sum(1 for r in positives if r.is_true_positive)
+        fp = sum(1 for r in negatives if r.is_false_positive)
 
-    print(f"\n--- Three Conditions Comparison ---")
-    print(f"Scenarios where memory should be triggered: {len(nl_should_intent)}")
-    print(f"")
-    print(f"1. Natural Language (baseline, no instruction):")
-    print(f"   Expressed any intent: {nl_expressed}/{len(nl_should_intent)} ({100*nl_expressed/len(nl_should_intent):.1f}%)")
-    print(f"")
-    print(f"2. Identify Persist (reasoning task - 'what SHOULD be saved?'):")
-    print(f"   Identified persist content: {explicit_identified}/{len(explicit_should)} ({100*explicit_identified/len(explicit_should):.1f}%)")
-    print(f"")
-    print(f"3. With Structured Tool Available:")
-    print(f"   Actually called tool: {tool_called}/{len(tool_should_call)} ({100*tool_called/len(tool_should_call):.1f}%)")
+        recall = tp / len(positives) if positives else 0
+        fpr = fp / len(negatives) if negatives else 0
+        ci = compute_ci(tp, len(positives))
 
-    # The key comparison
-    print(f"\n--- KEY FINDINGS ---")
-    print(f"")
-    print(f"Comparing 'identify what to save' (reasoning) vs 'call tool' (action):")
-    print(f"")
-    explicit_vs_tool = explicit_identified - tool_called
-    if explicit_vs_tool > 0:
-        print(f"  REASONING > ACTION by: {explicit_vs_tool} scenarios ({100*explicit_vs_tool/len(explicit_should):.1f}pp)")
-        print(f"")
-        print(f"  KEY INSIGHT: Claude KNOWS what should be saved more often than it ACTS.")
-        print(f"  The gap represents tool-calling overhead that a two-stage system could recover.")
-        print(f"")
-        print(f"  Two-stage architecture potential:")
-        print(f"  - Stage 1: Claude identifies what to persist (reasoning) -> {100*explicit_identified/len(explicit_should):.1f}%")
-        print(f"  - Stage 2: Lightweight model converts to tool calls")
-        print(f"  - vs Single-stage tool calling -> {100*tool_called/len(tool_should_call):.1f}%")
-    elif explicit_vs_tool < 0:
-        print(f"  ACTION > REASONING by: {-explicit_vs_tool}")
-        print(f"  -> Tools help Claude act (hypothesis not supported)")
+        return {
+            "n_pos": len(positives),
+            "n_neg": len(negatives),
+            "tp": tp,
+            "fp": fp,
+            "recall": recall,
+            "fpr": fpr,
+            "ci": ci,
+        }
+
+    metrics = {cond: calc_metrics(res) for cond, res in by_condition.items()}
+
+    nl = metrics["nl"]
+    st = metrics["structured"]
+
+    # Display recall (true positive rate)
+    print(f"\n{'='*76}")
+    print("TRUE POSITIVE RATE (Recall) - Did it save when it should?")
+    print(f"{'='*76}")
+
+    for cond in ["nl", "structured"]:
+        m = metrics[cond]
+        print(f"  {cond:12}: {m['tp']:3}/{m['n_pos']:3} = {m['recall']*100:5.1f}%  "
+              f"95% CI: [{m['ci'][0]*100:.1f}%, {m['ci'][1]*100:.1f}%]")
+
+    diff = nl["recall"] - st["recall"]
+    print(f"\n  Difference (NL - Structured): {diff*100:+.1f}pp")
+
+    # Display false positive rate
+    if n_negative > 0:
+        print(f"\n{'='*76}")
+        print("FALSE POSITIVE RATE - Did it save when it shouldn't?")
+        print(f"{'='*76}")
+
+        for cond in ["nl", "structured"]:
+            m = metrics[cond]
+            print(f"  {cond:12}: {m['fp']:3}/{m['n_neg']:3} = {m['fpr']*100:5.1f}%")
+
+    # Paired analysis (McNemar's test)
+    print(f"\n{'='*76}")
+    print("PAIRED ANALYSIS (McNemar's Test)")
+    print(f"{'='*76}")
+
+    # Build paired comparisons
+    paired: dict[tuple[str, int], dict[str, TrialResult]] = defaultdict(dict)
+    for r in results:
+        if r.expected_action:  # Only positive scenarios
+            paired[(r.scenario_id, r.trial_number)][r.condition] = r
+
+    nl_wins = 0  # NL succeeded, structured failed
+    st_wins = 0  # Structured succeeded, NL failed
+    both_win = 0
+    both_fail = 0
+
+    for key, conds in paired.items():
+        if "nl" in conds and "structured" in conds:
+            nl_ok = conds["nl"].is_true_positive
+            st_ok = conds["structured"].is_true_positive
+            if nl_ok and st_ok:
+                both_win += 1
+            elif nl_ok and not st_ok:
+                nl_wins += 1
+            elif st_ok and not nl_ok:
+                st_wins += 1
+            else:
+                both_fail += 1
+
+    print(f"\n  Contingency table (positive scenarios):")
+    print(f"                     Structured ✓   Structured ✗")
+    print(f"  NL ✓                  {both_win:4d}           {nl_wins:4d}")
+    print(f"  NL ✗                  {st_wins:4d}           {both_fail:4d}")
+
+    chi, p = mcnemar_test(nl_wins, st_wins)
+    print(f"\n  McNemar χ² = {chi:.2f}, p = {p:.4f}")
+    if p < 0.05:
+        if nl_wins > st_wins:
+            print(f"  Result: NL significantly outperforms Structured (p < 0.05)")
+        else:
+            print(f"  Result: Structured significantly outperforms NL (p < 0.05)")
     else:
-        print(f"  Perfect match between reasoning and action")
+        print(f"  Result: No significant difference (p >= 0.05)")
 
-    # By prompt level
-    print(f"\n--- By Prompt Level ---")
-    levels = ["implicit", "hint", "request"]
-    for level in levels:
-        nl_level = [r for r in nl_should_intent if r.scenario_id.startswith(level[:3])]
-        explicit_level = [r for r in explicit_should if r.scenario_id.startswith(level[:3])]
-        tool_level = [r for r in tool_should_call if r.scenario_id.startswith(level[:3])]
+    # Show sanity check results separately if included
+    sanity_nl = [r for r in by_condition["nl"]
+                 if r.scenario_id.startswith("mem_explicit_") and r.expected_action]
+    sanity_st = [r for r in by_condition["structured"]
+                 if r.scenario_id.startswith("mem_explicit_") and r.expected_action]
 
-        if nl_level:
-            nl_rate = sum(1 for r in nl_level if r.expressed_intent) / len(nl_level)
-            explicit_rate = sum(1 for r in explicit_level if r.expressed_intent) / len(explicit_level)
-            tool_rate = sum(1 for r in tool_level if r.actual_tool_call) / len(tool_level)
-            print(f"  {level:12}: NL {nl_rate*100:5.1f}% | Explicit {explicit_rate*100:5.1f}% | Tool {tool_rate*100:5.1f}%")
+    if sanity_nl:
+        print(f"\n{'='*76}")
+        print("SANITY CHECK (Explicit Scenario)")
+        print(f"{'='*76}")
+        nl_rate = sum(1 for r in sanity_nl if r.is_true_positive) / len(sanity_nl)
+        st_rate = sum(1 for r in sanity_st if r.is_true_positive) / len(sanity_st)
+        print(f"  NL:         {nl_rate*100:.0f}% ({sum(1 for r in sanity_nl if r.is_true_positive)}/{len(sanity_nl)})")
+        print(f"  Structured: {st_rate*100:.0f}% ({sum(1 for r in sanity_st if r.is_true_positive)}/{len(sanity_st)})")
+        if nl_rate == 1.0 and st_rate == 1.0:
+            print("  ✓ Both conditions pass on explicit scenario (sanity check OK)")
+        else:
+            print("  ⚠ Sanity check failed - something may be wrong with the setup")
+
+    # Familiarity analysis (filepath scenarios)
+    familiarity_metrics = {}
+    high_fam_nl = [r for r in by_condition["nl"]
+                   if r.scenario_id.startswith("mem_filepath_high_") and r.expected_action]
+    low_fam_nl = [r for r in by_condition["nl"]
+                  if r.scenario_id.startswith("mem_filepath_low_") and r.expected_action]
+    high_fam_st = [r for r in by_condition["structured"]
+                   if r.scenario_id.startswith("mem_filepath_high_") and r.expected_action]
+    low_fam_st = [r for r in by_condition["structured"]
+                  if r.scenario_id.startswith("mem_filepath_low_") and r.expected_action]
+
+    if high_fam_nl or low_fam_nl:
+        print(f"\n{'='*76}")
+        print("FAMILIARITY ANALYSIS - Common vs Uncommon File Paths")
+        print(f"{'='*76}")
+        print()
+        print("Hypothesis: Unfamiliar patterns trigger verification behavior in structured")
+        print("            condition but not in NL condition (cognitive overhead effect)")
+        print()
+
+        if high_fam_nl:
+            high_nl_rate = sum(1 for r in high_fam_nl if r.is_true_positive) / len(high_fam_nl)
+            high_st_rate = sum(1 for r in high_fam_st if r.is_true_positive) / len(high_fam_st)
+            high_diff = high_nl_rate - high_st_rate
+            print(f"  HIGH FAMILIARITY (common files like index.js, main.py):")
+            print(f"    NL:         {high_nl_rate*100:5.1f}% ({sum(1 for r in high_fam_nl if r.is_true_positive)}/{len(high_fam_nl)})")
+            print(f"    Structured: {high_st_rate*100:5.1f}% ({sum(1 for r in high_fam_st if r.is_true_positive)}/{len(high_fam_st)})")
+            print(f"    Diff (NL-St): {high_diff*100:+.1f}pp")
+            familiarity_metrics["high"] = {
+                "nl_rate": high_nl_rate, "st_rate": high_st_rate, "diff": high_diff,
+                "nl_n": len(high_fam_nl), "st_n": len(high_fam_st)
+            }
+
+        if low_fam_nl:
+            print()
+            low_nl_rate = sum(1 for r in low_fam_nl if r.is_true_positive) / len(low_fam_nl)
+            low_st_rate = sum(1 for r in low_fam_st if r.is_true_positive) / len(low_fam_st)
+            low_diff = low_nl_rate - low_st_rate
+            print(f"  LOW FAMILIARITY (uncommon files like orchestrator.py, mediator.kt):")
+            print(f"    NL:         {low_nl_rate*100:5.1f}% ({sum(1 for r in low_fam_nl if r.is_true_positive)}/{len(low_fam_nl)})")
+            print(f"    Structured: {low_st_rate*100:5.1f}% ({sum(1 for r in low_fam_st if r.is_true_positive)}/{len(low_fam_st)})")
+            print(f"    Diff (NL-St): {low_diff*100:+.1f}pp")
+            familiarity_metrics["low"] = {
+                "nl_rate": low_nl_rate, "st_rate": low_st_rate, "diff": low_diff,
+                "nl_n": len(low_fam_nl), "st_n": len(low_fam_st)
+            }
+
+        if high_fam_nl and low_fam_nl:
+            print()
+            gap_increase = low_diff - high_diff
+            print(f"  GAP ANALYSIS:")
+            print(f"    NL advantage on HIGH familiarity: {high_diff*100:+.1f}pp")
+            print(f"    NL advantage on LOW familiarity:  {low_diff*100:+.1f}pp")
+            print(f"    Gap increase (low - high):        {gap_increase*100:+.1f}pp")
+            if gap_increase > 5:
+                print()
+                print("  → Structured struggles MORE with unfamiliar patterns")
+                print("    This supports the cognitive overhead hypothesis")
+            elif gap_increase < -5:
+                print()
+                print("  → Structured actually does BETTER on unfamiliar patterns")
+                print("    This contradicts the cognitive overhead hypothesis")
+            else:
+                print()
+                print("  → Similar gap regardless of familiarity")
+
+    # Fidelity analysis (head-to-head comparisons)
+    fidelity_metrics = {}
+
+    if fidelity_comparisons:
+        print(f"\n{'='*76}")
+        print("FIDELITY ANALYSIS - Head-to-Head Comparison")
+        print(f"{'='*76}")
+        print()
+        print("When both conditions saved something, which captured better information?")
+        print()
+
+        nl_fidelity_wins = sum(1 for c in fidelity_comparisons if c["winner"] == "nl")
+        st_fidelity_wins = sum(1 for c in fidelity_comparisons if c["winner"] == "structured")
+        ties = sum(1 for c in fidelity_comparisons if c["winner"] == "tie")
+        total = len(fidelity_comparisons)
+
+        print(f"  NL wins:         {nl_fidelity_wins:3} ({nl_fidelity_wins/total*100:.0f}%)")
+        print(f"  Structured wins: {st_fidelity_wins:3} ({st_fidelity_wins/total*100:.0f}%)")
+        print(f"  Ties:            {ties:3} ({ties/total*100:.0f}%)")
+        print(f"  Total compared:  {total}")
+
+        if nl_fidelity_wins > st_fidelity_wins + ties:
+            print("\n  → NL captures higher fidelity information when saving")
+        elif st_fidelity_wins > nl_fidelity_wins + ties:
+            print("\n  → Structured captures higher fidelity information when saving")
+        else:
+            print("\n  → Similar fidelity between conditions")
+
+        fidelity_metrics = {
+            "nl_wins": nl_fidelity_wins,
+            "structured_wins": st_fidelity_wins,
+            "ties": ties,
+            "total": total,
+            "comparisons": fidelity_comparisons,
+        }
+
+    # Summary
+    print(f"\n{'='*76}")
+    print("SUMMARY")
+    print(f"{'='*76}")
+
+    if diff > 0.1 and p < 0.05:
+        print("""
+FINDING: Natural language intent expression significantly outperforms
+structured tool calling, even with identical guidance on WHEN to save
+and equally explicit instructions on HOW to save.
+
+IMPLICATION: The output format itself affects the model's judgment.
+Structured tool calling imposes additional cognitive overhead that
+suppresses action, even when the model would express intent naturally.
+
+This supports a two-stage architecture:
+  1. Let the model express intent in natural language
+  2. Use a separate system to convert intent to structured calls
+""")
+    elif diff < -0.1 and p < 0.05:
+        print("""
+FINDING: Structured tool calling significantly outperforms natural
+language intent expression.
+
+IMPLICATION: Having a concrete tool to call may actually help the model
+recognize when to act. The structure provides clarity rather than overhead.
+""")
+    elif abs(diff) < 0.05:
+        print("""
+FINDING: No meaningful difference between natural language and structured
+tool calling when both receive identical guidance.
+
+IMPLICATION: Output format doesn't significantly affect the model's ability
+to recognize when to save information. The key factor is the clarity of
+guidance, not the format of the output.
+""")
+    else:
+        print(f"""
+FINDING: NL {'outperforms' if diff > 0 else 'underperforms'} structured by {abs(diff)*100:.1f}pp,
+but this is not statistically significant (p = {p:.3f}).
+
+IMPLICATION: Larger sample size needed to draw firm conclusions.
+""")
 
     # Save results
     output_dir = Path("experiments/results")
     output_dir.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
 
-    output_path = output_dir / f"intent_vs_tool_{timestamp}.json"
+    output_path = output_dir / f"nl_vs_structured_{timestamp}.json"
+
+    output_data = {
+        "metadata": {
+            "timestamp": timestamp,
+            "experiment": "nl_vs_structured_tool_calling",
+            "version": "v3_matched_explicitness",
+            "num_trials": num_trials,
+            "include_controls": include_controls,
+            "seed": seed,
+            "n_positive": n_positive,
+            "n_negative": n_negative,
+            "total_observations": len(results),
+        },
+        "design": {
+            "description": "Both conditions receive identical WHEN-to-save guidance "
+                          "and equally explicit HOW-to-save examples. "
+                          "Vagueness comes from scenarios (user requests), not system prompts.",
+            "nl_format": "Natural English (e.g., 'I'll save X to the codebase category')",
+            "structured_format": "save-memory \"content\" \"category\"",
+        },
+        "conditions": {
+            "nl": "Natural language intent via [SAVE: category] tags",
+            "structured": "Structured tool call via save-memory command",
+        },
+        "metrics": {
+            cond: {
+                "recall": m["recall"],
+                "false_positive_rate": m["fpr"],
+                "ci_95": list(m["ci"]),
+                "true_positives": m["tp"],
+                "false_positives": m["fp"],
+                "n_positive_scenarios": m["n_pos"],
+                "n_negative_scenarios": m["n_neg"],
+            }
+            for cond, m in metrics.items()
+        },
+        "comparison": {
+            "nl_minus_structured_pp": diff * 100,
+            "mcnemar_chi_sq": chi,
+            "mcnemar_p_value": p,
+            "nl_wins": nl_wins,
+            "structured_wins": st_wins,
+            "both_succeed": both_win,
+            "both_fail": both_fail,
+        },
+        "fidelity": fidelity_metrics if fidelity_metrics else None,
+        "familiarity": familiarity_metrics if familiarity_metrics else None,
+        "results": [asdict(r) for r in results],
+    }
+
     with open(output_path, "w") as f:
-        json.dump([asdict(r) for r in results], f, indent=2)
+        json.dump(output_data, f, indent=2)
 
     print(f"\nResults saved to {output_path}")
 
@@ -446,4 +1012,61 @@ async def run_experiment():
 
 
 if __name__ == "__main__":
-    asyncio.run(run_experiment())
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Test NL intent vs structured tool calling"
+    )
+    parser.add_argument(
+        "--trials", type=int, default=5,
+        help="Trials per scenario per condition (default: 5)"
+    )
+    parser.add_argument(
+        "--no-controls", action="store_true",
+        help="Exclude negative (control) scenarios"
+    )
+    parser.add_argument(
+        "--no-randomize", action="store_true",
+        help="Don't randomize condition order"
+    )
+    parser.add_argument(
+        "--seed", type=int, default=42,
+        help="Random seed (default: 42)"
+    )
+    parser.add_argument(
+        "--scenario", type=str, nargs="+",
+        help="Run specific scenario(s) by ID (e.g., mem_implicit_001)"
+    )
+    parser.add_argument(
+        "--no-sanity-check", action="store_true",
+        help="Exclude the explicit sanity check scenario"
+    )
+    parser.add_argument(
+        "--no-fidelity", action="store_true",
+        help="Disable fidelity evaluation (enabled by default)"
+    )
+    parser.add_argument(
+        "--tags", type=str, nargs="+",
+        help="Filter scenarios by tags (e.g., --tags filepath high_familiarity)"
+    )
+    parser.add_argument(
+        "--filepath-only", action="store_true",
+        help="Run only filepath familiarity scenarios (shortcut for --tags filepath)"
+    )
+    args = parser.parse_args()
+
+    # Handle filepath shortcut
+    tags = args.tags
+    if args.filepath_only:
+        tags = ["filepath"]
+
+    asyncio.run(run_experiment(
+        num_trials=args.trials,
+        include_controls=not args.no_controls,
+        include_sanity_check=not args.no_sanity_check,
+        randomize_order=not args.no_randomize,
+        seed=args.seed,
+        scenario_ids=args.scenario,
+        evaluate_fidelity=not args.no_fidelity,
+        tags_filter=tags,
+    ))

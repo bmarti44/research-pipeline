@@ -1,0 +1,261 @@
+{
+  "metadata": {
+    "timestamp": "20260201_180842",
+    "experiment": "nl_vs_structured_tool_calling",
+    "version": "v3_matched_explicitness",
+    "num_trials": 5,
+    "include_controls": true,
+    "seed": 42,
+    "n_positive": 1,
+    "n_negative": 0,
+    "total_observations": 10
+  },
+  "design": {
+    "description": "Both conditions receive identical WHEN-to-save guidance and equally explicit HOW-to-save examples. Vagueness comes from scenarios (user requests), not system prompts.",
+    "nl_format": "Natural English (e.g., 'I'll save X to the codebase category')",
+    "structured_format": "save-memory \"content\" \"category\""
+  },
+  "conditions": {
+    "nl": "Natural language intent via [SAVE: category] tags",
+    "structured": "Structured tool call via save-memory command"
+  },
+  "metrics": {
+    "structured": {
+      "recall": 1.0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0.5655085052479191,
+        1
+      ],
+      "true_positives": 5,
+      "false_positives": 0,
+      "n_positive_scenarios": 5,
+      "n_negative_scenarios": 0
+    },
+    "nl": {
+      "recall": 1.0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0.5655085052479191,
+        1
+      ],
+      "true_positives": 5,
+      "false_positives": 0,
+      "n_positive_scenarios": 5,
+      "n_negative_scenarios": 0
+    }
+  },
+  "comparison": {
+    "nl_minus_structured_pp": 0.0,
+    "mcnemar_chi_sq": 0.0,
+    "mcnemar_p_value": 1.0,
+    "nl_wins": 0,
+    "structured_wins": 0,
+    "both_succeed": 5,
+    "both_fail": 0
+  },
+  "results": [
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"PostgreSQL (pstgr) is the database used in this project\" \"codebase\"",
+      "response_text": "I've noted that PostgreSQL is your database. I'll save this for future reference.Got it \u2014 PostgreSQL is your database. I'll keep that in mind for our work together. Let me know if you need help with anything related to your PostgreSQL setup, queries, migrations, or anything else!",
+      "is_control": false,
+      "trial_number": 1,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll remember",
+        "I'll save",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I'll remember that for future reference.\n\nI'll save that PostgreSQL (pstgr) is the database to the codebase category.\n\nIs there anything specific you'd like help with regarding your PostgreSQL database?",
+      "is_control": false,
+      "trial_number": 1,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"PostgreSQL (pstgr) is the database used in this project\" \"codebase\"",
+      "response_text": "I've noted that PostgreSQL is your database. I'll save this for future reference.Got it \u2014 **PostgreSQL is your database**. I'll keep that in mind for our conversation. Let me know if you need help with queries, schema design, migrations, or anything else related to your Postgres setup!",
+      "is_control": false,
+      "trial_number": 2,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "tool_content": null,
+      "response_text": "I'll save that PostgreSQL is your database.\n\nI've noted that PostgreSQL (pstgr) is the database for this project. This will help me provide relevant advice for database-related questions in future conversations.",
+      "is_control": false,
+      "trial_number": 2,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "I'll save",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I'll save that for future reference.\n\nI'll save that PostgreSQL is the database to the codebase category.\n\nIs there anything specific you'd like help with regarding your PostgreSQL database setup or configuration?",
+      "is_control": false,
+      "trial_number": 3,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"PostgreSQL (pstgr) is the database used in this project\" \"codebase\"",
+      "response_text": "I've noted that PostgreSQL is your database. I'll remember this for future conversations.Got it! I'll remember that **PostgreSQL** is your database for this project. Let me know if you need help with queries, migrations, connection setup, or anything else database-related!",
+      "is_control": false,
+      "trial_number": 3,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"PostgreSQL (pstgr) is the database used in this project\" \"codebase\"",
+      "response_text": "I've noted that PostgreSQL is your database. I'll save this for future reference.Got it \u2014 PostgreSQL is your database. I'll keep that in mind for our work together. Let me know if you need help with queries, schema design, migrations, or anything else related to your Postgres setup!",
+      "is_control": false,
+      "trial_number": 4,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "I'll remember",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I'll save that PostgreSQL is the database for this project.\n\nI'll remember that PostgreSQL (pstgr) is the database for this codebase to the codebase category.\n\nIs there anything specific about the PostgreSQL setup you'd like to work on, such as:\n- Database schema or migrations\n- Connection configuration\n- Query optimization\n- Setting up models/ORM",
+      "is_control": false,
+      "trial_number": 4,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"PostgreSQL (pstgr) is the database used in this project\" \"codebase\"",
+      "response_text": "Got it! I've noted that PostgreSQL is your database. Let me save this for future reference.Noted! PostgreSQL is your database. I'll keep that in mind for any database-related work in this project. \ud83d\udc4d",
+      "is_control": false,
+      "trial_number": 5,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pstgr is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "I'll save",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I'll save that information for future reference.\n\nI'll save that PostgreSQL (pstgr) is the database to the codebase category.\n\nGot it! I've noted that PostgreSQL is your database. This will help me provide relevant advice for database queries, migrations, and configurations in future conversations.",
+      "is_control": false,
+      "trial_number": 5,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    }
+  ]
+}

@@ -4,6 +4,12 @@ Experiment: Does prompt explicitness affect proactive tool usage?
 Hypothesis: Claude may be reluctant to use tools proactively, even when explicitly
 instructed. This tests different levels of prompt explicitness.
 
+METHODOLOGY FIXES (v2):
+1. Multiple trials per scenario (default: 5)
+2. Control scenarios for false positive testing
+3. Proper statistical analysis with confidence intervals
+4. Randomized condition order
+
 The "memory tool" is simulated via Bash - Claude should call:
     save-memory "content" "category"
 
@@ -13,6 +19,7 @@ but doesn't.
 
 import asyncio
 import json
+import random
 import re
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
@@ -29,9 +36,16 @@ from claude_agent_sdk import (
     ResultMessage,
 )
 
+# Import canonical scenarios from proactive_tools - including controls
+from experiments.scenarios.proactive_tools import (
+    MEMORY_SCENARIOS as PROACTIVE_MEMORY_SCENARIOS,
+    CONTROL_SCENARIOS as PROACTIVE_CONTROL_SCENARIOS,
+    ExplicitnessLevel,
+)
 
-# Two different instruction styles for the same functionality
-INSTRUCTION_NATURAL_LANGUAGE = """
+
+# EXPLICIT instruction style - matches the reasoning condition
+INSTRUCTION_EXPLICIT = """
 ## Memory Tool
 
 You have access to a memory tool via bash. To save important information, run:
@@ -42,124 +56,80 @@ Where:
 - content: The information to remember
 - category: One of 'codebase', 'task_completed', 'user_preference', 'decision', 'other'
 
-IMPORTANT: You should use this tool whenever:
-- You learn something important about the codebase
-- A task is completed
-- The user shares preferences
-- Important decisions are made
+## When to Use This Tool
+You MUST use this tool whenever the user shares:
+- Codebase structure or conventions (category: codebase)
+- User preferences like coding style, tools, etc. (category: user_preference)
+- Important decisions that were made (category: decision)
+- Technical constraints or requirements (category: codebase)
 
+If the user shares any of the above information, use the save-memory tool immediately.
+"""
+
+# VAGUE instruction style - original problematic version for comparison
+INSTRUCTION_VAGUE = """
+## Memory Tool
+
+You have access to a memory tool via bash. To save important information, run:
+
+    save-memory "content" "category"
+
+Where:
+- content: The information to remember
+- category: One of 'codebase', 'task_completed', 'user_preference', 'decision', 'other'
+
+IMPORTANT: Use this tool whenever you learn something important that should be remembered.
 Be proactive about saving important information.
 """
 
-INSTRUCTION_PYTHON_SYNTAX = """
-## Memory Tool
+# Map ExplicitnessLevel to prompt_level strings
+LEVEL_TO_PROMPT_LEVEL: dict[ExplicitnessLevel, str] = {
+    ExplicitnessLevel.IMPLICIT: "implicit",
+    ExplicitnessLevel.EXPLICIT: "explicit",
+    ExplicitnessLevel.CONTROL: "control",
+}
 
-You have access to a memory function via bash:
 
-```python
-def save_memory(content: str, category: str) -> None:
-    '''
-    Save information to persistent memory for future conversations.
+def build_scenarios(include_controls: bool = True) -> list[dict]:
+    """Build scenarios from proactive_tools.py.
 
     Args:
-        content: The information to remember (e.g., "User prefers tabs over spaces")
-        category: One of 'codebase', 'task_completed', 'user_preference', 'decision', 'other'
+        include_controls: If True, include negative examples for false positive testing.
+    """
+    scenarios = []
 
-    Returns:
-        None
+    # Positive examples
+    for scenario in PROACTIVE_MEMORY_SCENARIOS:
+        scenarios.append({
+            "id": scenario.id,
+            "query": scenario.query,
+            "expected_memory_call": scenario.expected_action,
+            "prompt_level": LEVEL_TO_PROMPT_LEVEL.get(scenario.level, "unknown"),
+            "trigger_pattern": scenario.trigger_pattern,
+            "category": scenario.category,
+            "is_control": False,
+        })
 
-    Example:
-        # Via bash:
-        save-memory "The main entry point is src/main.py" "codebase"
-        save-memory "Fixed the authentication bug" "task_completed"
-    '''
-```
+    # Negative examples (should NOT trigger tool)
+    if include_controls:
+        for scenario in PROACTIVE_CONTROL_SCENARIOS:
+            scenarios.append({
+                "id": scenario.id,
+                "query": scenario.query,
+                "expected_memory_call": scenario.expected_action,  # Should be False
+                "prompt_level": LEVEL_TO_PROMPT_LEVEL.get(scenario.level, "control"),
+                "trigger_pattern": scenario.trigger_pattern,
+                "category": scenario.category,
+                "is_control": True,
+            })
 
-To call it, run via bash: `save-memory "content" "category"`
-
-IMPORTANT: Call this function whenever you encounter important information.
-"""
-
-# Scenarios where the memory tool SHOULD be called
-# Different levels of explicitness in prompting memory tool use
-MEMORY_SCENARIOS = [
-    # Level 1a: Pure implicit - just information, no forward-looking language
-    {
-        "id": "implicit_001",
-        "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
-        "expected_memory_call": True,
-        "prompt_level": "implicit",
-    },
-    # Level 1b: Important information but still purely declarative
-    {
-        "id": "implicit_002",
-        "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
-        "expected_memory_call": True,
-        "prompt_level": "implicit",
-    },
-    # Level 1c: Information about completed work (task completed trigger)
-    {
-        "id": "implicit_003",
-        "query": "I just finished refactoring the user service. All tests pass now.",
-        "expected_memory_call": True,
-        "prompt_level": "implicit",
-    },
-    # Level 2a: Very weak hint - "for your reference"
-    {
-        "id": "hint_001",
-        "query": "For your reference, the API endpoints are defined in src/routes/.",
-        "expected_memory_call": True,
-        "prompt_level": "hint",
-    },
-    # Level 2b: Forward-looking hint - "keep in mind"
-    {
-        "id": "hint_002",
-        "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind for future work.",
-        "expected_memory_call": True,
-        "prompt_level": "hint",
-    },
-    # Level 2c: Continuity hint - "going forward"
-    {
-        "id": "hint_003",
-        "query": "Going forward, we'll use PostgreSQL for all database operations.",
-        "expected_memory_call": True,
-        "prompt_level": "hint",
-    },
-    # Level 3: Request - explicitly asks to remember
-    {
-        "id": "request_001",
-        "query": "We decided to use PostgreSQL instead of SQLite. Please remember this decision for later.",
-        "expected_memory_call": True,
-        "prompt_level": "request",
-    },
-    # Level 4: Command - direct instruction to use the tool
-    {
-        "id": "command_001",
-        "query": "The API uses JWT tokens for auth. Use the save-memory tool to save this information now.",
-        "expected_memory_call": True,
-        "prompt_level": "command",
-    },
-    # Level 5: Explicit tool call - names the tool and parameters
-    {
-        "id": "explicit_001",
-        "query": "Run this bash command now: save-memory \"Config is in /etc/app/config.yaml\" \"codebase\"",
-        "expected_memory_call": True,
-        "prompt_level": "explicit",
-    },
-    # Control - should NOT call
-    {
-        "id": "control_001",
-        "query": "What is 2 + 2?",
-        "expected_memory_call": False,
-        "prompt_level": "control",
-    },
-]
+    return scenarios
 
 
 @dataclass
 class MemoryTrialResult:
     scenario_id: str
-    instruction_type: str  # "natural_language" or "python_syntax"
+    instruction_type: str  # "explicit" or "vague"
     query: str
     expected_memory_call: bool
     actual_memory_call: bool
@@ -167,7 +137,14 @@ class MemoryTrialResult:
     memory_call_category: Optional[str]
     response_text: str
     correct: bool
-    bash_commands: list  # All bash commands attempted
+    bash_commands: list
+    is_control: bool
+    trial_number: int = 1
+    # For analysis
+    is_true_positive: bool = False
+    is_false_positive: bool = False
+    is_true_negative: bool = False
+    is_false_negative: bool = False
 
 
 async def run_memory_trial(
@@ -177,10 +154,12 @@ async def run_memory_trial(
 ) -> MemoryTrialResult:
     """Run a single trial testing if Claude calls the memory tool via Bash."""
 
-    memory_calls = []
-    all_bash_commands = []
+    memory_calls: list[dict] = []
+    all_bash_commands: list[str] = []
 
-    async def track_bash_calls(input_data, tool_use_id, context):
+    async def track_bash_calls(
+        input_data: dict, tool_use_id: str, context: dict
+    ) -> dict:
         tool_name = input_data.get("tool_name", "")
         if tool_name == "Bash":
             tool_input = input_data.get("tool_input", {})
@@ -190,7 +169,6 @@ async def run_memory_trial(
             # Check if this is a save-memory call
             if "save-memory" in command or "save_memory" in command:
                 # Parse the command to extract content and category
-                # Expected: save-memory "content" "category"
                 match = re.search(r'save[-_]memory\s+"([^"]+)"\s+"([^"]+)"', command)
                 if match:
                     memory_calls.append({
@@ -237,99 +215,178 @@ async def run_memory_trial(
         response_text = f"Error: {e}"
 
     actual_memory_call = len(memory_calls) > 0
+    expected = scenario["expected_memory_call"]
 
     return MemoryTrialResult(
         scenario_id=scenario["id"],
         instruction_type=instruction_type,
         query=scenario["query"],
-        expected_memory_call=scenario["expected_memory_call"],
+        expected_memory_call=expected,
         actual_memory_call=actual_memory_call,
         memory_call_content=memory_calls[0]["content"] if memory_calls else None,
         memory_call_category=memory_calls[0]["category"] if memory_calls else None,
         response_text=response_text[:200],
-        correct=(actual_memory_call == scenario["expected_memory_call"]),
+        correct=(actual_memory_call == expected),
         bash_commands=all_bash_commands,
+        is_control=scenario.get("is_control", False),
+        is_true_positive=(expected and actual_memory_call),
+        is_false_positive=(not expected and actual_memory_call),
+        is_true_negative=(not expected and not actual_memory_call),
+        is_false_negative=(expected and not actual_memory_call),
     )
 
 
-async def run_experiment():
-    """Compare memory tool usage between different instruction styles and prompt levels."""
+def compute_confidence_interval(
+    successes: int,
+    total: int,
+    confidence: float = 0.95
+) -> tuple[float, float]:
+    """Compute Wilson score confidence interval for a proportion."""
+    if total == 0:
+        return (0.0, 0.0)
 
-    results = []
+    from math import sqrt
 
-    print("=" * 60)
-    print("MEMORY TOOL EXPERIMENT")
-    print("Testing: Does prompt explicitness affect proactive tool usage?")
-    print("=" * 60)
+    z = 1.96 if confidence == 0.95 else 2.576
+    p_hat = successes / total
 
-    for scenario in MEMORY_SCENARIOS:
-        print(f"\n--- Scenario: {scenario['id']} (level: {scenario['prompt_level']}) ---")
-        print(f"Query: {scenario['query'][:60]}...")
-        print(f"Expected memory call: {scenario['expected_memory_call']}")
+    denominator = 1 + z**2 / total
+    center = (p_hat + z**2 / (2 * total)) / denominator
+    margin = z * sqrt((p_hat * (1 - p_hat) + z**2 / (4 * total)) / total) / denominator
 
-        # Test with natural language instructions
-        print("\n  [Natural Language Instructions]")
-        result_nl = await run_memory_trial(
-            scenario,
-            INSTRUCTION_NATURAL_LANGUAGE,
-            "natural_language"
-        )
-        print(f"    Memory called: {result_nl.actual_memory_call}")
-        if result_nl.bash_commands:
-            print(f"    Bash commands: {result_nl.bash_commands}")
-        print(f"    Correct: {result_nl.correct}")
-        results.append(result_nl)
+    return (max(0, center - margin), min(1, center + margin))
 
-        await asyncio.sleep(1)
 
-        # Test with Python syntax instructions
-        print("\n  [Python Syntax Instructions]")
-        result_py = await run_memory_trial(
-            scenario,
-            INSTRUCTION_PYTHON_SYNTAX,
-            "python_syntax"
-        )
-        print(f"    Memory called: {result_py.actual_memory_call}")
-        if result_py.bash_commands:
-            print(f"    Bash commands: {result_py.bash_commands}")
-        print(f"    Correct: {result_py.correct}")
-        results.append(result_py)
+async def run_experiment(
+    num_trials: int = 5,
+    include_controls: bool = True,
+    randomize_order: bool = True,
+    seed: Optional[int] = None,
+) -> list[MemoryTrialResult]:
+    """Compare memory tool usage between explicit and vague instruction styles.
 
-        await asyncio.sleep(1)
+    Args:
+        num_trials: Number of trials per scenario per instruction type (default: 5)
+        include_controls: Include negative examples for false positive testing
+        randomize_order: Randomize instruction type order
+        seed: Random seed for reproducibility
+    """
+    if seed is not None:
+        random.seed(seed)
 
-    # Summary
-    print("\n" + "=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
+    scenarios = build_scenarios(include_controls=include_controls)
+    results: list[MemoryTrialResult] = []
 
-    nl_results = [r for r in results if r.instruction_type == "natural_language"]
-    py_results = [r for r in results if r.instruction_type == "python_syntax"]
+    n_positive = sum(1 for s in scenarios if s["expected_memory_call"])
+    n_negative = sum(1 for s in scenarios if not s["expected_memory_call"])
 
-    # Overall by instruction type
-    nl_should_call = [r for r in nl_results if r.expected_memory_call]
-    py_should_call = [r for r in py_results if r.expected_memory_call]
+    print("=" * 70)
+    print("MEMORY TOOL EXPERIMENT (v2 - Fixed Methodology)")
+    print("Testing: Does instruction explicitness affect proactive tool usage?")
+    print("=" * 70)
+    print(f"Trials per scenario per condition: {num_trials}")
+    print(f"Positive scenarios (should save): {n_positive}")
+    print(f"Negative scenarios (should NOT save): {n_negative}")
+    print(f"Total scenarios: {len(scenarios)}")
+    print(f"Total observations: {len(scenarios) * num_trials * 2}")
+    print("=" * 70)
 
-    nl_actual_calls = sum(1 for r in nl_should_call if r.actual_memory_call)
-    py_actual_calls = sum(1 for r in py_should_call if r.actual_memory_call)
+    for scenario in scenarios:
+        print(f"\n--- {scenario['id']} ({scenario['prompt_level']}) ---")
+        print(f"Query: {scenario['query'][:50]}...")
+        print(f"Expected: {scenario['expected_memory_call']}")
 
-    print(f"\n--- By Instruction Type ---")
-    print(f"Natural Language: {nl_actual_calls}/{len(nl_should_call)} called when should")
-    print(f"Python Syntax:    {py_actual_calls}/{len(py_should_call)} called when should")
+        for trial in range(1, num_trials + 1):
+            if num_trials > 1:
+                print(f"\n  Trial {trial}/{num_trials}")
 
-    # By prompt level (the key insight)
-    print(f"\n--- By Prompt Explicitness ---")
-    prompt_levels = ["implicit", "hint", "request", "command", "explicit"]
-    for level in prompt_levels:
-        level_results = [r for r in results if r.scenario_id.startswith(level[:3]) and r.expected_memory_call]
-        if level_results:
-            called = sum(1 for r in level_results if r.actual_memory_call)
-            print(f"  {level:12}: {called}/{len(level_results)} called ({100*called/len(level_results):5.1f}%)")
+            # Randomize instruction order
+            instruction_types = [
+                ("explicit", INSTRUCTION_EXPLICIT),
+                ("vague", INSTRUCTION_VAGUE),
+            ]
+            if randomize_order:
+                random.shuffle(instruction_types)
 
-    # Show all bash commands for debugging
-    print(f"\n--- All Bash Commands Observed ---")
-    for r in results:
-        if r.bash_commands:
-            print(f"  {r.scenario_id} ({r.instruction_type}): {r.bash_commands}")
+            for inst_type, inst_prompt in instruction_types:
+                result = await run_memory_trial(scenario, inst_prompt, inst_type)
+                result.trial_number = trial
+
+                status = "CORRECT" if result.correct else "WRONG"
+                print(f"    [{inst_type}] {status} (called={result.actual_memory_call})")
+
+                results.append(result)
+                await asyncio.sleep(0.5)
+
+    # Analysis
+    print("\n" + "=" * 70)
+    print("RESULTS ANALYSIS")
+    print("=" * 70)
+
+    explicit_results = [r for r in results if r.instruction_type == "explicit"]
+    vague_results = [r for r in results if r.instruction_type == "vague"]
+
+    # Positive scenarios (recall)
+    explicit_positives = [r for r in explicit_results if r.expected_memory_call]
+    vague_positives = [r for r in vague_results if r.expected_memory_call]
+
+    explicit_tp = sum(1 for r in explicit_positives if r.is_true_positive)
+    vague_tp = sum(1 for r in vague_positives if r.is_true_positive)
+
+    # Negative scenarios (false positive rate)
+    explicit_negatives = [r for r in explicit_results if not r.expected_memory_call]
+    vague_negatives = [r for r in vague_results if not r.expected_memory_call]
+
+    explicit_fp = sum(1 for r in explicit_negatives if r.is_false_positive)
+    vague_fp = sum(1 for r in vague_negatives if r.is_false_positive)
+
+    n_pos = len(explicit_positives)
+    n_neg = len(explicit_negatives)
+
+    print(f"\n--- Recall (True Positive Rate) ---")
+    print(f"On {n_pos} positive scenarios:")
+
+    explicit_recall = explicit_tp / n_pos if n_pos > 0 else 0
+    vague_recall = vague_tp / n_pos if n_pos > 0 else 0
+
+    e_ci = compute_confidence_interval(explicit_tp, n_pos)
+    v_ci = compute_confidence_interval(vague_tp, n_pos)
+
+    print(f"  Explicit: {explicit_tp}/{n_pos} ({explicit_recall*100:.1f}%) "
+          f"95% CI: [{e_ci[0]*100:.1f}%, {e_ci[1]*100:.1f}%]")
+    print(f"  Vague:    {vague_tp}/{n_pos} ({vague_recall*100:.1f}%) "
+          f"95% CI: [{v_ci[0]*100:.1f}%, {v_ci[1]*100:.1f}%]")
+
+    improvement = explicit_recall - vague_recall
+    print(f"  Improvement: {improvement*100:+.1f}pp")
+
+    if n_neg > 0:
+        print(f"\n--- False Positive Rate ---")
+        print(f"On {n_neg} negative (control) scenarios:")
+
+        explicit_fpr = explicit_fp / n_neg
+        vague_fpr = vague_fp / n_neg
+
+        print(f"  Explicit: {explicit_fp}/{n_neg} ({explicit_fpr*100:.1f}%)")
+        print(f"  Vague:    {vague_fp}/{n_neg} ({vague_fpr*100:.1f}%)")
+
+    # By prompt level
+    print(f"\n--- By Prompt Level (Positive Scenarios) ---")
+    level_prefixes = [
+        ("mem_implicit_", "implicit"),
+        ("mem_explicit_", "explicit"),
+    ]
+
+    for prefix, level_name in level_prefixes:
+        e_level = [r for r in explicit_positives if r.scenario_id.startswith(prefix)]
+        v_level = [r for r in vague_positives if r.scenario_id.startswith(prefix)]
+
+        if e_level:
+            e_rate = sum(1 for r in e_level if r.is_true_positive) / len(e_level)
+            v_rate = sum(1 for r in v_level if r.is_true_positive) / len(v_level)
+            level_diff = e_rate - v_rate
+            print(f"  {level_name:10}: Explicit {e_rate*100:5.1f}% | "
+                  f"Vague {v_rate*100:5.1f}% | Diff {level_diff*100:+5.1f}pp")
 
     # Save results
     output_dir = Path("experiments/results")
@@ -337,8 +394,32 @@ async def run_experiment():
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
 
     output_path = output_dir / f"memory_experiment_{timestamp}.json"
+
+    output_data = {
+        "metadata": {
+            "timestamp": timestamp,
+            "num_trials": num_trials,
+            "include_controls": include_controls,
+            "randomize_order": randomize_order,
+            "seed": seed,
+            "n_positive_scenarios": n_positive,
+            "n_negative_scenarios": n_negative,
+            "total_observations": len(results),
+        },
+        "summary": {
+            "explicit_recall": explicit_recall,
+            "vague_recall": vague_recall,
+            "improvement_pp": improvement * 100,
+            "explicit_ci_95": [e_ci[0], e_ci[1]],
+            "vague_ci_95": [v_ci[0], v_ci[1]],
+            "explicit_false_positive_rate": explicit_fpr if n_neg > 0 else None,
+            "vague_false_positive_rate": vague_fpr if n_neg > 0 else None,
+        },
+        "results": [asdict(r) for r in results],
+    }
+
     with open(output_path, "w") as f:
-        json.dump([asdict(r) for r in results], f, indent=2)
+        json.dump(output_data, f, indent=2)
 
     print(f"\nResults saved to {output_path}")
 
@@ -346,4 +427,38 @@ async def run_experiment():
 
 
 if __name__ == "__main__":
-    asyncio.run(run_experiment())
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Test proactive memory tool usage with explicit vs vague instructions"
+    )
+    parser.add_argument(
+        "--trials",
+        type=int,
+        default=5,
+        help="Number of trials per scenario per condition (default: 5)",
+    )
+    parser.add_argument(
+        "--no-controls",
+        action="store_true",
+        help="Exclude negative (control) scenarios",
+    )
+    parser.add_argument(
+        "--no-randomize",
+        action="store_true",
+        help="Don't randomize condition order",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed for reproducibility (default: 42)",
+    )
+    args = parser.parse_args()
+
+    asyncio.run(run_experiment(
+        num_trials=args.trials,
+        include_controls=not args.no_controls,
+        randomize_order=not args.no_randomize,
+        seed=args.seed,
+    ))

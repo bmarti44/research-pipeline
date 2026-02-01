@@ -1,0 +1,1047 @@
+[
+  {
+    "scenario_id": "mem_implicit_001",
+    "condition": "natural_language",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Thanks for sharing that context! Let me think through what I'm learning here:\n\n**Project Structure:**\n- **Main entry point**: `src/app.py` - This is where the FastAPI application is initialized and likely where routes are registered or included\n- **Framework**: FastAPI - so this is a Python web API project, which means you're probably using async/await patterns, Pydantic models for request/response validation, and dependency injection\n- **Database models**: Located in `src/models/` - This sugges",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_001",
+    "condition": "identify_persist",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- Project main entry point is `src/app.py`\n- Project uses FastAPI framework\n- Database models are lo"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for sharing that information about your project structure! That's helpful context.\n\nSo to summarize what you've told me:\n- **Main entry point**: `src/app.py`\n- **Framework**: FastAPI\n- **Database models location**: `src/models/`\n\nIs there something specific you'd like me to help you with in this project? I can explore the codebase, help with implementation, debug issues, or answer questions about the code.\n\n---\n\n[PERSIST]: \n- Project main entry point is `src/app.py`\n- Project uses Fast",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_001",
+    "condition": "with_tool",
+    "query": "The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I understand",
+      "helpful context",
+      "context"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I understand! Your project structure is:\n\n- **Main entry point**: `src/app.py` (FastAPI application)\n- **Database models**: `src/models/` directory\n\nThis is helpful context. What would you like me to help you with? I can:\n\n- Explore the codebase structure\n- Read and understand specific files\n- Help implement new features\n- Debug issues\n- Refactor code\n- And more!\n\nJust let me know what you need.",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_002",
+    "condition": "natural_language",
+    "query": "We use PostgreSQL 15 with the pgvector extension for embeddings.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "That's useful to know! So you're working with **PostgreSQL 15** and using the **pgvector extension** for handling embeddings/vector data.\n\nLet me think about what this tells me about your setup:\n\n1. **pgvector** is great for similarity search and storing vector embeddings directly in Postgres - it supports operations like cosine distance, L2 distance, and inner product for finding nearest neighbors.\n\n2. With **Postgres 15**, you have access to features like `MERGE` statements, improved JSON supp",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_002",
+    "condition": "identify_persist",
+    "query": "We use PostgreSQL 15 with the pgvector extension for embeddings.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- **Database**: PostgreSQL 15\n- **Extensions**: pgvector (for embeddings/vector similarity search)"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for sharing that! That's useful context about your tech stack.\n\nPostgreSQL 15 with pgvector is a solid choice for handling vector embeddings - it lets you keep your embeddings alongside your relational data without needing a separate vector database. Are you working on a specific project involving embeddings, or is there something I can help you with regarding your PostgreSQL/pgvector setup?\n\n---\n\n[PERSIST]: \n- **Database**: PostgreSQL 15\n- **Extensions**: pgvector (for embeddings/vector ",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_002",
+    "condition": "with_tool",
+    "query": "We use PostgreSQL 15 with the pgvector extension for embeddings.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Thanks for letting me know! I'll remember that your project uses PostgreSQL 15 with the pgvector extension for embeddings. This is useful context for any database-related work we do together.I've noted that information. Is there anything specific you'd like help with regarding your PostgreSQL/pgvector setup? For example, I can help with:\n\n- **Schema design** for vector storage\n- **Indexing strategies** (IVFFlat, HNSW) for similarity search\n- **Query optimization** for vector operations\n- **Embed",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_003",
+    "condition": "natural_language",
+    "query": "Authentication is handled by Clerk, and we store sessions in Redis.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Thanks for sharing that context! Let me think about what I'm learning here:\n\n**Authentication & Sessions Architecture:**\n- **Clerk** is handling your authentication - that's a popular auth provider that handles user management, sign-up/sign-in flows, session tokens, and things like OAuth integrations. It takes a lot of the heavy lifting out of auth.\n- **Redis** for session storage - this makes sense as a pairing with Clerk. You're likely storing session data, tokens, or user state in Redis for f",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_003",
+    "condition": "identify_persist",
+    "query": "Authentication is handled by Clerk, and we store sessions in Redis.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- Project uses Clerk for authentication\n- Sessions are stored in Redis"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for sharing that information about your project's architecture!\n\nSo you're using **Clerk** for authentication and **Redis** for session storage. That's a solid combination - Clerk handles the complexity of auth (OAuth, passwordless, etc.) while Redis provides fast, reliable session management.\n\nIs there something specific you'd like to work on related to your authentication or session handling? For example:\n- Debugging an auth issue\n- Adding new auth features\n- Reviewing the current im",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_003",
+    "condition": "with_tool",
+    "query": "Authentication is handled by Clerk, and we store sessions in Redis.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I understand"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I understand your authentication setup:\n\n- **Authentication**: Handled by **Clerk**\n- **Sessions**: Stored in **Redis**\n\nIs there something specific you'd like help with regarding your authentication or session management? For example:\n\n- Reviewing or modifying your Clerk integration\n- Working with your Redis session storage\n- Debugging authentication issues\n- Adding new auth features\n- Understanding the current implementation in your codebase\n\nLet me know what you need!",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_004",
+    "condition": "natural_language",
+    "query": "The API rate limit is 100 requests per minute per user.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know about the API rate limit - 100 requests per minute per user. That's useful context to keep in mind.\n\nThis seems like a reasonable rate limit for most use cases. It means roughly 1-2 requests per second on average, which should accommodate typical interactive usage patterns without issues. \n\nIs there something specific you'd like to discuss about rate limiting, or were you sharing this as context for something else you're working on? For example, are you:\n\n- Building so",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_004",
+    "condition": "identify_persist",
+    "query": "The API rate limit is 100 requests per minute per user.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "API rate limit is 100 requests per minute per user. This should be saved as it's a technical constra"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for sharing that information about the API rate limit.\n\nThat's a useful technical specification to know - 100 requests per minute per user is a fairly standard rate limit that should accommodate most typical usage patterns while protecting against abuse or runaway scripts.\n\nIs there something specific you'd like to do with this information? For example:\n- Implement rate limiting logic in your code\n- Handle rate limit errors gracefully\n- Design a queuing system to stay within limits\n- S",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_004",
+    "condition": "with_tool",
+    "query": "The API rate limit is 100 requests per minute per user.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I understand"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I understand you're sharing information about an API rate limit of 100 requests per minute per user. This is useful context to know.\n\nIs there something specific you'd like me to help you with regarding this rate limit? For example:\n\n1. **Implement rate limiting** in your code\n2. **Handle rate limit errors** gracefully\n3. **Design a queuing system** to stay within limits\n4. **Monitor or track** API usage\n5. Something else?\n\nLet me know what you're working on and I'll be happy to help!",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_005",
+    "condition": "natural_language",
+    "query": "All environment variables are in .env.local, never commit them.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "keep that in mind",
+      "that"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'll make sure to keep that in mind. So your project uses `.env.local` for environment variables, and these should never be committed to version control.\n\nThis is a common and good practice - `.env.local` typically contains sensitive information like:\n- API keys\n- Database credentials\n- Secret tokens\n- Third-party service configurations\n\nI'll be careful to:\n1. **Never stage or commit `.env.local`** - I'll always exclude it when making commits\n2. **Check for it in `.gitignore`** - It shou",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_005",
+    "condition": "identify_persist",
+    "query": "All environment variables are in .env.local, never commit them.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- Project uses `.env.local` for all environment variables\n- `.env.local` should never be committed t"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I understand! You're letting me know that your project stores environment variables in `.env.local` and that this file should never be committed to version control.\n\nThis is a great practice for keeping sensitive information like API keys, database credentials, and other secrets out of your repository.\n\nA few things I'll keep in mind:\n- When working with your project, I'll look for configuration in `.env.local`\n- I won't include `.env.local` in any git commits\n- If you need to set up environment",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_implicit_005",
+    "condition": "with_tool",
+    "query": "All environment variables are in .env.local, never commit them.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I understand",
+      "I'll remember",
+      "'ll",
+      "remember",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I understand. I'll remember that your environment variables are stored in `.env.local` and should never be committed to version control.Got it! I'll keep this in mind for our work together:\n\n- **Environment variables location:** `.env.local`\n- **Important:** Never commit `.env.local` to version control\n\nThis means when working with git, I'll make sure `.env.local` is in your `.gitignore` and will avoid staging or committing it. If you need me to help with any tasks involving environment configur",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_001",
+    "condition": "natural_language",
+    "query": "Just so you know, we deploy to AWS using CDK.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "for future reference"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! That's useful context about your infrastructure setup.\n\nSo you're using **AWS CDK** (Cloud Development Kit) for deployments. This tells me a few things that could be helpful:\n\n1. **Infrastructure as Code** - Your AWS resources are defined programmatically, likely in TypeScript, Python, Java, or C#\n2. **Stack-based architecture** - Your infrastructure is organized into CDK stacks\n3. **CloudFormation under the hood** - CDK synthesizes to CloudFormation templates\n\nThis i",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_001",
+    "condition": "identify_persist",
+    "query": "Just so you know, we deploy to AWS using CDK.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "The project/team deploys to AWS using CDK (Cloud Development Kit) for infrastructure as code."
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! That's helpful context about your infrastructure setup. AWS CDK is a great choice for infrastructure as code - it gives you the power of a full programming language for defining your cloud resources.\n\nIf you need any help with CDK-related tasks like defining stacks, working with constructs, deploying, or troubleshooting CDK issues, feel free to ask!\n\n---\n\n[PERSIST]: The project/team deploys to AWS using CDK (Cloud Development Kit) for infrastructure as code.",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_001",
+    "condition": "with_tool",
+    "query": "Just so you know, we deploy to AWS using CDK.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference",
+      "helpful context",
+      "context"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Thanks for letting me know! I'll save that information for future reference.Got it! I've noted that your project **deploys to AWS using CDK** (AWS Cloud Development Kit). This is helpful context for when we work on infrastructure, deployment pipelines, or any cloud-related tasks. \n\nIs there anything specific you'd like to work on with your CDK setup or deployment process?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_002",
+    "condition": "natural_language",
+    "query": "FYI, I prefer functional components over class components in React.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Thanks for sharing that! I'll keep in mind that you prefer **functional components over class components** in React.\n\nThis makes a lot of sense - functional components have become the modern standard in React development, especially since the introduction of Hooks. They tend to be:\n\n- **More concise** - less boilerplate code\n- **Easier to test** - just functions that take props and return JSX\n- **Better for Hooks** - `useState`, `useEffect`, `useContext`, custom hooks, etc. work naturally with t",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_002",
+    "condition": "identify_persist",
+    "query": "FYI, I prefer functional components over class components in React.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "** User prefers functional components over class components when writing React code."
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! I'll keep that in mind when working with React code in your projects. Functional components are indeed the modern standard in React development, offering cleaner syntax, easier testing, and access to hooks for state and lifecycle management.\n\nIf I'm ever writing or suggesting React code for you, I'll default to functional components with hooks (like `useState`, `useEffect`, `useContext`, etc.) rather than class-based components.\n\n---\n\n**[PERSIST]:** User prefers funct",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_002",
+    "condition": "with_tool",
+    "query": "FYI, I prefer functional components over class components in React.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Noted! I'll remember your preference for functional components over class components in React. This is the modern standard anyway, as functional components with hooks provide cleaner, more readable code and better composability.I've made a note of your preference for **functional components over class components** in React. Whenever I'm writing or suggesting React code for you, I'll use functional components with hooks (like `useState`, `useEffect`, `useContext`, etc.) rather than class-based co",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_003",
+    "condition": "natural_language",
+    "query": "By the way, tests are in __tests__ folders next to the source files.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! That's a helpful piece of context about the codebase structure.\n\nSo the project follows a co-located test pattern where `__tests__` folders sit alongside the source files they test, rather than having a separate top-level `tests/` directory. This is a common pattern in JavaScript/TypeScript projects (especially React apps using Jest).\n\nFor example, the structure would look something like:\n```\nsrc/\n  components/\n    Button.tsx\n    __tests__/\n      Button.test.tsx\n  uti",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_003",
+    "condition": "identify_persist",
+    "query": "By the way, tests are in __tests__ folders next to the source files.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "Project convention - tests are located in `__tests__` folders next to their corresponding source fil"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! That's helpful context about your project structure - tests are co-located with source files in `__tests__` folders rather than in a separate top-level test directory.\n\n[PERSIST]: Project convention - tests are located in `__tests__` folders next to their corresponding source files (co-located test structure).",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_003",
+    "condition": "with_tool",
+    "query": "By the way, tests are in __tests__ folders next to the source files.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'll remember that tests are located in `__tests__` folders next to the source files in this codebase. This is a common pattern (often called \"co-located tests\") where test files live alongside the code they're testing.\n\nIs there something specific you'd like me to help you with regarding the tests or any other part of the codebase?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_004",
+    "condition": "natural_language",
+    "query": "For your information, we use Prettier with 2-space indentation.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "helpful context",
+      "context"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Hi! Thanks for letting me know about the Prettier configuration with 2-space indentation. That's helpful context for any code formatting I might do.\n\nSo when working with your codebase, I'll make sure to:\n- Use 2 spaces for indentation (not tabs, not 4 spaces)\n- Follow Prettier's formatting conventions\n\nThis is a pretty common setup, especially in JavaScript/TypeScript projects. Is there anything specific you'd like help with today?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_004",
+    "condition": "identify_persist",
+    "query": "For your information, we use Prettier with 2-space indentation.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "Code formatting preference - Uses Prettier with 2-space indentation"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for letting me know about your Prettier configuration with 2-space indentation. I'll keep that in mind when working with your code to ensure consistent formatting.\n\n[PERSIST]: Code formatting preference - Uses Prettier with 2-space indentation",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_004",
+    "condition": "with_tool",
+    "query": "For your information, we use Prettier with 2-space indentation.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "I've noted that your project uses Prettier with 2-space indentation. I'll make sure to follow this formatting convention when writing or editing code.\n\nIs there something specific you'd like help with today?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_005",
+    "condition": "natural_language",
+    "query": "Note that all dates should be stored in UTC.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Hello! I'm ready to help you with your coding tasks. I can assist with:\n\n- **Exploring and understanding codebases** - searching for files, reading code, understanding architecture\n- **Writing and editing code** - creating new files, modifying existing ones, refactoring\n- **Running commands** - executing build tools, tests, git operations, and other terminal commands\n- **Web searches and fetching** - looking up documentation or fetching web content\n- **Planning implementations** - designing appr",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_005",
+    "condition": "identify_persist",
+    "query": "Note that all dates should be stored in UTC.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [
+      "None"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Hello! I'm here to help you with coding tasks, file operations, research, and more. I have access to various tools for searching code, reading and editing files, running bash commands, web searching, and other development tasks.\n\nWhat can I help you with today?\n\n---\n\n[PERSIST]: None",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_weak_005",
+    "condition": "with_tool",
+    "query": "Note that all dates should be stored in UTC.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Hello! I'm here to help you with your coding tasks. I have access to various tools including file reading and editing, bash commands, web search, and more.\n\nWhat can I help you with today?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_001",
+    "condition": "natural_language",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "That's useful context about your authentication system! Let me think through what you've shared:\n\n**Password Hashing with bcrypt:**\n- bcrypt is a solid choice - it's designed specifically for password hashing with built-in salting and adaptive cost factors\n- The work factor can be increased over time as hardware gets faster, which is a nice future-proofing feature\n- It's deliberately slow, which helps protect against brute-force attacks\n\n**Session Management with JWT:**\n- JWTs are stateless, whi",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_001",
+    "condition": "identify_persist",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "The project's authentication system uses bcrypt for password hashing and JWT (JSON Web Tokens) for s"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for sharing that technical detail about your authentication system!\n\nThat's a solid, industry-standard approach:\n- **bcrypt** is excellent for password hashing because it's deliberately slow (making brute-force attacks impractical) and automatically handles salting\n- **JWT (JSON Web Tokens)** for session tokens provides stateless authentication, which scales well and allows you to embed claims/permissions directly in the token\n\nIs there something specific you'd like to do with the authent",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_001",
+    "condition": "with_tool",
+    "query": "This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Thank you for sharing that important detail about your authentication system. I'll save this information for future reference.I've noted that your authentication system uses:\n- **bcrypt** for password hashing\n- **JWT (JSON Web Tokens)** for session tokens\n\nThis is a solid, industry-standard approach for authentication. Bcrypt is excellent for password hashing because it's designed to be slow (making brute-force attacks impractical) and includes built-in salting. JWT tokens are great for stateles",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_002",
+    "condition": "natural_language",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'll remember those preferences for our work together:\n\n1. **Type hints everywhere** - I'll include type annotations for function parameters, return types, and variables where appropriate (especially in Python, TypeScript, or other languages that support them).\n\n2. **Descriptive variable names** - I'll use clear, meaningful names that convey purpose rather than short abbreviations. For example, `user_email_address` instead of `email` or `e`, `total_items_in_cart` instead of `total`, etc.",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_002",
+    "condition": "identify_persist",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- User coding preference: Always use type hints in code\n- User coding preference: Use descriptive va"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! I'll make sure to use type hints everywhere and descriptive variable names in any code I write for you. This is a great practice for code readability and maintainability.\n\nFor example, instead of:\n\n```python\ndef calc(x, y):\n    res = x + y\n    return res\n```\n\nI'll write:\n\n```python\ndef calculate_sum(first_number: int, second_number: int) -> int:\n    total_sum: int = first_number + second_number\n    return total_sum\n```\n\nI've got it noted! Is there anything you'd like ",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_002",
+    "condition": "with_tool",
+    "query": "I prefer using type hints everywhere and descriptive variable names. Keep that in mind.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Understood! I'll remember your preferences:\n\n1. **Type hints everywhere** - I'll include type annotations for function parameters, return types, and variables where appropriate\n2. **Descriptive variable names** - I'll use clear, meaningful names that convey purpose rather than short/cryptic ones\n\nLet me save these preferences for future conversations:Got it! I've noted your coding style preferences. When writing or reviewing code for you, I'll make sure to:\n\n- Add type hints to all function sign",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_003",
+    "condition": "natural_language",
+    "query": "Going forward, we'll use PostgreSQL for all new database operations.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'm noting"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'm noting that **PostgreSQL** will be the database of choice for all new database operations going forward.\n\nThis is useful context to keep in mind. When working on database-related tasks, I'll:\n\n- Use PostgreSQL-specific syntax and features (like `SERIAL`/`BIGSERIAL` for auto-incrementing IDs, `JSONB` for JSON data, array types, etc.)\n- Leverage PostgreSQL's rich feature set (CTEs, window functions, full-text search, etc.)\n- Use appropriate PostgreSQL client libraries depending on the ",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_003",
+    "condition": "identify_persist",
+    "query": "Going forward, we'll use PostgreSQL for all new database operations.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "The user's project uses PostgreSQL for all new database operations. This is a technical preference/s"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! I'll keep that in mind for any future database work we do together. PostgreSQL is a great choice - it's robust, has excellent SQL compliance, and offers powerful features like JSONB support, full-text search, and advanced indexing options.\n\nIf you need help with any PostgreSQL-related tasks like:\n- Setting up schemas or tables\n- Writing queries or migrations\n- Configuring connections\n- Optimizing performance\n\nJust let me know!\n\n---\n\n[PERSIST]: The user's project uses ",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_003",
+    "condition": "with_tool",
+    "query": "Going forward, we'll use PostgreSQL for all new database operations.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Understood! I'll remember that PostgreSQL is your preferred database for all new database operations going forward.I've noted your preference: **PostgreSQL will be used for all new database operations**. \n\nWhen working on database-related tasks in this project, I'll default to PostgreSQL for:\n- New tables and schemas\n- Database connections and configurations\n- Query syntax and PostgreSQL-specific features\n- Migrations and database tooling\n\nIs there anything specific you'd like to set up with Pos",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_004",
+    "condition": "natural_language",
+    "query": "For future reference, the staging environment is at staging.example.com.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "for future reference"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I've noted that your staging environment is at **staging.example.com**. \n\nThis is useful context to keep in mind - whenever we're discussing deployments, testing, or environment-specific configurations, I'll know that's where your staging setup lives. This could be relevant for things like:\n\n- Debugging issues that only appear in staging\n- Configuring environment variables or API endpoints\n- Discussing deployment pipelines or CI/CD workflows\n- Testing features before they go to productio",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_004",
+    "condition": "identify_persist",
+    "query": "For future reference, the staging environment is at staging.example.com.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "staging environment URL = staging.example.com"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! I've noted that the staging environment is at staging.example.com. This will be helpful for any future work involving deployment, testing, or environment-specific configurations.\n\n[PERSIST]: staging environment URL = staging.example.com",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_004",
+    "condition": "with_tool",
+    "query": "For future reference, the staging environment is at staging.example.com.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference",
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "Understood! I'll save that information for future reference.I've noted that **the staging environment is at staging.example.com**. I'll remember this for our future conversations when we need to reference or work with the staging environment. Is there anything you'd like to do with the staging environment now?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_005",
+    "condition": "natural_language",
+    "query": "You should know that we never use console.log in production code.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember",
+      "helpful to know",
+      "to know"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! That's a good coding practice to keep in mind. Using `console.log` in production code can:\n\n1. **Expose sensitive information** - Log statements might accidentally leak user data, API keys, or internal system details\n2. **Impact performance** - Excessive logging can slow down the application, especially in high-traffic scenarios\n3. **Clutter browser consoles** - Makes debugging harder for developers when there's noise from leftover logs\n4. **Look unprofessional** - End users with dev too",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_005",
+    "condition": "identify_persist",
+    "query": "You should know that we never use console.log in production code.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "**Coding standard** - Never use `console.log` in production code. Use proper logging libraries/servi"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I understand! You're letting me know about a coding standard for your project/team: **console.log statements should not be used in production code**.\n\nThis is a common best practice - `console.log` is great for debugging during development, but in production it can:\n- Clutter browser consoles\n- Potentially expose sensitive information\n- Impact performance (especially with large objects)\n- Create noise in server logs\n\nInstead, production code typically uses:\n- A proper logging library (like Winst",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_moderate_005",
+    "condition": "with_tool",
+    "query": "You should know that we never use console.log in production code.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Understood! I've noted that your team/project doesn't use `console.log` in production code. This is a common best practice - typically teams use proper logging libraries (like Winston, Pino, or custom loggers) that provide log levels, better formatting, and can be configured differently for different environments.\n\nI'll keep this in mind when writing or reviewing code. If I need to add any debugging or logging, I'll either:\n1. Ask about your preferred logging solution\n2. Use appropriate alternat",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_001",
+    "condition": "natural_language",
+    "query": "Please note for later: the CI/CD pipeline is in .github/workflows/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "for future reference"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I've noted that your CI/CD pipeline configuration is located in `.github/workflows/`. This is the standard location for GitHub Actions workflows.\n\nThis will be helpful to remember when we need to:\n- Review or modify your build/test/deploy automation\n- Debug CI failures\n- Add new workflow jobs or steps\n- Check what triggers are configured for your pipelines\n\nIs there something specific you'd like to do with the CI/CD pipeline, or were you just letting me know for future reference?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_001",
+    "condition": "identify_persist",
+    "query": "Please note for later: the CI/CD pipeline is in .github/workflows/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "The CI/CD pipeline for this project is located in `.github/workflows/` (GitHub Actions)."
+    ],
+    "actual_tool_call": false,
+    "response_text": "I've noted that information. Thank you for letting me know!\n\nThe CI/CD pipeline being located in `.github/workflows/` is a standard location for GitHub Actions workflows. This is helpful context for when we work with builds, tests, deployments, or any automation in this repository.\n\n[PERSIST]: The CI/CD pipeline for this project is located in `.github/workflows/` (GitHub Actions).",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_001",
+    "condition": "with_tool",
+    "query": "Please note for later: the CI/CD pipeline is in .github/workflows/.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Noted! I'll remember that the CI/CD pipeline configuration is located in `.github/workflows/`. This is useful context for when we need to work with GitHub Actions workflows, deployment pipelines, or any automation in this repository.",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_002",
+    "condition": "natural_language",
+    "query": "I'd like you to remember that I prefer tabs over spaces.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "Thanks for letting me know! I'll keep in mind that you prefer **tabs over spaces** for indentation.\n\nThis is a useful preference to remember - it'll help me write code that matches your style when I'm creating or editing files for you. Whether we're working on JavaScript, Python, TypeScript, or any other language, I'll use tabs for indentation instead of spaces.\n\nIs there anything else about your coding style or preferences you'd like me to know?",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_002",
+    "condition": "identify_persist",
+    "query": "I'd like you to remember that I prefer tabs over spaces.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "** User coding preference: Prefers tabs over spaces for indentation. When writing or editing code, u"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I appreciate you sharing that preference! I'll make note of it.\n\n**My response:** Got it! I'll keep in mind that you prefer tabs over spaces for indentation. Whenever I write or edit code for you, I'll use tabs instead of spaces.\n\n---\n\n**[PERSIST]:** User coding preference: Prefers tabs over spaces for indentation. When writing or editing code, use tab characters (`\\t`) rather than spaces for indentation.",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_002",
+    "condition": "with_tool",
+    "query": "I'd like you to remember that I prefer tabs over spaces.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "note this",
+      "note",
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save this preference for you.Let me note this preference for our conversation. I'll remember that **you prefer tabs over spaces** for indentation when writing or editing code. I'll apply this preference whenever I'm creating or modifying files for you.",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_003",
+    "condition": "natural_language",
+    "query": "Make a note: we decided to use GraphQL instead of REST for the new API.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll keep them in mind"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I've noted that decision! \n\n**Key decision recorded:** You're going with **GraphQL instead of REST** for the new API.\n\nThis is useful context to keep in mind. GraphQL will give you:\n- A single endpoint with flexible queries\n- Clients can request exactly the data they need (no over/under-fetching)\n- Strong typing with the schema\n- Built-in introspection for documentation\n\nWhen we work on the API implementation, I'll make sure to follow GraphQL patterns and conventions. If you have any preferences",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_003",
+    "condition": "identify_persist",
+    "query": "Make a note: we decided to use GraphQL instead of REST for the new API.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- **API Architecture Decision**: The team/user has decided to use GraphQL instead of REST for the ne"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I've noted that decision about your API architecture choice.\n\n**Your decision has been recorded:** You've decided to use **GraphQL instead of REST** for the new API. This is a significant architectural choice that will influence how you structure your endpoints, handle data fetching, and manage client-server communication.\n\nSome benefits this brings:\n- Clients can request exactly the data they need\n- Single endpoint for all queries\n- Strong typing with schema definitions\n- Built-in documentation",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_003",
+    "condition": "with_tool",
+    "query": "Make a note: we decided to use GraphQL instead of REST for the new API.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save this decision to memory for future reference.I apologize - it seems the memory tool isn't available as a command in this environment. However, I've noted your decision:\n\n**Decision recorded:** Use **GraphQL** instead of REST for the new API.\n\nI'll keep this in mind for our current conversation. If you'd like this to persist across sessions, you might want to:\n1. Add it to a project README or decision log file\n2. Create an `.claude/CLAUDE.md` or similar project memory file\n\nWould you li",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_004",
+    "condition": "natural_language",
+    "query": "Don't forget: the admin panel requires 2FA for all users.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'm noting"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! That's an important security requirement to keep in mind. So the admin panel requires two-factor authentication (2FA) for all users who access it.\n\nThis is a good security practice - admin panels typically have access to sensitive operations and data, so adding that extra layer of authentication beyond just a password makes sense. It helps protect against compromised credentials and adds defense-in-depth.\n\nA few things I'm noting about this that might be relevant for future context:\n\n1. ",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_004",
+    "condition": "identify_persist",
+    "query": "Don't forget: the admin panel requires 2FA for all users.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "The admin panel requires 2FA (two-factor authentication) for all users. This appears to be a project"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thanks for the reminder! That's an important security requirement - having 2FA (two-factor authentication) mandatory for all admin panel users is a solid security practice that helps protect against unauthorized access even if passwords are compromised.\n\nIs there something specific you'd like me to help you with regarding the admin panel or its 2FA implementation?\n\n---\n\n[PERSIST]: The admin panel requires 2FA (two-factor authentication) for all users. This appears to be a project/system security",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_004",
+    "condition": "with_tool",
+    "query": "Don't forget: the admin panel requires 2FA for all users.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll remember that important information about the admin panel security requirement.Got it! I've noted that important security requirement: **the admin panel requires 2FA (two-factor authentication) for all users**. \n\nI'll keep this in mind for any work related to the admin panel. This is a critical security decision that should be enforced in any authentication flows, user management, or access control implementations for admin functionality.\n\nIs there something specific you'd like me to help y",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_005",
+    "condition": "natural_language",
+    "query": "Store this for later: the database connection string format is postgres://user:pass@host:5432/db.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "storing that",
+      "storing",
+      "that",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'm storing that for later reference:\n\n**Database connection string format:** `postgres://user:pass@host:5432/db`\n\nThis is a standard PostgreSQL connection string format where:\n- `postgres://` - the protocol\n- `user:pass` - username and password credentials\n- `host` - the database server hostname or IP\n- `5432` - the default PostgreSQL port\n- `db` - the database name\n\nI'll keep this in mind in case it's relevant for any database configuration or connection work we do together. Let me kno",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_005",
+    "condition": "identify_persist",
+    "query": "Store this for later: the database connection string format is postgres://user:pass@host:5432/db.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "**Database connection string format** - The user's PostgreSQL connection string format is `postgres:"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for sharing that! I've noted the database connection string format.\n\n**Your connection string format:**\n```\npostgres://user:pass@host:5432/db\n```\n\nThis is the standard PostgreSQL connection string format where:\n- `user` - database username\n- `pass` - database password\n- `host` - server hostname/IP\n- `5432` - default PostgreSQL port\n- `db` - database name\n\nI'll keep this noted for any future database-related work we do together.\n\n---\n\n[PERSIST]: **Database connection string format** - T",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_strong_005",
+    "condition": "with_tool",
+    "query": "Store this for later: the database connection string format is postgres://user:pass@host:5432/db.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference",
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save that database connection string format for future reference.I've noted this information. The database connection string format is:\n\n```\npostgres://user:pass@host:5432/db\n```\n\nWhere:\n- `user` - database username\n- `pass` - database password\n- `host` - database server hostname/IP\n- `5432` - default PostgreSQL port\n- `db` - database name\n\nI'll remember this for our conversation. If you need to use it later, just ask!",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_001",
+    "condition": "natural_language",
+    "query": "Save this to memory: we use Stripe for payments with webhook endpoint at /api/webhooks/stripe.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll remember",
+      "'ll",
+      "remember",
+      "helpful context",
+      "context"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I'll remember that for you! \n\nSo your project uses **Stripe for payments** with the webhook endpoint located at `/api/webhooks/stripe`. This is useful context to keep in mind - it tells me:\n\n1. **Payment provider**: Stripe (so I should expect Stripe SDK patterns, API keys like `STRIPE_SECRET_KEY`, and Stripe-specific concepts like PaymentIntents, Customers, etc.)\n\n2. **Webhook architecture**: You have a webhook endpoint set up to handle Stripe events (like `checkout.session.completed`, `invoice.",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_001",
+    "condition": "identify_persist",
+    "query": "Save this to memory: we use Stripe for payments with webhook endpoint at /api/webhooks/stripe.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- **Payment Provider**: Stripe\n- **Stripe Webhook Endpoint**: `/api/webhooks/stripe`"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Thank you for sharing that information! I've noted that your project uses Stripe for payment processing, with the webhook endpoint configured at `/api/webhooks/stripe`. This is helpful context for any payment-related work we might do together.\n\n[PERSIST]: \n- **Payment Provider**: Stripe\n- **Stripe Webhook Endpoint**: `/api/webhooks/stripe`",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_001",
+    "condition": "with_tool",
+    "query": "Save this to memory: we use Stripe for payments with webhook endpoint at /api/webhooks/stripe.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference",
+      "I'll keep this in mind",
+      "I'll remember",
+      "'ll",
+      "remember"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save this information to memory for future reference.I apologize - it appears the memory save command isn't available in this environment. However, I've noted this important information about your codebase:\n\n**Noted for this session:**\n- **Payment provider:** Stripe\n- **Webhook endpoint:** `/api/webhooks/stripe`\n\nI'll keep this in mind during our conversation. If you need me to reference this information while working on payment-related code, I'll remember it. Is there anything you'd like m",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_002",
+    "condition": "natural_language",
+    "query": "Please remember this decision: we're using Tailwind CSS instead of styled-components.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'm noting",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": false,
+    "response_text": "Got it! I'm noting that **Tailwind CSS** is the chosen styling approach for this project, rather than styled-components.\n\nThis is a useful architectural decision to remember. It means:\n- You'll be using utility classes directly in your markup (like `className=\"flex items-center p-4 bg-blue-500\"`)\n- No CSS-in-JS runtime overhead\n- Styling will be co-located with components via class names rather than separate styled component definitions\n- You'll likely have a `tailwind.config.js` for customizati",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_002",
+    "condition": "identify_persist",
+    "query": "Please remember this decision: we're using Tailwind CSS instead of styled-components.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- **Project styling decision**: Using Tailwind CSS instead of styled-components for CSS/styling appr"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I'll remember that decision for you!\n\n**Acknowledged:** Your team/project is using **Tailwind CSS** instead of styled-components for styling. This is a good choice for utility-first CSS with great performance and no runtime overhead.\n\nI'll keep this in mind for any future code suggestions, component creation, or styling discussions - I'll use Tailwind utility classes rather than styled-components syntax.\n\n---\n\n[PERSIST]: \n- **Project styling decision**: Using Tailwind CSS instead of styled-compo",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_002",
+    "condition": "with_tool",
+    "query": "Please remember this decision: we're using Tailwind CSS instead of styled-components.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save this decision to memory for future reference.I've noted this decision: **Using Tailwind CSS instead of styled-components** for styling in this project.\n\nI'll keep this in mind for any future work on this codebase. When writing or modifying styles, I'll use Tailwind's utility classes rather than styled-components. For example:\n\n```jsx\n// Will use this (Tailwind)\n<div className=\"flex items-center p-4 bg-blue-500 rounded-lg\">\n\n// Instead of this (styled-components)\nconst Container = style",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_003",
+    "condition": "natural_language",
+    "query": "Add to your notes: my timezone is America/Los_Angeles.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "useful context for any time-related discussions, scheduling, or when interpreting timestamps in logs or data. I'll keep this in mind for our future",
+      "context"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I've noted that your timezone is **America/Los_Angeles** (Pacific Time). This is useful context for any time-related discussions, scheduling, or when interpreting timestamps in logs or data. I'll keep this in mind for our future conversations!",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_003",
+    "condition": "identify_persist",
+    "query": "Add to your notes: my timezone is America/Los_Angeles.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "User's timezone is America/Los_Angeles (Pacific Time)"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I've noted your timezone information.\n\n**Your timezone is America/Los_Angeles** (Pacific Time). I'll keep this in mind for any time-related discussions or scheduling needs during our conversation.\n\n---\n\n[PERSIST]: User's timezone is America/Los_Angeles (Pacific Time)",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_003",
+    "condition": "with_tool",
+    "query": "Add to your notes: my timezone is America/Los_Angeles.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "I'll note",
+      "'ll",
+      "note",
+      "I'll keep this in mind"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save this information about your timezone to my notes.Let me try a different approach - I'll note this preference for our conversation. Unfortunately, I don't have a persistent memory tool available in this environment to save notes across sessions.\n\nHowever, I've noted your timezone preference: **America/Los_Angeles (Pacific Time)**. I'll keep this in mind for our current conversation when discussing anything time-related!\n\nIf you'd like this to persist across sessions, you might consider ",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_004",
+    "condition": "natural_language",
+    "query": "Record this: the production database is read-only replicated to analytics-db.",
+    "expected_intent": true,
+    "expressed_intent": false,
+    "intent_phrases": [],
+    "actual_tool_call": false,
+    "response_text": "I've noted that information. So your production database has read-only replication set up to an analytics database called `analytics-db`. This is a pretty common pattern - it keeps heavy analytical queries from impacting production performance, while ensuring the analytics team has access to fresh data.\n\nThis could be useful context for future conversations, especially if we're ever:\n- Writing queries for reporting or analytics (should target `analytics-db`)\n- Debugging data sync issues between ",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_004",
+    "condition": "identify_persist",
+    "query": "Record this: the production database is read-only replicated to analytics-db.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "- **Database Architecture**: The production database is read-only replicated to `analytics-db`. This"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I've noted that information about your database architecture.\n\n**Your production database is read-only replicated to analytics-db.** This is useful context for understanding your data infrastructure - it means analytics queries should be directed to analytics-db to avoid impacting production performance, and that analytics-db will have near-real-time (or periodic) copies of production data in a read-only state.\n\n---\n\n[PERSIST]: \n- **Database Architecture**: The production database is read-only r",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_004",
+    "condition": "with_tool",
+    "query": "Record this: the production database is read-only replicated to analytics-db.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "save this",
+      "save"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save this important information about your database architecture.Let me check how to properly save this memory:",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_005",
+    "condition": "natural_language",
+    "query": "Use your memory tool to save: error logs go to Sentry, project ID is abc123.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "remember this",
+      "remember"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I appreciate you sharing that information! Let me think about what you've told me:\n\n**What I'm learning:**\n- Your project uses **Sentry** for error logging/monitoring\n- The **Sentry project ID is abc123**\n\nThis is useful context for future conversations - if you ever ask me to help with error handling, debugging, or setting up error tracking, I'll know that Sentry is your error monitoring tool and can reference the correct project ID.\n\nHowever, I should mention that I don't actually have a persi",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_005",
+    "condition": "identify_persist",
+    "query": "Use your memory tool to save: error logs go to Sentry, project ID is abc123.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "** \n- Error logging service: Sentry\n- Sentry project ID: abc123"
+    ],
+    "actual_tool_call": false,
+    "response_text": "I don't actually have a memory tool available to save information directly. However, I can help you understand what I would recommend saving if such a tool were available.\n\n**My response to you:**\n\nGot it! I've noted that your error logs are sent to Sentry with project ID `abc123`. This is useful context for debugging and monitoring discussions. If you need help with Sentry configuration, error tracking setup, or reviewing error patterns, just let me know!\n\n---\n\n**[PERSIST]:** \n- Error logging s",
+    "trial_number": 1
+  },
+  {
+    "scenario_id": "mem_explicit_005",
+    "condition": "with_tool",
+    "query": "Use your memory tool to save: error logs go to Sentry, project ID is abc123.",
+    "expected_intent": true,
+    "expressed_intent": true,
+    "intent_phrases": [
+      "I'll save",
+      "'ll",
+      "save",
+      "for future reference"
+    ],
+    "actual_tool_call": true,
+    "response_text": "I'll save that information to memory for future reference.Let me check how the memory tool works in this environment:",
+    "trial_number": 1
+  }
+]

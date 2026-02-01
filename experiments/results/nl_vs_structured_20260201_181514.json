@@ -1,0 +1,260 @@
+{
+  "metadata": {
+    "timestamp": "20260201_181514",
+    "experiment": "nl_vs_structured_tool_calling",
+    "version": "v3_matched_explicitness",
+    "num_trials": 5,
+    "include_controls": true,
+    "seed": 42,
+    "n_positive": 1,
+    "n_negative": 0,
+    "total_observations": 10
+  },
+  "design": {
+    "description": "Both conditions receive identical WHEN-to-save guidance and equally explicit HOW-to-save examples. Vagueness comes from scenarios (user requests), not system prompts.",
+    "nl_format": "Natural English (e.g., 'I'll save X to the codebase category')",
+    "structured_format": "save-memory \"content\" \"category\""
+  },
+  "conditions": {
+    "nl": "Natural language intent via [SAVE: category] tags",
+    "structured": "Structured tool call via save-memory command"
+  },
+  "metrics": {
+    "structured": {
+      "recall": 1.0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0.5655085052479191,
+        1
+      ],
+      "true_positives": 5,
+      "false_positives": 0,
+      "n_positive_scenarios": 5,
+      "n_negative_scenarios": 0
+    },
+    "nl": {
+      "recall": 1.0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0.5655085052479191,
+        1
+      ],
+      "true_positives": 5,
+      "false_positives": 0,
+      "n_positive_scenarios": 5,
+      "n_negative_scenarios": 0
+    }
+  },
+  "comparison": {
+    "nl_minus_structured_pp": 0.0,
+    "mcnemar_chi_sq": 0.0,
+    "mcnemar_p_value": 1.0,
+    "nl_wins": 0,
+    "structured_wins": 0,
+    "both_succeed": 5,
+    "both_fail": 0
+  },
+  "results": [
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"pg refers to the database (PostgreSQL)\" \"codebase\"",
+      "response_text": "I've noted that \"pg\" refers to the database in your project. I'll save this for future reference.Got it! I'll remember that **pg is the database** (PostgreSQL) in your project. This will be useful context for future discussions about your codebase - when you mention \"pg\", I'll understand you're referring to your PostgreSQL database.",
+      "is_control": false,
+      "trial_number": 1,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I understand! You're letting me know that \"pg\" refers to your database (PostgreSQL).\n\nI'll save that \"pg\" is the database reference in your project to the codebase category.\n\nIs there anything specific you'd like help with regarding your PostgreSQL database?",
+      "is_control": false,
+      "trial_number": 1,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"pg refers to the database (PostgreSQL)\" \"codebase\"",
+      "response_text": "I've noted that \"pg\" refers to your database (PostgreSQL). I'll remember this for our conversation.Got it \u2014 **pg = database (PostgreSQL)**. I'll keep this in mind for our conversation. How can I help you with your database?",
+      "is_control": false,
+      "trial_number": 2,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "I'll remember"
+      ],
+      "tool_content": null,
+      "response_text": "I'll save that preference for you.\n\nI'll remember that \"pg\" refers to your database (PostgreSQL). This will help me understand your shorthand in future conversations.",
+      "is_control": false,
+      "trial_number": 2,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I understand! You're letting me know that \"pg\" refers to your database (PostgreSQL).\n\nI'll save that \"pg\" refers to the PostgreSQL database in this codebase to the codebase category.\n\nIs there something specific you'd like me to help you with regarding your PostgreSQL database?",
+      "is_control": false,
+      "trial_number": 3,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"pg refers to the database (PostgreSQL)\" \"codebase\"",
+      "response_text": "I've noted that \"pg\" refers to your database (PostgreSQL). I'll remember this for our future conversations.Got it \u2014 **pg = database (PostgreSQL)**. I'll keep that in mind for our conversation. How can I help you with your database?",
+      "is_control": false,
+      "trial_number": 3,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"pg refers to db - PostgreSQL is the database used in this project\" \"codebase\"",
+      "response_text": "I've noted that \"pg\" refers to \"db\" in your context - meaning PostgreSQL is your database. I'll remember this for our conversations.Got it - **pg = db** (PostgreSQL is the database). I'll keep this in mind for our work together. Let me know what you'd like to do!",
+      "is_control": false,
+      "trial_number": 4,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "I'll save",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I understand! You're letting me know that \"pg\" refers to a database (PostgreSQL). I'll save this for future reference.\n\nI'll save that \"pg\" refers to the PostgreSQL database in this project to the codebase category.\n\nIs there anything specific you'd like me to help you with regarding the database?",
+      "is_control": false,
+      "trial_number": 4,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": true,
+      "success": true,
+      "intent_phrases": [],
+      "tool_content": "save-memory \"pg refers to the database (PostgreSQL)\" \"codebase\"",
+      "response_text": "Understood! I've noted that \"pg\" refers to your database (PostgreSQL). I'll remember this for our conversation.Got it - **\"pg\" = database (PostgreSQL)**. I'll keep this in mind for our conversation. How can I help you with your database?",
+      "is_control": false,
+      "trial_number": 5,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pg is db",
+      "expected_action": true,
+      "detected_intent": true,
+      "tool_called": false,
+      "success": true,
+      "intent_phrases": [
+        "I'll save",
+        "I'll save",
+        "to the codebase category",
+        "codebase"
+      ],
+      "tool_content": null,
+      "response_text": "I'll save that note about your database setup.\n\nI'll save that \"pg\" refers to the database (PostgreSQL) in this codebase to the codebase category.\n\nIs there anything specific you'd like me to help you with regarding the database?",
+      "is_control": false,
+      "trial_number": 5,
+      "is_true_positive": true,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "timestamp": "20260201_180147",
+    "experiment": "nl_vs_structured_tool_calling",
+    "version": "v3_matched_explicitness",
+    "num_trials": 1,
+    "include_controls": true,
+    "seed": 42,
+    "n_positive": 1,
+    "n_negative": 0,
+    "total_observations": 2
+  },
+  "design": {
+    "description": "Both conditions receive identical WHEN-to-save guidance and equally explicit HOW-to-save examples. Vagueness comes from scenarios (user requests), not system prompts.",
+    "nl_format": "Natural English (e.g., 'I'll save X to the codebase category')",
+    "structured_format": "save-memory \"content\" \"category\""
+  },
+  "conditions": {
+    "nl": "Natural language intent via [SAVE: category] tags",
+    "structured": "Structured tool call via save-memory command"
+  },
+  "metrics": {
+    "structured": {
+      "recall": 0.0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0,
+        0.7934567085261071
+      ],
+      "true_positives": 0,
+      "false_positives": 0,
+      "n_positive_scenarios": 1,
+      "n_negative_scenarios": 0
+    },
+    "nl": {
+      "recall": 0.0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0,
+        0.7934567085261071
+      ],
+      "true_positives": 0,
+      "false_positives": 0,
+      "n_positive_scenarios": 1,
+      "n_negative_scenarios": 0
+    }
+  },
+  "comparison": {
+    "nl_minus_structured_pp": 0.0,
+    "mcnemar_chi_sq": 0.0,
+    "mcnemar_p_value": 1.0,
+    "nl_wins": 0,
+    "structured_wins": 0,
+    "both_succeed": 0,
+    "both_fail": 1
+  },
+  "results": [
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "structured",
+      "query": "pstgrse db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": false,
+      "success": false,
+      "intent_phrases": [],
+      "tool_content": null,
+      "response_text": "I'd be happy to help you with PostgreSQL database tasks! However, your message \"pstgrse db\" seems a bit unclear. Could you please clarify what you'd like to do?\n\nHere are some common PostgreSQL tasks I can help with:\n\n1. **Connect to a database** - using `psql` command\n2. **Create a database** - `createdb` or SQL commands\n3. **List databases** - `\\l` in psql or query `pg_database`\n4. **Query tables** - SELECT statements\n5. **Database administration** - users, permissions, backups\n6. **Set up Pos",
+      "is_control": false,
+      "trial_number": 1,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": true
+    },
+    {
+      "scenario_id": "mem_implicit_002",
+      "condition": "nl",
+      "query": "pstgrse db",
+      "expected_action": true,
+      "detected_intent": false,
+      "tool_called": false,
+      "success": false,
+      "intent_phrases": [],
+      "tool_content": null,
+      "response_text": "I'd be happy to help you with PostgreSQL database tasks! However, your message \"pstgrse db\" is a bit brief. Could you clarify what you'd like to do?\n\nHere are some common PostgreSQL tasks I can help with:\n\n1. **Connect to a database** - Check connection, list databases\n2. **Create/manage databases** - Create, drop, or modify databases\n3. **Query data** - Write SELECT, INSERT, UPDATE, DELETE queries\n4. **Schema management** - Create tables, indexes, migrations\n5. **Troubleshooting** - Debug conne",
+      "is_control": false,
+      "trial_number": 1,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": true
+    }
+  ]
+}

@@ -22,12 +22,27 @@ class Scenario:
     prior_searches: Optional[list[str]] = None  # F10, F20: Prior search queries
 
 
-# Scenarios where the validator SHOULD block
-# NOTE: These test scenarios are intentionally DIFFERENT from training exemplars
-# to avoid data leakage. See exemplars.py for training data.
+# ============================================================================
+# DATA LEAKAGE PREVENTION
+# ============================================================================
+# IMPORTANT: These test scenarios are intentionally DIFFERENT from training exemplars
+# in src/validator/exemplars.py to avoid data leakage.
+#
+# Calibration exemplars (DO NOT USE HERE):
+#   - STATIC_KNOWLEDGE_EXEMPLARS: "What is the capital of France?", "What is a linked list?", etc.
+#   - MEMORY_REFERENCE_EXEMPLARS: "What did we talk about yesterday?", etc.
+#
+# Test scenarios (THIS FILE):
+#   - Use DIFFERENT queries that test the SAME concepts
+#   - Example: Instead of "What is the capital of France?", use "What is the boiling point of water?"
+#
+# If you add new scenarios, verify they don't overlap with exemplars.py!
+# ============================================================================
+
 SHOULD_BLOCK_SCENARIOS = [
     # F1: Static knowledge - should not search
     # These queries test generalization - NOT present in exemplars.py
+    # Held-out from: STATIC_KNOWLEDGE_EXEMPLARS
     Scenario("f1_001", "What is the boiling point of water?", "static", "no_tools", "F1", True),
     Scenario("f1_002", "How do binary trees work?", "static", "no_tools", "F1", True),
     Scenario("f1_003", "What is the mitochondria's function?", "static", "no_tools", "F1", True),

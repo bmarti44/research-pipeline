@@ -8,7 +8,12 @@ from typing import Optional
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from .exemplars import STATIC_KNOWLEDGE_EXEMPLARS, MEMORY_REFERENCE_EXEMPLARS
+from .exemplars import (
+    STATIC_KNOWLEDGE_EXEMPLARS,
+    MEMORY_REFERENCE_EXEMPLARS,
+    STATIC_KNOWLEDGE_HOLDOUT,
+    MEMORY_REFERENCE_HOLDOUT,
+)
 
 
 @dataclass
@@ -283,3 +288,47 @@ class SemanticClassifier:
             fold_results=fold_results,
             auc=float(auc),
         )
+
+    def validate_on_holdout(self, category: str = "static_knowledge") -> dict:
+        """
+        Validate classifier performance on held-out data to detect overfitting.
+
+        This method uses STATIC_KNOWLEDGE_HOLDOUT or MEMORY_REFERENCE_HOLDOUT
+        (which are NOT used in training) to test generalization.
+
+        Args:
+            category: "static_knowledge" or "memory_reference"
+
+        Returns:
+            Dictionary with accuracy and per-example results
+        """
+        if category == "static_knowledge":
+            holdout = STATIC_KNOWLEDGE_HOLDOUT
+            check_func = self.is_static_knowledge_query
+        elif category == "memory_reference":
+            holdout = MEMORY_REFERENCE_HOLDOUT
+            check_func = self.is_memory_reference_query
+        else:
+            raise ValueError(f"Unknown category: {category}")
+
+        results = []
+        correct = 0
+        for query in holdout:
+            is_match, score = check_func(query)
+            results.append({
+                "query": query,
+                "predicted": is_match,
+                "expected": True,  # Holdout examples should match
+                "score": score,
+                "correct": is_match,  # Should be True for positive holdout examples
+            })
+            if is_match:
+                correct += 1
+
+        return {
+            "category": category,
+            "accuracy": correct / len(holdout) if holdout else 0.0,
+            "n_total": len(holdout),
+            "n_correct": correct,
+            "results": results,
+        }

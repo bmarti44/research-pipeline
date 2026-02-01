@@ -1,8 +1,8 @@
 """
 Scenario definitions for proactive tool evaluation.
 
-This module defines scenarios across multiple tool types and explicitness levels
-for rigorous evaluation of the reasoning-action gap.
+This module defines scenarios for testing whether NL intent expression
+outperforms structured tool calling on vague user messages.
 """
 
 from dataclasses import dataclass, field
@@ -13,18 +13,11 @@ import json
 
 class ToolType(Enum):
     MEMORY = "memory"           # Save information for future
-    TASK_LOG = "task_log"       # Log completed actions
-    ANALYTICS = "analytics"     # Track preferences/patterns
-    BOOKMARK = "bookmark"       # Mark files as important
-    PROACTIVE_SEARCH = "search" # Search without explicit request
 
 
 class ExplicitnessLevel(Enum):
-    IMPLICIT = 1        # No hint at all
-    WEAK_HINT = 2       # Very subtle suggestion
-    MODERATE_HINT = 3   # Clear but indirect
-    STRONG_HINT = 4     # Direct suggestion
-    EXPLICIT = 5        # Direct command
+    IMPLICIT = 1        # Vague, no hint to save
+    EXPLICIT = 5        # Direct command to save
     CONTROL = 0         # Should NOT trigger tool
 
 
@@ -36,8 +29,8 @@ class Scenario:
     query: str
     expected_action: bool
     expected_content: Optional[str] = None
-    trigger_pattern: Optional[str] = None  # e.g., "this is important"
-    category: Optional[str] = None  # For memory: codebase, preference, etc.
+    trigger_pattern: Optional[str] = None
+    category: Optional[str] = None
     tags: list = field(default_factory=list)
 
     def to_dict(self):
@@ -56,234 +49,417 @@ class Scenario:
 
 
 # =============================================================================
-# MEMORY TOOL SCENARIOS (25)
+# MEMORY TOOL SCENARIOS - IMPLICIT (20 vague scenarios)
 # =============================================================================
 
 MEMORY_SCENARIOS = [
-    # IMPLICIT (5) - No hint at all
+    # Original implicit (5) - very terse
+    Scenario(
+            id="mem_implicit_000",
+            tool_type=ToolType.MEMORY,
+            level=ExplicitnessLevel.IMPLICIT,
+            query="app.py is in ./src",
+            expected_action=True,
+            expected_content="app.py in src folder",
+            category="codebase",
+        ),
     Scenario(
         id="mem_implicit_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="The main entry point is src/app.py and it uses FastAPI. The database models are in src/models/.",
+        query="app.ts is in ./src",
         expected_action=True,
-        expected_content="entry point src/app.py, FastAPI, models in src/models",
+        expected_content="app.ts in src folder",
         category="codebase",
-        tags=["architecture", "no_trigger"],
     ),
     Scenario(
         id="mem_implicit_002",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="We use PostgreSQL 15 with the pgvector extension for embeddings.",
+        query="pg is db",
         expected_action=True,
-        expected_content="PostgreSQL 15, pgvector extension",
+        expected_content="using Postgres",
         category="codebase",
-        tags=["database", "no_trigger"],
     ),
     Scenario(
         id="mem_implicit_003",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="Authentication is handled by Clerk, and we store sessions in Redis.",
+        query="clerk is used for auth",
         expected_action=True,
-        expected_content="Clerk for auth, Redis for sessions",
+        expected_content="Clerk for auth",
         category="codebase",
-        tags=["auth", "no_trigger"],
     ),
     Scenario(
         id="mem_implicit_004",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="The API rate limit is 100 requests per minute per user.",
+        query="rate limit is about 100 per minute",
         expected_action=True,
-        expected_content="rate limit 100 req/min/user",
-        category="codebase",
-        tags=["constraints", "no_trigger"],
+        expected_content="rate limit ~100/min",
+        category="constraint",
     ),
     Scenario(
         id="mem_implicit_005",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="All environment variables are in .env.local, never commit them.",
+        query="the config is in .env.local",
         expected_action=True,
-        expected_content="env vars in .env.local, don't commit",
+        expected_content="config in .env.local",
         category="codebase",
-        tags=["security", "no_trigger"],
     ),
 
-    # WEAK HINT (5) - Subtle suggestion
+    # Converted from weak (5) - made vague
     Scenario(
-        id="mem_weak_001",
+        id="mem_implicit_006",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="Just so you know, we deploy to AWS using CDK.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="deploy uses CDK",
         expected_action=True,
-        expected_content="deploy to AWS with CDK",
-        trigger_pattern="just so you know",
+        expected_content="deploy with CDK",
         category="codebase",
-        tags=["deployment", "weak_trigger"],
     ),
     Scenario(
-        id="mem_weak_002",
+        id="mem_implicit_007",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="FYI, I prefer functional components over class components in React.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="prefer functional components",
         expected_action=True,
         expected_content="prefers functional React components",
-        trigger_pattern="fyi",
         category="user_preference",
-        tags=["preference", "weak_trigger"],
     ),
     Scenario(
-        id="mem_weak_003",
+        id="mem_implicit_008",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="By the way, tests are in __tests__ folders next to the source files.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="tests in __tests__ folders",
         expected_action=True,
-        expected_content="tests in __tests__ folders, colocated",
-        trigger_pattern="by the way",
+        expected_content="tests in __tests__ folders",
         category="codebase",
-        tags=["testing", "weak_trigger"],
     ),
     Scenario(
-        id="mem_weak_004",
+        id="mem_implicit_009",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="For your information, we use Prettier with 2-space indentation.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="two space indent",
         expected_action=True,
-        expected_content="Prettier, 2-space indent",
-        trigger_pattern="for your information",
+        expected_content="2-space indentation",
         category="codebase",
-        tags=["formatting", "weak_trigger"],
     ),
     Scenario(
-        id="mem_weak_005",
+        id="mem_implicit_010",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="Note that all dates should be stored in UTC.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="dates are UTC in db",
         expected_action=True,
-        expected_content="dates stored in UTC",
-        trigger_pattern="note that",
+        expected_content="dates in UTC",
         category="codebase",
-        tags=["conventions", "weak_trigger"],
     ),
 
-    # MODERATE HINT (5) - Clear but indirect
+    # Converted from moderate (5) - made vague
     Scenario(
-        id="mem_moderate_001",
+        id="mem_implicit_011",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="This is important: the authentication system uses bcrypt for password hashing and JWT for session tokens.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="bcrypt for passwords, jwt for sessions",
         expected_action=True,
         expected_content="bcrypt for passwords, JWT for sessions",
-        trigger_pattern="this is important",
         category="codebase",
-        tags=["auth", "importance_marker"],
     ),
     Scenario(
-        id="mem_moderate_002",
+        id="mem_implicit_012",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="I prefer using type hints everywhere and descriptive variable names. Keep that in mind.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="type hints everywhere, descriptive names",
         expected_action=True,
         expected_content="prefers type hints, descriptive names",
-        trigger_pattern="keep that in mind",
         category="user_preference",
-        tags=["preference", "future_reference"],
     ),
     Scenario(
-        id="mem_moderate_003",
+        id="mem_implicit_013",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="Going forward, we'll use PostgreSQL for all new database operations.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="postgres for new db stuff",
         expected_action=True,
-        expected_content="PostgreSQL for all new DB ops",
-        trigger_pattern="going forward",
+        expected_content="PostgreSQL for new DB ops",
         category="decision",
-        tags=["decision", "future_reference"],
     ),
     Scenario(
-        id="mem_moderate_004",
+        id="mem_implicit_014",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="For future reference, the staging environment is at staging.example.com.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="staging is at staging.example.com",
         expected_action=True,
         expected_content="staging at staging.example.com",
-        trigger_pattern="for future reference",
         category="codebase",
-        tags=["environment", "future_reference"],
     ),
     Scenario(
-        id="mem_moderate_005",
+        id="mem_implicit_015",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="You should know that we never use console.log in production code.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="no console.log in prod",
         expected_action=True,
         expected_content="no console.log in production",
-        trigger_pattern="you should know",
         category="codebase",
-        tags=["conventions", "importance_marker"],
     ),
 
-    # STRONG HINT (5) - Direct suggestion
+    # Converted from strong (5) - made vague
     Scenario(
-        id="mem_strong_001",
+        id="mem_implicit_016",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Please note for later: the CI/CD pipeline is in .github/workflows/.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="ci/cd is in .github/workflows",
         expected_action=True,
         expected_content="CI/CD in .github/workflows",
-        trigger_pattern="please note for later",
         category="codebase",
-        tags=["devops", "explicit_save_hint"],
     ),
     Scenario(
-        id="mem_strong_002",
+        id="mem_implicit_017",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="I'd like you to remember that I prefer tabs over spaces.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="tabs not spaces",
         expected_action=True,
         expected_content="prefers tabs over spaces",
-        trigger_pattern="remember that",
         category="user_preference",
-        tags=["preference", "explicit_save_hint"],
     ),
     Scenario(
-        id="mem_strong_003",
+        id="mem_implicit_018",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Make a note: we decided to use GraphQL instead of REST for the new API.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="graphql for the new api",
         expected_action=True,
-        expected_content="GraphQL for new API (not REST)",
-        trigger_pattern="make a note",
+        expected_content="GraphQL for new API",
         category="decision",
-        tags=["decision", "explicit_save_hint"],
     ),
     Scenario(
-        id="mem_strong_004",
+        id="mem_implicit_019",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Don't forget: the admin panel requires 2FA for all users.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="admin panel needs 2fa",
         expected_action=True,
         expected_content="admin panel requires 2FA",
-        trigger_pattern="don't forget",
         category="codebase",
-        tags=["security", "explicit_save_hint"],
     ),
     Scenario(
-        id="mem_strong_005",
+        id="mem_implicit_020",
         tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Store this for later: the database connection string format is postgres://user:pass@host:5432/db.",
+        level=ExplicitnessLevel.IMPLICIT,
+        query="db connection is postgres://user:pass@host:5432/db",
         expected_action=True,
         expected_content="DB connection format",
-        trigger_pattern="store this for later",
         category="codebase",
-        tags=["database", "explicit_save_hint"],
     ),
 
-    # EXPLICIT (5) - Direct command
+    # =========================================================================
+    # FILE PATH FAMILIARITY TEST - High vs Low familiarity
+    # Testing hypothesis: familiar conventions trigger less verification behavior
+    # =========================================================================
+
+    # HIGH FAMILIARITY - Very common file names/paths across ecosystems
+    Scenario(
+        id="mem_filepath_high_001",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="index.js is in ./src",
+        expected_action=True,
+        expected_content="index.js in src",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="main.py is in the root",
+        expected_action=True,
+        expected_content="main.py in root",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="package.json is in root",
+        expected_action=True,
+        expected_content="package.json in root",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_004",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="__init__.py is in ./src",
+        expected_action=True,
+        expected_content="__init__.py in src",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_005",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="settings.py is in ./config",
+        expected_action=True,
+        expected_content="settings.py in config",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_006",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="routes.py is in ./api",
+        expected_action=True,
+        expected_content="routes.py in api",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_007",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="models.py is in ./app",
+        expected_action=True,
+        expected_content="models.py in app",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_008",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="index.html is in ./public",
+        expected_action=True,
+        expected_content="index.html in public",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_009",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Dockerfile is in root",
+        expected_action=True,
+        expected_content="Dockerfile in root",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_high_010",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="README.md is in root",
+        expected_action=True,
+        expected_content="README.md in root",
+        category="codebase",
+        tags=["filepath", "high_familiarity"],
+    ),
+
+    # LOW FAMILIARITY - Uncommon/custom file names, unusual paths
+    Scenario(
+        id="mem_filepath_low_001",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="orchestrator.py is in ./core",
+        expected_action=True,
+        expected_content="orchestrator.py in core",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="dispatcher.ts is in ./lib",
+        expected_action=True,
+        expected_content="dispatcher.ts in lib",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="coordinator.go is in ./internal",
+        expected_action=True,
+        expected_content="coordinator.go in internal",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_004",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="bootstrap.php is in ./app",
+        expected_action=True,
+        expected_content="bootstrap.php in app",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_005",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="entrypoint.rs is in ./src",
+        expected_action=True,
+        expected_content="entrypoint.rs in src",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_006",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="processor.scala is in ./app",
+        expected_action=True,
+        expected_content="processor.scala in app",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_007",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="handler.ex is in ./lib",
+        expected_action=True,
+        expected_content="handler.ex in lib",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_008",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="mediator.kt is in ./src",
+        expected_action=True,
+        expected_content="mediator.kt in src",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_009",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="aggregator.rb is in ./services",
+        expected_action=True,
+        expected_content="aggregator.rb in services",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+    Scenario(
+        id="mem_filepath_low_010",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="reconciler.zig is in ./core",
+        expected_action=True,
+        expected_content="reconciler.zig in core",
+        category="codebase",
+        tags=["filepath", "low_familiarity"],
+    ),
+
+    # EXPLICIT (5) - Direct commands (for sanity check)
     Scenario(
         id="mem_explicit_001",
         tool_type=ToolType.MEMORY,
@@ -293,7 +469,6 @@ MEMORY_SCENARIOS = [
         expected_content="Stripe payments, webhook at /api/webhooks/stripe",
         trigger_pattern="save this to memory",
         category="codebase",
-        tags=["payments", "explicit_command"],
     ),
     Scenario(
         id="mem_explicit_002",
@@ -304,7 +479,6 @@ MEMORY_SCENARIOS = [
         expected_content="Tailwind CSS (not styled-components)",
         trigger_pattern="please remember this",
         category="decision",
-        tags=["decision", "explicit_command"],
     ),
     Scenario(
         id="mem_explicit_003",
@@ -315,7 +489,6 @@ MEMORY_SCENARIOS = [
         expected_content="timezone America/Los_Angeles",
         trigger_pattern="add to your notes",
         category="user_preference",
-        tags=["preference", "explicit_command"],
     ),
     Scenario(
         id="mem_explicit_004",
@@ -326,7 +499,6 @@ MEMORY_SCENARIOS = [
         expected_content="prod DB replicated to analytics-db (read-only)",
         trigger_pattern="record this",
         category="codebase",
-        tags=["database", "explicit_command"],
     ),
     Scenario(
         id="mem_explicit_005",
@@ -337,304 +509,16 @@ MEMORY_SCENARIOS = [
         expected_content="Sentry for errors, project abc123",
         trigger_pattern="use your memory tool",
         category="codebase",
-        tags=["monitoring", "explicit_command"],
     ),
 ]
 
 
 # =============================================================================
-# TASK LOGGING SCENARIOS (25)
-# =============================================================================
-
-TASK_LOG_SCENARIOS = [
-    # IMPLICIT (5)
-    Scenario(
-        id="log_implicit_001",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.IMPLICIT,
-        query="I fixed the authentication bug in login.py.",
-        expected_action=True,
-        expected_content="fixed auth bug in login.py",
-        category="task_completed",
-        tags=["bugfix", "no_trigger"],
-    ),
-    Scenario(
-        id="log_implicit_002",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.IMPLICIT,
-        query="The user registration flow is now working correctly.",
-        expected_action=True,
-        expected_content="user registration working",
-        category="task_completed",
-        tags=["feature", "no_trigger"],
-    ),
-    Scenario(
-        id="log_implicit_003",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.IMPLICIT,
-        query="All unit tests are passing now.",
-        expected_action=True,
-        expected_content="all unit tests passing",
-        category="task_completed",
-        tags=["testing", "no_trigger"],
-    ),
-    Scenario(
-        id="log_implicit_004",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.IMPLICIT,
-        query="The database migration completed successfully.",
-        expected_action=True,
-        expected_content="DB migration completed",
-        category="task_completed",
-        tags=["database", "no_trigger"],
-    ),
-    Scenario(
-        id="log_implicit_005",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.IMPLICIT,
-        query="Refactored the payment processing module.",
-        expected_action=True,
-        expected_content="refactored payment processing",
-        category="task_completed",
-        tags=["refactor", "no_trigger"],
-    ),
-
-    # WEAK HINT (5)
-    Scenario(
-        id="log_weak_001",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="Just finished implementing the search feature.",
-        expected_action=True,
-        expected_content="implemented search feature",
-        trigger_pattern="just finished",
-        category="task_completed",
-        tags=["feature", "completion_language"],
-    ),
-    Scenario(
-        id="log_weak_002",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="Done with the code review for PR #123.",
-        expected_action=True,
-        expected_content="code review PR #123 complete",
-        trigger_pattern="done with",
-        category="task_completed",
-        tags=["review", "completion_language"],
-    ),
-    Scenario(
-        id="log_weak_003",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="Completed the API endpoint documentation.",
-        expected_action=True,
-        expected_content="API docs completed",
-        trigger_pattern="completed",
-        category="task_completed",
-        tags=["docs", "completion_language"],
-    ),
-    Scenario(
-        id="log_weak_004",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="Successfully deployed to staging environment.",
-        expected_action=True,
-        expected_content="deployed to staging",
-        trigger_pattern="successfully",
-        category="task_completed",
-        tags=["deployment", "completion_language"],
-    ),
-    Scenario(
-        id="log_weak_005",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.WEAK_HINT,
-        query="Wrapped up the performance optimization work.",
-        expected_action=True,
-        expected_content="performance optimization done",
-        trigger_pattern="wrapped up",
-        category="task_completed",
-        tags=["optimization", "completion_language"],
-    ),
-
-    # MODERATE HINT (5)
-    Scenario(
-        id="log_moderate_001",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="I just finished refactoring the user service. All tests pass now.",
-        expected_action=True,
-        expected_content="refactored user service, tests pass",
-        trigger_pattern="just finished",
-        category="task_completed",
-        tags=["refactor", "completion_with_verification"],
-    ),
-    Scenario(
-        id="log_moderate_002",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="Task complete: migrated all users to the new authentication system.",
-        expected_action=True,
-        expected_content="migrated users to new auth",
-        trigger_pattern="task complete",
-        category="task_completed",
-        tags=["migration", "explicit_completion"],
-    ),
-    Scenario(
-        id="log_moderate_003",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="That's done - the caching layer is now implemented and tested.",
-        expected_action=True,
-        expected_content="caching layer implemented and tested",
-        trigger_pattern="that's done",
-        category="task_completed",
-        tags=["feature", "explicit_completion"],
-    ),
-    Scenario(
-        id="log_moderate_004",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="Finished! The export functionality now supports CSV and JSON formats.",
-        expected_action=True,
-        expected_content="export supports CSV and JSON",
-        trigger_pattern="finished!",
-        category="task_completed",
-        tags=["feature", "explicit_completion"],
-    ),
-    Scenario(
-        id="log_moderate_005",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.MODERATE_HINT,
-        query="Work complete on ticket JIRA-456: implemented rate limiting.",
-        expected_action=True,
-        expected_content="JIRA-456: rate limiting implemented",
-        trigger_pattern="work complete",
-        category="task_completed",
-        tags=["feature", "ticket_reference"],
-    ),
-
-    # STRONG HINT (5)
-    Scenario(
-        id="log_strong_001",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Please log that I've completed the security audit.",
-        expected_action=True,
-        expected_content="security audit completed",
-        trigger_pattern="please log",
-        category="task_completed",
-        tags=["security", "explicit_log_request"],
-    ),
-    Scenario(
-        id="log_strong_002",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Make sure to record that the database backup system is working.",
-        expected_action=True,
-        expected_content="DB backup system working",
-        trigger_pattern="make sure to record",
-        category="task_completed",
-        tags=["devops", "explicit_log_request"],
-    ),
-    Scenario(
-        id="log_strong_003",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Note this milestone: v2.0 feature freeze achieved.",
-        expected_action=True,
-        expected_content="v2.0 feature freeze",
-        trigger_pattern="note this milestone",
-        category="task_completed",
-        tags=["milestone", "explicit_log_request"],
-    ),
-    Scenario(
-        id="log_strong_004",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Track this: resolved all P0 bugs for the release.",
-        expected_action=True,
-        expected_content="all P0 bugs resolved",
-        trigger_pattern="track this",
-        category="task_completed",
-        tags=["bugfix", "explicit_log_request"],
-    ),
-    Scenario(
-        id="log_strong_005",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.STRONG_HINT,
-        query="Keep a record that we shipped the mobile app v3.1.",
-        expected_action=True,
-        expected_content="shipped mobile app v3.1",
-        trigger_pattern="keep a record",
-        category="task_completed",
-        tags=["release", "explicit_log_request"],
-    ),
-
-    # EXPLICIT (5)
-    Scenario(
-        id="log_explicit_001",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.EXPLICIT,
-        query="Log this task as complete: implemented OAuth2 integration.",
-        expected_action=True,
-        expected_content="OAuth2 integration complete",
-        trigger_pattern="log this task",
-        category="task_completed",
-        tags=["feature", "explicit_command"],
-    ),
-    Scenario(
-        id="log_explicit_002",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.EXPLICIT,
-        query="Use the task logger to record: finished migrating to TypeScript.",
-        expected_action=True,
-        expected_content="TypeScript migration complete",
-        trigger_pattern="use the task logger",
-        category="task_completed",
-        tags=["migration", "explicit_command"],
-    ),
-    Scenario(
-        id="log_explicit_003",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.EXPLICIT,
-        query="Add to the task log: performance tests now run in CI.",
-        expected_action=True,
-        expected_content="perf tests in CI",
-        trigger_pattern="add to the task log",
-        category="task_completed",
-        tags=["testing", "explicit_command"],
-    ),
-    Scenario(
-        id="log_explicit_004",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.EXPLICIT,
-        query="Record in the activity log: deployed hotfix for CVE-2024-1234.",
-        expected_action=True,
-        expected_content="hotfix CVE-2024-1234 deployed",
-        trigger_pattern="record in the activity log",
-        category="task_completed",
-        tags=["security", "explicit_command"],
-    ),
-    Scenario(
-        id="log_explicit_005",
-        tool_type=ToolType.TASK_LOG,
-        level=ExplicitnessLevel.EXPLICIT,
-        query="Call the logging tool to save: completed accessibility audit, WCAG 2.1 AA compliant.",
-        expected_action=True,
-        expected_content="accessibility audit complete, WCAG 2.1 AA",
-        trigger_pattern="call the logging tool",
-        category="task_completed",
-        tags=["accessibility", "explicit_command"],
-    ),
-]
-
-
-# =============================================================================
-# CONTROL SCENARIOS (25) - Should NOT trigger any tool
+# CONTROL SCENARIOS (5) - Should NOT trigger any tool
 # =============================================================================
 
 CONTROL_SCENARIOS = [
-    # Simple questions
+    # One from each category for diversity
     Scenario(
         id="ctrl_question_001",
         tool_type=ToolType.MEMORY,
@@ -644,40 +528,6 @@ CONTROL_SCENARIOS = [
         tags=["simple_question"],
     ),
     Scenario(
-        id="ctrl_question_002",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="How do I create a list in Python?",
-        expected_action=False,
-        tags=["simple_question"],
-    ),
-    Scenario(
-        id="ctrl_question_003",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="What's the difference between let and const in JavaScript?",
-        expected_action=False,
-        tags=["simple_question"],
-    ),
-    Scenario(
-        id="ctrl_question_004",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Can you explain what a REST API is?",
-        expected_action=False,
-        tags=["simple_question"],
-    ),
-    Scenario(
-        id="ctrl_question_005",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="What does HTTP 404 mean?",
-        expected_action=False,
-        tags=["simple_question"],
-    ),
-
-    # Requests for immediate action
-    Scenario(
         id="ctrl_action_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
@@ -685,40 +535,6 @@ CONTROL_SCENARIOS = [
         expected_action=False,
         tags=["action_request"],
     ),
-    Scenario(
-        id="ctrl_action_002",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Can you help me debug this error?",
-        expected_action=False,
-        tags=["action_request"],
-    ),
-    Scenario(
-        id="ctrl_action_003",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Review this code and suggest improvements.",
-        expected_action=False,
-        tags=["action_request"],
-    ),
-    Scenario(
-        id="ctrl_action_004",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Help me write a unit test for this function.",
-        expected_action=False,
-        tags=["action_request"],
-    ),
-    Scenario(
-        id="ctrl_action_005",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Refactor this code to use async/await.",
-        expected_action=False,
-        tags=["action_request"],
-    ),
-
-    # Temporary/ephemeral information
     Scenario(
         id="ctrl_temp_001",
         tool_type=ToolType.MEMORY,
@@ -728,49 +544,7 @@ CONTROL_SCENARIOS = [
         tags=["temporary"],
     ),
     Scenario(
-        id="ctrl_temp_002",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Let me try running this command once.",
-        expected_action=False,
-        tags=["temporary"],
-    ),
-    Scenario(
-        id="ctrl_temp_003",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="This is just a temporary workaround until we fix it properly.",
-        expected_action=False,
-        tags=["temporary"],
-    ),
-    Scenario(
-        id="ctrl_temp_004",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="I'm experimenting with different approaches.",
-        expected_action=False,
-        tags=["temporary"],
-    ),
-    Scenario(
-        id="ctrl_temp_005",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Just checking if this works.",
-        expected_action=False,
-        tags=["temporary"],
-    ),
-
-    # Chitchat
-    Scenario(
         id="ctrl_chat_001",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Hello! How are you today?",
-        expected_action=False,
-        tags=["chitchat"],
-    ),
-    Scenario(
-        id="ctrl_chat_002",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
         query="Thanks for your help!",
@@ -778,68 +552,10 @@ CONTROL_SCENARIOS = [
         tags=["chitchat"],
     ),
     Scenario(
-        id="ctrl_chat_003",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="That makes sense, thanks.",
-        expected_action=False,
-        tags=["chitchat"],
-    ),
-    Scenario(
-        id="ctrl_chat_004",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Got it, I'll try that.",
-        expected_action=False,
-        tags=["chitchat"],
-    ),
-    Scenario(
-        id="ctrl_chat_005",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Perfect, that's exactly what I needed.",
-        expected_action=False,
-        tags=["chitchat"],
-    ),
-
-    # Already-discussed information
-    Scenario(
         id="ctrl_known_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
         query="As I mentioned before, we use React.",
-        expected_action=False,
-        tags=["already_known"],
-    ),
-    Scenario(
-        id="ctrl_known_002",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Like I said earlier, the tests are in the tests/ folder.",
-        expected_action=False,
-        tags=["already_known"],
-    ),
-    Scenario(
-        id="ctrl_known_003",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="You already know we're using PostgreSQL.",
-        expected_action=False,
-        tags=["already_known"],
-    ),
-    Scenario(
-        id="ctrl_known_004",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="We discussed this - the API is RESTful.",
-        expected_action=False,
-        tags=["already_known"],
-    ),
-    Scenario(
-        id="ctrl_known_005",
-        tool_type=ToolType.MEMORY,
-        level=ExplicitnessLevel.CONTROL,
-        query="Remember when I told you about the config file? It's still there.",
         expected_action=False,
         tags=["already_known"],
     ),
@@ -850,12 +566,7 @@ CONTROL_SCENARIOS = [
 # ALL SCENARIOS
 # =============================================================================
 
-ALL_SCENARIOS = MEMORY_SCENARIOS + TASK_LOG_SCENARIOS + CONTROL_SCENARIOS
-
-
-def get_scenarios_by_tool(tool_type: ToolType) -> list[Scenario]:
-    """Get all scenarios for a specific tool type."""
-    return [s for s in ALL_SCENARIOS if s.tool_type == tool_type]
+ALL_SCENARIOS = MEMORY_SCENARIOS + CONTROL_SCENARIOS
 
 
 def get_scenarios_by_level(level: ExplicitnessLevel) -> list[Scenario]:
@@ -863,20 +574,10 @@ def get_scenarios_by_level(level: ExplicitnessLevel) -> list[Scenario]:
     return [s for s in ALL_SCENARIOS if s.level == level]
 
 
-def get_scenarios_by_trigger(trigger_pattern: str) -> list[Scenario]:
-    """Get all scenarios with a specific trigger pattern."""
-    return [s for s in ALL_SCENARIOS
-            if s.trigger_pattern and trigger_pattern.lower() in s.trigger_pattern.lower()]
-
-
 def export_scenarios(filepath: str):
     """Export all scenarios to JSON."""
     data = {
         "total": len(ALL_SCENARIOS),
-        "by_tool": {
-            tool.value: len(get_scenarios_by_tool(tool))
-            for tool in ToolType
-        },
         "by_level": {
             level.name: len(get_scenarios_by_level(level))
             for level in ExplicitnessLevel
@@ -889,13 +590,8 @@ def export_scenarios(filepath: str):
 
 if __name__ == "__main__":
     print(f"Total scenarios: {len(ALL_SCENARIOS)}")
-    print(f"\nBy tool type:")
-    for tool in ToolType:
-        print(f"  {tool.value}: {len(get_scenarios_by_tool(tool))}")
     print(f"\nBy explicitness level:")
     for level in ExplicitnessLevel:
-        print(f"  {level.name}: {len(get_scenarios_by_level(level))}")
-
-    # Export
-    export_scenarios("experiments/scenarios/proactive_scenarios.json")
-    print(f"\nExported to proactive_scenarios.json")
+        count = len(get_scenarios_by_level(level))
+        if count > 0:
+            print(f"  {level.name}: {count}")

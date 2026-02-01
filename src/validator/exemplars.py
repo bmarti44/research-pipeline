@@ -1,10 +1,30 @@
 """
 Unified exemplars for semantic classification.
-Used in both calibration and runtime.
+
+IMPORTANT: Data Leakage Prevention
+==================================
+The exemplars in this file are used to compute centroids for semantic classification.
+To avoid data leakage, these exemplars MUST be kept separate from test scenarios:
+
+1. CALIBRATION EXEMPLARS (this file): Used to train/calibrate the semantic classifier
+2. TEST SCENARIOS (scenarios/generator.py): Used to evaluate the classifier
+
+Rule: If a query appears in this file, it MUST NOT appear in test scenarios, and vice versa.
+
+The test scenarios in scenarios/generator.py have been carefully designed to test the
+same concepts WITHOUT using the exact same queries. For example:
+- Exemplar: "What is the capital of France?"
+- Test: "What is the boiling point of water?" (different query, same static-knowledge pattern)
+
+When adding new exemplars or test scenarios, ensure no overlap exists.
 """
 
+# ============================================================================
+# CALIBRATION EXEMPLARS - DO NOT USE IN TEST SCENARIOS
+# ============================================================================
+
 STATIC_KNOWLEDGE_EXEMPLARS = [
-    # Basic facts
+    # Basic facts (used for calibration only)
     "What is the capital of France?",
     "What is photosynthesis?",
     "Define recursion",
@@ -36,6 +56,7 @@ STATIC_KNOWLEDGE_EXEMPLARS = [
 ]
 
 MEMORY_REFERENCE_EXEMPLARS = [
+    # Memory reference patterns (used for calibration only)
     "What did we talk about yesterday?",
     "Remember when we discussed the project?",
     "You mentioned something about deadlines earlier",
@@ -53,4 +74,26 @@ MEMORY_REFERENCE_EXEMPLARS = [
     "What did we agree on?",
     "Can you recall our earlier discussion?",
     "What was my original request?",
+]
+
+# ============================================================================
+# HELD-OUT VALIDATION SET - For testing calibration without data leakage
+# ============================================================================
+# These are NOT used for computing centroids. Use for validation only.
+
+STATIC_KNOWLEDGE_HOLDOUT = [
+    # Held-out examples for validation (NOT in training set)
+    "What is the boiling point of water?",
+    "How do binary trees work?",
+    "What is the mitochondria's function?",
+    "Who painted the Mona Lisa?",
+    "What is Euler's formula?",
+]
+
+MEMORY_REFERENCE_HOLDOUT = [
+    # Held-out examples for validation (NOT in training set)
+    "What were we chatting about last week?",
+    "Recall our conversation about the deadline?",
+    "What was the price range I gave you?",
+    "Earlier you noted something about the timeline",
 ]
