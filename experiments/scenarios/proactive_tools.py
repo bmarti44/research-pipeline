@@ -459,6 +459,107 @@ MEMORY_SCENARIOS = [
         tags=["filepath", "low_familiarity"],
     ),
 
+    # =========================================================================
+    # PRECISION TEST - Scenarios where structured output's fidelity advantage
+    # may outweigh NL's recall advantage (exact values, multi-field, negation)
+    # =========================================================================
+
+    # PRECISION - Exact numeric/version values that need to be preserved exactly
+    Scenario(
+        id="mem_precision_001",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="max upload is exactly 10485760 bytes",
+        expected_action=True,
+        expected_content="max upload 10485760 bytes",
+        category="constraint",
+        tags=["precision", "numeric"],
+    ),
+    Scenario(
+        id="mem_precision_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="our api is at v2.3.1-beta.4",
+        expected_action=True,
+        expected_content="API version v2.3.1-beta.4",
+        category="codebase",
+        tags=["precision", "version"],
+    ),
+    Scenario(
+        id="mem_precision_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="timeout is 30000ms, not 30s",
+        expected_action=True,
+        expected_content="timeout 30000ms (not 30s)",
+        category="constraint",
+        tags=["precision", "numeric"],
+    ),
+
+    # MULTI-FIELD - Multiple pieces of information that all need to be captured
+    Scenario(
+        id="mem_multifield_001",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="auth uses OAuth2 with PKCE, tokens expire in 3600s, refresh enabled",
+        expected_action=True,
+        expected_content="OAuth2 PKCE, 3600s expiry, refresh enabled",
+        category="codebase",
+        tags=["multifield", "auth"],
+    ),
+    Scenario(
+        id="mem_multifield_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="db is postgres 15.2 on port 5433 with ssl required",
+        expected_action=True,
+        expected_content="postgres 15.2, port 5433, ssl required",
+        category="codebase",
+        tags=["multifield", "database"],
+    ),
+    Scenario(
+        id="mem_multifield_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="redis cache at localhost:6379, db 2, password is in REDIS_PASS env var",
+        expected_action=True,
+        expected_content="redis localhost:6379, db 2, password in REDIS_PASS",
+        category="codebase",
+        tags=["multifield", "cache"],
+    ),
+
+    # NEGATION - State changes, migrations, removals that need precise capture
+    Scenario(
+        id="mem_negation_001",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="we migrated off Redis last month",
+        expected_action=True,
+        expected_content="migrated off Redis",
+        category="decision",
+        tags=["negation", "migration"],
+    ),
+    Scenario(
+        id="mem_negation_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="removed the webpack config, using vite now",
+        expected_action=True,
+        expected_content="removed webpack, using vite",
+        category="decision",
+        tags=["negation", "migration"],
+    ),
+    Scenario(
+        id="mem_negation_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="deprecated the v1 api, only v2 is supported",
+        expected_action=True,
+        expected_content="v1 API deprecated, only v2 supported",
+        category="codebase",
+        tags=["negation", "deprecation"],
+    ),
+
     # EXPLICIT (5) - Direct commands (for sanity check)
     Scenario(
         id="mem_explicit_001",

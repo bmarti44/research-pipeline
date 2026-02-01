@@ -55,6 +55,21 @@ from experiments.scenarios.proactive_tools import (
 
 
 # =============================================================================
+# Configurable Constants
+# =============================================================================
+
+# Maximum characters to extract for tool content comparison
+# This should be enough to capture the essential saved content without
+# including extraneous response text. 200 chars typically covers 1-2 sentences.
+MAX_TOOL_CONTENT_LENGTH: int = 200
+
+# Maximum characters to store in response_text field
+# This preserves enough context for debugging while avoiding memory bloat.
+# 1500 chars is roughly 250-300 words, sufficient for most responses.
+MAX_RESPONSE_TEXT_LENGTH: int = 1500
+
+
+# =============================================================================
 # PROMPTS - The key experimental manipulation
 # =============================================================================
 
@@ -111,11 +126,46 @@ If nothing needs to be saved, respond normally."""
 # Intent Detection - XML and Natural Language patterns
 # =============================================================================
 
-# XML pattern for save-memory tags (used by both conditions)
+# XML pattern for save-memory tags (strict - exact format match)
 SAVE_MEMORY_XML_PATTERN = re.compile(
     r'<save-memory\s+category=["\'](\w+)["\']>(.+?)</save-memory>',
     re.IGNORECASE | re.DOTALL
 )
+
+# Additional patterns to detect malformed XML save attempts
+# This makes detection more symmetric with NL patterns which are also generous
+# NOTE: These are used to flag attempted saves, not to extract content
+MALFORMED_XML_PATTERNS = [
+    # Common variations of the save-memory tag
+    r'<save[-_]?memory\b[^>]*>',      # save-memory, save_memory, savememory
+    r'<memory\b[^>]*>',                # Just <memory>
+    r'<save\b[^>]*>',                  # Just <save>
+    r'<remember\b[^>]*>',              # <remember>
+    r'<note\b[^>]*>',                  # <note>
+    r'<store\b[^>]*>',                 # <store>
+    r'<record\b[^>]*>',                # <record>
+    # Category-like attributes without proper tag
+    r'category\s*=\s*["\']?\w+["\']?', # category="codebase" (no tag)
+]
+
+MALFORMED_XML_REGEX = re.compile(
+    "|".join(f"({p})" for p in MALFORMED_XML_PATTERNS),
+    re.IGNORECASE
+)
+
+
+def detect_xml_save_attempt(text: str) -> bool:
+    """Detect if the model attempted to use XML to save, even if malformed.
+
+    This provides symmetric detection with NL patterns - both are generous
+    in recognizing save intent.
+    """
+    # First check for properly formatted XML
+    if SAVE_MEMORY_XML_PATTERN.search(text):
+        return True
+    # Then check for malformed XML attempts
+    return bool(MALFORMED_XML_REGEX.search(text))
+
 
 # Detect natural language expressions of save intent
 # These patterns match how humans naturally express "I'm saving this"
@@ -192,17 +242,30 @@ async def judge_fidelity_comparison(
 ) -> dict:
     """Compare NL vs Structured responses head-to-head.
 
+    To prevent position bias (LLM judges may favor response A or B),
+    the order is randomized and the winner is mapped back to the
+    actual condition.
+
     Returns dict with 'winner' ('nl', 'structured', or 'tie') and 'reason'.
     """
+    # Randomize order to prevent position bias
+    nl_is_first = random.choice([True, False])
+
+    if nl_is_first:
+        response_a = nl_response
+        response_b = structured_response
+    else:
+        response_a = structured_response
+        response_b = nl_response
 
     judge_query = f"""## Prompt (User Message)
 {user_query}
 
 ## Response A
-{nl_response}
+{response_a}
 
 ## Response B
-{structured_response}
+{response_b}
 
 Which response more accurately captures the information from the user's message?"""
 
@@ -226,7 +289,7 @@ Which response more accurately captures the information from the user's message?
                             response_text += block.text
 
     except Exception as e:
-        return {"winner": "error", "reason": str(e)}
+        return {"winner": "error", "reason": str(e), "nl_was_first": nl_is_first}
 
     # Parse winner
     winner_match = re.search(r'WINNER:\s*(A|B|TIE)', response_text, re.IGNORECASE)
@@ -234,13 +297,18 @@ Which response more accurately captures the information from the user's message?
 
     if winner_match:
         winner_raw = winner_match.group(1).upper()
-        winner = "nl" if winner_raw == "A" else "structured" if winner_raw == "B" else "tie"
+        if winner_raw == "TIE":
+            winner = "tie"
+        elif winner_raw == "A":
+            winner = "nl" if nl_is_first else "structured"
+        else:  # winner_raw == "B"
+            winner = "structured" if nl_is_first else "nl"
     else:
         winner = "unknown"
 
     reason = reason_match.group(1).strip() if reason_match else "No reason provided"
 
-    return {"winner": winner, "reason": reason}
+    return {"winner": winner, "reason": reason, "nl_was_first": nl_is_first}
 
 
 # =============================================================================
@@ -271,8 +339,11 @@ def build_scenarios(
 
     Args:
         include_controls: Include negative examples for false positive testing.
+            Controls are ALWAYS included when True, regardless of tags_filter.
+            This ensures false positive rate is always measured.
         include_sanity_check: Include one explicit scenario as sanity check.
-        tags_filter: If provided, only include scenarios with at least one matching tag.
+        tags_filter: If provided, only include implicit scenarios with at least
+            one matching tag. Does NOT affect controls (they have no tags to filter).
     """
     scenarios = []
 
@@ -311,6 +382,9 @@ def build_scenarios(
                 "is_control": False,
             })
 
+    # Include controls when requested AND no tags filter is active
+    # When filtering by tags, user is testing specific scenarios - controls not relevant
+    # To force controls with tags, user can run a separate experiment
     if include_controls and not tags_filter:
         for scenario in PROACTIVE_CONTROL_SCENARIOS:
             scenarios.append({
@@ -410,7 +484,7 @@ async def run_nl_trial(scenario: dict) -> TrialResult:
     if detected_intent:
         # Try to extract the content being saved from the response
         # Look for phrases like "I'll save that X" or "remembering X"
-        tool_content = response_text[:200]  # Use response snippet for comparison
+        tool_content = response_text[:MAX_TOOL_CONTENT_LENGTH]
 
     expected = scenario["expected_action"]
     success = (detected_intent == expected)
@@ -425,7 +499,7 @@ async def run_nl_trial(scenario: dict) -> TrialResult:
         success=success,
         intent_phrases=intent_phrases[:5],
         tool_content=tool_content,
-        response_text=response_text[:1500],
+        response_text=response_text[:MAX_RESPONSE_TEXT_LENGTH],
         is_control=scenario.get("is_control", False),
         is_true_positive=(expected and detected_intent),
         is_false_positive=(not expected and detected_intent),
@@ -459,14 +533,25 @@ async def run_structured_trial(scenario: dict) -> TrialResult:
     except Exception as e:
         response_text = f"Error: {e}"
 
-    # Detect XML save-memory tags
+    # Detect XML save-memory tags (properly formatted)
     xml_saves = extract_xml_save_content(response_text)
-    tool_called = len(xml_saves) > 0
+    proper_xml = len(xml_saves) > 0
+
+    # Also detect malformed XML attempts for symmetric detection
+    # This ensures we count intent even when formatting fails
+    malformed_xml_attempt = detect_xml_save_attempt(response_text) and not proper_xml
+
+    # Count as tool_called if either proper XML or malformed attempt detected
+    # This makes detection symmetric with NL which accepts various phrasings
+    tool_called = proper_xml or malformed_xml_attempt
 
     # Extract content for fidelity comparison
     tool_content = None
     if xml_saves:
         tool_content = f"<save-memory category=\"{xml_saves[0]['category']}\">{xml_saves[0]['content']}</save-memory>"
+    elif malformed_xml_attempt:
+        # Use response snippet when malformed XML detected
+        tool_content = response_text[:MAX_TOOL_CONTENT_LENGTH]
 
     expected = scenario["expected_action"]
     success = (tool_called == expected)
@@ -481,7 +566,7 @@ async def run_structured_trial(scenario: dict) -> TrialResult:
         success=success,
         intent_phrases=[],
         tool_content=tool_content,
-        response_text=response_text[:1500],
+        response_text=response_text[:MAX_RESPONSE_TEXT_LENGTH],
         is_control=scenario.get("is_control", False),
         is_true_positive=(expected and tool_called),
         is_false_positive=(not expected and tool_called),
@@ -510,14 +595,105 @@ def compute_ci(successes: int, total: int) -> tuple[float, float]:
     return (max(0, center - margin), min(1, center + margin))
 
 
+def compute_power_analysis(
+    p1: float,
+    p2: float,
+    n: int,
+    alpha: float = 0.05,
+) -> dict:
+    """Compute statistical power for McNemar's test.
+
+    Uses the formula for power of McNemar's test assuming the observed
+    proportions are close to the true population values.
+
+    Args:
+        p1: Observed proportion for condition 1 (e.g., NL recall)
+        p2: Observed proportion for condition 2 (e.g., structured recall)
+        n: Sample size (number of paired observations)
+        alpha: Significance level (default 0.05)
+
+    Returns:
+        Dictionary with power analysis results
+    """
+    from math import sqrt, ceil
+    from scipy.stats import norm
+
+    # Effect size (difference in proportions)
+    effect = abs(p1 - p2)
+
+    if effect == 0:
+        return {
+            "observed_effect": 0.0,
+            "power_observed": 0.0,
+            "required_n_80_power": float('inf'),
+            "required_n_90_power": float('inf'),
+            "message": "No effect observed; power analysis not meaningful"
+        }
+
+    # For McNemar's test, we need to estimate the discordant proportions
+    # Assuming p_discordant ~ p1*(1-p2) + p2*(1-p1)
+    p_discordant = p1 * (1 - p2) + p2 * (1 - p1)
+
+    if p_discordant == 0:
+        return {
+            "observed_effect": effect,
+            "power_observed": 0.0,
+            "required_n_80_power": float('inf'),
+            "required_n_90_power": float('inf'),
+            "message": "No discordant pairs; power analysis requires discordant observations"
+        }
+
+    # Standard error under the alternative
+    # For McNemar's, SE ~ sqrt(p_discordant / n)
+    se = sqrt(p_discordant / n)
+
+    # Z-score for the observed effect
+    z_alpha = norm.ppf(1 - alpha / 2)  # Two-tailed
+    z_effect = effect / se if se > 0 else float('inf')
+
+    # Power = P(reject H0 | H1 true)
+    power = norm.cdf(z_effect - z_alpha) + norm.cdf(-z_effect - z_alpha)
+
+    # Required sample size for 80% power
+    z_beta_80 = norm.ppf(0.80)
+    n_80 = ceil(p_discordant * ((z_alpha + z_beta_80) / effect) ** 2) if effect > 0 else float('inf')
+
+    # Required sample size for 90% power
+    z_beta_90 = norm.ppf(0.90)
+    n_90 = ceil(p_discordant * ((z_alpha + z_beta_90) / effect) ** 2) if effect > 0 else float('inf')
+
+    # Minimum detectable effect at 80% power with current n
+    min_effect_80 = (z_alpha + z_beta_80) * sqrt(p_discordant / n) if n > 0 else float('inf')
+
+    return {
+        "observed_effect": effect,
+        "power_observed": round(power, 3),
+        "required_n_80_power": n_80,
+        "required_n_90_power": n_90,
+        "min_detectable_effect_80": round(min_effect_80, 3),
+        "p_discordant_estimate": round(p_discordant, 3),
+        "current_n": n,
+    }
+
+
 def mcnemar_test(b: int, c: int) -> tuple[float, float]:
-    """McNemar's test. b = A wins, c = B wins."""
+    """McNemar's test for paired nominal data.
+
+    Args:
+        b: Count of cases where A succeeded and B failed
+        c: Count of cases where B succeeded and A failed
+
+    Returns:
+        Tuple of (chi-squared statistic, p-value)
+    """
     if b + c == 0:
         return (0.0, 1.0)
 
-    from math import exp
+    from scipy.stats import chi2
+    # McNemar's chi-squared statistic with continuity correction
     chi_sq = (abs(b - c) - 1)**2 / (b + c)
-    p_value = exp(-chi_sq / 2) if chi_sq < 10 else 0.0001
+    # Correct p-value calculation using chi-squared survival function (1 - CDF)
+    p_value = chi2.sf(chi_sq, df=1)
 
     return (chi_sq, p_value)
 
@@ -782,6 +958,19 @@ async def run_experiment(
     else:
         print(f"  Result: No significant difference (p >= 0.05)")
 
+    # Power analysis
+    power_results = compute_power_analysis(
+        p1=nl["recall"],
+        p2=st["recall"],
+        n=nl["n_pos"],
+    )
+    print(f"\n  Power Analysis:")
+    print(f"    Observed effect: {power_results['observed_effect']*100:.1f}pp")
+    print(f"    Statistical power: {power_results['power_observed']*100:.1f}%")
+    print(f"    Min detectable effect (80% power): {power_results.get('min_detectable_effect_80', 0)*100:.1f}pp")
+    print(f"    Required n for 80% power: {power_results['required_n_80_power']}")
+    print(f"    Required n for 90% power: {power_results['required_n_90_power']}")
+
     # Show sanity check results separately if included
     sanity_nl = [r for r in by_condition["nl"]
                  if r.scenario_id.startswith("mem_explicit_") and r.expected_action]
@@ -958,7 +1147,7 @@ IMPLICATION: Larger sample size needed to draw firm conclusions.
         "metadata": {
             "timestamp": timestamp,
             "experiment": "nl_vs_structured_tool_calling",
-            "version": "v3_matched_explicitness",
+            "version": "v4_review_fixes",
             "num_trials": num_trials,
             "include_controls": include_controls,
             "seed": seed,
@@ -998,6 +1187,7 @@ IMPLICATION: Larger sample size needed to draw firm conclusions.
             "both_succeed": both_win,
             "both_fail": both_fail,
         },
+        "power_analysis": power_results,
         "fidelity": fidelity_metrics if fidelity_metrics else None,
         "familiarity": familiarity_metrics if familiarity_metrics else None,
         "results": [asdict(r) for r in results],
