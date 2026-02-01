@@ -1,0 +1,1098 @@
+[
+  {
+    "scenario_id": "f10_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Search for Python tutorials again",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=22985, duration_api_ms=24829, is_error=False, num_turns=2, session_id='4d4c2755-3581-4d3b-91af-25becc84c4c4', total_cost_usd=0.09616965, usage={'input_toke",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f10_001",
+      "approach": "baseline",
+      "score": 0.0,
+      "category": "WRONG",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Made duplicate search"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:50:13.446222+00:00",
+    "completed_at": "2026-02-01T01:50:37.806191+00:00",
+    "duration_ms": 24359,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:50:16.466915+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python tutorials"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:50:30.234328+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Python tutorials'}"
+      ],
+      "search_queries": [
+        "Python tutorials",
+        "Python tutorials"
+      ],
+      "known_paths": [],
+      "prior_searches": [
+        "Python tutorials"
+      ]
+    }
+  },
+  {
+    "scenario_id": "f10_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Search for Python tutorials again",
+    "tools_used": [],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=6193, duration_api_ms=6966, is_error=False, num_turns=2, session_id='1d3cae03-aad0-4de2-91ce-7e5e812884cb', total_cost_usd=0.015038, usage={'input_tokens':",
+    "validator_rejections": [
+      {
+        "rule_id": "F10",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python tutorials"
+        },
+        "reason": "Duplicate search (similarity: 1.00). Use previous results.",
+        "feedback_level": "GENTLE",
+        "timestamp": "2026-02-01T01:50:40.977096+00:00"
+      }
+    ],
+    "score": {
+      "scenario_id": "f10_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": true,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Correctly used previous results"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:50:38.307459+00:00",
+    "completed_at": "2026-02-01T01:50:45.283117+00:00",
+    "duration_ms": 6975,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T01:50:40.977096+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Python tutorials"
+        },
+        "decision": "deny",
+        "rule_id": "F10",
+        "reason": "Duplicate search (similarity: 1.00). Use previous results.",
+        "feedback_level": "GENTLE",
+        "semantic_scores": {
+          "static_knowledge": 0.2036,
+          "memory_reference": 0.1338,
+          "duplicate_search": 1.0
+        }
+      }
+    ],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 1,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {
+        "F10": {
+          "count": 1,
+          "last_level": "GENTLE"
+        }
+      }
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [
+        "Python tutorials"
+      ],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f8_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Find restaurants near me",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=4767, duration_api_ms=6101, is_error=False, num_turns=1, session_id='786d609c-e9b7-4e03-b5c5-8b3259087356', total_cost_usd=0.009463899999999999, usage={'in",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f8_001",
+      "approach": "validated",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:50:45.784401+00:00",
+    "completed_at": "2026-02-01T01:50:51.252412+00:00",
+    "duration_ms": 5468,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f8_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Find restaurants near me",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=6719, duration_api_ms=8179, is_error=False, num_turns=1, session_id='2df1662e-10ba-4ac3-a0d5-cb051886008d', total_cost_usd=0.009066799999999998, usage={'in",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f8_001",
+      "approach": "baseline",
+      "score": 1.0,
+      "category": "PARTIAL",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:50:51.753644+00:00",
+    "completed_at": "2026-02-01T01:50:59.123982+00:00",
+    "duration_ms": 7370,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": []
+    }
+  },
+  {
+    "scenario_id": "f13_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Read /project/src/main.py",
+    "tools_used": [
+      "Glob"
+    ],
+    "tools_attempted": [
+      "Glob"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=10526, duration_api_ms=11763, is_error=False, num_turns=3, session_id='41e9dc5c-2387-4865-b9f0-3945e2748406', total_cost_usd=0.0233838, usage={'input_token",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f13_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [
+        "Glob"
+      ],
+      "tools_attempted": [
+        "Glob"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:50:59.625216+00:00",
+    "completed_at": "2026-02-01T01:51:10.864450+00:00",
+    "duration_ms": 11239,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:51:06.561640+00:00",
+        "tool_name": "Glob",
+        "tool_input": {
+          "pattern": "**/main.py"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:07.168198+00:00",
+        "tool_name": "Glob",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "Glob:{'pattern': '**/main.py'}"
+      ],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": []
+    }
+  },
+  {
+    "scenario_id": "f13_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Read /project/src/main.py",
+    "tools_used": [
+      "Bash",
+      "Bash",
+      "Bash"
+    ],
+    "tools_attempted": [
+      "Bash",
+      "Bash",
+      "Bash"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=14279, duration_api_ms=18425, is_error=False, num_turns=5, session_id='6ee4bd74-aa89-486c-9692-9c3769ec56e5', total_cost_usd=0.034212599999999996, usage={'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f13_001",
+      "approach": "validated",
+      "score": 0.0,
+      "category": "WRONG",
+      "tools_used": [
+        "Bash",
+        "Bash",
+        "Bash"
+      ],
+      "tools_attempted": [
+        "Bash",
+        "Bash",
+        "Bash"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Attempted to read unknown path"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:51:11.365612+00:00",
+    "completed_at": "2026-02-01T01:51:26.405818+00:00",
+    "duration_ms": 15040,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T01:51:18.663112+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "pwd",
+          "description": "Show current working directory"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {}
+      },
+      {
+        "timestamp": "2026-02-01T01:51:19.021318+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "ls -la",
+          "description": "List files in current directory"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {}
+      },
+      {
+        "timestamp": "2026-02-01T01:51:23.284589+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "ls -la src/",
+          "description": "List files in src directory"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {}
+      }
+    ],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:51:18.663112+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "pwd",
+          "description": "Show current working directory"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:19.021318+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "ls -la",
+          "description": "List files in current directory"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:20.654825+00:00",
+        "tool_name": "Bash",
+        "status": "completed",
+        "result_type": "dict",
+        "result_length": 0
+      },
+      {
+        "timestamp": "2026-02-01T01:51:20.660230+00:00",
+        "tool_name": "Bash",
+        "status": "completed",
+        "result_type": "dict",
+        "result_length": 0
+      },
+      {
+        "timestamp": "2026-02-01T01:51:23.284589+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "ls -la src/",
+          "description": "List files in src directory"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:23.332102+00:00",
+        "tool_name": "Bash",
+        "status": "completed",
+        "result_type": "dict",
+        "result_length": 0
+      }
+    ],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [
+        "Bash:{'command': 'pwd', 'description': 'Show current wo",
+        "Bash:{'command': 'ls -la', 'description': 'List files i",
+        "Bash:{'command': 'ls -la src/', 'description': 'List fi"
+      ],
+      "search_queries": [],
+      "known_paths": [
+        "/home/claude/actual_file.txt"
+      ]
+    }
+  },
+  {
+    "scenario_id": "f4_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What were we chatting about last week?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=3547, duration_api_ms=4634, is_error=False, num_turns=1, session_id='b4413df7-6eeb-4967-9180-fef9b09fd629', total_cost_usd=0.00843265, usage={'input_tokens",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f4_001",
+      "approach": "baseline",
+      "score": 2.0,
+      "category": "GOOD",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "No memory search but may have answered from context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:51:26.907040+00:00",
+    "completed_at": "2026-02-01T01:51:31.235511+00:00",
+    "duration_ms": 4328,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": []
+    }
+  },
+  {
+    "scenario_id": "f4_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What were we chatting about last week?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=3380, duration_api_ms=6139, is_error=False, num_turns=1, session_id='4742bd26-4e42-4f5d-8e38-4a7e4d098aa1', total_cost_usd=0.0065333, usage={'input_tokens'",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f4_001",
+      "approach": "validated",
+      "score": 2.0,
+      "category": "GOOD",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "No memory search but may have answered from context"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:51:31.736789+00:00",
+    "completed_at": "2026-02-01T01:51:35.831517+00:00",
+    "duration_ms": 4094,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f15_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Read /usr/bin/python",
+    "tools_used": [
+      "Bash",
+      "Bash"
+    ],
+    "tools_attempted": [
+      "Bash",
+      "Bash"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=12010, duration_api_ms=13658, is_error=False, num_turns=4, session_id='b433a800-b449-4b85-9ada-d53f999368dc', total_cost_usd=0.0246771, usage={'input_token",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f15_001",
+      "approach": "baseline",
+      "score": 0.0,
+      "category": "WRONG",
+      "tools_used": [
+        "Bash",
+        "Bash"
+      ],
+      "tools_attempted": [
+        "Bash",
+        "Bash"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Used tools when shouldn't have: ['Bash', 'Bash']"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:51:36.332688+00:00",
+    "completed_at": "2026-02-01T01:51:49.053157+00:00",
+    "duration_ms": 12720,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:51:42.940105+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "ls -la /usr/bin/python* 2>/dev/null || echo \"No python executables found in /usr/bin\"",
+          "description": "List Python executables in /usr/bin"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:44.874635+00:00",
+        "tool_name": "Bash",
+        "tool_input": null,
+        "status": "completed"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:44.876666+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "which python python3 2>/dev/null",
+          "description": "Find Python in PATH"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:44.906943+00:00",
+        "tool_name": "Bash",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "Bash:{'command': 'ls -la /usr/bin/python* 2>/dev/null |",
+        "Bash:{'command': 'which python python3 2>/dev/null', 'd"
+      ],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": []
+    }
+  },
+  {
+    "scenario_id": "f15_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Read /usr/bin/python",
+    "tools_used": [
+      "Bash",
+      "Bash"
+    ],
+    "tools_attempted": [
+      "Bash",
+      "Bash",
+      "Read"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=17716, duration_api_ms=19547, is_error=False, num_turns=5, session_id='cc2b2fdc-1192-4098-84df-474aca12d8c5', total_cost_usd=0.03115785, usage={'input_toke",
+    "validator_rejections": [
+      {
+        "rule_id": "F15",
+        "tool_name": "Read",
+        "tool_input": {
+          "file_path": "/usr/bin/python3"
+        },
+        "reason": "Binary file cannot be read as text.",
+        "feedback_level": "GENTLE",
+        "timestamp": "2026-02-01T01:52:02.587843+00:00"
+      }
+    ],
+    "score": {
+      "scenario_id": "f15_001",
+      "approach": "validated",
+      "score": 0.0,
+      "category": "WRONG",
+      "tools_used": [
+        "Bash",
+        "Bash"
+      ],
+      "tools_attempted": [
+        "Bash",
+        "Bash",
+        "Read"
+      ],
+      "validator_blocked": true,
+      "validator_should_block": true,
+      "correct_without_validator": false,
+      "notes": [
+        "Used tools when shouldn't have: ['Bash', 'Bash']"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:51:49.554313+00:00",
+    "completed_at": "2026-02-01T01:52:07.986524+00:00",
+    "duration_ms": 18432,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T01:51:57.122334+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "which python python3",
+          "description": "Find Python executable locations"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {}
+      },
+      {
+        "timestamp": "2026-02-01T01:51:59.101126+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "ls -la /usr/bin/python*",
+          "description": "List Python binaries in /usr/bin"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {}
+      },
+      {
+        "timestamp": "2026-02-01T01:52:02.587843+00:00",
+        "tool_name": "Read",
+        "tool_input": {
+          "file_path": "/usr/bin/python3"
+        },
+        "decision": "deny",
+        "rule_id": "F15",
+        "reason": "Binary file cannot be read as text.",
+        "feedback_level": "GENTLE",
+        "semantic_scores": {}
+      }
+    ],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:51:57.122334+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "which python python3",
+          "description": "Find Python executable locations"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:59.100051+00:00",
+        "tool_name": "Bash",
+        "status": "completed",
+        "result_type": "dict",
+        "result_length": 0
+      },
+      {
+        "timestamp": "2026-02-01T01:51:59.101126+00:00",
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "ls -la /usr/bin/python*",
+          "description": "List Python binaries in /usr/bin"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:51:59.142800+00:00",
+        "tool_name": "Bash",
+        "status": "completed",
+        "result_type": "dict",
+        "result_length": 0
+      }
+    ],
+    "convergence_state": {
+      "total_rejections": 1,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {
+        "F15": {
+          "count": 1,
+          "last_level": "GENTLE"
+        }
+      }
+    },
+    "context_state": {
+      "tool_history": [
+        "Bash:{'command': 'which python python3', 'description':",
+        "Bash:{'command': 'ls -la /usr/bin/python*', 'descriptio"
+      ],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "valid_020",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "Write a Python function to sort a list",
+    "tools_used": [
+      "Write"
+    ],
+    "tools_attempted": [
+      "Write"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=14754, duration_api_ms=16207, is_error=False, num_turns=2, session_id='779ed336-f251-49b2-b12a-2e02b3652693', total_cost_usd=0.0323584, usage={'input_token",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_020",
+      "approach": "baseline",
+      "score": 0.0,
+      "category": "WRONG",
+      "tools_used": [
+        "Write"
+      ],
+      "tools_attempted": [
+        "Write"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": false,
+      "notes": [
+        "Used tools when shouldn't have: ['Write']"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:52:08.487787+00:00",
+    "completed_at": "2026-02-01T01:52:23.934294+00:00",
+    "duration_ms": 15446,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:52:18.404664+00:00",
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "/tmp/sort_list.py",
+          "content": "def sort_list(items, reverse=False):\n    \"\"\"\n    Sorts a list in ascending or descending order.\n\n    Args:\n        items: The list to sort\n        reverse: If True, sort in descending order. Default is False (ascending)\n\n    Returns:\n        A new sorted list (original list is not modified)\n\n    Examples:\n        >>> sort_list([3, 1, 4, 1, 5, 9, 2, 6])\n        [1, 1, 2, 3, 4, 5, 6, 9]\n\n        >>> sort_list([3, 1, 4, 1, 5, 9, 2, 6], reverse=True)\n        [9, 6, 5, 4, 3, 2, 1, 1]\n\n        >>> sort_list(['banana', 'apple', 'cherry'])\n        ['apple', 'banana', 'cherry']\n    \"\"\"\n    return sorted(items, reverse=reverse)\n\n\n# Alternative: in-place sorting function\ndef sort_list_in_place(items, reverse=False):\n    \"\"\"\n    Sorts a list in-place (modifies the original list).\n\n    Args:\n        items: The list to sort\n        reverse: If True, sort in descending order. Default is False (ascending)\n\n    Returns:\n        None (the original list is modified)\n\n    Examples:\n        >>> numbers = [3, 1, 4, 1, 5, 9, 2, 6]\n        >>> sort_list_in_place(numbers)\n        >>> numbers\n        [1, 1, 2, 3, 4, 5, 6, 9]\n    \"\"\"\n    items.sort(reverse=reverse)\n\n\n# Example usage\nif __name__ == \"__main__\":\n    # Example 1: Sort numbers\n    numbers = [3, 1, 4, 1, 5, 9, 2, 6]\n    sorted_numbers = sort_list(numbers)\n    print(f\"Original: {numbers}\")\n    print(f\"Sorted: {sorted_numbers}\")\n\n    # Example 2: Sort in descending order\n    sorted_desc = sort_list(numbers, reverse=True)\n    print(f\"Sorted (descending): {sorted_desc}\")\n\n    # Example 3: Sort strings\n    fruits = ['banana', 'apple', 'cherry', 'date']\n    sorted_fruits = sort_list(fruits)\n    print(f\"Sorted fruits: {sorted_fruits}\")\n\n    # Example 4: In-place sorting\n    colors = ['red', 'blue', 'green', 'yellow']\n    print(f\"Before in-place sort: {colors}\")\n    sort_list_in_place(colors)\n    print(f\"After in-place sort: {colors}\")\n"
+        },
+        "status": "started"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "Write:{'file_path': '/tmp/sort_list.py', 'content': 'def"
+      ],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": []
+    }
+  },
+  {
+    "scenario_id": "valid_020",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "Write a Python function to sort a list",
+    "tools_used": [
+      "Write"
+    ],
+    "tools_attempted": [
+      "Write"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=14822, duration_api_ms=16053, is_error=False, num_turns=2, session_id='84a847d8-a3ef-4968-9596-25519dcc1e37', total_cost_usd=0.0267925, usage={'input_token",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_020",
+      "approach": "validated",
+      "score": 0.0,
+      "category": "WRONG",
+      "tools_used": [
+        "Write"
+      ],
+      "tools_attempted": [
+        "Write"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": false,
+      "notes": [
+        "Used tools when shouldn't have: ['Write']"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:52:24.435521+00:00",
+    "completed_at": "2026-02-01T01:52:39.961049+00:00",
+    "duration_ms": 15525,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T01:52:34.057870+00:00",
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "/tmp/sort_list.py",
+          "content": "def sort_list(lst, reverse=False):\n    \"\"\"\n    Sort a list in ascending or descending order.\n\n    Args:\n        lst: The list to sort\n        reverse: If True, sort in descending order. Default is False (ascending)\n\n    Returns:\n        A new sorted list\n\n    Examples:\n        >>> sort_list([3, 1, 4, 1, 5, 9, 2, 6])\n        [1, 1, 2, 3, 4, 5, 6, 9]\n\n        >>> sort_list([3, 1, 4, 1, 5, 9, 2, 6], reverse=True)\n        [9, 6, 5, 4, 3, 2, 1, 1]\n\n        >>> sort_list(['banana', 'apple', 'cherry'])\n        ['apple', 'banana', 'cherry']\n    \"\"\"\n    return sorted(lst, reverse=reverse)\n\n\n# Alternative: In-place sorting function\ndef sort_list_inplace(lst, reverse=False):\n    \"\"\"\n    Sort a list in-place (modifies the original list).\n\n    Args:\n        lst: The list to sort\n        reverse: If True, sort in descending order. Default is False (ascending)\n\n    Returns:\n        None (modifies the list in-place)\n\n    Example:\n        >>> numbers = [3, 1, 4, 1, 5, 9, 2, 6]\n        >>> sort_list_inplace(numbers)\n        >>> numbers\n        [1, 1, 2, 3, 4, 5, 6, 9]\n    \"\"\"\n    lst.sort(reverse=reverse)\n\n\n# Example usage\nif __name__ == \"__main__\":\n    # Test with numbers\n    numbers = [3, 1, 4, 1, 5, 9, 2, 6]\n    print(\"Original:\", numbers)\n    print(\"Sorted (ascending):\", sort_list(numbers))\n    print(\"Sorted (descending):\", sort_list(numbers, reverse=True))\n\n    # Test with strings\n    fruits = ['banana', 'apple', 'cherry', 'date']\n    print(\"\\nOriginal:\", fruits)\n    print(\"Sorted:\", sort_list(fruits))\n\n    # Test in-place sorting\n    mixed = [42, 7, 23, 15, 8]\n    print(\"\\nBefore in-place sort:\", mixed)\n    sort_list_inplace(mixed)\n    print(\"After in-place sort:\", mixed)\n"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {}
+      }
+    ],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:52:34.057870+00:00",
+        "tool_name": "Write",
+        "tool_input": {
+          "file_path": "/tmp/sort_list.py",
+          "content": "def sort_list(lst, reverse=False):\n    \"\"\"\n    Sort a list in ascending or descending order.\n\n    Args:\n        lst: The list to sort\n        reverse: If True, sort in descending order. Default is False (ascending)\n\n    Returns:\n        A new sorted list\n\n    Examples:\n        >>> sort_list([3, 1, 4, 1, 5, 9, 2, 6])\n        [1, 1, 2, 3, 4, 5, 6, 9]\n\n        >>> sort_list([3, 1, 4, 1, 5, 9, 2, 6], reverse=True)\n        [9, 6, 5, 4, 3, 2, 1, 1]\n\n        >>> sort_list(['banana', 'apple', 'cherry'])\n        ['apple', 'banana', 'cherry']\n    \"\"\"\n    return sorted(lst, reverse=reverse)\n\n\n# Alternative: In-place sorting function\ndef sort_list_inplace(lst, reverse=False):\n    \"\"\"\n    Sort a list in-place (modifies the original list).\n\n    Args:\n        lst: The list to sort\n        reverse: If True, sort in descending order. Default is False (ascending)\n\n    Returns:\n        None (modifies the list in-place)\n\n    Example:\n        >>> numbers = [3, 1, 4, 1, 5, 9, 2, 6]\n        >>> sort_list_inplace(numbers)\n        >>> numbers\n        [1, 1, 2, 3, 4, 5, 6, 9]\n    \"\"\"\n    lst.sort(reverse=reverse)\n\n\n# Example usage\nif __name__ == \"__main__\":\n    # Test with numbers\n    numbers = [3, 1, 4, 1, 5, 9, 2, 6]\n    print(\"Original:\", numbers)\n    print(\"Sorted (ascending):\", sort_list(numbers))\n    print(\"Sorted (descending):\", sort_list(numbers, reverse=True))\n\n    # Test with strings\n    fruits = ['banana', 'apple', 'cherry', 'date']\n    print(\"\\nOriginal:\", fruits)\n    print(\"Sorted:\", sort_list(fruits))\n\n    # Test in-place sorting\n    mixed = [42, 7, 23, 15, 8]\n    print(\"\\nBefore in-place sort:\", mixed)\n    sort_list_inplace(mixed)\n    print(\"After in-place sort:\", mixed)\n"
+        },
+        "status": "started"
+      }
+    ],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [
+        "Write:{'file_path': '/tmp/sort_list.py', 'content': 'def"
+      ],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "f1_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What is the boiling point of water?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=4550, duration_api_ms=6184, is_error=False, num_turns=1, session_id='423599df-8eac-4e5a-94b8-cb471bed0ed3', total_cost_usd=0.009432649999999999, usage={'in",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f1_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:52:40.462284+00:00",
+    "completed_at": "2026-02-01T01:52:45.887296+00:00",
+    "duration_ms": 5425,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": [],
+      "prior_searches": []
+    }
+  },
+  {
+    "scenario_id": "f1_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What is the boiling point of water?",
+    "tools_used": [],
+    "tools_attempted": [],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=4919, duration_api_ms=6408, is_error=False, num_turns=1, session_id='e2a64c61-db59-4622-9d5f-79393df1d0db', total_cost_usd=0.008188299999999999, usage={'in",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "f1_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [],
+      "tools_attempted": [],
+      "validator_blocked": false,
+      "validator_should_block": true,
+      "correct_without_validator": true,
+      "notes": [
+        "Correctly answered without tools"
+      ]
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:52:46.388462+00:00",
+    "completed_at": "2026-02-01T01:52:51.994177+00:00",
+    "duration_ms": 5605,
+    "validation_log": [],
+    "tool_call_sequence": [],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [],
+      "search_queries": [],
+      "known_paths": []
+    }
+  },
+  {
+    "scenario_id": "valid_001",
+    "trial_number": 0,
+    "approach": "baseline",
+    "query": "What is the current stock price of Apple?",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=21040, duration_api_ms=22184, is_error=False, num_turns=2, session_id='01a1aeb5-457c-47c3-8270-ef3420ac14fc', total_cost_usd=0.08414769999999999, usage={'i",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_001",
+      "approach": "baseline",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:52:52.495372+00:00",
+    "completed_at": "2026-02-01T01:53:14.204844+00:00",
+    "duration_ms": 21709,
+    "validation_log": [],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:52:55.111115+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Apple stock price AAPL 2026"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:53:07.687264+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": null,
+        "status": "completed"
+      }
+    ],
+    "convergence_state": null,
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Apple stock price AAPL 2026'}"
+      ],
+      "search_queries": [
+        "Apple stock price AAPL 2026"
+      ],
+      "known_paths": [],
+      "prior_searches": []
+    }
+  },
+  {
+    "scenario_id": "valid_001",
+    "trial_number": 0,
+    "approach": "validated",
+    "query": "What is the current stock price of Apple?",
+    "tools_used": [
+      "WebSearch"
+    ],
+    "tools_attempted": [
+      "WebSearch"
+    ],
+    "response_summary": "ResultMessage(subtype='success', duration_ms=20508, duration_api_ms=22153, is_error=False, num_turns=2, session_id='d192c6bd-5992-4791-b5ff-c0f077ef256d', total_cost_usd=0.07914615, usage={'input_toke",
+    "validator_rejections": [],
+    "score": {
+      "scenario_id": "valid_001",
+      "approach": "validated",
+      "score": 3.0,
+      "category": "PERFECT",
+      "tools_used": [
+        "WebSearch"
+      ],
+      "tools_attempted": [
+        "WebSearch"
+      ],
+      "validator_blocked": false,
+      "validator_should_block": false,
+      "correct_without_validator": true,
+      "notes": []
+    },
+    "error": null,
+    "started_at": "2026-02-01T01:53:14.705393+00:00",
+    "completed_at": "2026-02-01T01:53:36.025030+00:00",
+    "duration_ms": 21319,
+    "validation_log": [
+      {
+        "timestamp": "2026-02-01T01:53:17.564578+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Apple stock price AAPL current 2026"
+        },
+        "decision": "allow",
+        "rule_id": null,
+        "reason": "All rules passed",
+        "feedback_level": null,
+        "semantic_scores": {
+          "static_knowledge": 0.187,
+          "memory_reference": 0.1121,
+          "duplicate_search": 0.0
+        }
+      }
+    ],
+    "tool_call_sequence": [
+      {
+        "timestamp": "2026-02-01T01:53:17.564578+00:00",
+        "tool_name": "WebSearch",
+        "tool_input": {
+          "query": "Apple stock price AAPL current 2026"
+        },
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-02-01T01:53:29.780215+00:00",
+        "tool_name": "WebSearch",
+        "status": "completed",
+        "result_type": "dict",
+        "result_length": 0
+      }
+    ],
+    "convergence_state": {
+      "total_rejections": 0,
+      "forced_direct_answer": false,
+      "termination_reason": null,
+      "violations": {}
+    },
+    "context_state": {
+      "tool_history": [
+        "WebSearch:{'query': 'Apple stock price AAPL current 2026'}"
+      ],
+      "search_queries": [
+        "Apple stock price AAPL current 2026"
+      ],
+      "known_paths": []
+    }
+  }
+]

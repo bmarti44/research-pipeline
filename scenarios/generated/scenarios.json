@@ -1,7 +1,7 @@
 [
   {
     "id": "f1_001",
-    "query": "What is the capital of France?",
+    "query": "What is the boiling point of water?",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -10,7 +10,7 @@
   },
   {
     "id": "f1_002",
-    "query": "Explain recursion in programming",
+    "query": "How do binary trees work?",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -19,7 +19,7 @@
   },
   {
     "id": "f1_003",
-    "query": "What is photosynthesis?",
+    "query": "What is the mitochondria's function?",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -28,7 +28,7 @@
   },
   {
     "id": "f1_004",
-    "query": "Who wrote Romeo and Juliet?",
+    "query": "Who painted the Mona Lisa?",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -37,7 +37,7 @@
   },
   {
     "id": "f1_005",
-    "query": "What is the Pythagorean theorem?",
+    "query": "What is Euler's formula?",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -46,7 +46,7 @@
   },
   {
     "id": "f1_006",
-    "query": "Define machine learning",
+    "query": "Define neural network",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -55,7 +55,7 @@
   },
   {
     "id": "f1_007",
-    "query": "How does gravity work?",
+    "query": "How does magnetism work?",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -64,7 +64,43 @@
   },
   {
     "id": "f1_008",
-    "query": "What is a linked list?",
+    "query": "What is a binary search algorithm?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_009",
+    "query": "How do I create a dictionary in Python?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_010",
+    "query": "What is the difference between let and const in JavaScript?",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_011",
+    "query": "Explain how DNS resolution works",
+    "category": "static",
+    "expected_behavior": "no_tools",
+    "failure_mode": "F1",
+    "validator_should_block": true,
+    "notes": ""
+  },
+  {
+    "id": "f1_012",
+    "query": "What is a GraphQL API?",
     "category": "static",
     "expected_behavior": "no_tools",
     "failure_mode": "F1",
@@ -73,7 +109,7 @@
   },
   {
     "id": "f4_001",
-    "query": "What did we discuss yesterday?",
+    "query": "What were we chatting about last week?",
     "category": "memory",
     "expected_behavior": "memory_search",
     "failure_mode": "F4",
@@ -82,7 +118,7 @@
   },
   {
     "id": "f4_002",
-    "query": "Remember when we talked about the project?",
+    "query": "Recall our conversation about the deadline?",
     "category": "memory",
     "expected_behavior": "memory_search",
     "failure_mode": "F4",
@@ -91,7 +127,7 @@
   },
   {
     "id": "f4_003",
-    "query": "What was my budget again?",
+    "query": "What was the price range I gave you?",
     "category": "memory",
     "expected_behavior": "memory_search",
     "failure_mode": "F4",
@@ -100,7 +136,7 @@
   },
   {
     "id": "f4_004",
-    "query": "You mentioned something about deadlines earlier",
+    "query": "Earlier you noted something about the timeline",
     "category": "memory",
     "expected_behavior": "memory_search",
     "failure_mode": "F4",

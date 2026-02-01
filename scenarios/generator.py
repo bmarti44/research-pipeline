@@ -18,22 +18,31 @@ class Scenario:
 
 
 # Scenarios where the validator SHOULD block
+# NOTE: These test scenarios are intentionally DIFFERENT from training exemplars
+# to avoid data leakage. See exemplars.py for training data.
 SHOULD_BLOCK_SCENARIOS = [
     # F1: Static knowledge - should not search
-    Scenario("f1_001", "What is the capital of France?", "static", "no_tools", "F1", True),
-    Scenario("f1_002", "Explain recursion in programming", "static", "no_tools", "F1", True),
-    Scenario("f1_003", "What is photosynthesis?", "static", "no_tools", "F1", True),
-    Scenario("f1_004", "Who wrote Romeo and Juliet?", "static", "no_tools", "F1", True),
-    Scenario("f1_005", "What is the Pythagorean theorem?", "static", "no_tools", "F1", True),
-    Scenario("f1_006", "Define machine learning", "static", "no_tools", "F1", True),
-    Scenario("f1_007", "How does gravity work?", "static", "no_tools", "F1", True),
-    Scenario("f1_008", "What is a linked list?", "static", "no_tools", "F1", True),
+    # These queries test generalization - NOT present in exemplars.py
+    Scenario("f1_001", "What is the boiling point of water?", "static", "no_tools", "F1", True),
+    Scenario("f1_002", "How do binary trees work?", "static", "no_tools", "F1", True),
+    Scenario("f1_003", "What is the mitochondria's function?", "static", "no_tools", "F1", True),
+    Scenario("f1_004", "Who painted the Mona Lisa?", "static", "no_tools", "F1", True),
+    Scenario("f1_005", "What is Euler's formula?", "static", "no_tools", "F1", True),
+    Scenario("f1_006", "Define neural network", "static", "no_tools", "F1", True),
+    Scenario("f1_007", "How does magnetism work?", "static", "no_tools", "F1", True),
+    Scenario("f1_008", "What is a binary search algorithm?", "static", "no_tools", "F1", True),
+    # Additional static knowledge scenarios (held-out from exemplars)
+    Scenario("f1_009", "How do I create a dictionary in Python?", "static", "no_tools", "F1", True),
+    Scenario("f1_010", "What is the difference between let and const in JavaScript?", "static", "no_tools", "F1", True),
+    Scenario("f1_011", "Explain how DNS resolution works", "static", "no_tools", "F1", True),
+    Scenario("f1_012", "What is a GraphQL API?", "static", "no_tools", "F1", True),
 
     # F4: Memory reference - should use memory, not web
-    Scenario("f4_001", "What did we discuss yesterday?", "memory", "memory_search", "F4", True),
-    Scenario("f4_002", "Remember when we talked about the project?", "memory", "memory_search", "F4", True),
-    Scenario("f4_003", "What was my budget again?", "memory", "memory_search", "F4", True),
-    Scenario("f4_004", "You mentioned something about deadlines earlier", "memory", "memory_search", "F4", True),
+    # These queries test generalization - NOT present in exemplars.py
+    Scenario("f4_001", "What were we chatting about last week?", "memory", "memory_search", "F4", True),
+    Scenario("f4_002", "Recall our conversation about the deadline?", "memory", "memory_search", "F4", True),
+    Scenario("f4_003", "What was the price range I gave you?", "memory", "memory_search", "F4", True),
+    Scenario("f4_004", "Earlier you noted something about the timeline", "memory", "memory_search", "F4", True),
 
     # F8: Location-dependent without location
     Scenario("f8_001", "Find restaurants near me", "location", "get_location_then_search", "F8", True),

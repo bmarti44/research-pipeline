@@ -34,10 +34,34 @@ class ValidationContext:
 
 
 class RuleValidator:
-    """Validates tool calls against rules."""
+    """Validates tool calls against rules.
 
-    def __init__(self, semantic: Optional[SemanticClassifier] = None):
+    Supports ablation testing by enabling/disabling individual rules.
+    """
+
+    # All available rules with their IDs
+    ALL_RULES = {"F1", "F4", "F8", "F10", "F13", "F15"}
+
+    def __init__(
+        self,
+        semantic: Optional[SemanticClassifier] = None,
+        enabled_rules: Optional[set[str]] = None,
+    ):
+        """
+        Initialize the rule validator.
+
+        Args:
+            semantic: Semantic classifier for F1, F4, F10 rules
+            enabled_rules: Set of rule IDs to enable. If None, all rules are enabled.
+                          Use for ablation studies, e.g., {"F1"} to test only F1.
+        """
         self.semantic = semantic or SemanticClassifier()
+        self.enabled_rules = enabled_rules if enabled_rules is not None else self.ALL_RULES.copy()
+
+        # Validate rule IDs
+        invalid_rules = self.enabled_rules - self.ALL_RULES
+        if invalid_rules:
+            raise ValueError(f"Unknown rule IDs: {invalid_rules}. Valid rules: {self.ALL_RULES}")
 
     def validate(
         self,
@@ -45,19 +69,27 @@ class RuleValidator:
         tool_input: dict,
         ctx: ValidationContext,
     ) -> ValidationResult:
-        """Run all rules. First denial wins."""
+        """Run enabled rules. First denial wins."""
 
-        rules = [
-            self._rule_f15_binary_file,
-            self._rule_f1_static_knowledge,
-            self._rule_f4_memory_vs_web,
-            self._rule_f8_missing_location,
-            self._rule_f10_duplicate_search,
-            self._rule_f13_hallucinated_path,
-        ]
+        # Map rule IDs to rule methods
+        rule_map = {
+            "F15": self._rule_f15_binary_file,
+            "F1": self._rule_f1_static_knowledge,
+            "F4": self._rule_f4_memory_vs_web,
+            "F8": self._rule_f8_missing_location,
+            "F10": self._rule_f10_duplicate_search,
+            "F13": self._rule_f13_hallucinated_path,
+        }
 
-        for rule in rules:
-            result = rule(tool_name, tool_input, ctx)
+        # Run rules in order (F15 first for efficiency)
+        rule_order = ["F15", "F1", "F4", "F8", "F10", "F13"]
+
+        for rule_id in rule_order:
+            if rule_id not in self.enabled_rules:
+                continue
+
+            rule_fn = rule_map[rule_id]
+            result = rule_fn(tool_name, tool_input, ctx)
             if result is not None:
                 return result
 
@@ -66,6 +98,33 @@ class RuleValidator:
             rule_id=None,
             reason="All rules passed"
         )
+
+    @classmethod
+    def for_ablation(cls, only_rule: str, semantic: Optional[SemanticClassifier] = None) -> "RuleValidator":
+        """Create a validator with only one rule enabled for ablation testing.
+
+        Args:
+            only_rule: The single rule ID to enable (e.g., "F1")
+            semantic: Optional semantic classifier
+
+        Returns:
+            RuleValidator with only the specified rule enabled
+        """
+        return cls(semantic=semantic, enabled_rules={only_rule})
+
+    @classmethod
+    def without_rule(cls, exclude_rule: str, semantic: Optional[SemanticClassifier] = None) -> "RuleValidator":
+        """Create a validator with all rules except one for ablation testing.
+
+        Args:
+            exclude_rule: The rule ID to exclude (e.g., "F1")
+            semantic: Optional semantic classifier
+
+        Returns:
+            RuleValidator with all rules except the specified one
+        """
+        enabled = cls.ALL_RULES - {exclude_rule}
+        return cls(semantic=semantic, enabled_rules=enabled)
 
     def _rule_f1_static_knowledge(
         self, tool_name: str, tool_input: dict, ctx: ValidationContext
@@ -198,12 +257,44 @@ class RuleValidator:
     def _rule_f15_binary_file(
         self, tool_name: str, tool_input: dict, ctx: ValidationContext
     ) -> Optional[ValidationResult]:
-        """Block reading binary files."""
-        if tool_name not in ("Read", "View", "view_file", "read_file"):
-            return None
+        """Block reading binary files via Read or Bash."""
 
-        path = (tool_input.get("file_path", "") or tool_input.get("path", "")).lower()
+        # Check Read tool
+        if tool_name in ("Read", "View", "view_file", "read_file"):
+            path = (tool_input.get("file_path", "") or tool_input.get("path", "")).lower()
+            if self._is_binary_path(path):
+                return ValidationResult(
+                    decision=Decision.DENY,
+                    rule_id="F15",
+                    reason=f"Binary file cannot be read as text."
+                )
 
+        # Check Bash commands that try to read binary files
+        if tool_name in ("Bash", "bash", "shell", "execute"):
+            command = tool_input.get("command", "")
+
+            # Patterns that directly read binary files (command followed by binary path)
+            # More specific patterns to avoid false positives from heredocs with shebangs
+            direct_binary_reads = [
+                # cat/head/tail directly reading from binary locations
+                r"\b(cat|head|tail|less|more)\s+(/usr/bin/|/bin/|/sbin/|/usr/lib/)\S+",
+                r"\b(cat|head|tail|less|more)\s+\S+\.(pyc|so|dylib|exe|dll|bin)\b",
+                # xxd/hexdump/strings on binary files
+                r"\b(xxd|hexdump|strings)\s+\S+",
+            ]
+
+            for pattern in direct_binary_reads:
+                if re.search(pattern, command, re.IGNORECASE):
+                    return ValidationResult(
+                        decision=Decision.DENY,
+                        rule_id="F15",
+                        reason=f"Cannot read binary file via shell command."
+                    )
+
+        return None
+
+    def _is_binary_path(self, path: str) -> bool:
+        """Check if a path looks like a binary file."""
         binary_patterns = [
             r"\.(exe|dll|so|dylib|bin|o|a)$",
             r"\.(png|jpg|jpeg|gif|bmp|ico|webp|svg)$",
@@ -215,12 +306,7 @@ class RuleValidator:
             r"^/bin/",
             r"^/sbin/",
         ]
-
         for pattern in binary_patterns:
             if re.search(pattern, path, re.IGNORECASE):
-                return ValidationResult(
-                    decision=Decision.DENY,
-                    rule_id="F15",
-                    reason=f"Binary file cannot be read as text."
-                )
-        return None
+                return True
+        return False

@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 
 import numpy as np
@@ -13,9 +13,19 @@ from .exemplars import STATIC_KNOWLEDGE_EXEMPLARS, MEMORY_REFERENCE_EXEMPLARS
 
 @dataclass
 class Thresholds:
-    static_knowledge: float = 0.40
-    memory_reference: float = 0.50
-    duplicate_search: float = 0.85
+    static_knowledge: float = 0.45  # Raised to reduce false positives on current-events queries
+    memory_reference: float = 0.45  # Catch memory references
+    duplicate_search: float = 0.80  # Catch near-duplicate searches
+
+
+@dataclass
+class CrossValidationResult:
+    """Result of k-fold cross-validation for threshold selection."""
+    optimal_threshold: float
+    mean_accuracy: float
+    std_accuracy: float
+    fold_results: list[dict] = field(default_factory=list)
+    auc: Optional[float] = None  # Area under ROC curve
 
 
 class SemanticClassifier:
@@ -72,3 +82,125 @@ class SemanticClassifier:
         best_score = max(similarities)
 
         return best_score >= self.thresholds.duplicate_search, best_score
+
+    def cross_validate_threshold(
+        self,
+        positive_examples: list[str],
+        negative_examples: list[str],
+        category: str,
+        k_folds: int = 5,
+        threshold_range: tuple[float, float] = (0.30, 0.70),
+        threshold_steps: int = 20,
+    ) -> CrossValidationResult:
+        """
+        Perform k-fold cross-validation to find optimal threshold.
+
+        Args:
+            positive_examples: Examples that SHOULD match (e.g., static knowledge queries)
+            negative_examples: Examples that should NOT match (e.g., current events queries)
+            category: 'static_knowledge' or 'memory_reference'
+            k_folds: Number of folds for cross-validation
+            threshold_range: (min, max) threshold values to test
+            threshold_steps: Number of threshold values to try
+
+        Returns:
+            CrossValidationResult with optimal threshold and metrics
+        """
+        # Encode all examples
+        pos_embeddings = self.model.encode(positive_examples)
+        neg_embeddings = self.model.encode(negative_examples)
+
+        # Generate threshold candidates
+        thresholds = np.linspace(threshold_range[0], threshold_range[1], threshold_steps)
+
+        fold_results = []
+        all_labels = []
+        all_scores = []
+
+        # Create folds
+        n_pos = len(positive_examples)
+        n_neg = len(negative_examples)
+        pos_indices = np.arange(n_pos)
+        neg_indices = np.arange(n_neg)
+
+        np.random.shuffle(pos_indices)
+        np.random.shuffle(neg_indices)
+
+        pos_folds = np.array_split(pos_indices, k_folds)
+        neg_folds = np.array_split(neg_indices, k_folds)
+
+        for fold in range(k_folds):
+            # Held-out test set
+            test_pos_idx = pos_folds[fold]
+            test_neg_idx = neg_folds[fold]
+
+            # Training set (all other folds)
+            train_pos_idx = np.concatenate([pos_folds[i] for i in range(k_folds) if i != fold])
+            train_neg_idx = np.concatenate([neg_folds[i] for i in range(k_folds) if i != fold])
+
+            # Compute centroid from training positive examples only
+            train_centroid = np.mean(pos_embeddings[train_pos_idx], axis=0)
+
+            # Compute similarities for test examples
+            test_pos_sims = [self._cosine_similarity(pos_embeddings[i], train_centroid)
+                            for i in test_pos_idx]
+            test_neg_sims = [self._cosine_similarity(neg_embeddings[i], train_centroid)
+                            for i in test_neg_idx]
+
+            # Store for ROC curve
+            all_scores.extend(test_pos_sims + test_neg_sims)
+            all_labels.extend([1] * len(test_pos_sims) + [0] * len(test_neg_sims))
+
+            # Find best threshold for this fold
+            best_threshold = thresholds[0]
+            best_accuracy = 0.0
+
+            for thresh in thresholds:
+                # Predictions
+                pos_correct = sum(1 for s in test_pos_sims if s >= thresh)
+                neg_correct = sum(1 for s in test_neg_sims if s < thresh)
+                accuracy = (pos_correct + neg_correct) / (len(test_pos_sims) + len(test_neg_sims))
+
+                if accuracy > best_accuracy:
+                    best_accuracy = accuracy
+                    best_threshold = thresh
+
+            fold_results.append({
+                "fold": fold,
+                "best_threshold": float(best_threshold),
+                "accuracy": float(best_accuracy),
+                "n_test_pos": len(test_pos_idx),
+                "n_test_neg": len(test_neg_idx),
+            })
+
+        # Compute AUC using trapezoidal rule
+        sorted_pairs = sorted(zip(all_scores, all_labels), reverse=True)
+        n_pos_total = sum(all_labels)
+        n_neg_total = len(all_labels) - n_pos_total
+
+        tpr_prev, fpr_prev = 0.0, 0.0
+        auc = 0.0
+        tp, fp = 0, 0
+
+        for score, label in sorted_pairs:
+            if label == 1:
+                tp += 1
+            else:
+                fp += 1
+            tpr = tp / n_pos_total if n_pos_total > 0 else 0
+            fpr = fp / n_neg_total if n_neg_total > 0 else 0
+            auc += (fpr - fpr_prev) * (tpr + tpr_prev) / 2
+            tpr_prev, fpr_prev = tpr, fpr
+
+        # Optimal threshold is mean of fold thresholds
+        optimal_threshold = float(np.mean([f["best_threshold"] for f in fold_results]))
+        mean_accuracy = float(np.mean([f["accuracy"] for f in fold_results]))
+        std_accuracy = float(np.std([f["accuracy"] for f in fold_results]))
+
+        return CrossValidationResult(
+            optimal_threshold=optimal_threshold,
+            mean_accuracy=mean_accuracy,
+            std_accuracy=std_accuracy,
+            fold_results=fold_results,
+            auc=float(auc),
+        )

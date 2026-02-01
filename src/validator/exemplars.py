@@ -4,6 +4,7 @@ Used in both calibration and runtime.
 """
 
 STATIC_KNOWLEDGE_EXEMPLARS = [
+    # Basic facts
     "What is the capital of France?",
     "What is photosynthesis?",
     "Define recursion",
@@ -12,6 +13,26 @@ STATIC_KNOWLEDGE_EXEMPLARS = [
     "Who wrote Romeo and Juliet?",
     "What is the speed of light?",
     "Explain the theory of relativity",
+    # Programming concepts
+    "What is a linked list?",
+    "How does garbage collection work?",
+    "What is the difference between a class and an object?",
+    "Explain big O notation",
+    "What is a hash table?",
+    "How does TCP/IP work?",
+    # Science
+    "What causes earthquakes?",
+    "How do vaccines work?",
+    "What is DNA?",
+    "Explain how evolution works",
+    # Math
+    "What is a prime number?",
+    "Explain the quadratic formula",
+    "What is calculus used for?",
+    # General knowledge
+    "Who was Albert Einstein?",
+    "What is democracy?",
+    "How does the stock market work?",
 ]
 
 MEMORY_REFERENCE_EXEMPLARS = [
@@ -23,4 +44,13 @@ MEMORY_REFERENCE_EXEMPLARS = [
     "We talked about this before",
     "What was my budget again?",
     "As I mentioned previously",
+    # More variations
+    "Earlier you told me",
+    "Go back to what we discussed",
+    "What was that thing you said?",
+    "Remind me what we decided",
+    "You suggested something before",
+    "What did we agree on?",
+    "Can you recall our earlier discussion?",
+    "What was my original request?",
 ]
