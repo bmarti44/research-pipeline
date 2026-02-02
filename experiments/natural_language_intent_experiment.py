@@ -1514,12 +1514,20 @@ async def run_experiment(
 
     # Familiarity analysis (filepath scenarios)
     familiarity_metrics = {}
+    # Exclude scenarios with semantic confounds (e.g., README.md interpreted as read request)
+    # mem_filepath_high_010 is excluded due to semantic confound - both conditions interpret as read request
+    EXCLUDED_FROM_FAMILIARITY = {"mem_filepath_high_010"}  # README.md
+
     high_fam_nl = [r for r in by_condition["nl"]
-                   if r.scenario_id.startswith("mem_filepath_high_") and r.expected_action]
+                   if r.scenario_id.startswith("mem_filepath_high_")
+                   and r.expected_action
+                   and r.scenario_id not in EXCLUDED_FROM_FAMILIARITY]
     low_fam_nl = [r for r in by_condition["nl"]
                   if r.scenario_id.startswith("mem_filepath_low_") and r.expected_action]
     high_fam_st = [r for r in by_condition["structured"]
-                   if r.scenario_id.startswith("mem_filepath_high_") and r.expected_action]
+                   if r.scenario_id.startswith("mem_filepath_high_")
+                   and r.expected_action
+                   and r.scenario_id not in EXCLUDED_FROM_FAMILIARITY]
     low_fam_st = [r for r in by_condition["structured"]
                   if r.scenario_id.startswith("mem_filepath_low_") and r.expected_action]
 
@@ -1530,6 +1538,9 @@ async def run_experiment(
         print()
         print("Hypothesis: Unfamiliar patterns trigger verification behavior in structured")
         print("            condition but not in NL condition (cognitive overhead effect)")
+        print()
+        print("Note: mem_filepath_high_010 (README.md) excluded due to semantic confound")
+        print("      (both conditions interpret 'README.md is in root' as read request)")
         print()
 
         if high_fam_nl:

@@ -1,0 +1,128 @@
+{
+  "description": "Samples for manual validation of detection accuracy",
+  "nl_false_negatives": [],
+  "st_false_negatives": [],
+  "nl_false_positives": [
+    {
+      "scenario_id": "ctrl_opinion_001",
+      "query": "React has more GitHub stars than Vue",
+      "response": "I'll save that React has more GitHub stars than Vue - this is a notable fact about the relative popularity of these JavaScript frameworks on GitHub.",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you mentioning that before in our conversations. But now that you've shared it, I'll save that your project uses React for future reference.\n\nIs there anything specific about your React setup you'd like me to know, such as whether you're using TypeScript, any particular state management library, or component patterns you prefer?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_opinion_001",
+      "query": "React has more GitHub stars than Vue",
+      "response": "I'll save that React has more GitHub stars than Vue - this is a notable fact about the relative popularity of these frontend frameworks on GitHub.",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so I don't have a record of you mentioning React before. This appears to be the start of our conversation.\n\nBut now that you've shared it - I'll remember that your project uses React for future reference.",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll remember"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so I don't have a record of you mentioning that you use React.\n\nBut now that you've told me - I'll save that your project uses React for the frontend framework. This will be helpful context for future conversations!\n\nIs there anything else about your tech stack or project setup you'd like me to remember?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so this would be the first time you're mentioning that you use React.\n\nI'll save that your project uses React for future reference.\n\nIs there anything specific about your React setup you'd like me to remember, such as the version, whether you're using TypeScript, your state management approach, or any particular patterns/conventions you follow?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you mentioning that you use React in our previous conversations. This is the first time you've shared that with me.\n\nI'll save that your project uses React for future reference.\n\nIs there anything specific about your React setup you'd like me to remember, such as which version, whether you're using TypeScript, your state management approach, or any particular conventions your team follows?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    }
+  ],
+  "st_false_positives": [
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so I don't have a record of you mentioning that you use React. This appears to be our first interaction, or at least the first in this session.\n\nBut now I know! I'll save that for future reference.\n\n<save-memory category=\"codebase\">Project uses React</save-memory>\n\nIs there anything specific about your React setup or project you'd like to discuss or get help with?",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so this would be the first time you're telling me that you use React.\n\nBut now I know! Let me save that for future reference.\n\n<save-memory category=\"codebase\">Project uses React</save-memory>\n\nIs there anything specific about your React setup you'd like to share (like whether you're using TypeScript, a specific state management library, or any particular patterns/conventions)?",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you mentioning that you use React in our previous conversations. My memory doesn't show any saved information about your tech stack or codebase yet.\n\nBut now that you've told me - I'll remember that for future conversations!\n\n<save-memory category=\"codebase\">Tech stack uses React</save-memory>\n\nIs there anything else about your project setup or preferences you'd like me to know?",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Tech stack uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you mentioning that you use React before. This appears to be our first conversation, so I don't have any saved context about your codebase or tech stack yet.\n\nBut now I know! Would you like me to remember that your project uses React for future conversations?\n\n<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    }
+  ],
+  "counts": {
+    "nl_false_negatives_total": 0,
+    "st_false_negatives_total": 0,
+    "nl_false_positives_total": 7,
+    "st_false_positives_total": 4
+  }
+}

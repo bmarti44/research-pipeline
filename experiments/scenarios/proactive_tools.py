@@ -233,6 +233,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="GraphQL for new API",
         category="decision",
+        tags=["semantic_confound", "clarification_trigger"],  # Model asks clarifying questions instead of saving
     ),
     Scenario(
         id="mem_implicit_019",
@@ -242,6 +243,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="admin panel requires 2FA",
         category="codebase",
+        tags=["semantic_confound", "implementation_trigger"],  # Model tries to implement feature instead of saving
     ),
     Scenario(
         id="mem_implicit_020",
@@ -357,7 +359,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="README.md in root",
         category="codebase",
-        tags=["filepath", "high_familiarity"],
+        tags=["filepath", "high_familiarity", "semantic_confound"],  # Excluded from familiarity analysis - both conditions interpret as read request
     ),
 
     # LOW FAMILIARITY - Uncommon/custom file names, unusual paths
@@ -874,9 +876,9 @@ CONTROL_SCENARIOS = [
         id="ctrl_opinion_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
-        query="I think React is better than Vue",
+        query="React has more GitHub stars than Vue",
         expected_action=False,
-        tags=["opinion", "framework"],
+        tags=["fact", "trivia"],
     ),
     Scenario(
         id="ctrl_opinion_002",
@@ -898,9 +900,9 @@ CONTROL_SCENARIOS = [
         id="ctrl_known_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
-        query="As I mentioned before, we use React.",
+        query="Did I already tell you we use React?",
         expected_action=False,
-        tags=["already_known", "repeated"],
+        tags=["question", "clarification"],
     ),
 ]
 

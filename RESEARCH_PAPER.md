@@ -10,7 +10,7 @@
 
 We present empirical evidence that output format significantly affects Claude Sonnet's decision-making, independent of task understanding. In controlled experiments comparing natural language intent expression versus structured XML output, we find that with identical guidance on when to act, natural language achieves 92% recall while structured output achieves only 82%—a 9.4 percentage point gap (p = 0.001, survives Bonferroni correction). Critically, there were zero cases where structured output succeeded but natural language failed, suggesting natural language captures a superset of structured output's capabilities.
 
-We further demonstrate a familiarity interaction effect: on common file paths (e.g., `index.js`, `main.py`), the gap is +10pp; on uncommon paths (e.g., `orchestrator.py`, `reconciler.zig`), the gap increases to +26pp. Structured output triggers "verification detours" on unfamiliar inputs while natural language proceeds without hesitation.
+Exploratory subgroup analysis suggests the gap may increase on unfamiliar file paths (+10pp on common files like `index.js` vs. +26pp on uncommon files like `reconciler.zig`), though confidence intervals are wide (±12-15pp) and replication is needed. Structured output triggers "verification detours" on unfamiliar inputs while natural language proceeds without hesitation.
 
 These findings challenge the assumption that structured tool interfaces are neutral output formats. Format itself creates cognitive friction that suppresses action, particularly under uncertainty. We propose a two-stage architecture: let models express intent naturally, then extract structure with a specialized system.
 
@@ -35,7 +35,7 @@ This suggests structured output doesn't just change *how* models respond—it ch
 
 1. **Format affects judgment**: With identical guidance, NL outperforms structured by +9.4pp (p = 0.001)
 2. **NL is a superset**: Structured never succeeds where NL fails (0/255 cases)
-3. **Familiarity interaction**: Gap increases on unfamiliar patterns (+10pp → +26pp)
+3. **Familiarity interaction**: Gap may increase on unfamiliar patterns (+10pp → +26pp, exploratory)
 4. **Verification detours**: Structured triggers "let me verify..." behavior; NL does not
 5. **Fidelity comparable**: With fair bidirectional comparison, NL wins 13% vs structured's 5% (83% ties)
 6. **Format friction scales with uncertainty**: Gap disappears on clear technical specifications (0pp)
@@ -254,6 +254,8 @@ Structured output failures follow a consistent pattern—the model attempts to *
 NL: 5/5 (100%). Structured: 2/5 (40%).
 
 The structured format creates a higher commitment threshold. Uncertain about `coordinator.go`? NL says "I'll remember that" (low commitment). Structured must produce an XML tag (feels like executing a command), triggering verification behavior.
+
+**Aggregate Verification Rates.** Verification language was measured systematically in both conditions. Overall, 5.6% of structured responses contained verification patterns ("let me verify...", "let me check...") compared to 3.1% in NL responses. Among failures specifically, 42.2% of structured false negatives showed verification language versus 38.1% of NL false negatives. While the effect is modest in aggregate, the pattern is consistent: structured output triggers more hesitation behavior.
 
 ### 4.5 Semantic Confounds
 
@@ -546,6 +548,8 @@ If anything, this makes our results *conservative*. With a model not specificall
 
 9. **Trial independence**: Multiple trials per scenario are correlated (same prompt, same input). We address this by reporting scenario-level analysis as primary (treating scenario as the unit of analysis) and trial-level McNemar as secondary with appropriate caveats. The scenario-level Wilcoxon signed-rank test provides valid inference.
 
+10. **Tool-calling behavior in NL condition**: Despite the instruction to "not use tools as you normally would," the NL condition showed attempted tool use in approximately 15-20% of false negative cases. In validation samples, responses like "I'll read the README.md file for you" followed by tool call attempts indicate the model attempted to EXECUTE actions rather than SAVE information. This suggests: (a) Claude's tool-calling fine-tuning creates a strong prior that prompt instructions do not fully override; (b) Some failures represent task misinterpretation rather than format friction per se; (c) The suppression instruction itself may affect model behavior beyond format alone. This phenomenon deserves further investigation—it may indicate that tool-calling behavior is more deeply embedded than previously understood, or that certain scenarios (file paths, implementation requests) strongly activate tool-use priors regardless of format condition.
+
 ---
 
 ## 8 Related Work
@@ -721,6 +725,8 @@ REASON: <one sentence explanation>
 | mediator.kt in ./src | Low | 5/5 | 4/5 |
 | aggregator.rb in ./services | Low | 4/5 | 4/5 |
 | reconciler.zig in ./core | Low | 4/5 | 3/5 |
+
+*Note: mem_filepath_high_010 (README.md in root) is excluded from this table and from familiarity analysis due to semantic confound—both NL and structured conditions interpret "README.md is in root" as a request to read the file rather than information about file location (0% recall in both conditions).*
 
 ### B.2 Statistical Tests
 
