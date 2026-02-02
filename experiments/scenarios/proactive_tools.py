@@ -13,6 +13,9 @@ import json
 
 class ToolType(Enum):
     MEMORY = "memory"           # Save information for future
+    FILE_READ = "file_read"     # Read file contents (future work)
+    FILE_WRITE = "file_write"   # Write/create files (future work)
+    FILE_SEARCH = "file_search" # Search for files (future work)
 
 
 class ExplicitnessLevel(Enum):
@@ -615,42 +618,281 @@ MEMORY_SCENARIOS = [
 
 
 # =============================================================================
-# CONTROL SCENARIOS (5) - Should NOT trigger any tool
+# FILE OPERATION SCENARIOS (Future Work)
 # =============================================================================
+# These scenarios test format friction for higher-stakes tools beyond memory.
+# Memory persistence is low-stakes; file operations have real side effects.
+# NOTE: These are defined but not currently used in the main experiment.
+
+FILE_OPERATION_SCENARIOS = [
+    # -------------------------------------------------------------------------
+    # FILE READ REQUESTS - Should trigger file read
+    # -------------------------------------------------------------------------
+    Scenario(
+        id="file_read_001",
+        tool_type=ToolType.FILE_READ,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Check what's in config.yaml",
+        expected_action=True,
+        expected_content="read config.yaml",
+        tags=["file_operation", "read"],
+    ),
+    Scenario(
+        id="file_read_002",
+        tool_type=ToolType.FILE_READ,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Look at the package.json dependencies",
+        expected_action=True,
+        expected_content="read package.json",
+        tags=["file_operation", "read"],
+    ),
+    Scenario(
+        id="file_read_003",
+        tool_type=ToolType.FILE_READ,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="What's in the .env file?",
+        expected_action=True,
+        expected_content="read .env",
+        tags=["file_operation", "read"],
+    ),
+
+    # -------------------------------------------------------------------------
+    # FILE WRITE REQUESTS - Should trigger file write
+    # -------------------------------------------------------------------------
+    Scenario(
+        id="file_write_001",
+        tool_type=ToolType.FILE_WRITE,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Add a newline at the end of main.py",
+        expected_action=True,
+        expected_content="modify main.py",
+        tags=["file_operation", "write"],
+    ),
+    Scenario(
+        id="file_write_002",
+        tool_type=ToolType.FILE_WRITE,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Create a .gitignore file",
+        expected_action=True,
+        expected_content="create .gitignore",
+        tags=["file_operation", "write"],
+    ),
+    Scenario(
+        id="file_write_003",
+        tool_type=ToolType.FILE_WRITE,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Update the README with a new section",
+        expected_action=True,
+        expected_content="modify README",
+        tags=["file_operation", "write"],
+    ),
+
+    # -------------------------------------------------------------------------
+    # FILE SEARCH REQUESTS - Should trigger file search
+    # -------------------------------------------------------------------------
+    Scenario(
+        id="file_search_001",
+        tool_type=ToolType.FILE_SEARCH,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Find all TypeScript files",
+        expected_action=True,
+        expected_content="search for *.ts",
+        tags=["file_operation", "search"],
+    ),
+    Scenario(
+        id="file_search_002",
+        tool_type=ToolType.FILE_SEARCH,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Where is the database config?",
+        expected_action=True,
+        expected_content="search for database config",
+        tags=["file_operation", "search"],
+    ),
+    Scenario(
+        id="file_search_003",
+        tool_type=ToolType.FILE_SEARCH,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="Find where the API endpoints are defined",
+        expected_action=True,
+        expected_content="search for API endpoints",
+        tags=["file_operation", "search"],
+    ),
+]
+
+
+# =============================================================================
+# CONTROL SCENARIOS (20) - Should NOT trigger any tool
+# =============================================================================
+# Expanded from 5 to 20 scenarios to reliably estimate false positive rate
+# (addresses peer review concern about underpowered control analysis)
 
 CONTROL_SCENARIOS = [
-    # One from each category for diversity
+    # -------------------------------------------------------------------------
+    # QUESTIONS (should not save) - 5 scenarios
+    # -------------------------------------------------------------------------
     Scenario(
         id="ctrl_question_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
         query="What is 2 + 2?",
         expected_action=False,
-        tags=["simple_question"],
+        tags=["question", "simple"],
     ),
+    Scenario(
+        id="ctrl_question_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="How do I configure webpack?",
+        expected_action=False,
+        tags=["question", "technical"],
+    ),
+    Scenario(
+        id="ctrl_question_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="What's the best way to handle errors?",
+        expected_action=False,
+        tags=["question", "technical"],
+    ),
+    Scenario(
+        id="ctrl_question_004",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Can you explain async/await?",
+        expected_action=False,
+        tags=["question", "conceptual"],
+    ),
+    Scenario(
+        id="ctrl_question_005",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Why is my test failing?",
+        expected_action=False,
+        tags=["question", "debugging"],
+    ),
+
+    # -------------------------------------------------------------------------
+    # ACTION REQUESTS (should not save) - 5 scenarios
+    # -------------------------------------------------------------------------
     Scenario(
         id="ctrl_action_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
         query="Please write a function that sorts an array.",
         expected_action=False,
-        tags=["action_request"],
+        tags=["action_request", "coding"],
     ),
+    Scenario(
+        id="ctrl_action_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Refactor this function to use async",
+        expected_action=False,
+        tags=["action_request", "refactor"],
+    ),
+    Scenario(
+        id="ctrl_action_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Add error handling to this code",
+        expected_action=False,
+        tags=["action_request", "coding"],
+    ),
+    Scenario(
+        id="ctrl_action_004",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Write unit tests for the auth module",
+        expected_action=False,
+        tags=["action_request", "testing"],
+    ),
+    Scenario(
+        id="ctrl_action_005",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Fix the bug on line 42",
+        expected_action=False,
+        tags=["action_request", "debugging"],
+    ),
+
+    # -------------------------------------------------------------------------
+    # TEMPORARY/TRANSIENT (should not save) - 5 scenarios
+    # -------------------------------------------------------------------------
     Scenario(
         id="ctrl_temp_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
         query="I'm just testing something real quick.",
         expected_action=False,
-        tags=["temporary"],
+        tags=["temporary", "testing"],
     ),
+    Scenario(
+        id="ctrl_temp_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Let me try something different",
+        expected_action=False,
+        tags=["temporary", "exploring"],
+    ),
+    Scenario(
+        id="ctrl_temp_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Actually, ignore that last thing",
+        expected_action=False,
+        tags=["temporary", "retraction"],
+    ),
+    Scenario(
+        id="ctrl_temp_004",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="Just brainstorming here",
+        expected_action=False,
+        tags=["temporary", "brainstorm"],
+    ),
+    Scenario(
+        id="ctrl_temp_005",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="This is just a quick test",
+        expected_action=False,
+        tags=["temporary", "testing"],
+    ),
+
+    # -------------------------------------------------------------------------
+    # CHITCHAT AND OPINIONS (should not save) - 5 scenarios
+    # -------------------------------------------------------------------------
     Scenario(
         id="ctrl_chat_001",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.CONTROL,
         query="Thanks for your help!",
         expected_action=False,
-        tags=["chitchat"],
+        tags=["chitchat", "gratitude"],
+    ),
+    Scenario(
+        id="ctrl_opinion_001",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="I think React is better than Vue",
+        expected_action=False,
+        tags=["opinion", "framework"],
+    ),
+    Scenario(
+        id="ctrl_opinion_002",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="This code looks messy",
+        expected_action=False,
+        tags=["opinion", "code_quality"],
+    ),
+    Scenario(
+        id="ctrl_opinion_003",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.CONTROL,
+        query="That's an interesting approach",
+        expected_action=False,
+        tags=["opinion", "feedback"],
     ),
     Scenario(
         id="ctrl_known_001",
@@ -658,7 +900,7 @@ CONTROL_SCENARIOS = [
         level=ExplicitnessLevel.CONTROL,
         query="As I mentioned before, we use React.",
         expected_action=False,
-        tags=["already_known"],
+        tags=["already_known", "repeated"],
     ),
 ]
 
@@ -667,7 +909,12 @@ CONTROL_SCENARIOS = [
 # ALL SCENARIOS
 # =============================================================================
 
+# Default set: memory scenarios + controls
+# FILE_OPERATION_SCENARIOS are defined but not included by default (future work)
 ALL_SCENARIOS = MEMORY_SCENARIOS + CONTROL_SCENARIOS
+
+# To include file operation scenarios for future experiments:
+# ALL_SCENARIOS_WITH_FILES = MEMORY_SCENARIOS + CONTROL_SCENARIOS + FILE_OPERATION_SCENARIOS
 
 
 def get_scenarios_by_level(level: ExplicitnessLevel) -> list[Scenario]:

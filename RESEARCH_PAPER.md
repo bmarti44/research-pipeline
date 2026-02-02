@@ -2,15 +2,15 @@
 
 **Brian Martin**¹, **Stephen Lipmann**¹
 
-¹ Unaffiliated
+¹ Oracle
 
 ---
 
 ## Abstract
 
-We present empirical evidence that output format significantly affects LLM decision-making, independent of task understanding. In controlled experiments comparing natural language intent expression versus structured XML output, we find that with identical guidance on when to act, natural language achieves 91% recall while structured output achieves only 81%—a 10 percentage point gap (p < 0.0001). Critically, there were zero cases where structured output succeeded but natural language failed, suggesting natural language captures a superset of structured output's capabilities.
+We present empirical evidence that output format significantly affects Claude Sonnet's decision-making, independent of task understanding. In controlled experiments comparing natural language intent expression versus structured XML output, we find that with identical guidance on when to act, natural language achieves 92% recall while structured output achieves only 82%—a 9.4 percentage point gap (p = 0.001, survives Bonferroni correction). Critically, there were zero cases where structured output succeeded but natural language failed, suggesting natural language captures a superset of structured output's capabilities.
 
-We further demonstrate a familiarity interaction effect: on common file paths (e.g., `index.js`, `main.py`), the gap is +12pp; on uncommon paths (e.g., `orchestrator.py`, `reconciler.zig`), the gap nearly triples to +30pp. Structured output triggers "verification detours" on unfamiliar inputs while natural language proceeds without hesitation.
+We further demonstrate a familiarity interaction effect: on common file paths (e.g., `index.js`, `main.py`), the gap is +10pp; on uncommon paths (e.g., `orchestrator.py`, `reconciler.zig`), the gap increases to +26pp. Structured output triggers "verification detours" on unfamiliar inputs while natural language proceeds without hesitation.
 
 These findings challenge the assumption that structured tool interfaces are neutral output formats. Format itself creates cognitive friction that suppresses action, particularly under uncertainty. We propose a two-stage architecture: let models express intent naturally, then extract structure with a specialized system.
 
@@ -27,17 +27,17 @@ We present evidence that output format affects model judgment, not just output p
 - **Natural Language**: "I'll save that your configuration file is in src/config.ts"
 - **Structured XML**: `<save-memory category="codebase">config file in src/config.ts</save-memory>`
 
-With identical task understanding and equally explicit instructions, natural language achieves 91% recall while structured output achieves 81%—a 10 percentage point gap. More striking: in 255 paired trials, there were zero cases where structured output succeeded but natural language failed.
+With identical task understanding and equally explicit instructions, natural language achieves 92% recall while structured output achieves 82%—a 9.4 percentage point gap. More striking: in 255 paired trials, there were zero cases where structured output succeeded but natural language failed.
 
 This suggests structured output doesn't just change *how* models respond—it changes *whether* they respond.
 
 ### 1.1 Key Findings
 
-1. **Format affects judgment**: With identical guidance, NL outperforms structured by +10pp (p < 0.0001)
+1. **Format affects judgment**: With identical guidance, NL outperforms structured by +9.4pp (p = 0.001)
 2. **NL is a superset**: Structured never succeeds where NL fails (0/255 cases)
-3. **Familiarity interaction**: Gap nearly triples on unfamiliar patterns (+12pp → +30pp)
+3. **Familiarity interaction**: Gap increases on unfamiliar patterns (+10pp → +26pp)
 4. **Verification detours**: Structured triggers "let me verify..." behavior; NL does not
-5. **Fidelity tradeoff**: Structured wins 45% of fidelity comparisons vs NL's 2%
+5. **Fidelity comparable**: With fair bidirectional comparison, NL wins 13% vs structured's 5% (83% ties)
 6. **Format friction scales with uncertainty**: Gap disappears on clear technical specifications (0pp)
 
 ### 1.2 Contributions
@@ -130,18 +130,30 @@ Examples:
 - <save-memory category="user_preference">Use tabs</save-memory>
 ```
 
+### 3.2.1 Prompt Engineering Constraints
+
+A practical constraint shaped our prompt design: Claude's default behavior strongly favors tool use when tools are available. In pilot testing, the NL condition frequently attempted to call tools despite instructions to express intent naturally.
+
+To isolate the format variable, we:
+- **NL condition**: Explicitly instructed "Do not use tools as you normally would - use natural language" to suppress default tool-calling behavior
+- **Structured condition**: Used standard tool-calling framing consistent with current production patterns
+
+This reflects the real architectural choice: deploying NL intent expression requires suppressing default tool behavior. We acknowledge this as a limitation; the suppression instruction itself may affect model behavior beyond format alone.
+
 ### 3.3 Scenarios
 
-We constructed 41 scenarios across two dimensions:
+We constructed 71 scenarios across two dimensions:
 
 **Explicitness** (vague → explicit):
-- **Implicit** (20): Terse statements like "app.py is in ./src", "pg is db"
-- **Control** (5): Should NOT trigger save (questions, chitchat)
+- **Implicit** (~40): Terse statements like "app.py is in ./src", "pg is db"
+- **Control** (20): Should NOT trigger save (questions, chitchat, transient statements)
 - **Explicit** (1): Sanity check with direct command
 
 **Familiarity** (for filepath scenarios):
 - **High familiarity** (10): Common files (`index.js`, `main.py`, `package.json`)
 - **Low familiarity** (10): Uncommon files (`orchestrator.py`, `mediator.kt`, `reconciler.zig`)
+
+All test scenarios were constructed by the authors based on plausible developer interactions. We did not conduct formal validation of scenario realism; future work should validate with user studies or real conversation logs.
 
 ### 3.4 Evaluation
 
@@ -170,7 +182,7 @@ This experiment evolved through three versions to address confounds:
 - Equally explicit HOW-to-save examples (matched verbosity and formality)
 - Only difference: output structure (NL phrases vs XML tags)
 
-This evolution is important context: early results showing 25-30pp gaps were inflated by confounds. The current 10pp gap represents the isolated effect of output format.
+This evolution is important context: early results showing 25-30pp gaps were inflated by confounds. The current 9.4pp gap represents the isolated effect of output format.
 
 ---
 
@@ -182,11 +194,11 @@ This evolution is important context: early results showing 25-30pp gaps were inf
 
 | Condition | Recall | 95% CI |
 |-----------|--------|--------|
-| Natural Language | **91.0%** | [86.8%, 93.9%] |
-| Structured | **80.8%** | [75.5%, 85.1%] |
-| **Difference** | **+10.2pp** | — |
+| Natural Language | **91.8%** | [87.7%, 94.6%] |
+| Structured | **82.4%** | [77.2%, 86.5%] |
+| **Difference** | **+9.4pp** | — |
 
-McNemar's χ² = 24.04, p < 0.0001
+McNemar's χ² = 22.04, p < 0.0001 (trial-level; see Section 4.11 for scenario-level analysis)
 
 ### 4.2 Natural Language is a Superset
 
@@ -194,10 +206,20 @@ McNemar's χ² = 24.04, p < 0.0001
 
 |  | Structured ✓ | Structured ✗ |
 |--|--------------|--------------|
-| **NL ✓** | 206 | 26 |
-| **NL ✗** | **0** | 23 |
+| **NL ✓** | 210 | 24 |
+| **NL ✗** | **0** | 21 |
 
-The zero in the bottom-left cell is remarkable: there were no cases where structured succeeded but NL failed. Every structured success was also an NL success. NL captures everything structured does, plus 26 additional cases.
+The zero in the bottom-left cell is remarkable: there were no cases where structured succeeded but NL failed. Every structured success was also an NL success. NL captures everything structured does, plus 24 additional cases.
+
+**Interpreting the zero cell.** This result warrants scrutiny. Three interpretations:
+
+1. **NL is genuinely a superset**: The model's decision to save under structured constraints implies it would also save under NL constraints. The structured format adds friction without enabling new capabilities.
+
+2. **Detection asymmetry**: NL patterns are more generous than XML patterns, so borderline cases are caught by NL detection but not structured detection. Some "NL successes" might be false positives.
+
+3. **Statistical artifact**: With 255 observations, a true 1-2% structured-only rate could yield zero by chance (p ≈ 0.08 for true rate of 1%).
+
+We cannot definitively distinguish these interpretations. Raw response data is available in `experiments/results/` for independent verification.
 
 ### 4.3 Familiarity Interaction Effect
 
@@ -205,15 +227,17 @@ The zero in the bottom-left cell is remarkable: there were no cases where struct
 
 | Familiarity | NL | Structured | Gap |
 |-------------|-----|------------|-----|
-| High (common files) | 90.0% | 78.0% | **+12.0pp** |
-| Low (uncommon files) | 86.0% | 56.0% | **+30.0pp** |
+| High (common files) | 90.0% | 80.0% | **+10.0pp** |
+| Low (uncommon files) | 88.0% | 62.0% | **+26.0pp** |
 
-The gap nearly triples on low-familiarity scenarios. Breaking this down:
+The gap appears to increase on low-familiarity scenarios (+10pp → +26pp). However, with only 50 observations per subgroup (10 scenarios × 5 trials), confidence intervals are wide (approximately ±12-15pp). The difference-in-differences (+16pp) is suggestive but requires larger samples for confirmation. We report this as preliminary evidence.
 
-- NL drops 4pp (90% → 86%) on unfamiliar inputs
-- Structured drops 22pp (78% → 56%) on unfamiliar inputs
+Breaking down the point estimates:
 
-Uncertainty affects both conditions, but structured output amplifies the effect 5.5×.
+- NL drops 2pp (90% → 88%) on unfamiliar inputs
+- Structured drops 18pp (80% → 62%) on unfamiliar inputs
+
+If the pattern holds, structured output amplifies the uncertainty effect ~9× compared to NL. This is consistent with the format friction hypothesis but should be replicated.
 
 ### 4.4 Failure Mode: Verification Detours
 
@@ -245,22 +269,21 @@ This failure is not a format effect (both conditions fail equally) but rather a 
 
 When both conditions successfully save, which captures better information?
 
-**Table 4: Head-to-Head Fidelity Comparison (n=211 paired successes)**
+**Methodology.** To ensure fair comparison, we: (1) extract semantic content from NL responses before comparison (removing conversational wrappers like "I'll save that..."), and (2) run bidirectional comparison (A vs B, then B vs A) to control for LLM judge position bias. A winner is only counted if consistent across both orderings.
+
+**Table 4: Head-to-Head Fidelity Comparison (n=219 paired successes)**
 
 | Winner | Count | Percentage |
 |--------|-------|------------|
-| NL | 5 | 2% |
-| Structured | 94 | 45% |
-| Tie | 112 | 53% |
+| NL | 28 | 13% |
+| Structured | 10 | 5% |
+| Tie | 181 | 83% |
 
-**Structured output produces higher fidelity when it succeeds.** Structured won 45% of fidelity comparisons versus NL's 2%. The XML format produces more concise, focused content without extraneous conversational text.
+Bidirectional consistency: 87% (29 comparisons showed position bias and were marked as ties).
 
-However, this fidelity advantage is offset by structured's lower recall. The effective accuracy calculation:
+**With fair comparison, fidelity is roughly equivalent.** The majority of comparisons (83%) show no meaningful difference in information capture quality. NL wins slightly more often (13% vs 5%), but the dominant pattern is equivalence.
 
-- NL: 91% recall × ~98% relative fidelity ≈ 89% effective accuracy
-- Structured: 81% recall × ~145% relative fidelity ≈ 85% effective accuracy (when accounting for fidelity advantage)
-
-The net effect still favors NL, but practitioners should note: if your use case requires high-precision content capture and can tolerate lower recall, structured output may be preferable. If your use case prioritizes coverage, NL is superior.
+**LLM-as-judge limitations.** Research shows LLM judges have significant biases (position bias, verbosity bias, self-enhancement). Our bidirectional approach mitigates position bias, but results should be considered suggestive rather than definitive. We recommend treating fidelity findings as exploratory.
 
 ### 4.7 Precision Scenarios: A Surprising Result
 
@@ -296,9 +319,9 @@ This finding reinforces the uncertainty hypothesis from Section 4.3. These scena
 
 | Scenario Type | Uncertainty | NL Recall | Structured Recall | Gap |
 |---------------|-------------|-----------|-------------------|-----|
-| Ambiguous (implicit) | High | 91% | 81% | +10pp |
-| Unfamiliar paths | High | 86% | 56% | +30pp |
-| Familiar paths | Medium | 90% | 78% | +12pp |
+| Ambiguous (implicit) | High | 92% | 82% | +9.4pp |
+| Unfamiliar paths | High | 88% | 62% | +26pp |
+| Familiar paths | Medium | 90% | 80% | +10pp |
 | Multi-field technical | Low | 100% | 100% | 0pp |
 
 Format friction is not a constant tax—it scales with uncertainty. When the model is confident, structured output performs as well as natural language. The practical implication: format friction is most problematic for edge cases and ambiguous inputs, precisely where robust behavior matters most.
@@ -338,16 +361,27 @@ Structured output better captures **state transitions**—the relationship betwe
 
 | Metric | Value |
 |--------|-------|
-| NL Recall | 91.0% |
-| Structured Recall | 80.8% |
-| Difference | +10.2pp |
-| McNemar's χ² | 24.04 |
-| p-value | <0.0001 |
-| NL-only successes | 26 |
+| NL Recall | 91.8% |
+| Structured Recall | 82.4% |
+| Difference | +9.4pp |
+| Scenario-level sign test p | 0.001 |
+| Scenario-level Wilcoxon p | 0.001 |
+| McNemar's χ² (trial-level) | 22.04 |
+| McNemar p-value (trial-level) | <0.0001 |
+| NL-only successes | 24 |
 | Structured-only successes | 0 |
-| High-familiarity gap | +12.0pp |
-| Low-familiarity gap | +30.0pp |
-| False positive rate (both) | 20.0% |
+| High-familiarity gap | +10.0pp |
+| Low-familiarity gap | +26.0pp |
+| False positive rate (NL) | 9.0% |
+| False positive rate (Structured) | 10.0% |
+
+### 4.11 Statistical Corrections
+
+We conducted 8 hypothesis tests in this study. To control family-wise error rate, we apply Bonferroni correction (α = 0.05/8 = 0.00625). The primary finding (NL vs. structured recall difference) survives correction at the scenario level (sign test p = 0.001, Wilcoxon p = 0.001). Subgroup analyses (familiarity, precision, negation) should be considered exploratory pending replication with larger samples.
+
+**Scenario-level analysis (primary).** Multiple trials per scenario are correlated (same prompt, same input). We aggregate to scenario level: of 51 positive scenarios, NL had higher recall in 11, structured had higher recall in 0, and 40 were tied. The sign test and Wilcoxon signed-rank test both yield p = 0.001, confirming the NL advantage with independent observations.
+
+**Trial-level McNemar (secondary).** The trial-level analysis (χ² = 22.04, p < 0.0001) treats all 255 observations as independent. This assumption is violated, so p-values may be inflated. We report it for comparability with prior work but emphasize the scenario-level analysis.
 
 ---
 
@@ -481,7 +515,7 @@ If format friction is a general phenomenon—format requirements competing with 
 
 ### 7.1 Training Bias Favors Structured Output
 
-A remarkable aspect of these results: Claude is almost certainly trained to use XML tool-calling syntax. Anthropic's models are fine-tuned on tool-use patterns, with XML being the canonical format for Claude's tool interface. Despite this training advantage for structured output, natural language still outperforms by 10pp.
+A remarkable aspect of these results: Claude is almost certainly trained to use XML tool-calling syntax. Anthropic's models are fine-tuned on tool-use patterns, with XML being the canonical format for Claude's tool interface. Despite this training advantage for structured output, natural language still outperforms by 9.4pp.
 
 This suggests format friction is a fundamental phenomenon that persists even with format-specific training. The model has been optimized to produce XML tool calls, yet still exhibits verification detours and hesitation when asked to use them. The training hasn't eliminated the cognitive overhead—it may have just masked how large the underlying friction truly is.
 
@@ -504,9 +538,13 @@ If anything, this makes our results *conservative*. With a model not specificall
 6. **Two-stage architecture untested**: The proposed two-stage architecture is theoretical. We have not implemented or validated that intent extraction from NL achieves high accuracy.
 
 7. **Statistical considerations**:
-   - Confidence intervals for NL [80.2%, 93.0%] and structured [63.6%, 80.7%] overlap slightly
+   - Confidence intervals for NL [87.7%, 94.6%] and structured [77.2%, 86.5%] do not overlap
    - The zero in McNemar's table (0 structured-only wins) is statistically unusual and warrants further investigation
    - Power analysis should be consulted before drawing conclusions about effect sizes
+
+8. **Non-deterministic behavior**: Claude Code does not expose temperature configuration. The underlying model's sampling behavior cannot be controlled, affecting reproducibility. Our 5 trials per scenario capture this variance, but we cannot isolate format effects from sampling effects within a scenario.
+
+9. **Trial independence**: Multiple trials per scenario are correlated (same prompt, same input). We address this by reporting scenario-level analysis as primary (treating scenario as the unit of analysis) and trial-level McNemar as secondary with appropriate caveats. The scenario-level Wilcoxon signed-rank test provides valid inference.
 
 ---
 
@@ -514,7 +552,7 @@ If anything, this makes our results *conservative*. With a model not specificall
 
 **Natural Language Tool Interfaces.** Johnson et al. (2025) show NL outputs improve tool accuracy by 18.4pp. Our work complements this by showing NL *inputs* (intent expression) also outperform structured formats.
 
-**Format Tax.** Tam et al. (2024) quantify up to 27.3pp degradation from JSON requirements. Our 10pp gap is consistent with this "format tax" applied to tool-calling decisions.
+**Format Tax.** Tam et al. (2024) quantify up to 27.3pp degradation from JSON requirements. Our 9.4pp gap is consistent with this "format tax" applied to tool-calling decisions.
 
 **SLOT Architecture.** Wang et al. (2025) achieve 99.5% schema accuracy by separating generation from structuring. Our findings provide theoretical grounding: the primary model reasons better without format constraints.
 
@@ -524,9 +562,9 @@ If anything, this makes our results *conservative*. With a model not specificall
 
 ## 9 Conclusion
 
-We demonstrate that output format affects model decision-making independent of task understanding. With identical guidance, natural language intent expression achieves 91% recall versus 81% for structured XML—a significant 10pp gap with zero cases of structured-only success.
+We demonstrate that output format affects Claude Sonnet's decision-making independent of task understanding. With identical guidance, natural language intent expression achieves 92% recall versus 82% for structured XML—a significant 9.4pp gap (p = 0.001) with zero cases of structured-only success.
 
-The gap nearly triples on unfamiliar inputs (+12pp → +30pp), suggesting format friction amplifies under uncertainty. Structured output triggers "verification detours" that natural language avoids.
+The gap increases on unfamiliar inputs (+10pp → +26pp), suggesting format friction amplifies under uncertainty. Structured output triggers "verification detours" that natural language avoids.
 
 These findings have immediate practical implications:
 - Structured tool interfaces are not neutral—they can suppress action
@@ -534,12 +572,6 @@ These findings have immediate practical implications:
 - Familiarity with input patterns affects format friction magnitude
 
 The broader principle: **let models speak naturally about what they want to do, then handle the formatting separately**. Fighting format friction at inference time is harder than avoiding it architecturally.
-
----
-
-## Acknowledgments
-
-We thank the Claude Code team at Anthropic for infrastructure support and feedback on experimental design.
 
 ---
 
@@ -696,13 +728,15 @@ REASON: <one sentence explanation>
 
 | Test | Value |
 |------|-------|
-| McNemar's χ² | 24.04 |
-| McNemar's p-value | <0.0001 |
-| NL Recall | 91.0% |
-| Structured Recall | 80.8% |
-| NL 95% CI | [86.8%, 93.9%] |
-| Structured 95% CI | [75.5%, 85.1%] |
-| Statistical Power | 90.5% |
+| Scenario-level sign test p | 0.001 |
+| Scenario-level Wilcoxon p | 0.001 |
+| McNemar's χ² (trial-level) | 22.04 |
+| McNemar's p-value (trial-level) | <0.0001 |
+| NL Recall | 91.8% |
+| Structured Recall | 82.4% |
+| NL 95% CI | [87.7%, 94.6%] |
+| Structured 95% CI | [77.2%, 86.5%] |
+| Statistical Power | 88.0% |
 
 ---
 
@@ -714,7 +748,7 @@ Experimental code is included in this repository:
 experiments/
 ├── natural_language_intent_experiment.py   # Main experiment runner
 ├── scenarios/
-│   └── proactive_tools.py                  # Scenario definitions (41 total)
+│   └── proactive_tools.py                  # Scenario definitions (51 positive + 20 control)
 └── results/                                # Raw JSON results from experiments
 ```
 
