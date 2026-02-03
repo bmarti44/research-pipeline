@@ -1,4 +1,4 @@
-# Format Friction Phase Transition: Research Plan
+# Format Friction Phase Transition: Exploratory Research Plan
 
 **Status**: Hypothesis stage - requires validation
 **Potential venue**: NeurIPS 2026 / ICML 2027

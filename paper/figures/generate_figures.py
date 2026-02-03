@@ -49,58 +49,7 @@ def load_judged_results(path: Path) -> dict:
         return json.load(f)
 
 
-def fig1_study1_before_after(output_dir: Path):
-    """Figure 1: Study 1 before/after prompt correction.
-
-    Simple grouped bar chart showing the 9pp gap with confounded prompts
-    and the null after correction.
-    """
-    fig, ax = plt.subplots(figsize=(6, 4))
-
-    # Data (from Study 1 results - Table in §3.3)
-    # With Confound: NL 89.8% (229/255), ST 80.8% (206/255)
-    # After Correction: NL 100%, ST 100% (n=5 each, preliminary)
-    conditions = ['Confounded\nPrompts', 'Corrected\nPrompts*']
-    nl_values = [0.898, 1.00]
-    st_values = [0.808, 1.00]
-
-    x = np.arange(len(conditions))
-    width = 0.35
-
-    bars1 = ax.bar(x - width/2, nl_values, width, label='NL',
-                   color=COLORS['nl'], edgecolor='black', linewidth=0.5)
-    bars2 = ax.bar(x + width/2, st_values, width, label='Structured',
-                   color=COLORS['st'], edgecolor='black', linewidth=0.5,
-                   hatch='///')
-
-    # Add gap annotations
-    for i, (nl, st) in enumerate(zip(nl_values, st_values)):
-        gap = nl - st
-        y_pos = max(nl, st) + 0.02
-        ax.annotate(f'Gap: {gap:+.0%}',
-                   xy=(i, y_pos),
-                   ha='center', fontsize=10,
-                   fontweight='bold' if abs(gap) > 0.05 else 'normal')
-
-    ax.set_ylabel('Recall', fontsize=12)
-    ax.set_title('Study 1: Memory Persistence\nPrompt Asymmetry Confounds Format Effects', fontsize=12)
-    ax.set_xticks(x)
-    ax.set_xticklabels(conditions)
-    ax.set_ylim(0, 1.05)
-    ax.legend(loc='lower right')
-
-    # Add horizontal line at 80%
-    ax.axhline(y=0.80, color='gray', linestyle='--', alpha=0.5, linewidth=0.8)
-
-    # Add footnote for preliminary correction data
-    ax.text(0.5, -0.12, '*Corrected: preliminary validation (n=5 per condition)',
-            transform=ax.transAxes, ha='center', fontsize=8, style='italic')
-
-    plt.tight_layout()
-    plt.savefig(output_dir / 'fig1_study1_before_after.png', dpi=300, bbox_inches='tight')
-    plt.savefig(output_dir / 'fig1_study1_before_after.pdf', bbox_inches='tight')
-    plt.close()
-    print(f"Saved: fig1_study1_before_after.png/pdf")
+# Figure 1 (Study 1 before/after) removed - Study 1 no longer in paper
 
 
 def fig2_ambiguity_interaction(results: list[dict], output_dir: Path):
@@ -307,6 +256,72 @@ def fig4_hedging_breakdown(results: list[dict], output_dir: Path):
     print(f"Saved: fig4_hedging_breakdown.png/pdf")
 
 
+def fig5_friction_by_ambiguity(results: list[dict], output_dir: Path):
+    """Figure 5: Friction by ambiguity level horizontal bar chart.
+
+    Visual summary showing friction increases with ambiguity.
+    """
+    fig, ax = plt.subplots(figsize=(7, 4))
+
+    # Compute friction by ambiguity
+    ambiguity_levels = ['EXPLICIT', 'IMPLICIT\n(excl. HARD)', 'IMPLICIT\n(incl. HARD)']
+
+    # EXPLICIT scenarios
+    explicit = [r for r in results
+                if r.get('ambiguity') == 'EXPLICIT'
+                and r.get('expected_detection') is True]
+
+    # IMPLICIT excluding HARD scenarios
+    implicit_no_hard = [r for r in results
+                        if r.get('ambiguity') == 'IMPLICIT'
+                        and r.get('expected_detection') is True
+                        and r.get('difficulty') != 'HARD']
+
+    # IMPLICIT including HARD
+    implicit_all = [r for r in results
+                    if r.get('ambiguity') == 'IMPLICIT'
+                    and r.get('expected_detection') is True]
+
+    def calc_friction(trials):
+        if not trials:
+            return 0, 0, 0
+        detection = sum(1 for r in trials if r.get('st_judge_detected') is True) / len(trials)
+        compliance = sum(1 for r in trials if r.get('st_regex_detected') is True) / len(trials)
+        return detection - compliance, detection, compliance
+
+    friction_explicit, det_exp, comp_exp = calc_friction(explicit)
+    friction_no_hard, det_no_hard, comp_no_hard = calc_friction(implicit_no_hard)
+    friction_all, det_all, comp_all = calc_friction(implicit_all)
+
+    frictions = [friction_explicit * 100, friction_no_hard * 100, friction_all * 100]
+    colors_list = [COLORS['nl'], COLORS['st'], '#95a5a6']
+
+    y_pos = np.arange(len(ambiguity_levels))
+    bars = ax.barh(y_pos, frictions, color=colors_list, edgecolor='black', linewidth=0.5)
+
+    # Add value labels
+    for i, (bar, friction) in enumerate(zip(bars, frictions)):
+        width = bar.get_width()
+        ax.annotate(f'{friction:.1f}pp',
+                   xy=(width + 0.5, bar.get_y() + bar.get_height() / 2),
+                   va='center', ha='left', fontsize=11, fontweight='bold')
+
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(ambiguity_levels, fontsize=11)
+    ax.set_xlabel('Format Friction (Detection − Compliance)', fontsize=12)
+    ax.set_title('Format Friction Increases with Signal Ambiguity', fontsize=12)
+    ax.set_xlim(0, 25)
+
+    # Add vertical line at 0
+    ax.axvline(x=0, color='black', linewidth=0.5)
+
+    plt.tight_layout()
+    plt.savefig(output_dir / 'fig5_friction_by_ambiguity.png', dpi=300, bbox_inches='tight')
+    plt.savefig(output_dir / 'fig5_friction_by_ambiguity.pdf', bbox_inches='tight')
+    plt.close()
+    print(f"Saved: fig5_friction_by_ambiguity.png/pdf")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Generate figures for format friction paper"
@@ -328,20 +343,18 @@ def main():
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Figure 1 doesn't need data file (uses fixed Study 1 numbers)
-    print("Generating Figure 1: Study 1 before/after...")
-    fig1_study1_before_after(args.output_dir)
-
-    # Figures 2-4 need data file
+    # All figures need data file
     if args.results_file is None:
         # Try to find most recent judged file
         results_dir = Path("experiments/results")
         judged_files = list(results_dir.glob("*_judged.json"))
+        primary_judged = list(Path("experiments/results/primary").glob("*_judged.json"))
+        judged_files.extend(primary_judged)
         if judged_files:
             args.results_file = max(judged_files, key=lambda p: p.stat().st_mtime)
             print(f"Using most recent judged file: {args.results_file}")
         else:
-            print("No judged results file found. Skipping figures 2-4.")
+            print("No judged results file found.")
             print("Run: python experiments/judge_scoring.py <results.json>")
             return
 
@@ -350,14 +363,17 @@ def main():
     results = data.get("results", [])
     print(f"Found {len(results)} trial records")
 
-    print("Generating Figure 2: Ambiguity interaction...")
+    print("Generating Figure 1: Ambiguity interaction...")
     fig2_ambiguity_interaction(results, args.output_dir)
 
-    print("Generating Figure 3: Measurement comparison...")
+    print("Generating Figure 2: Measurement comparison...")
     fig3_measurement_comparison(results, args.output_dir)
 
-    print("Generating Figure 4: Hedging breakdown...")
+    print("Generating Figure 3: Hedging breakdown...")
     fig4_hedging_breakdown(results, args.output_dir)
+
+    print("Generating Figure 4: Friction by ambiguity...")
+    fig5_friction_by_ambiguity(results, args.output_dir)
 
     print(f"\nAll figures saved to {args.output_dir}")
 

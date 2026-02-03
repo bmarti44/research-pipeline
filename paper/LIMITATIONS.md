@@ -55,9 +55,9 @@ This document outlines the known limitations of the Format Friction study on str
 
 ### Judge-Human Agreement on IMPLICIT Signals
 - **Limitation**: Overall κ = 0.81 (substantial), but IMPLICIT stratum shows κ = 0.41 (moderate).
-- **Impact**: 24% disagreement on IMPLICIT scenarios where the main friction finding (20.5pp) originates.
+- **Impact**: 24% disagreement on IMPLICIT scenarios where the main friction finding (18.4pp) originates.
 - **Analysis**: Human annotators tended not to count "helpful without explicit acknowledgment" as detection. Judge is more permissive.
-- **Sensitivity**: Excluding disagreement cases, IMPLICIT friction remains ~19pp. Finding is robust.
+- **Sensitivity**: Excluding disagreement cases, IMPLICIT friction remains ~17pp. Finding is robust.
 
 ### LLM Judge (Same Model Family)
 - **Limitation**: Judge model (Claude Sonnet) is same family as subject model.
@@ -76,33 +76,26 @@ This document outlines the known limitations of the Format Friction study on str
 
 ---
 
-## Study 1 (Confound Discovery) Limitations
-
-### Small Correction Sample
-- **Limitation**: Correction validation used only n=5 per condition from single scenario.
-- **Impact**: Cannot definitively conclude prompt asymmetry *explains* the original 9pp effect.
-- **Interpretation**: Study 1 demonstrates confound *exists*; Study 2 provides the primary findings with proper controls.
-
----
-
 ## Statistical Limitations
 
 ### Effect Size Interpretation
-- **Detection gap**: 5.7pp (NL 87.0% vs ST 81.4%), p = 0.005
-- **Compliance gap**: 12.2pp (ST detection 81.4% vs compliance 69.2%)
+- **Detection gap**: 3.8pp (NL 89.4% vs ST 85.6%), p = 0.065
+- **Compliance gap**: 10.3pp (ST detection 85.6% vs compliance 75.3%)
 - **Context**: Effects are meaningful for production systems processing thousands of requests, but not catastrophic impairment.
 
 ### Confidence Intervals
-Key estimates with 95% Wilson score CIs:
+Key estimates with 95% Wilson score CIs (primary analysis, excluding HARD scenarios, N=340):
 
 | Metric | Estimate | 95% CI |
 |--------|----------|--------|
-| NL detection | 87.0% | [83.2%, 90.1%] |
-| ST detection | 81.4% | [77.1%, 85.0%] |
-| ST compliance | 69.2% | [64.3%, 73.7%] |
-| IMPLICIT friction | 20.5pp | ~[14pp, 27pp]* |
+| NL detection | 89.4% | [85.8%, 92.2%] |
+| ST detection | 85.6% | [81.5%, 89.0%] |
+| ST compliance | 75.3% | [70.4%, 79.6%] |
+| Format friction | 10.3pp | [5.8pp, 14.8pp]* |
+| IMPLICIT friction | 18.4pp | ~[12pp, 25pp]** |
 
-*Approximate; derived from component CIs.
+*Bootstrap CI (10,000 replicates).
+**Approximate; derived from component CIs.
 
 ### Trial Non-Independence
 - **Limitation**: 10 trials per scenario are not fully independent (same prompt, similar responses).
@@ -114,7 +107,7 @@ Key estimates with 95% Wilson score CIs:
 ## Two-Pass Recovery Limitations
 
 ### Single Task Tested
-- **Limitation**: Recovery rates (65% Sonnet, 39% Qwen-7B) only validated on signal detection.
+- **Limitation**: Recovery rates (74% Sonnet, 50% Qwen-7B) only validated on signal detection.
 - **Impact**: Recovery may differ for other tool-calling domains.
 - **Recommendation**: Test on additional tasks before generalizing.
 
@@ -126,7 +119,7 @@ Key estimates with 95% Wilson score CIs:
 ### Cost Analysis Incomplete
 - **Limitation**: Two-pass cost estimates don't account for latency or infrastructure overhead.
 - **Impact**: Production deployment may reveal hidden costs.
-- **Trade-off**: Even with overhead, 17pp compliance improvement may justify costs.
+- **Trade-off**: Even with overhead, 16pp compliance improvement may justify costs.
 
 ---
 
@@ -159,13 +152,12 @@ Key estimates with 95% Wilson score CIs:
 
 Despite these limitations, the study establishes:
 
-1. **Format friction exists**: 12.2pp compliance gap in structured condition (60 silent failures / 370 trials)
-2. **Concentrates in uncertainty**: 0pp EXPLICIT vs 20.5pp IMPLICIT friction
-3. **Not reasoning impairment**: Detection rates similar across conditions (87% vs 81%)
-4. **Recoverable**: Two-pass extraction recovers 39-65% of silent failures
-5. **Confounds matter**: Prior work may overestimate format effects due to prompt asymmetry
+1. **Format friction exists**: 10.3pp compliance gap [95% CI: 5.8pp, 14.8pp] in structured condition (50 compliance gaps / 340 trials)
+2. **Concentrates in uncertainty**: 0pp EXPLICIT vs 18.4pp IMPLICIT friction
+3. **Not reasoning impairment**: Detection rates similar across conditions (89% vs 86%)
+4. **Recoverable**: Two-pass extraction recovers 50-74% of compliance gaps
 
-The primary limitation is single-model testing. Format friction is established for Claude Sonnet; generalization to other model families requires validation.
+The primary limitation is single-model testing—format friction is established for Claude Sonnet but generalization to other model families requires validation.
 
 ---
 

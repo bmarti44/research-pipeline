@@ -1,617 +1,820 @@
-# External Academic Review: "Format Friction"
+# Academic Review: "Format Friction: The Compliance Gap in Prompt-Based Tool Calling"
 
-**Manuscript**: "Format Friction: Isolating Output Structure from Prompt Asymmetry"
-**Authors**: Martin & Lipmann (Oracle)
-**Reviewer**: Anonymous
+**Reviewer**: Automated Academic Review
 **Date**: 2026-02-03
+**Review Type**: Rigorous methodological and statistical audit
 
 ---
 
-## Overall Assessment
+## Overall Score: 72/100 (B-)
 
-**Verdict**: This paper makes a modest but genuine contribution to understanding LLM tool-calling behavior. The core insight—that format requirements primarily affect *output compliance* rather than *reasoning capability*—is sound and practically useful. However, the paper suffers from methodological limitations, overstated claims relative to evidence, and narrow generalizability. The work is appropriate for a workshop or short paper venue; it does not meet the bar for top-tier publication.
-
----
-
-## I. Venue Suitability Grades
-
-| Venue | Grade | Rationale |
-|-------|-------|-----------|
-| **NeurIPS/ICML main** | D+ | Insufficient novelty; single-model study; no theoretical contribution |
-| **ACL/EMNLP main** | C | Relevant topic but shallow analysis; limited linguistic insight |
-| **NAACL Findings** | B- | Acceptable as a focused empirical study with practical implications |
-| **arXiv preprint** | B | Appropriate for dissemination; clearly labeled as preliminary work |
-| **EMNLP Industry Track** | B+ | Good fit; practical relevance; acknowledges limitations |
-| **Workshop (e.g., NLP4ConvAI)** | A- | Excellent fit for sparking discussion; appropriate scope |
-| **Blog post / Technical report** | A | Well-suited for practitioner audience |
-
-**Recommended venue**: Workshop paper or arXiv preprint with explicit framing as preliminary/exploratory work. The authors should not submit to main conference tracks without substantial additional validation.
+**Verdict**: A methodologically sound contribution with a genuinely novel finding, undermined by single-model/single-task scope and presentation inconsistencies. The core insight—that detection and compliance diverge in structured output conditions—is valid and reproducible. Publication-ready with revisions.
 
 ---
 
-## II. Detailed Critique
+## Executive Summary
 
-### 1. Research Question and Framing
+### What the Paper Does Well
+1. **Identifies a real confound in prior work**: The observation that Tam et al. and Johnson et al. conflate format effects with prompt asymmetries is insightful and validated.
+2. **Clean within-condition methodology**: Measuring detection vs. compliance *within* the structured condition elegantly sidesteps measurement asymmetry.
+3. **Transparent limitation acknowledgment**: The authors proactively disclose single-model scope, HARD scenario exclusion, and judge reliability issues.
+4. **Reproducible**: Code, data, and analysis pipeline are complete and verifiable.
+
+### Critical Weaknesses
+1. **Single model, single task**: All findings are from Claude Sonnet on signal detection. Generalization is entirely unknown.
+2. **Low reliability on key stratum**: κ = 0.41 on IMPLICIT scenarios—exactly where the 18.4pp friction manifests.
+3. **Confusing metrics**: "50 compliance gaps" vs "10.3pp friction" measure different things; the text conflates them.
+4. **Underpowered for some claims**: HARD scenario analysis (n=30) and FPR comparison (5/230 structured FPs) are exploratory at best.
+
+---
+
+## Detailed Evaluation
+
+### 1. Research Question and Motivation (Score: 85/100)
 
 **Strengths**:
-- The research question is clear and practically motivated
-- The distinction between "detection" and "compliance" is a useful conceptual contribution
-- The confound identification in Study 1, while limited, raises valid methodological concerns about prior work
+- The paper correctly identifies that prior format-effect studies (Tam et al., Johnson et al.) contain a suppression confound that could explain their results.
+- The research question—"When format is the only variable, what is the actual impact?"—is well-posed and addresses a genuine gap.
+- The shift to within-condition analysis (detection vs. compliance) is methodologically sophisticated.
 
 **Weaknesses**:
-- The paper positions itself against Tam et al. (2024) and Johnson et al. (2025), but the comparison is somewhat of a strawman. Those papers studied *different tasks* (reasoning benchmarks, multi-step tool use). The authors claim to "isolate format" but are really studying a narrow signal detection task that may not generalize
-- The framing of "silent failures" is dramatic but potentially misleading. A response that empathetically addresses a user's frustration without XML is only a "failure" from the narrow perspective of tool dispatch. From a user experience standpoint, Appendix E examples show *better* responses than an XML tag would produce
-- The title promises "isolating output structure from prompt asymmetry" but Study 1—which addresses prompt asymmetry—has n=5 per condition. This is not isolation; it's a pilot
+- The framing overstates novelty. The compliance gap is a known issue in prompt-based systems; this paper quantifies it for one model on one task.
+- The title "Format Friction" is catchy but potentially misleading—this is compliance failure, not reasoning friction.
 
-### 2. Methodology
+**Verdict**: Strong motivation; appropriately scoped research question.
 
-#### Study 1: Confound Discovery
+---
 
-**Critical Problem**: This "study" is barely a study. The key claim ("a 9pp effect disappeared when controlled") is based on:
-- Original: 255 trials per condition (reasonable)
-- Correction: 5 trials per condition from 1 scenario (laughable)
+### 2. Experimental Design (Score: 78/100)
 
-The paper states the correction showed "100.0% (5/5)" in both conditions. With n=5 at ceiling, you cannot conclude *anything*. The 95% CI for 5/5 is [56.6%, 100%] using exact binomial methods. The correction is consistent with the original 9pp gap persisting, disappearing, or even reversing.
-
-**Verdict**: Study 1 demonstrates the *existence* of a confound but provides essentially zero evidence about its *magnitude*. The paper should either:
-1. Remove causal claims entirely ("the effect disappeared")
-2. Run a proper correction with adequate sample size
-
-The current framing misleads readers into thinking the confound has been *explained* when it has merely been *identified*.
-
-#### Study 2: Signal Detection
-
-**Task Validity**: The signal detection task is reasonable for studying compliance behavior. The parallel prompt structure (§4.1) addresses the confound concern appropriately. The ambiguity gradient (EXPLICIT/IMPLICIT/BORDERLINE/CONTROL) is well-designed.
-
-**Sample Size**: 750 total trials across 75 scenarios is adequate for the main effects. However, the IMPLICIT stratum (22 scenarios × 10 trials = 220 trials) carries most of the friction finding, and includes 3 "HARD" scenarios flagged as problematic during piloting.
-
-**Problems**:
-
-1. **Post-hoc scenario manipulation**: The paper mentions 3 scenarios were relabeled from IMPLICIT to CONTROL after showing 0% detection in piloting. This is concerning—post-hoc relabeling based on results inflates apparent effects. How many other scenarios were modified during piloting? What was the decision rule?
-
-2. **Judge-model circularity**: The judge (Claude Sonnet) is from the same model family as the subject. The authors argue κ=0.81 validates the judge, but the 150-response validation used the same human who designed the scenarios. True inter-rater reliability requires independent annotators.
-
-3. **IMPLICIT stratum weakness**: The critical finding (20.5pp friction) comes from IMPLICIT scenarios where judge-human κ=0.41. This is "moderate" agreement at best. The paper's central claim rests on a measurement with 24% disagreement rate in exactly the stratum that matters.
-
-4. **Selective reporting of HARD scenarios**: The authors note 3 HARD scenarios show "extreme friction" (33pp+) in the LIMITATIONS.md but relegate this to a brief mention in the main paper. An honest presentation would either:
-   - Exclude HARD from the main analysis and report 10.3pp friction
-   - Include HARD and discuss the extreme heterogeneity
-
-   Instead, the paper reports the higher 12.2pp number in headlines while burying the sensitivity analysis.
-
-### 3. Statistical Issues
-
-**Missing CIs**: The paper reports point estimates without confidence intervals for key findings. Adding them:
-
-| Metric | Point Estimate | 95% CI (Wilson) |
-|--------|----------------|-----------------|
-| Format friction | 12.2pp | ~[7.1pp, 17.3pp]* |
-| IMPLICIT friction | 20.5pp | ~[13.5pp, 27.5pp]* |
-
-*Derived from component proportions; exact interval requires bootstrapping.
-
-The CIs are wide. A finding of "friction is somewhere between 7pp and 17pp" is less impressive than "friction is 12.2pp."
-
-**Trial non-independence**: The 10 trials per scenario are not independent—same prompt, same scenario, similar model behavior. Standard errors are underestimated. The sign test at scenario level (mentioned in LIMITATIONS.md but not the paper) would be more appropriate but is never reported.
-
-**McNemar test questionable**: McNemar's test assumes independent observations. With scenario-level clustering (10 trials per scenario), the p-values are anticonservative.
-
-### 4. Claims vs. Evidence
-
-| Claim | Evidence Quality | Assessment |
-|-------|------------------|------------|
-| "Prompt asymmetry produces artificial format effects" | Weak (n=5 correction) | Overstated; should say "may produce" |
-| "Format does not catastrophically impair detection" (81.4% vs 87.0%) | Moderate | Fair claim with appropriate hedging |
-| "12.2pp compliance gap" | Moderate | Fair, but CI should be reported |
-| "Friction concentrates in uncertainty" (0pp explicit, 20.5pp implicit) | Moderate-weak | Plausible but judge reliability is poor on IMPLICIT |
-| "Two-pass recovery works" (65%/39%) | Moderate | Fair for this task; generalization unknown |
-| "Silent failures are invisible without response-level auditing" | Tautological | True by definition; not a finding |
-
-### 5. Novelty Assessment
-
-**What's genuinely new**:
-- The detection-vs-compliance distinction within structured output
-- The uncertainty interaction (friction concentrates on ambiguous signals)
-- Empirical demonstration that a confound exists in prior work (though not its magnitude)
-
-**What's not new**:
-- "Format requirements can hurt LLM performance" (Tam et al., Johnson et al., Sclar et al.)
-- "Two-pass architectures can help" (SLOT paper already showed this with better methods)
-- "LLMs hedge under uncertainty" (extensively documented)
-
-**Net novelty**: Low-to-moderate. The detection/compliance distinction is the genuine contribution. The rest is incremental.
-
-### 6. Missing Critical Analysis
-
-**Why does friction exist?** The paper documents the phenomenon but offers only hand-waving explanation ("calibrated uncertainty"). Alternative hypotheses not explored:
-
-1. **Training distribution mismatch**: The model may have been trained on XML for confident tool calls. Uncertain situations may be out-of-distribution for structured output
-2. **Token commitment**: Producing `<signal` commits the model early; NL allows hedging throughout
-3. **Prompt interpretation**: The structured prompt may be interpreted as "only use XML when certain" despite not saying this
-
-**What about over-triggering?** The paper focuses entirely on under-triggering (false negatives). But the false positive analysis (§4.8) shows ST has 2.2% FPR vs NL's 0.0%. This suggests the structured condition may have a *lower* decision threshold overall—which contradicts the "hedging under uncertainty" narrative. This inconsistency is not addressed.
-
-**Constrained decoding comparison**: The paper acknowledges native tool-calling APIs eliminate friction by construction but never compares. A single experiment with Anthropic's tool_use API would establish whether the friction is about *output format* or *prompt-based tool calling specifically*.
-
-### 7. Writing and Presentation
+#### 2.1 Task Design
 
 **Strengths**:
-- Generally clear prose
-- Good use of tables
-- Appendices are thorough
+- Signal detection is a reasonable proxy for "soft" tool-calling scenarios.
+- The structurally parallel prompts (both conditions receive identical "when" guidance) successfully eliminate the suppression confound.
+- 75 scenarios across 4 ambiguity levels provide reasonable coverage.
 
 **Weaknesses**:
-- Overselling throughout ("silent failures" framing, headline numbers without CIs)
-- Study 1 is presented as more conclusive than it is
-- The EXPLORATORY_RESEARCH.md contains more honest assessment than the paper itself—specifically the admission that this work is "not paradigm-shifting" and "contributes one data point to a growing pile"
+- **Single task limitation**: Signal detection may not generalize to other tool-calling domains (API calls, memory operations, multi-step chains).
+- **Scenario construction**: Some IMPLICIT scenarios were relabeled post-hoc after 0% pilot detection (sig_implicit_frust_005, sig_implicit_urg_003, sig_implicit_block_005). This is disclosed but introduces potential bias.
+- **HARD exclusion rationale**: The decision to exclude 3 scenarios based on pilot results is reasonable but the threshold is arbitrary. Why not include them with appropriate caveats?
 
-### 8. Reproducibility
+#### 2.2 Sample Size
 
-**Positive**: Prompts provided in appendices, code available, model versions specified.
+**Verified**:
+- 75 scenarios × 10 trials × 2 conditions = 1,500 observations
+- Primary analysis: 34 scenarios × 10 trials = 340 trials (excluding HARD)
 
-**Negative**:
-- Temperature not controlled (claimed default, but not verified)
-- Judge validation used single annotator (author?)
-- Scenario relabeling history not transparent in paper
+**Concerns**:
+- No power analysis reported. For the within-condition friction test, 340 trials provides adequate power for detecting 10pp differences, but marginal for the 3.8pp cross-condition effect.
+- HARD scenario analysis (n=30) is underpowered for any meaningful inference.
 
----
+#### 2.3 Measurement
 
-## III. Specific Required Revisions for Any Venue
+**Judge Validation** (κ = 0.81):
+- Overall agreement is acceptable.
+- **Critical issue**: IMPLICIT stratum κ = 0.41 (76% agreement). This is "moderate" agreement per Landis & Koch, below the 0.60 threshold typically required for research instruments. The main finding (18.4pp IMPLICIT friction) rests on a measurement with questionable reliability.
 
-1. **Study 1**: Either run adequate sample size (n≥50/condition) or explicitly state "We identified a potential confound but did not validate its magnitude"
+**Recommendation**: The paper should either (a) report a sensitivity analysis excluding judge-human disagreement cases, or (b) acknowledge that IMPLICIT friction estimates have wide uncertainty due to measurement unreliability.
 
-2. **Confidence intervals**: Add to all tables. If the CIs are embarrassingly wide, that's information the reader needs.
-
-3. **IMPLICIT stratum reliability**: Prominently report κ=0.41 in main text, not buried in appendix. Discuss implications for the 20.5pp finding.
-
-4. **HARD scenarios**: Either exclude from primary analysis or discuss the heterogeneity honestly.
-
-5. **Remove "silent failure" framing**: Or at minimum, acknowledge that these "failures" are often better user experiences than successful tool dispatch would be.
-
-6. **Acknowledge false positive asymmetry**: The 2.2% vs 0.0% FPR contradicts the hedging narrative. Discuss.
+*Note: The authors do report sensitivity analysis (17.2pp excluding disagreements), which is commendable.*
 
 ---
 
-## IV. Summary
+### 3. Statistical Analysis (Score: 75/100)
 
-This paper makes a useful distinction (detection vs. compliance) and provides preliminary evidence that format friction exists in prompt-based tool calling. However:
+#### 3.1 Verified Claims
 
-- Study 1 does not support its claims
-- The primary finding (12.2pp friction) has wide confidence intervals and depends on a measurement with 24% disagreement rate
-- Single-model, single-task design severely limits generalizability
-- The framing oversells modest findings
+I independently verified the following statistics from the primary data file:
 
-**Bottom line**: Publishable as a workshop paper or arXiv preprint with appropriate hedging. Not ready for competitive venues. The authors should consider this a foundation for more rigorous follow-up work rather than a standalone contribution.
+| Claim | Paper | Verified | Status |
+|-------|-------|----------|--------|
+| N (excluding HARD) | 340 | 340 | ✓ |
+| NL detection rate | 89.4% | 89.4% (304/340) | ✓ |
+| ST detection rate | 85.6% | 85.6% (291/340) | ✓ |
+| ST compliance rate | 75.3% | 75.3% (256/340) | ✓ |
+| Format friction | 10.3pp | 10.3pp | ✓ |
+| Compliance gaps | 50 | 50 | ✓ |
+| EXPLICIT friction | 0.0pp | 0.0pp | ✓ |
+| IMPLICIT friction | 18.4pp | 18.4pp (excluding HARD) | ✓ |
 
----
+**All primary statistics verified.**
 
-## V. Scores (Conference Submission Standards)
+#### 3.2 Statistical Issues
 
-| Criterion | Score (1-5) | Comments |
-|-----------|-------------|----------|
-| Soundness | 2.5/5 | Study 1 is unsound; Study 2 is adequate but limited |
-| Novelty | 2.5/5 | Detection/compliance split is new; rest is incremental |
-| Significance | 2/5 | Practical utility for narrow use case; no theoretical contribution |
-| Clarity | 3.5/5 | Well-written but oversells |
-| Reproducibility | 4/5 | Code and prompts provided |
-| **Overall** | **2.5/5** | Weak accept for workshop; reject for main conference |
+**Issue 1: Compliance Gaps vs. Friction Rate Confusion**
 
----
+The paper states "50 compliance gaps" but friction is 10.3pp = (291-256)/340 = 35/340. These differ because:
+- 50 trials have detection without XML (compliance gaps)
+- 15 trials have XML without detection (reverse gaps)
+- Net difference: 35
 
-## VI. Questions for Authors
+This is mathematically correct but potentially confusing. The paper should clarify that "50 compliance gaps" is the gross count, while "10.3pp" is the net rate difference.
 
-1. Why was Study 1 correction run with only n=5? This seems like an oversight that undermines a key contribution.
+**Issue 2: McNemar vs. Sign Test Interpretation**
 
-2. The EXPLORATORY_RESEARCH.md states "The current paper is not [publishable in Nature]" and "contributes one data point." Do you agree this is the appropriate framing?
+- Trial-level McNemar: p = 0.065 (not significant at α = 0.05)
+- Scenario-level sign test: p = 0.0007 (highly significant)
 
-3. Have you tested on Anthropic's native tool_use API? This would distinguish prompt-based friction from format friction generally.
+The paper correctly notes that trial-level tests are inappropriate due to within-scenario correlation, but then reports both. The sign test is the appropriate primary test; McNemar should be relegated to a footnote or removed.
 
-4. The judge and subject are both Claude Sonnet. Did you consider GPT-4 as an independent judge?
+**Issue 3: Confidence Interval for Friction**
 
-5. What was the decision rule for relabeling scenarios from IMPLICIT to CONTROL during piloting?
+The paper reports friction CI as [5.8pp, 14.8pp] via bootstrap. This is reasonable, but the bootstrap should account for the paired structure of trials. Verification of bootstrap methodology not possible without access to the bootstrap code.
 
-6. The false positive rate is higher in structured (2.2%) than NL (0.0%). How does this square with the "hedging under uncertainty" explanation?
+#### 3.3 False Positive Rate Paradox
 
----
+The paper notes an "apparent contradiction": if structured output causes hedging (fewer TPs on uncertain signals), we'd expect fewer FPs too. Instead: 2.2% FPR structured vs. 0.0% NL.
 
-## VII. Recommendation
+**Analysis**:
+- Structured FPs: 5/230 = 2.2%
+- NL FPs: 0/230 = 0.0%
 
-**Reject** for main conference tracks (NeurIPS, ICML, ACL, EMNLP main).
-
-**Accept with revisions** for:
-- NAACL/EMNLP Findings
-- Industry Track
-- Workshop venues
-- arXiv (with honest framing)
-
-The core observation is valid. The execution is sloppy. The claims outrun the evidence. Fix these issues and the paper becomes a solid practitioner-focused contribution.
+This is based on 5 false positives. With n=5, the 95% CI for structured FPR is [0.7%, 5.0%]. The "paradox" may be noise. The paper's speculative explanations (threshold shift, XML commitment dynamics) are reasonable but untestable with current data.
 
 ---
 
-## VIII. Remediation Plan: B → A for arXiv
+### 4. Two-Pass Recovery Analysis (Score: 70/100)
 
-The following plan addresses each identified issue to bring the paper to **A-grade arXiv quality**. Issues are categorized by priority and effort.
+#### 4.1 Design
 
----
+The two-pass recovery is tested on the 50 compliance gap trials—cases where detection occurred but no XML was produced. This is the appropriate test population.
 
-### Phase 1: Critical Fixes (Must Do)
+**Verified from data**:
+- Sonnet tested on compliance gaps: Recovery methodology appears sound
+- Qwen 7B tested on same gaps: Provides cost comparison
 
-These issues undermine the paper's credibility. Fix before any submission.
+#### 4.2 Concerns
 
-#### 1.1 Study 1: Run Proper Correction Experiment
+1. **No baseline comparison**: What's the extraction success rate on trials where the original model *did* produce XML? Without this baseline, we can't assess whether recovery is model-specific.
 
-**Problem**: n=5 correction is worthless.
+2. **Type accuracy discrepancy**: Sonnet 81.1% vs. Qwen 7B 36.0% type accuracy. This large gap suggests the task may be sensitive to model capability in ways that matter for production deployment.
 
-**Fix**: Run 50+ trials per condition on the memory persistence task with corrected prompts.
+3. **Cost claims unverified**: "~1× + local" for Qwen 7B assumes local inference, but doesn't account for latency or infrastructure overhead.
 
-```bash
-# Suggested experiment parameters
-python -m experiments.memory_persistence_experiment \
-    --conditions nl,structured \
-    --trials-per-scenario 50 \
-    --scenarios 5 \
-    --corrected-prompts  # No suppression language
-```
+4. **Effective compliance estimates**: The paper reports:
+   - NL → Sonnet: ~94%
+   - NL → 7B: ~88%
 
-**Expected outcomes**:
-- If gap persists (e.g., 6-9pp): Report honestly. "Correction reduced but did not eliminate the gap, suggesting both confound and genuine format effect."
-- If gap disappears (<3pp): Current framing is validated.
-- If gap reverses: Even more interesting—report it.
-
-**Effort**: ~$50-100 API cost, 1 day work
-**Impact**: Transforms Study 1 from "embarrassing" to "credible"
-
-**Paper revision**:
-```markdown
-### 3.3 Results (REVISED)
-
-| Condition | With Confound (n=255) | Corrected (n=250) |
-|-----------|----------------------|-------------------|
-| NL Recall | 89.8% | XX.X% [CI] |
-| Structured Recall | 80.8% | XX.X% [CI] |
-| Difference | +9.0pp (p < 0.01) | +X.Xpp (p = X.XX) |
-```
-
-#### 1.2 Add Confidence Intervals to All Tables
-
-**Problem**: Point estimates without uncertainty mislead readers.
-
-**Fix**: Add 95% Wilson score intervals to Tables 1-3 and key claims.
-
-**Table 1 revision**:
-```markdown
-| Condition | Detection Rate | 95% CI | Count |
-|-----------|---------------|--------|-------|
-| Natural Language | 87.0% | [83.2%, 90.1%] | 322/370 |
-| Structured | 81.4% | [77.1%, 85.0%] | 301/370 |
-| Difference | +5.7pp | [+1.2pp, +10.2pp]* | — |
-```
-*Bootstrap CI for difference
-
-**Table 2 revision**:
-```markdown
-| Metric | Rate | 95% CI | Count |
-|--------|------|--------|-------|
-| Detection (judge) | 81.4% | [77.1%, 85.0%] | 301/370 |
-| Compliance (XML) | 69.2% | [64.3%, 73.7%] | 256/370 |
-| **Format friction** | **12.2pp** | **[7.1pp, 17.3pp]*** | — |
-```
-
-**Effort**: 2 hours (compute CIs, update tables)
-**Impact**: Honest uncertainty quantification
-
-#### 1.3 Address IMPLICIT Stratum Judge Reliability
-
-**Problem**: κ=0.41 on IMPLICIT undermines the 20.5pp finding.
-
-**Fix**: Move this information to the main text (not appendix) and add sensitivity analysis.
-
-**Add to §4.3 (Measurement)**:
-```markdown
-**Stratum-specific reliability**: While overall κ = 0.81, agreement varied by
-ambiguity level. EXPLICIT and CONTROL achieved perfect agreement (κ = 1.00),
-BORDERLINE showed strong agreement (κ = 0.87), but IMPLICIT—where format
-friction primarily manifests—showed only moderate agreement (κ = 0.41).
-
-This reflects genuine measurement difficulty: human annotators tended to mark
-"NO" when models addressed issues helpfully without explicit acknowledgment,
-while the judge counted any acknowledgment. **Sensitivity analysis**: Excluding
-the 12 IMPLICIT trials with judge-human disagreement, friction remains at
-19.1pp (vs 20.5pp), indicating the finding is robust to measurement uncertainty.
-```
-
-**Effort**: 1 hour (text revision)
-**Impact**: Preempts reviewer criticism; demonstrates scientific honesty
-
-#### 1.4 Fix the "Silent Failure" Framing
-
-**Problem**: Dramatic framing obscures that these "failures" are often better UX.
-
-**Fix**: Reframe as "compliance gap" and acknowledge the tension.
-
-**Revise §2.4 and throughout**:
-```markdown
-### 2.4 The Compliance Gap (was: Silent Failures)
-
-When a model detects a signal but fails to produce the required XML structure,
-the tool dispatcher sees nothing—we term this a *compliance gap*. From a
-**system perspective**, these are missed actions requiring response-level
-auditing to detect. From a **user perspective**, the natural language
-acknowledgment may actually be preferable (see Appendix E for examples where
-NL responses are more empathetic than an XML tag would convey).
-
-This tension—system needs vs. user experience—is itself a design consideration
-for tool-calling architectures.
-```
-
-**Effort**: 1 hour (terminology change throughout)
-**Impact**: More honest framing; addresses legitimate criticism
+   These are upper bounds assuming perfect precision. Actual production rates would be lower due to false extractions.
 
 ---
 
-### Phase 2: Statistical Rigor (Should Do)
+### 5. Reproducibility (Score: 90/100)
 
-These issues affect credibility with statistically sophisticated readers.
+**Strengths**:
+- Complete code repository with clear structure
+- Data manifest explicitly documents which files support which claims
+- Git history preserves version control
+- Failed experiments documented (not deleted)
+- Human validation data available
 
-#### 2.1 Report Scenario-Level Analysis
+**Weaknesses**:
+- No requirements.txt or lockfile for exact dependency versions
+- Temperature/sampling parameters not explicitly controlled
+- Random seed documented (42) but not verified across all runs
 
-**Problem**: Trial non-independence inflates significance; McNemar is inappropriate.
+**Verdict**: Highly reproducible by research standards.
 
-**Fix**: Add scenario-level sign test as primary inference.
+---
 
-**Add to §4.4**:
-```markdown
-**Scenario-level analysis**: To account for within-scenario correlation, we
-conducted a sign test at the scenario level. Of 37 ground-truth scenarios,
-28 showed higher NL detection, 6 showed higher structured detection, and 3
-were tied. Sign test: p = 0.0003. The scenario-level effect is consistent
-with the trial-level finding.
+### 6. Presentation Quality (Score: 68/100)
 
-For format friction (structured condition only), 31/37 scenarios showed
-detection > compliance, 4 showed compliance > detection, 2 were tied.
-Sign test: p < 0.0001.
-```
+**Strengths**:
+- Clear abstract with concrete numbers
+- Good use of tables for statistical summaries
+- Appendices provide necessary detail (prompts, judge validation)
 
-**Effort**: 2 hours (compute sign tests, add text)
-**Impact**: Robust inference that survives statistical scrutiny
+**Weaknesses**:
+- Figures reference filenames that don't match paper (fig1_ambiguity_interaction vs fig2 in code)
+- Some redundancy between main text and limitations section
+- The "format friction" terminology is introduced but never formally defined until deep in the paper
+- DATA_MANIFEST.md reports different numbers (12.2pp, 60 failures) than paper (10.3pp, 50)—these are for different N values but could confuse readers reviewing the repository
 
-#### 2.2 Bootstrap the Friction CI
+---
 
-**Problem**: The friction CI (~[7pp, 17pp]) is approximate.
+### 7. Limitations Assessment (Score: 82/100)
 
-**Fix**: Compute proper bootstrap CI.
+The authors provide a thorough LIMITATIONS.md document covering:
+- Single model family
+- Single task domain
+- Judge reliability issues
+- HARD scenario exclusion
+- Statistical caveats
+
+This transparency is commendable and exceeds typical paper standards.
+
+**Missing limitations**:
+1. No discussion of prompt sensitivity—would different phrasing of the "how to flag" instructions change friction rates?
+2. No analysis of response length effects—are compliance gaps correlated with response verbosity?
+3. No examination of whether friction varies by signal type (frustration vs. urgency vs. blocking)
+
+---
+
+## Data Integrity Audit
+
+### Verified Data Files
+
+| File | Purpose | Integrity |
+|------|---------|-----------|
+| signal_detection_20260203_074411_judged.json | Primary results | ✓ Valid, 750 trials |
+| signal_detection_20260203_121413.json | Raw experiment | ✓ Valid, 1500 observations |
+| two_pass_sonnet_nl_20260203_125603.json | Recovery testing | ✓ Valid, 750 trials |
+| two_pass_qwen7b_nl_20260203_131141.json | Recovery testing | ✓ Valid, 750 trials |
+
+### Code Verification
+
+| Component | Status |
+|-----------|--------|
+| Wilson CI implementation | ✓ Correct formula |
+| McNemar test implementation | ✓ Correct |
+| Sign test implementation | ✓ Uses scipy.binomtest |
+| Judge prompt | ✓ Matches paper Appendix B |
+| Scenario definitions | ✓ 75 scenarios, HARD flagged |
+
+### Discrepancy Log
+
+| Issue | Explanation | Severity |
+|-------|-------------|----------|
+| DATA_MANIFEST says 60 failures, paper says 50 | MANIFEST includes HARD; paper excludes | Low (documented) |
+| DATA_MANIFEST says 12.2pp, paper says 10.3pp | Same reason | Low (documented) |
+| Figure numbering mismatch (code vs paper) | Code generates fig2, fig3, fig4, fig5; paper references fig1-4 | Low (cosmetic) |
+
+---
+
+## Specific Corrections Required
+
+### Errors
+
+1. **Table 2 presentation**: "50 compliance gaps" appears alongside "10.3pp friction" without explaining these measure different things (gross count vs. net rate). Add a footnote clarifying: "50 trials showed detection without XML; the net rate difference (10.3pp) accounts for 15 trials with XML but no judged detection."
+
+2. **Section 3.6 HARD scenarios**: The claim "33% detection but 0% XML compliance (+33pp friction)" is based on n=30 trials from 3 scenarios. This should be explicitly labeled as exploratory/underpowered, not just "small sample warrants caution."
+
+### Clarifications Needed
+
+1. Define "format friction" formally in Section 1 or 2, not just by example.
+
+2. Explain why the sign test is the primary test and McNemar is secondary (within-scenario correlation).
+
+3. Address whether compliance gaps are concentrated in specific scenarios or distributed uniformly across IMPLICIT trials.
+
+### Missing Analyses
+
+1. **Signal type breakdown**: Is friction higher for frustration vs. urgency vs. blocking_issue?
+
+2. **Scenario-level variance**: Do some IMPLICIT scenarios show 0% friction while others show 40%+?
+
+3. **Response length correlation**: Are longer responses more likely to show compliance gaps?
+
+---
+
+## Scoring Breakdown
+
+| Category | Weight | Score | Weighted |
+|----------|--------|-------|----------|
+| Research Question | 15% | 85 | 12.75 |
+| Experimental Design | 20% | 78 | 15.60 |
+| Statistical Analysis | 25% | 75 | 18.75 |
+| Two-Pass Analysis | 10% | 70 | 7.00 |
+| Reproducibility | 15% | 90 | 13.50 |
+| Presentation | 10% | 68 | 6.80 |
+| Limitations Handling | 5% | 82 | 4.10 |
+| **Total** | **100%** | — | **72.50** |
+
+---
+
+## Recommendation
+
+**Accept with Major Revisions**
+
+The paper makes a valid contribution by:
+1. Identifying and controlling for the suppression confound in prior work
+2. Introducing within-condition analysis as a cleaner methodology
+3. Quantifying format friction at 10.3pp with appropriate uncertainty bounds
+
+However, significant revisions are needed:
+1. Address the compliance gaps vs. friction rate confusion
+2. Acknowledge measurement unreliability on IMPLICIT stratum more prominently
+3. Reframe HARD scenario analysis as exploratory
+4. Add missing analyses (signal type breakdown, scenario-level variance)
+
+The single-model/single-task scope is a fundamental limitation that cannot be addressed without additional experiments. The paper should be more conservative in its claims about generalization.
+
+---
+
+## Comparison to Related Work
+
+| Paper | Task | Models | Format Effect Claimed |
+|-------|------|--------|----------------------|
+| Tam et al. (2024) | Reasoning benchmarks | Multiple | 27.3pp (confounded) |
+| Johnson et al. (2025) | Tool-calling | 10 models | 18.4pp (confounded) |
+| **This paper** | Signal detection | 1 model | 10.3pp (compliance gap) |
+
+The key contribution is methodological: showing that apparent format effects can be decomposed into detection impairment (small: ~4pp) and compliance failure (larger: ~10pp). This is a more nuanced picture than prior work, but applies only to the tested model and task.
+
+---
+
+## Final Assessment
+
+This is a competent research contribution with a genuine insight: format requirements in prompt-based tool-calling create a compliance gap distinct from reasoning impairment. The methodology is sound, the statistics are verified, and the limitations are honestly acknowledged.
+
+The paper falls short of excellence due to:
+- Narrow scope (single model, single task)
+- Measurement reliability concerns on the key stratum
+- Presentation issues that obscure rather than clarify
+
+**Score: 72/100 (B-)**
+
+For a top-tier venue (NeurIPS, ICML), multi-model validation would be required. For a workshop or applications track, the current contribution is acceptable with revisions.
+
+---
+
+## Remediation Plan
+
+This section provides a concrete plan for addressing each major issue identified in this review, **excluding multi-model validation** (which requires substantial new experimentation).
+
+---
+
+### Issue 1: Low Reliability on IMPLICIT Stratum (κ = 0.41)
+
+**Problem**: The judge-human agreement on IMPLICIT scenarios is only 76%, which undermines confidence in the 18.4pp friction estimate where the main finding manifests.
+
+**Remediation Plan**:
+
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **1a. Compute bounded estimates from existing data** | 1 hour | High |
+| - Report friction under "optimistic" (judge) and "conservative" (human) interpretations | | |
+| - Use existing validation data to compute bounds | | |
+| **1b. Add uncertainty quantification to Table 3** | 30 min | Medium |
+| - Show friction range: 18.4pp (judge) to ~14pp (conservative) | | |
+| **1c. Expand sensitivity analysis in text** | 1 hour | Medium |
+| - Already have 17.2pp excluding disagreement cases | | |
+| - Add explicit statement: "IMPLICIT friction estimates have ±4pp uncertainty due to measurement reliability" | | |
+
+**Implementation**:
 
 ```python
-# Bootstrap friction CI
-from scipy.stats import bootstrap
-import numpy as np
+def compute_bounded_friction(results: list[dict], validation_data: dict) -> dict:
+    """Compute friction bounds using existing human validation."""
+    implicit = [r for r in results
+                if r.get('ambiguity') == 'IMPLICIT'
+                and r.get('expected_detection') is True]
 
-def friction_stat(detection, compliance):
-    return detection.mean() - compliance.mean()
+    # Optimistic (judge-based)
+    det_judge = sum(1 for r in implicit if r.get('st_judge_detected') is True)
+    comp = sum(1 for r in implicit if r.get('st_regex_detected') is True)
+    friction_optimistic = (det_judge - comp) / len(implicit) * 100
 
-# 10,000 bootstrap replicates
-result = bootstrap((detection_array, compliance_array),
-                   friction_stat,
-                   n_resamples=10000,
-                   paired=True)
-print(f"95% CI: [{result.confidence_interval.low:.1%}, {result.confidence_interval.high:.1%}]")
+    # Conservative (discount by disagreement rate)
+    # IMPLICIT disagreement rate = 24% from validation
+    disagreement_rate = 0.24
+    det_conservative = det_judge * (1 - disagreement_rate)
+    friction_conservative = (det_conservative - comp) / len(implicit) * 100
+
+    return {
+        'friction_optimistic': friction_optimistic,
+        'friction_conservative': friction_conservative,
+        'uncertainty_pp': friction_optimistic - friction_conservative
+    }
 ```
 
-**Effort**: 1 hour
-**Impact**: Proper uncertainty quantification
+**Deliverable**: Updated Table 3 with bounded estimates, expanded sensitivity discussion.
 
-#### 2.3 HARD Scenario Decision
-
-**Problem**: Selective inclusion inflates headline number.
-
-**Fix**: Choose one approach and stick to it.
-
-**Option A (Recommended)**: Exclude HARD from primary analysis, report in sensitivity.
-```markdown
-**Primary analysis** (excluding 3 HARD scenarios, n=340):
-- Format friction: 10.3pp [6.2pp, 14.4pp]
-- Silent failures: 52/340
-
-**Sensitivity analysis** (including HARD, n=370):
-- Format friction: 12.2pp [7.1pp, 17.3pp]
-- The 3 HARD scenarios show extreme friction (33pp+),
-  suggesting friction scales with signal ambiguity.
-```
-
-**Option B**: Include HARD but discuss heterogeneity prominently.
-
-**Effort**: 1 hour (recompute, revise text)
-**Impact**: Honest reporting; preempts cherry-picking criticism
+**Timeline**: 2.5 hours
 
 ---
 
-### Phase 3: Strengthening Claims (Nice to Have)
+### Issue 2: Confusing Metrics (50 Gaps vs. 10.3pp Friction)
 
-These additions would strengthen the paper but aren't strictly required.
+**Problem**: "50 compliance gaps" and "10.3pp friction" measure different things (gross count vs. net rate), but the paper presents them without clarification.
 
-#### 3.1 Address False Positive Asymmetry
+**Remediation Plan**:
 
-**Problem**: ST FPR (2.2%) > NL FPR (0.0%) contradicts hedging narrative.
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **2a. Add explanatory footnote to Table 2** | 30 min | High |
+| - "50 trials showed detection without XML (compliance gaps). The net friction rate (10.3pp) differs because 15 trials showed XML without judged detection (reverse gaps)." | | |
+| **2b. Add 2×2 contingency table** | 1 hour | High |
+| - Show full breakdown: Both/Neither/Detection-only/XML-only | | |
+| **2c. Discuss reverse gaps in §4.4** | 1 hour | Medium |
+| - What do the 15 reverse gaps represent? False positive XML? Overly strict judge? | | |
 
-**Fix**: Acknowledge and discuss in §5.
+**Deliverable**: Revised Table 2 with footnote, new Table 2a with contingency breakdown.
 
-**Add to Discussion**:
+**Timeline**: 2 hours
+
+**Implementation**:
+
 ```markdown
-### 5.X False Positive Asymmetry
+## New Table 2a: Detection × Compliance Contingency
 
-An apparent contradiction: if structured output causes hedging (fewer true
-positives on uncertain signals), we might expect fewer false positives too.
-Instead, we observe the opposite: 2.2% FPR in structured vs 0.0% in NL.
+|                    | XML Present | XML Absent |
+|--------------------|-------------|------------|
+| **Judge: Detected**    | 241         | 50 (compliance gaps) |
+| **Judge: Not Detected**| 15 (reverse gaps) | 34         |
 
-Several explanations are possible:
-1. **Threshold shift**: The structured condition may have a *lower* overall
-   threshold (more trigger-happy), but friction selectively suppresses
-   uncertain cases
-2. **XML commitment dynamics**: Once the model begins `<signal`, it must
-   complete the structure—potentially over-committing on edge cases
-3. **Small sample**: 5/230 false positives may be noise
-
-This asymmetry warrants further investigation but does not undermine the
-primary finding (compliance gap on true signals).
+Note: Net friction = (291-256)/340 = 10.3pp. Gross compliance gaps = 50.
 ```
 
-**Effort**: 30 minutes
-**Impact**: Demonstrates thorough analysis; addresses reviewer question
+---
 
-#### 3.2 Add Second Model (Optional but High-Value)
+### Issue 3: Underpowered HARD Scenario Analysis
 
-**Problem**: Single-model study limits generalizability.
+**Problem**: The claim "33% detection, 0% compliance (+33pp friction)" is based on n=30 trials from 3 scenarios—too small for reliable inference.
 
-**Fix**: Run core experiment on one additional model.
+**Remediation Plan**:
 
-**Recommended**: Qwen 2.5 32B via Ollama (free, runs on 36GB Mac)
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **3a. Reframe as exploratory observation** | 30 min | High |
+| - Change "HARD scenarios show extreme friction" to "Preliminary observation: HARD scenarios (n=30) showed elevated friction, suggesting a potential dose-response relationship with ambiguity" | | |
+| **3b. Add explicit power limitation** | 15 min | Medium |
+| - "With n=30, the 95% CI for 33% detection is [17%, 52%]; inference is unreliable" | | |
+| **3c. Compute and report wide confidence intervals** | 30 min | Medium |
+| - Use Wilson score CI for HARD detection/compliance rates | | |
+| - Make uncertainty visually clear in any HARD-related figures | | |
 
-```bash
-# Local replication
-ollama run qwen2.5:32b-instruct
-
-python -m experiments.signal_detection_experiment \
-    --model ollama/qwen2.5:32b-instruct \
-    --trials 5 \
-    --scenarios all
-```
-
-**Expected outcome**: Either:
-- Similar friction → "Friction generalizes beyond Claude"
-- Different friction → "Friction may be model-specific" (still interesting)
-
-**Effort**: ~4 hours compute, 2 hours analysis
-**Impact**: Transforms "single-model study" criticism into "validated on 2 models"
-
-**Paper revision**: Add Table 7
-```markdown
-**Table 7: Cross-Model Validation**
-
-| Model | Detection (NL) | Detection (ST) | Compliance | Friction |
-|-------|---------------|----------------|------------|----------|
-| Claude Sonnet | 87.0% | 81.4% | 69.2% | 12.2pp |
-| Qwen 2.5 32B | XX.X% | XX.X% | XX.X% | XX.Xpp |
-```
-
-#### 3.3 Constrained Decoding Comparison (Optional)
-
-**Problem**: Paper discusses native APIs but never tests them.
-
-**Fix**: Run 50 trials with Anthropic tool_use API.
+**Implementation**:
 
 ```python
-# Compare prompt-based vs native tool calling
-response = client.messages.create(
-    model="claude-sonnet-4-20250514",
-    tools=[{
-        "name": "flag_signal",
-        "description": "Flag frustration, urgency, or blocking issues",
-        "input_schema": {...}
-    }],
-    messages=[{"role": "user", "content": scenario}]
-)
+def hard_scenario_uncertainty(results: list[dict]) -> dict:
+    """Compute CIs for HARD scenarios to show uncertainty."""
+    hard_ids = ['sig_implicit_frust_007', 'sig_implicit_block_001', 'sig_implicit_block_008']
+    hard = [r for r in results if r.get('scenario_id') in hard_ids]
+
+    det = sum(1 for r in hard if r.get('st_judge_detected') is True)
+    comp = sum(1 for r in hard if r.get('st_regex_detected') is True)
+    n = len(hard)
+
+    det_ci = wilson_ci(det, n)
+    comp_ci = wilson_ci(comp, n)
+
+    return {
+        'n': n,
+        'detection': det / n,
+        'detection_ci': det_ci,  # Expected: ~[17%, 52%]
+        'compliance': comp / n,
+        'compliance_ci': comp_ci,  # Expected: [0%, 12%]
+        'note': 'Wide CIs reflect underpowered sample'
+    }
 ```
 
-**Expected outcome**: Native API shows ~0% friction (by construction), confirming friction is prompt-based phenomenon.
-
-**Effort**: 3 hours, ~$20 API cost
-**Impact**: Clarifies scope; shows friction is avoidable with right architecture
+**Timeline**: 1.25 hours
 
 ---
 
-### Phase 4: Presentation Polish
+### Issue 4: Missing Analyses
 
-#### 4.1 Revise Title
+**Problem**: Three analyses would strengthen the paper but are absent: signal type breakdown, scenario-level variance, response length correlation.
 
-**Current**: "Format Friction: Isolating Output Structure from Prompt Asymmetry"
+**Remediation Plan**:
 
-**Problem**: Promises isolation that Study 1 doesn't deliver.
+#### 4a. Signal Type Breakdown
 
-**Options**:
-- "Format Friction: The Compliance Gap in Prompt-Based Tool Calling"
-- "Detection Without Compliance: Format Friction in LLM Tool Calling"
-- "When Models Detect But Don't Comply: Format Friction in Structured Output"
+| Action | Effort | Impact |
+|--------|--------|--------|
+| Add analysis script section | 2 hours | Medium |
+| Report friction by frustration/urgency/blocking_issue | | |
 
-#### 4.2 Add Visualization
+**Implementation** (add to `analyze_judged_results.py`):
 
-Create figure showing friction by ambiguity level:
-
+```python
+def analyze_friction_by_signal_type(results: list[dict]) -> dict:
+    """Friction breakdown by signal type (frustration, urgency, blocking_issue)."""
+    analysis = {}
+    for signal_type in ['frustration', 'urgency', 'blocking_issue']:
+        subset = [r for r in results
+                  if r.get('signal_type') == signal_type
+                  and r.get('ambiguity') in ['EXPLICIT', 'IMPLICIT']
+                  and r.get('expected_detection') is True]
+        if not subset:
+            continue
+        detection = sum(1 for r in subset if r.get('st_judge_detected') is True)
+        compliance = sum(1 for r in subset if r.get('st_regex_detected') is True)
+        n = len(subset)
+        analysis[signal_type] = {
+            'n': n,
+            'detection_rate': detection / n,
+            'compliance_rate': compliance / n,
+            'friction_pp': (detection - compliance) / n * 100
+        }
+    return analysis
 ```
-Friction (Detection - Compliance)
 
-EXPLICIT  |████████████████████| 0.0pp   ← No friction
-IMPLICIT  |████████████████████████████████████████| 20.5pp  ← High friction
-BORDERLINE|████████████████████████████| 14.1pp  ← Moderate friction
+**Expected output**: New Table showing whether friction is uniform across signal types or concentrated (e.g., blocking_issue might have higher friction than frustration).
 
-          0%        10%        20%        30%
+#### 4b. Scenario-Level Variance
+
+| Action | Effort | Impact |
+|--------|--------|--------|
+| Compute per-scenario friction rates | 1 hour | High |
+| Identify high-friction scenarios | | |
+| Report variance/IQR | | |
+
+**Implementation**:
+
+```python
+def scenario_friction_distribution(results: list[dict]) -> dict:
+    """Compute friction for each IMPLICIT scenario."""
+    from collections import defaultdict
+    by_scenario = defaultdict(list)
+
+    for r in results:
+        if r.get('ambiguity') == 'IMPLICIT' and r.get('expected_detection') is True:
+            by_scenario[r['scenario_id']].append(r)
+
+    frictions = []
+    for scenario_id, trials in by_scenario.items():
+        det = sum(1 for t in trials if t.get('st_judge_detected') is True)
+        comp = sum(1 for t in trials if t.get('st_regex_detected') is True)
+        n = len(trials)
+        friction = (det - comp) / n * 100 if n > 0 else 0
+        frictions.append({'scenario_id': scenario_id, 'friction_pp': friction, 'n': n})
+
+    return {
+        'scenarios': sorted(frictions, key=lambda x: -x['friction_pp']),
+        'mean_friction': np.mean([f['friction_pp'] for f in frictions]),
+        'std_friction': np.std([f['friction_pp'] for f in frictions]),
+        'max_friction': max(f['friction_pp'] for f in frictions),
+        'min_friction': min(f['friction_pp'] for f in frictions),
+    }
 ```
 
-**Effort**: 1 hour
-**Impact**: Visual summary aids comprehension
+**Expected insight**: Does friction concentrate in a few "pathological" scenarios, or is it broadly distributed?
 
-#### 4.3 Honest Abstract Revision
+#### 4c. Response Length Correlation
 
-**Current abstract claims** → **Revised claims**:
-- "disappeared entirely" → "was confounded with; correction suggests [X]"
-- "60 silent failures" → "60 instances of detection without compliance"
-- Add: "Findings are preliminary; validated on single model and task"
+| Action | Effort | Impact |
+|--------|--------|--------|
+| Correlate response length with compliance gaps | 1 hour | Medium |
 
----
+**Implementation**:
 
-### Implementation Checklist
+```python
+def response_length_analysis(results: list[dict]) -> dict:
+    """Analyze whether longer responses have more compliance gaps."""
+    with_truth = [r for r in results
+                  if r.get('ambiguity') in ['EXPLICIT', 'IMPLICIT']
+                  and r.get('expected_detection') is True]
 
-| Task | Priority | Effort | Status |
-|------|----------|--------|--------|
-| Study 1: Run n=250 correction | CRITICAL | 1 day | ☐ |
-| Add CIs to Tables 1-3 | CRITICAL | 2 hrs | ☐ |
-| Move κ=0.41 to main text | CRITICAL | 1 hr | ☐ |
-| Reframe "silent failure" | CRITICAL | 1 hr | ☐ |
-| Add scenario-level sign tests | HIGH | 2 hrs | ☐ |
-| Bootstrap friction CI | HIGH | 1 hr | ☐ |
-| HARD scenario decision | HIGH | 1 hr | ☐ |
-| Address FPR asymmetry | MEDIUM | 30 min | ☐ |
-| Second model validation | MEDIUM | 6 hrs | ☐ |
-| Native API comparison | LOW | 3 hrs | ☐ |
-| Title revision | LOW | 15 min | ☐ |
-| Add friction figure | LOW | 1 hr | ☐ |
-| Abstract revision | LOW | 30 min | ☐ |
+    # Get response lengths for compliance gaps vs successful compliance
+    gap_lengths = [len(r.get('st_response_text', ''))
+                   for r in with_truth
+                   if r.get('st_judge_detected') is True
+                   and r.get('st_regex_detected') is not True]
 
-**Total effort for CRITICAL + HIGH**: ~1.5 days
-**Total effort for complete remediation**: ~3 days
+    success_lengths = [len(r.get('st_response_text', ''))
+                       for r in with_truth
+                       if r.get('st_regex_detected') is True]
 
----
+    from scipy.stats import mannwhitneyu
+    stat, pvalue = mannwhitneyu(gap_lengths, success_lengths, alternative='two-sided')
 
-### Expected Outcome After Remediation
+    return {
+        'gap_mean_length': np.mean(gap_lengths),
+        'success_mean_length': np.mean(success_lengths),
+        'mann_whitney_p': pvalue,
+    }
+```
 
-| Criterion | Before | After | Notes |
-|-----------|--------|-------|-------|
-| Soundness | 2.5/5 | 4/5 | Study 1 fixed; proper stats |
-| Novelty | 2.5/5 | 3/5 | Unchanged (inherent limit) |
-| Significance | 2/5 | 3/5 | Cross-model adds value |
-| Clarity | 3.5/5 | 4.5/5 | Honest framing, CIs |
-| Reproducibility | 4/5 | 4.5/5 | Temperature controlled |
-| **Overall** | **2.5/5** | **3.8/5** | Solid arXiv contribution |
+**Hypothesis**: Compliance gaps may be associated with longer, more elaborate responses where the model "talks around" the signal rather than tagging it.
 
-**Projected arXiv grade**: **A** (with all CRITICAL + HIGH items)
-**Projected arXiv grade**: **A-** (with CRITICAL items only)
+**Timeline for all 4a-4c**: 4-6 hours
 
 ---
 
-### What This Paper Can Never Be
+### Issue 5: Statistical Presentation (McNemar vs. Sign Test)
 
-Even with all fixes, this paper will not be:
+**Problem**: The paper reports both McNemar (p=0.065) and sign test (p=0.0007) without clearly explaining why sign test is primary.
 
-1. **Top-tier venue material**: Single task, no theoretical contribution
-2. **Paradigm-shifting**: Confirms rather than overturns prior intuitions
-3. **Highly cited**: Practical utility for narrow audience
+**Remediation Plan**:
 
-**What it CAN be**: A well-executed empirical study that makes a clear, honest, properly-scoped contribution to understanding LLM tool-calling behavior. That's enough for a good arXiv preprint.
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **5a. Add explanatory paragraph** | 30 min | High |
+| - "We report the scenario-level sign test as primary because trials within a scenario are correlated (same prompt, similar responses). McNemar's test assumes independence, making it anticonservative here. The sign test treats each scenario as a single observation, providing valid inference." | | |
+| **5b. Move McNemar to footnote** | 15 min | Medium |
+| - Or remove entirely from main text | | |
+
+**Timeline**: 45 minutes
 
 ---
 
-*Remediation plan added: 2026-02-03*
+### Issue 6: Presentation Issues
+
+**Problem**: Multiple presentation inconsistencies reduce clarity.
+
+**Remediation Plan**:
+
+| Issue | Action | Effort |
+|-------|--------|--------|
+| **6a. Formal definition of "format friction"** | Add to §1 or §2 | 30 min |
+| "We define *format friction* as the within-condition gap between signal detection (as measured by an LLM judge) and format compliance (as measured by XML tag presence) in structured output responses." | | |
+| **6b. Figure numbering** | Rename fig2→fig1, fig3→fig2, etc. in code and paper | 30 min |
+| **6c. Sync DATA_MANIFEST with paper** | Add note clarifying that MANIFEST reports full dataset (N=370) while paper primary analysis excludes HARD (N=340) | 15 min |
+| **6d. Remove redundancy** | Cut overlapping content between §4.6 Limitations and LIMITATIONS.md | 1 hour |
+
+**Timeline**: 2-3 hours
 
 ---
 
-*Review completed by: Anonymous (simulated external reviewer)*
-*Conflict of interest: None declared*
+### Issue 7: Two-Pass Recovery Baseline
+
+**Problem**: Recovery rates (74%, 50%) lack context—what's the extraction success on trials that *did* produce XML?
+
+**Remediation Plan**:
+
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **7a. Run extraction on XML-present trials** | 2 hours | High |
+| - Sample 50 trials where XML was produced | | |
+| - Run Sonnet and Qwen extraction on original NL response | | |
+| - Compare extraction success vs. original XML | | |
+| **7b. Report baseline** | 30 min | Medium |
+| - "On trials where the model did produce XML, extraction from NL achieved X% agreement, establishing a Y% baseline vs. Z% recovery rate" | | |
+
+**Implementation**:
+
+```python
+# Add to two_pass_extraction.py
+def baseline_extraction(results: list[dict], extraction_model: str) -> dict:
+    """Extract from NL responses of trials that DID produce XML."""
+    xml_present = [r for r in results
+                   if r.get('st_regex_detected') is True
+                   and r.get('ambiguity') in ['EXPLICIT', 'IMPLICIT']]
+
+    # Sample 50 for comparison
+    sample = random.sample(xml_present, min(50, len(xml_present)))
+
+    # Run extraction on NL responses
+    # Compare to original XML tag
+    ...
+```
+
+**Timeline**: 3 hours
+
+---
+
+### Issue 8: Reproducibility Gaps
+
+**Problem**: Missing requirements.txt, undocumented temperature settings.
+
+**Remediation Plan**:
+
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **8a. Create requirements.txt** | 15 min | High |
+| ```claude-agent-sdk>=0.1.20``` | | |
+| ```sentence-transformers>=2.2.0``` | | |
+| ```numpy>=1.24.0``` | | |
+| ```scipy>=1.10.0``` | | |
+| ```matplotlib>=3.7.0``` | | |
+| **8b. Document temperature** | 30 min | Medium |
+| - Add to experiment metadata: `"temperature": "default (1.0)"` | | |
+| - Discuss in limitations: "Temperature was not explicitly controlled; default settings used" | | |
+| **8c. Verify seed consistency** | 1 hour | Low |
+| - Check that seed=42 propagates to all random operations | | |
+
+**Timeline**: 2 hours
+
+---
+
+### Issue 9: FPR Paradox Resolution
+
+**Problem**: 2.2% structured FPR vs 0% NL FPR is noted but unexplained. Sample (n=5 FPs) is too small for inference.
+
+**Remediation Plan**:
+
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **9a. Reframe as observation with statistical context** | 30 min | Medium |
+| - "We observed 5 false positives in structured vs. 0 in NL (p=0.06, Fisher's exact). With only 5 events, this may be noise; we note it as an observation for future investigation." | | |
+| **9b. Add confidence intervals** | 15 min | Medium |
+| - Report 95% CI for structured FPR: [0.7%, 5.0%] | | |
+| - Report 95% CI for NL FPR: [0%, 1.6%] (one-sided) | | |
+| **9c. Remove speculative explanations** | 15 min | Low |
+| - Current §4.4 offers untestable hypotheses (threshold shift, XML commitment) | | |
+| - Replace with: "The mechanism, if real, requires further investigation" | | |
+
+**Implementation**:
+
+```python
+def fpr_with_uncertainty(results: list[dict]) -> dict:
+    """Compute FPR with appropriate uncertainty for small samples."""
+    control = [r for r in results if r.get('ambiguity') == 'CONTROL']
+    n = len(control)
+
+    nl_fp = sum(1 for r in control if r.get('nl_judge_detected') is True)
+    st_fp = sum(1 for r in control if r.get('st_judge_detected') is True)
+
+    from scipy.stats import fisher_exact
+    table = [[nl_fp, n - nl_fp], [st_fp, n - st_fp]]
+    odds_ratio, p_value = fisher_exact(table)
+
+    return {
+        'nl_fpr': nl_fp / n,
+        'nl_fpr_ci': wilson_ci(nl_fp, n),
+        'st_fpr': st_fp / n,
+        'st_fpr_ci': wilson_ci(st_fp, n),
+        'fisher_p': p_value,
+        'interpretation': 'Not significant; treat as exploratory observation'
+    }
+```
+
+**Timeline**: 1 hour
+
+---
+
+### Issue 10: Single Task Limitation (Partial Mitigation)
+
+**Problem**: Signal detection may not generalize to other tool-calling domains.
+
+**Remediation Plan** (text-based mitigations only):
+
+| Action | Effort | Impact |
+|--------|--------|--------|
+| **10a. Add explicit scope statement** | 30 min | Medium |
+| - "These findings are validated on signal detection only. Generalization to other tool-calling tasks (API calls, memory operations, code generation) requires future validation." | | |
+| **10b. Conceptual analysis section** | 2 hours | Medium |
+| - Add discussion: "Why might friction generalize (or not)?" | | |
+| - Argument for: Friction is about output format commitment, not task semantics | | |
+| - Argument against: Different tasks may have different ambiguity profiles | | |
+| **10c. Connect to related work** | 1 hour | Medium |
+| - Note that Wang et al. (SLOT) found format compliance issues across multiple tasks | | |
+| - Tam et al. tested multiple reasoning benchmarks | | |
+| - Our contribution is methodology (within-condition), not task breadth | | |
+
+**Implementation** (add to Discussion section):
+
+```markdown
+### 4.X Generalization Considerations
+
+Our findings are validated on signal detection only. We offer two perspectives on generalization:
+
+**Arguments for generalization**: Format friction appears to reflect output commitment
+under uncertainty—a general property of language model generation, not task-specific
+reasoning. The model's reluctance to produce XML when uncertain about the signal
+should manifest whenever structured output requires committing to uncertain claims.
+
+**Arguments against generalization**: Signal detection involves recognizing subtle
+emotional/situational cues—a task where uncertainty is inherent. Tool-calling tasks
+with clearer triggering conditions (e.g., "save this to memory" vs. detecting implicit
+frustration) may show less friction because ambiguity is lower.
+
+Empirical validation across tasks remains necessary for strong generalization claims.
+```
+
+**Timeline**: 3.5 hours
+
+---
+
+## Remediation Summary
+
+### Priority 1: Must-Fix (Before Submission)
+
+| Issue | Action | Time |
+|-------|--------|------|
+| Metrics confusion | Add Table 2a, footnote | 2 hours |
+| HARD underpowered | Reframe as exploratory | 1 hour |
+| Statistical presentation | Clarify sign test primary | 45 min |
+| Format friction definition | Add formal definition | 30 min |
+| **Subtotal** | | **~4 hours** |
+
+### Priority 2: Should-Fix (Strengthens Paper)
+
+| Issue | Action | Time |
+|-------|--------|------|
+| Missing analyses | Signal type, scenario variance, response length | 5 hours |
+| IMPLICIT reliability | Expand annotation, bounded estimates | 6 hours |
+| Presentation cleanup | Figure numbers, MANIFEST sync | 2 hours |
+| Reproducibility | requirements.txt, temperature docs | 2 hours |
+| **Subtotal** | | **~15 hours** |
+
+### Priority 3: Nice-to-Have (For Top Venues)
+
+| Issue | Action | Time |
+|-------|--------|------|
+| Two-pass baseline | Run extraction on XML-present trials | 3 hours |
+| Expanded CONTROL | More scenarios for FPR analysis | 1 week |
+| Pilot second task | Memory persistence validation | 2 weeks |
+| **Subtotal** | | **~3 weeks** |
+
+---
+
+## Expected Impact of Remediation
+
+| Metric | Current | After Priority 1+2 | After All |
+|--------|---------|---------------------|-----------|
+| Review Score | 72/100 | 80-82/100 | 85-88/100 |
+| Venue Target | Workshop | Main track (borderline) | Main track (solid) |
+| Key Weakness | Presentation, reliability | Single task | (Addressed except multi-model) |
+
+---
+
+*Remediation plan completed: 2026-02-03*
+
+---
+
+*Review completed: 2026-02-03*
+*Methodology: Full data audit, code verification, statistical replication*
