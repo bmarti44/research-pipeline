@@ -26,6 +26,8 @@ However, these studies compare conditions that differ in more than format alone.
 
 This motivates our primary research question: **When format is the only variable, what is the actual impact on model performance?**
 
+We define *format friction* as the within-condition gap between signal detection (as measured by an LLM judge) and format compliance (as measured by XML tag presence) in structured output responses. When a model detects a signal but fails to produce the required XML structure, this represents a compliance gap—information that existed in the model's reasoning but never reached the tool dispatcher.
+
 We designed a signal detection task where both conditions receive identical guidance on *when* to act; only the output format differs. Our key finding is not a cross-condition comparison but a gap *within* the structured condition itself:
 
 - **Detection rate** (LLM judge): 85.6% [81.5%, 89.0%]
@@ -141,9 +143,13 @@ Table 1 shows detection rates across conditions (excluding 3 HARD scenarios; see
 
 *Bootstrap CI for difference.
 
-**Scenario-level analysis**: To account for within-scenario correlation, we conducted a sign test at the scenario level. Of 34 ground-truth scenarios (excluding HARD), 26 showed higher NL detection, 5 showed higher structured detection, and 3 were tied. Sign test: p = 0.0007.
+**Scenario-level analysis (primary test)**: We report the scenario-level sign test as primary because trials within a scenario are correlated (same prompt, similar responses). McNemar's test assumes independence, making it anticonservative here. The sign test treats each scenario as a single observation, providing valid inference.
 
-The model detects signals at somewhat higher rates in NL (89.4% vs 85.6%), with the difference not reaching significance at trial level (McNemar p=0.065) but significant at scenario level (sign test p=0.0007). This is substantially smaller than effects reported in prior work, and detection in the structured condition remains high.
+Of 34 ground-truth scenarios (excluding HARD), 26 showed higher NL detection, 5 showed higher structured detection, and 3 were tied. Sign test: p = 0.0007.
+
+The model detects signals at somewhat higher rates in NL (89.4% vs 85.6%), significant at scenario level (sign test p=0.0007).¹ This is substantially smaller than effects reported in prior work, and detection in the structured condition remains high.
+
+¹Trial-level McNemar test yields p=0.065, but is anticonservative due to within-scenario correlation.
 
 ### 3.5 Format Friction: The Compliance Gap
 
@@ -156,11 +162,22 @@ Within the structured condition, we measure detection versus compliance:
 | Detection (judge) | 85.6% | [81.5%, 89.0%] | 291/340 |
 | Compliance (XML present) | 75.3% | [70.4%, 79.6%] | 256/340 |
 | **Format friction** | **10.3pp** | **[5.8pp, 14.8pp]*** | — |
-| **Compliance gaps** | — | — | **50** |
+| **Compliance gaps** | — | — | **50**† |
 
 *Bootstrap CI (10,000 replicates).
 
+†50 trials showed detection without XML (compliance gaps). The net friction rate (10.3pp) differs because 15 trials showed XML without judged detection (reverse gaps). See Table 2a for the full contingency breakdown.
+
+**Table 2a: Detection × Compliance Contingency (Structured Condition)**
+
+|                     | XML Present | XML Absent |
+|---------------------|-------------|------------|
+| **Judge: Detected** | 241         | 50 (compliance gaps) |
+| **Judge: Not Detected** | 15 (reverse gaps) | 34 |
+
 Of 340 structured-condition trials (excluding HARD), the model detected the signal in 291 cases but produced XML in only 256. The remaining **50 trials are compliance gaps**—the model recognized the signal but no tool call would have fired.
+
+**Reverse gaps**: 15 trials showed XML without judged detection. These may represent: (1) over-tagging on borderline signals where the judge's "acknowledgment required" threshold was not met, (2) judge measurement error on edge cases, or (3) mechanical XML production without genuine signal recognition. Manual inspection suggests a mix of these causes—some responses include XML tags that appear formulaic rather than signal-responsive. The existence of reverse gaps suggests format requirements can also cause over-commitment in some cases.
 
 **Scenario-level analysis**: For format friction, 28/34 scenarios showed detection > compliance, 4 showed compliance > detection, 2 were tied. Sign test: p < 0.0001.
 
@@ -181,11 +198,27 @@ On explicit signals, format friction is zero—the model detects and complies at
 
 ![Figure 1: Format friction by ambiguity level](figures/fig1_ambiguity_interaction.png)
 
-**Sensitivity analysis (including HARD scenarios)**: When the 3 HARD scenarios (n=30) are included, IMPLICIT friction rises to 20.5pp. These scenarios show extreme friction: 33% detection but 0% XML compliance. This exploratory observation suggests friction may scale sharply with signal ambiguity, but the small sample (n=30) warrants cautious interpretation. See §3.6 for details.
+**Exploratory observation (HARD scenarios)**: When the 3 HARD scenarios (n=30) are included, IMPLICIT friction rises to 20.5pp. These scenarios show elevated friction: 33% detection [95% CI: 19%, 51%] but 0% compliance [95% CI: 0%, 11%]. With n=30, these confidence intervals are wide; this observation is exploratory and should be interpreted as hypothesis-generating rather than confirmatory. See §4.6 for details.
 
 This suggests format friction reflects calibrated uncertainty: the model is less willing to commit to a strong structured claim when the signal is ambiguous. This may be reasonable behavior for the model but problematic for downstream systems expecting binary tool dispatch.
 
 ![Figure 4: Friction scaling with ambiguity](figures/fig4_friction_by_ambiguity.png)
+
+**Signal type breakdown**: Friction is not uniform across signal types:
+
+**Table 3a: Format Friction by Signal Type**
+
+| Signal Type | N | Detection | Compliance | Friction |
+|-------------|---|-----------|------------|----------|
+| Frustration | 120 | 75.8% | 75.8% | 0.0pp |
+| Urgency | 110 | 99.1% | 83.6% | +15.5pp |
+| Blocking Issue | 110 | 82.7% | 66.4% | +16.4pp |
+
+Frustration signals show zero friction—the model both detects and complies reliably. Urgency and blocking issue signals show elevated friction (15-16pp), suggesting these signal types may be more challenging to commit to in structured format despite successful detection.
+
+**Scenario-level variance**: IMPLICIT friction is concentrated rather than uniform. Among 19 IMPLICIT scenarios (excluding HARD), 8 show zero friction, while 6 show friction exceeding 30pp. The top 5 friction scenarios (sig_implicit_urg_006, sig_implicit_frust_008, sig_implicit_urg_001, sig_implicit_block_006, sig_implicit_block_002) account for most compliance gaps, with friction rates of 70-90pp. This suggests that specific scenario characteristics—not yet identified—drive friction.
+
+**Response length**: Compliance gaps are associated with *shorter* responses (mean 793 chars) than successful compliances (mean 918 chars), contrary to the hypothesis that verbose responses hedge more (Mann-Whitney U, p=0.036). This may reflect cases where the model gives a brief acknowledgment without elaboration or XML structure.
 
 ### 3.7 Measurement Comparison
 
@@ -208,12 +241,12 @@ The cross-condition gap differs between instruments. Regex undercounts NL respon
 
 **Table 5: False Positive Rates (Control Scenarios, N=230)**
 
-| Condition | Judge FPR | Regex FPR |
-|-----------|-----------|-----------|
-| NL | 0.0% | 0.4% |
-| Structured | 2.2% | 0.0% |
+| Condition | Judge FPR | 95% CI | Regex FPR |
+|-----------|-----------|--------|-----------|
+| NL | 0.0% (0/230) | [0.0%, 1.6%] | 0.4% |
+| Structured | 2.2% (5/230) | [0.9%, 5.0%] | 0.0% |
 
-False positive rates are low in both conditions, indicating the model appropriately withholds signals on control scenarios.
+False positive rates are low in both conditions, indicating the model appropriately withholds signals on control scenarios. The apparent difference (5 FPs in structured vs. 0 in NL) does not reach significance (Fisher's exact p=0.061); with only 5 events, this observation may be noise rather than a systematic effect.
 
 ### 3.9 Two-Pass Recovery
 
@@ -277,14 +310,11 @@ From the model's perspective, this may be appropriate—hedging under uncertaint
 
 ### 4.4 False Positive Asymmetry
 
-An apparent contradiction: if structured output causes hedging (fewer true positives on uncertain signals), we might expect fewer false positives too. Instead, we observe the opposite: 2.2% FPR in structured vs 0.0% in NL (Table 5).
+An apparent contradiction: if structured output causes hedging (fewer true positives on uncertain signals), we might expect fewer false positives too. Instead, we observe 2.2% FPR in structured vs 0.0% in NL (Table 5).
 
-Several explanations are possible:
-1. **Threshold shift**: The structured condition may have a *lower* overall threshold (more trigger-happy), but friction selectively suppresses uncertain cases
-2. **XML commitment dynamics**: Once the model begins `<signal`, it must complete the structure—potentially over-committing on edge cases
-3. **Small sample**: 5/230 false positives may be noise given the sample size
+However, this observation should be interpreted cautiously: we observed only 5 false positives in the structured condition, with 95% CI [0.9%, 5.0%]. The difference does not reach significance (Fisher's exact p=0.061). With such a small sample, this may be noise rather than a systematic effect. The mechanism, if real, requires further investigation with larger control samples; we note it as an observation rather than a confirmed finding.
 
-This asymmetry warrants further investigation but does not undermine the primary finding (compliance gap on true signals).
+This observation does not undermine the primary finding (compliance gap on true signals).
 
 ### 4.5 Architectural Implications
 
@@ -294,19 +324,33 @@ This asymmetry warrants further investigation but does not undermine the primary
 
 **Two-pass architecture**: Separating reasoning (NL) from formatting (extraction) recovers 74% of compliance gaps with a frontier model—or 50% with a local 7B model at zero API cost.
 
-### 4.6 Limitations
+### 4.6 Generalization Considerations
+
+Our findings are validated on signal detection only. We offer two perspectives on generalization:
+
+**Arguments for generalization**: Format friction appears to reflect output commitment under uncertainty—a general property of language model generation, not task-specific reasoning. The model's reluctance to produce XML when uncertain about the signal should manifest whenever structured output requires committing to uncertain claims. Prior work supports this interpretation: Tam et al. (2024) found format effects across multiple reasoning benchmarks, and Wang et al. (SLOT) observed format compliance challenges across diverse tasks.
+
+**Arguments against generalization**: Signal detection involves recognizing subtle emotional/situational cues—a task where uncertainty is inherent. Tool-calling tasks with clearer triggering conditions (e.g., "save this to memory" vs. detecting implicit frustration) may show less friction because ambiguity is lower. The 0pp friction we observe on explicit signals supports this: when the triggering condition is unambiguous, compliance is reliable.
+
+Our methodological contribution—within-condition analysis separating detection from compliance—should generalize to other tasks, even if the specific friction magnitude differs. Empirical validation across tasks remains necessary for strong generalization claims about friction rates.
+
+### 4.7 Limitations
 
 1. **Single model**: All experiments used Claude Sonnet. Effects may differ across model families.
 
 2. **Single task**: Signal detection may not generalize to other tool-calling tasks.
 
-3. **Judge-human disagreement on implicit signals**: While overall κ = 0.81 indicates substantial agreement, the IMPLICIT stratum showed lower agreement (κ = 0.41, 76% agreement). Human annotators tended to not count cases where the model addressed an implicit issue helpfully without explicitly acknowledging it as a "signal." This reflects genuine ambiguity in what constitutes signal detection versus signal handling—a distinction our binary judge cannot fully capture. Sensitivity analysis excluding disagreement cases shows friction remains at 17.2pp.
+3. **Judge-human disagreement on implicit signals**: While overall κ = 0.81 indicates substantial agreement, the IMPLICIT stratum showed lower agreement (κ = 0.41, 76% agreement). Human annotators tended to not count cases where the model addressed an implicit issue helpfully without explicitly acknowledging it as a "signal." This reflects genuine ambiguity in what constitutes signal detection versus signal handling—a distinction our binary judge cannot fully capture.
 
-4. **HARD scenario exclusion**: Three IMPLICIT scenarios flagged during piloting as potentially too subtle were excluded from the primary analysis (n=340). Including them (n=370) increases friction from 10.3pp to 12.2pp. Examining HARD scenarios in isolation (n=30) reveals extreme friction: 33% detection but 0% XML compliance (+33pp friction). This exploratory observation suggests friction may scale sharply with signal ambiguity, but the small sample warrants cautious interpretation.
+   **Bounded estimates**: IMPLICIT friction estimates range from 0.6pp (conservative, adjusting for 24% disagreement rate) to 18.4pp (judge-based), reflecting ±17.8pp uncertainty due to measurement reliability. Sensitivity analysis excluding judge-human disagreement cases shows friction at 17.2pp (vs 18.4pp), suggesting the finding is robust to measurement noise but uncertainty remains substantial.
+
+4. **HARD scenario exclusion**: Three IMPLICIT scenarios flagged during piloting as potentially too subtle were excluded from the primary analysis (n=340). Including them (n=370) increases friction from 10.3pp to 12.2pp. Examining HARD scenarios in isolation (n=30) reveals elevated friction: 33% detection [95% CI: 19%, 51%] but 0% compliance [95% CI: 0%, 11%]. With only 30 trials, these confidence intervals are wide; this observation should be treated as exploratory and hypothesis-generating rather than confirmatory evidence of a dose-response relationship with ambiguity.
 
 5. **No baseline compliance check**: The 75.3% compliance rate may reflect general XML challenges. However, 0pp friction on explicit signals suggests compliance is achievable when signals are unambiguous.
 
-6. **Two-pass tested on single task**: Recovery rates (74%/50%) are from the signal detection task only. Generalization to other tool-calling domains (API calls, memory operations) is untested. Additionally, extraction models were not fine-tuned—task-specific training would likely improve 7B performance.
+6. **Two-pass tested on single task**: Recovery rates (74%/50%) are from the signal detection task only. Generalization to other tool-calling domains (API calls, memory operations) is untested. Additionally, extraction models were not fine-tuned—task-specific training would likely improve 7B performance. Recovery was tested only on compliance gaps (XML-absent trials); a proper baseline would test extraction on XML-present trials to establish expected accuracy.
+
+7. **Reproducibility notes**: All experiments used seed=42 for scenario ordering. Temperature was not explicitly controlled (API defaults used). Code, data, and analysis scripts are available in the repository with pinned dependencies.
 
 ---
 

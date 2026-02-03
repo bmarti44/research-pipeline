@@ -5,6 +5,12 @@ This document describes all experimental data files, their validity for paper cl
 **Last Updated**: 2026-02-03
 **Reorganization Commit**: See CHANGELOG.md
 
+> **Note on Sample Sizes**: This manifest reports statistics for the full dataset (N=370 ground-truth trials including 3 HARD scenarios). The paper's primary analysis excludes HARD scenarios (N=340), resulting in slightly different numbers:
+> - Manifest: 12.2pp friction, 60 compliance gaps, N=370
+> - Paper: 10.3pp friction, 50 compliance gaps, N=340
+>
+> See paper §3.6 and §4.6 for the rationale behind HARD scenario exclusion.
+
 ---
 
 ## Directory Structure

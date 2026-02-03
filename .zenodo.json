@@ -1,0 +1,29 @@
+{
+  "title": "Format Friction: The Compliance Gap in Prompt-Based Tool Calling",
+  "description": "This repository contains the paper, code, and data for research on format friction in LLM tool-calling systems. We find a 10.3pp gap between signal detection and XML compliance in structured output conditions, with friction concentrating in ambiguous scenarios (0pp explicit vs 18.4pp implicit). Two-pass recovery mechanisms can recover 50-74% of compliance gaps.",
+  "creators": [
+    {
+      "name": "Martin, Brian",
+      "affiliation": "Independent Researcher"
+    },
+    {
+      "name": "Lipmann, Stephen",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "keywords": [
+    "large language models",
+    "tool calling",
+    "structured output",
+    "format compliance",
+    "prompt engineering",
+    "LLM agents"
+  ],
+  "license": {
+    "id": "CC-BY-4.0"
+  },
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "access_right": "open",
+  "version": "1.0.0"
+}
