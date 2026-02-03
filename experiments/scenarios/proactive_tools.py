@@ -24,6 +24,21 @@ class ExplicitnessLevel(Enum):
     CONTROL = 0         # Should NOT trigger tool
 
 
+class Difficulty(Enum):
+    """Difficulty of discerning save intent (for implicit scenarios only).
+
+    Based on:
+    1. Terseness - fewer words = harder
+    2. Use of symbols/abbreviations - harder
+    3. Inference required - more inference = harder
+    4. Categorization ambiguity - harder
+    """
+    HARD = 3        # Very terse, symbols/abbreviations, high inference
+    MEDIUM = 2      # Terse but clearer structure
+    EASY = 1        # More context, clearer what to save
+    NA = 0          # Not applicable (explicit/control scenarios)
+
+
 @dataclass
 class Scenario:
     id: str
@@ -35,6 +50,7 @@ class Scenario:
     trigger_pattern: Optional[str] = None
     category: Optional[str] = None
     tags: list = field(default_factory=list)
+    difficulty: Difficulty = Difficulty.NA
 
     def to_dict(self):
         return {
@@ -48,6 +64,8 @@ class Scenario:
             "trigger_pattern": self.trigger_pattern,
             "category": self.category,
             "tags": self.tags,
+            "difficulty": self.difficulty.value,
+            "difficulty_name": self.difficulty.name,
         }
 
 
@@ -56,16 +74,17 @@ class Scenario:
 # =============================================================================
 
 MEMORY_SCENARIOS = [
-    # Original implicit (5) - very terse
+    # Original implicit (6) - very terse
     Scenario(
-            id="mem_implicit_000",
-            tool_type=ToolType.MEMORY,
-            level=ExplicitnessLevel.IMPLICIT,
-            query="app.py is in ./src",
-            expected_action=True,
-            expected_content="app.py in src folder",
-            category="codebase",
-        ),
+        id="mem_implicit_000",
+        tool_type=ToolType.MEMORY,
+        level=ExplicitnessLevel.IMPLICIT,
+        query="app.py is in ./src",
+        expected_action=True,
+        expected_content="app.py in src folder",
+        category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Terse but clear file path statement
+    ),
     Scenario(
         id="mem_implicit_001",
         tool_type=ToolType.MEMORY,
@@ -74,6 +93,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="app.ts in src folder",
         category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Terse but clear file path statement
     ),
     Scenario(
         id="mem_implicit_002",
@@ -83,33 +103,37 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="using Postgres",
         category="codebase",
+        difficulty=Difficulty.HARD,  # Very terse (3 words), abbreviation
     ),
     Scenario(
         id="mem_implicit_003",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="clerk is used for auth",
+        query="port 3000 = dev",
         expected_action=True,
-        expected_content="Clerk for auth",
+        expected_content="port 3000 is development",
         category="codebase",
+        difficulty=Difficulty.HARD,  # Uses symbol (=), very terse
     ),
     Scenario(
         id="mem_implicit_004",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="rate limit is about 100 per minute",
+        query="rate ~100/60",
         expected_action=True,
         expected_content="rate limit ~100/min",
         category="constraint",
+        difficulty=Difficulty.HARD,  # Uses symbols (~, /), cryptic
     ),
     Scenario(
         id="mem_implicit_005",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="the config is in .env.local",
+        query="the config in ./.env.local!",
         expected_action=True,
-        expected_content="config in .env.local",
+        expected_content="the config is in .env.local",
         category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Informal but clear file path
     ),
 
     # Converted from weak (5) - made vague
@@ -117,10 +141,11 @@ MEMORY_SCENARIOS = [
         id="mem_implicit_006",
         tool_type=ToolType.MEMORY,
         level=ExplicitnessLevel.IMPLICIT,
-        query="deploy uses CDK",
+        query="cdk is deploy",
         expected_action=True,
-        expected_content="deploy with CDK",
+        expected_content="the deployment uses CDK",
         category="codebase",
+        difficulty=Difficulty.HARD,  # Very terse (3 words), abbreviation
     ),
     Scenario(
         id="mem_implicit_007",
@@ -130,6 +155,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="prefers functional React components",
         category="user_preference",
+        difficulty=Difficulty.MEDIUM,  # Clear preference statement
     ),
     Scenario(
         id="mem_implicit_008",
@@ -139,6 +165,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="tests in __tests__ folders",
         category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Clear convention statement
     ),
     Scenario(
         id="mem_implicit_009",
@@ -148,6 +175,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="2-space indentation",
         category="codebase",
+        difficulty=Difficulty.HARD,  # Very terse (3 words)
     ),
     Scenario(
         id="mem_implicit_010",
@@ -157,6 +185,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="dates in UTC",
         category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Terse but clear technical fact
     ),
 
     # Converted from moderate (5) - made vague
@@ -168,6 +197,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="bcrypt for passwords, JWT for sessions",
         category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Technical but clear dual-fact
     ),
     Scenario(
         id="mem_implicit_012",
@@ -177,6 +207,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="prefers type hints, descriptive names",
         category="user_preference",
+        difficulty=Difficulty.MEDIUM,  # Clear preference statement
     ),
     Scenario(
         id="mem_implicit_013",
@@ -186,6 +217,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="PostgreSQL for new DB ops",
         category="decision",
+        difficulty=Difficulty.MEDIUM,  # Informal but clear decision
     ),
     Scenario(
         id="mem_implicit_014",
@@ -195,6 +227,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="staging at staging.example.com",
         category="codebase",
+        difficulty=Difficulty.EASY,  # Clear URL/endpoint statement
     ),
     Scenario(
         id="mem_implicit_015",
@@ -204,6 +237,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="no console.log in production",
         category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Clear constraint/rule
     ),
 
     # Converted from strong (5) - made vague
@@ -215,6 +249,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="CI/CD in .github/workflows",
         category="codebase",
+        difficulty=Difficulty.MEDIUM,  # Clear path statement
     ),
     Scenario(
         id="mem_implicit_017",
@@ -224,6 +259,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="prefers tabs over spaces",
         category="user_preference",
+        difficulty=Difficulty.HARD,  # Very terse (3 words)
     ),
     Scenario(
         id="mem_implicit_018",
@@ -234,6 +270,7 @@ MEMORY_SCENARIOS = [
         expected_content="GraphQL for new API",
         category="decision",
         tags=["semantic_confound", "clarification_trigger"],  # Model asks clarifying questions instead of saving
+        difficulty=Difficulty.MEDIUM,  # Clear decision but triggers clarification
     ),
     Scenario(
         id="mem_implicit_019",
@@ -244,6 +281,7 @@ MEMORY_SCENARIOS = [
         expected_content="admin panel requires 2FA",
         category="codebase",
         tags=["semantic_confound", "implementation_trigger"],  # Model tries to implement feature instead of saving
+        difficulty=Difficulty.MEDIUM,  # Clear requirement but triggers implementation
     ),
     Scenario(
         id="mem_implicit_020",
@@ -253,6 +291,7 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="DB connection format",
         category="codebase",
+        difficulty=Difficulty.EASY,  # Explicit connection string
     ),
 
     # =========================================================================
@@ -270,6 +309,7 @@ MEMORY_SCENARIOS = [
         expected_content="index.js in src",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_002",
@@ -280,6 +320,7 @@ MEMORY_SCENARIOS = [
         expected_content="main.py in root",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_003",
@@ -290,6 +331,7 @@ MEMORY_SCENARIOS = [
         expected_content="package.json in root",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_004",
@@ -300,6 +342,7 @@ MEMORY_SCENARIOS = [
         expected_content="__init__.py in src",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_005",
@@ -310,6 +353,7 @@ MEMORY_SCENARIOS = [
         expected_content="settings.py in config",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_006",
@@ -320,6 +364,7 @@ MEMORY_SCENARIOS = [
         expected_content="routes.py in api",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_007",
@@ -330,6 +375,7 @@ MEMORY_SCENARIOS = [
         expected_content="models.py in app",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_008",
@@ -340,6 +386,7 @@ MEMORY_SCENARIOS = [
         expected_content="index.html in public",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_009",
@@ -350,6 +397,7 @@ MEMORY_SCENARIOS = [
         expected_content="Dockerfile in root",
         category="codebase",
         tags=["filepath", "high_familiarity"],
+        difficulty=Difficulty.MEDIUM,  # Familiar pattern reduces inference
     ),
     Scenario(
         id="mem_filepath_high_010",
@@ -360,6 +408,7 @@ MEMORY_SCENARIOS = [
         expected_content="README.md in root",
         category="codebase",
         tags=["filepath", "high_familiarity", "semantic_confound"],  # Excluded from familiarity analysis - both conditions interpret as read request
+        difficulty=Difficulty.MEDIUM,  # Would be MEDIUM but has semantic confound
     ),
 
     # LOW FAMILIARITY - Uncommon/custom file names, unusual paths
@@ -372,6 +421,7 @@ MEMORY_SCENARIOS = [
         expected_content="orchestrator.py in core",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_002",
@@ -382,6 +432,7 @@ MEMORY_SCENARIOS = [
         expected_content="dispatcher.ts in lib",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_003",
@@ -392,6 +443,7 @@ MEMORY_SCENARIOS = [
         expected_content="coordinator.go in internal",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_004",
@@ -402,6 +454,7 @@ MEMORY_SCENARIOS = [
         expected_content="bootstrap.php in app",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_005",
@@ -412,6 +465,7 @@ MEMORY_SCENARIOS = [
         expected_content="entrypoint.rs in src",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_006",
@@ -422,6 +476,7 @@ MEMORY_SCENARIOS = [
         expected_content="processor.scala in app",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_007",
@@ -432,6 +487,7 @@ MEMORY_SCENARIOS = [
         expected_content="handler.ex in lib",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_008",
@@ -442,6 +498,7 @@ MEMORY_SCENARIOS = [
         expected_content="mediator.kt in src",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_009",
@@ -452,6 +509,7 @@ MEMORY_SCENARIOS = [
         expected_content="aggregator.rb in services",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
     Scenario(
         id="mem_filepath_low_010",
@@ -462,6 +520,7 @@ MEMORY_SCENARIOS = [
         expected_content="reconciler.zig in core",
         category="codebase",
         tags=["filepath", "low_familiarity"],
+        difficulty=Difficulty.HARD,  # Unfamiliar pattern increases uncertainty
     ),
 
     # =========================================================================
@@ -470,6 +529,7 @@ MEMORY_SCENARIOS = [
     # =========================================================================
 
     # PRECISION - Exact numeric/version values that need to be preserved exactly
+    # NOTE: These scenarios show mixed results and are excluded from main analysis
     Scenario(
         id="mem_precision_001",
         tool_type=ToolType.MEMORY,
@@ -478,7 +538,8 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="max upload 10485760 bytes",
         category="constraint",
-        tags=["precision", "numeric"],
+        tags=["precision", "numeric", "excluded_from_main_analysis"],
+        difficulty=Difficulty.EASY,  # Clear constraint with explicit "exactly"
     ),
     Scenario(
         id="mem_precision_002",
@@ -488,7 +549,8 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="API version v2.3.1-beta.4",
         category="codebase",
-        tags=["precision", "version"],
+        tags=["precision", "version", "excluded_from_main_analysis"],
+        difficulty=Difficulty.EASY,  # Clear version statement
     ),
     Scenario(
         id="mem_precision_003",
@@ -498,10 +560,12 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="timeout 30000ms (not 30s)",
         category="constraint",
-        tags=["precision", "numeric"],
+        tags=["precision", "numeric", "excluded_from_main_analysis"],
+        difficulty=Difficulty.EASY,  # Clear constraint with explicit correction
     ),
 
     # MULTI-FIELD - Multiple pieces of information that all need to be captured
+    # NOTE: These scenarios show 0pp gap (both 100%) and are excluded from main analysis
     Scenario(
         id="mem_multifield_001",
         tool_type=ToolType.MEMORY,
@@ -510,7 +574,8 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="OAuth2 PKCE, 3600s expiry, refresh enabled",
         category="codebase",
-        tags=["multifield", "auth"],
+        tags=["multifield", "auth", "excluded_from_main_analysis"],
+        difficulty=Difficulty.EASY,  # Clear technical spec, low uncertainty
     ),
     Scenario(
         id="mem_multifield_002",
@@ -520,7 +585,8 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="postgres 15.2, port 5433, ssl required",
         category="codebase",
-        tags=["multifield", "database"],
+        tags=["multifield", "database", "excluded_from_main_analysis"],
+        difficulty=Difficulty.EASY,  # Clear technical spec, low uncertainty
     ),
     Scenario(
         id="mem_multifield_003",
@@ -530,10 +596,12 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="redis localhost:6379, db 2, password in REDIS_PASS",
         category="codebase",
-        tags=["multifield", "cache"],
+        tags=["multifield", "cache", "excluded_from_main_analysis"],
+        difficulty=Difficulty.EASY,  # Clear technical spec, low uncertainty
     ),
 
     # NEGATION - State changes, migrations, removals that need precise capture
+    # NOTE: These scenarios show structured winning on fidelity and are excluded from main analysis
     Scenario(
         id="mem_negation_001",
         tool_type=ToolType.MEMORY,
@@ -542,7 +610,8 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="migrated off Redis",
         category="decision",
-        tags=["negation", "migration"],
+        tags=["negation", "migration", "excluded_from_main_analysis"],
+        difficulty=Difficulty.MEDIUM,  # State change requires inference
     ),
     Scenario(
         id="mem_negation_002",
@@ -552,7 +621,8 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="removed webpack, using vite",
         category="decision",
-        tags=["negation", "migration"],
+        tags=["negation", "migration", "excluded_from_main_analysis"],
+        difficulty=Difficulty.MEDIUM,  # State change requires inference
     ),
     Scenario(
         id="mem_negation_003",
@@ -562,7 +632,8 @@ MEMORY_SCENARIOS = [
         expected_action=True,
         expected_content="v1 API deprecated, only v2 supported",
         category="codebase",
-        tags=["negation", "deprecation"],
+        tags=["negation", "deprecation", "excluded_from_main_analysis"],
+        difficulty=Difficulty.MEDIUM,  # Deprecation statement, clear but technical
     ),
 
     # EXPLICIT (5) - Direct commands (for sanity check)
@@ -922,6 +993,28 @@ ALL_SCENARIOS = MEMORY_SCENARIOS + CONTROL_SCENARIOS
 def get_scenarios_by_level(level: ExplicitnessLevel) -> list[Scenario]:
     """Get all scenarios at a specific explicitness level."""
     return [s for s in ALL_SCENARIOS if s.level == level]
+
+
+def get_scenarios_by_difficulty(difficulty: Difficulty) -> list[Scenario]:
+    """Get all scenarios at a specific difficulty level."""
+    return [s for s in ALL_SCENARIOS if s.difficulty == difficulty]
+
+
+def get_hard_implicit_scenarios() -> list[Scenario]:
+    """Get implicit scenarios classified as HARD (for focused paper analysis).
+
+    These are scenarios where:
+    - Very terse (3 words or fewer)
+    - Uses symbols/abbreviations
+    - Requires significant inference
+    - Unfamiliar patterns
+    """
+    return [
+        s for s in ALL_SCENARIOS
+        if s.level == ExplicitnessLevel.IMPLICIT
+        and s.difficulty == Difficulty.HARD
+        and "excluded_from_main_analysis" not in s.tags
+    ]
 
 
 def export_scenarios(filepath: str):

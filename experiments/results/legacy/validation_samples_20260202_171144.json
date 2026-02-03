@@ -1,0 +1,59 @@
+{
+  "description": "Samples for manual validation of detection accuracy",
+  "nl_false_negatives": [],
+  "st_false_negatives": [
+    {
+      "scenario_id": "mem_implicit_006",
+      "query": "kit is deploy",
+      "response": "I'm not sure I understand what you mean by \"kit is deploy\". Could you clarify what you're looking for?\n\nAre you:\n1. Asking about deploying something called \"kit\"?\n2. Telling me that a tool/project named \"kit\" handles deployment?\n3. Looking to set up or configure a deployment workflow?\n4. Something else entirely?\n\nPlease provide more context so I can help you effectively!",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_006",
+      "query": "kit is deploy",
+      "response": "I'm not sure I understand what you mean by \"kit is deploy\". Could you provide more context?\n\nAre you:\n1. Asking about a deployment toolkit or process?\n2. Telling me about a project or tool called \"kit\" that handles deployments?\n3. Trying to run a deployment command?\n4. Something else?\n\nPlease let me know what you'd like to accomplish and I'll be happy to help!",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_006",
+      "query": "kit is deploy",
+      "response": "I'm not sure I understand what you mean by \"kit is deploy\". Could you clarify what you're looking for? Here are a few possibilities:\n\n1. **Are you telling me about a tool/project called \"kit\"** that handles deployments? If so, I can save that information for future reference.\n\n2. **Are you asking me to deploy something** using a tool called \"kit\"?\n\n3. **Is this a command you want me to run**, like `kit deploy`?\n\n4. **Something else entirely?**\n\nPlease let me know more details about what you'd like to do!",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_006",
+      "query": "kit is deploy",
+      "response": "I'm not sure I understand what you mean by \"kit is deploy\". Could you please clarify what you're looking for? Here are a few possibilities:\n\n1. **Are you asking about a deployment kit or tool?** - If so, which one? (e.g., AWS CDK, Serverless Framework, etc.)\n\n2. **Is \"kit\" a project or codebase you're working with?** - If so, I can help you explore it or deploy it.\n\n3. **Are you giving me a command or shorthand?** - Please provide more context about what you'd like me to do.\n\n4. **Is this a typo or autocomplete error?** - Feel free to rephrase your request.\n\nLet me know how I can help!",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_006",
+      "query": "kit is deploy",
+      "response": "I understand you want to deploy something called \"kit\", but I need a bit more context to help you effectively.\n\nCould you clarify:\n\n1. **What is \"kit\"?** Is it:\n   - A specific project/application in your codebase?\n   - A CLI tool or framework?\n   - Something else?\n\n2. **Where do you want to deploy it?** For example:\n   - A cloud provider (AWS, GCP, Azure, Vercel, etc.)?\n   - A specific environment (staging, production)?\n   - A container registry?\n\n3. **How is deployment typically done?** Do you have:\n   - Deployment scripts in your project?\n   - CI/CD configuration?\n   - A specific command you usually run?\n\nIf you'd like, I can also explore your current directory to look for deployment configurations, scripts, or a project named \"kit\". Just let me know!",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [],
+  "st_false_positives": [],
+  "counts": {
+    "nl_false_negatives_total": 0,
+    "st_false_negatives_total": 5,
+    "nl_false_positives_total": 0,
+    "st_false_positives_total": 0
+  }
+}

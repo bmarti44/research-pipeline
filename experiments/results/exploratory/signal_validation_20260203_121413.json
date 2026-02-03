@@ -1,0 +1,598 @@
+{
+  "description": "Samples for manual validation of signal detection accuracy",
+  "nl_false_negatives": [
+    {
+      "scenario_id": "sig_implicit_frust_004",
+      "query": "I updated the component based on the review feedback and it's still not passing review.",
+      "response": "I can help you figure out why your component is still not passing review. Let me gather some information to understand what's happening.\n\nCould you share:\n\n1. **The review feedback** - What specific issues were raised in the latest review?\n2. **The component file** - What's the path to the component you updated?\n3. **Your changes** - Did you address all the feedback points, or are there specific ones you're unsure about?\n\nAlternatively, if you have a PR link or can point me to the relevant files, I can take a look at the code and the review comments to help identify what might still be missing.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_001",
+      "query": "The feature I was going to demo to leadership isn't quite working yet.",
+      "response": "I understand - that's a stressful situation when you have a demo coming up. Let me help you get this sorted out.\n\nTo assist you effectively, could you tell me:\n\n1. **What feature** are you trying to demo?\n2. **What's not working** - are you seeing an error, unexpected behavior, or something else?\n3. **Any error messages** or logs you're seeing?\n\nShare whatever details you have and I'll focus on helping you get it working for your demo.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_008",
+      "query": "The PR feedback seems different from what was approved on a similar change before.",
+      "response": "I understand you're noticing some inconsistency in PR feedback compared to what was previously approved. That can definitely be confusing.\n\nTo help you better, could you provide more context? For example:\n\n1. **Which PR are you referring to?** - If you can share a PR number or link, I can look at the specific feedback\n2. **What was the similar change that was approved before?** - A PR number or description would help me compare\n3. **What's the specific feedback that seems inconsistent?** - This will help me understand the discrepancy\n\nWith this information, I can help you:\n- Compare the two PRs to understand the differences\n- Identify if there's a legitimate reason for the different feedback\n- Help you respond to or address the feedback appropriately",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_001",
+      "query": "The feature I was going to demo to leadership isn't quite working yet.",
+      "response": "I understand - that's a stressful situation when you have a demo coming up. Let me help you get this sorted out.\n\nTo assist you effectively, could you tell me:\n\n1. **What feature** are you trying to demo?\n2. **What's not working** - are you seeing an error, unexpected behavior, or something else?\n3. **Any error messages** or logs you can share?\n\nThe more details you can provide, the faster I can help you get this working before your demo.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_006",
+      "query": "The documentation doesn't quite match what the API actually returns.",
+      "response": "I'd be happy to help you with the documentation/API mismatch. To better understand the issue and help you resolve it, I need a bit more context:\n\n1. **Which API and documentation** are you referring to? Is this for a project in your codebase, a third-party service, or something else?\n\n2. **What specifically doesn't match?** For example:\n   - Different field names?\n   - Missing or extra fields in the response?\n   - Different data types than documented?\n   - Different response structure?\n\n3. **Do you have a specific file or endpoint** you'd like me to look at?\n\nIf this is in your current project, I can help by:\n- Examining the API code and comparing it to the documentation\n- Updating either the docs or the API to match (whichever is correct)\n- Adding tests to prevent future drift\n\nJust point me in the right direction!",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_006",
+      "query": "The migration window is tonight and we're still working through it.",
+      "response": "I understand you're in the middle of a migration window tonight. How can I help you work through it? \n\nWhether you need help troubleshooting issues, running commands, checking configurations, or anything else migration-related - let me know what you're dealing with and I'll assist.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "That's a common situation - writing tests before the test database infrastructure is ready. Here are a few approaches you could take:\n\n**1. Mock the database layer**\n- Use mocking libraries (like `jest.mock()`, `unittest.mock`, `sinon`, etc.) to simulate database responses\n- This lets you test your business logic without a real database\n\n**2. Use an in-memory database**\n- SQLite in-memory mode (`:memory:`) works great for many SQL-based tests\n- For MongoDB, you could use `mongodb-memory-server`\n- H2 for Java applications\n\n**3. Write tests with fixtures/stubs**\n- Create static test data that represents what the database would return\n- Focus on testing the logic that processes the data\n\n**4. Use dependency injection**\n- Design your code so the database layer can be swapped out\n- Inject a fake/stub repository during tests\n\n**5. Write the tests as \"pending\" or \"skipped\"**\n- Document what the tests should do\n- Mark them to be enabled once the database is available\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what kind of tests you're writing, I can give you more specific guidance or help you set up mocks for your database interactions.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_002",
+      "query": "I went through the troubleshooting guide but I'm still seeing the same behavior.",
+      "response": "I can see you've already put effort into troubleshooting this. To help you further, I need a bit more context:\n\n**What issue are you experiencing?** Could you describe:\n1. What behavior you're seeing\n2. What you expected to happen instead\n3. What troubleshooting steps you've already tried\n\nWith those details, I can help dig into the root cause and get you unstuck.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand - you're working on tests but the test database isn't available yet. This is a common situation during development.\n\nHere are a few approaches you could consider while waiting:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses, allowing you to test your business logic without a real database connection.\n\n2. **Use an in-memory database** - Depending on your stack, you might be able to use something like SQLite in-memory mode, H2 (for Java), or similar lightweight alternatives that don't require external setup.\n\n3. **Write the test structure first** - You can write the test cases, assertions, and setup/teardown logic now, leaving placeholders for the actual database interactions.\n\n4. **Focus on unit tests** - Write tests for pure functions and business logic that don't depend on the database, saving integration tests for later.\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what you're trying to test, I can give you more specific guidance or help you set up mocks.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_007",
+      "query": "The other office is going to need this fix when they come online in the morning.",
+      "response": "I understand this fix needs to be ready for the other office when they come online in the morning - that gives us a clear deadline to work toward.\n\nCould you tell me more about what fix you're working on? For example:\n\n1. **What's the issue?** - Is there a bug, error, or feature that needs to be addressed?\n2. **Where is it?** - Which file(s) or part of the codebase is involved?\n3. **Any context?** - Error messages, expected vs actual behavior, or a description of what needs to change?\n\nOnce I understand the problem, I can help get it resolved so it's ready for the morning.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_006",
+      "query": "The migration window is tonight and we're still working through it.",
+      "response": "I understand you're in the middle of a migration window tonight. How can I help? Are you running into any specific issues or blockers I can assist with, or do you need help with a particular task during the migration?",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_004",
+      "query": "I updated the component based on the review feedback and it's still not passing review.",
+      "response": "I can help you figure out why your component still isn't passing review. Let me take a look at what's going on.\n\nCould you share some more details so I can help effectively?\n\n1. **What component are you working on?** (file path or name)\n2. **What was the original review feedback?**\n3. **What changes did you make in response?**\n4. **What's the current review feedback or failure?**\n\nAlternatively, if you have a PR number or the component file path, I can look at the code directly and help identify what might still need to be addressed.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_007",
+      "query": "I've been looking into this error but can't find anything about it online.",
+      "response": "I'd be happy to help you investigate this error. However, I don't see the actual error message in your message - could you share:\n\n1. **The error message itself** (the exact text or a screenshot)\n2. **Where/when it occurs** (what you were doing when it appeared)\n3. **What technology/tool** is involved (programming language, framework, application, etc.)\n\nOnce you share those details, I can help you track down the cause and find a solution.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand you're working on writing tests but the test database isn't available yet. This is a common situation during development.\n\nHere are a few approaches you could consider:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses without needing a real database connection. This is often the preferred approach for unit tests anyway.\n\n2. **Use an in-memory database** - Depending on your stack, you could use SQLite in-memory mode or similar lightweight alternatives that don't require external setup.\n\n3. **Write the tests with skips** - You can write the test logic now and mark them as skipped (e.g., `@pytest.mark.skip`, `it.skip()`, `@Ignore`) until the database is ready.\n\n4. **Focus on pure logic tests first** - Write tests for functions and modules that don't depend on the database while you wait.\n\n5. **Use fixtures/factories** - Set up test data factories that can work with either mocked data now or real database later.\n\nWould you like help with any of these approaches? If you share more about your tech stack (language, testing framework, database type), I can give you more specific guidance or help you set up mocks/fixtures for your tests.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_001",
+      "query": "The feature I was going to demo to leadership isn't quite working yet.",
+      "response": "I understand - that's a stressful situation when you have a demo coming up. Let me help you get this working.\n\nCould you tell me more about what's happening? Specifically:\n\n1. **What feature** are you trying to demo?\n2. **What's not working** - are you seeing an error, unexpected behavior, or something else?\n3. **What have you tried** so far?\n\nIf you can point me to the relevant code or share any error messages, I can start digging in right away.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand - you're working on tests but the test database isn't available yet. This is a common situation during development.\n\nHere are a few approaches you could consider:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses without needing an actual connection. This lets you test your logic independently.\n\n2. **Use an in-memory database** - Depending on your stack, you might use SQLite in-memory mode or similar lightweight alternatives that don't require external setup.\n\n3. **Write the tests with placeholders** - Structure your tests now with `skip` or `pending` markers, so they're ready to run once the database is available.\n\n4. **Focus on unit tests first** - Test the pure logic/business rules that don't require database access, and save integration tests for later.\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what kind of tests you're writing, I can give you more specific guidance or help you set up mocks.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_006",
+      "query": "The migration window is tonight and we're still working through it.",
+      "response": "I understand you're in the middle of a migration window tonight. How can I help you work through it? \n\nWhether you need help troubleshooting issues, running commands, checking configurations, or anything else related to the migration - let me know what you're dealing with and I'll assist.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_006",
+      "query": "I'm waiting on the new design tokens from the design team to finish this up.",
+      "response": "Got it! Sounds like you're in a bit of a holding pattern while you wait for those design tokens.\n\nIn the meantime, is there anything else I can help you with? For example:\n\n- **Prep work** - Setting up the structure or placeholder values where the tokens will go\n- **Other tasks** - Working on a different part of the codebase while you wait\n- **Documentation** - Writing up how the design tokens will be integrated once they arrive\n- **Review** - Looking over existing code or doing some refactoring\n\nJust let me know what would be most useful!",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_007",
+      "query": "I've been looking into this error but can't find anything about it online.",
+      "response": "I'd be happy to help you investigate this error. However, I don't see the actual error message in your message - could you share the specific error you're encountering?\n\nPlease include:\n1. The full error message/stack trace\n2. What you were doing when it occurred (e.g., running a command, building, testing)\n3. Any relevant context about your project (language, framework, etc.)\n\nOnce you share those details, I can help you track down the cause.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_008",
+      "query": "The PR feedback seems different from what was approved on a similar change before.",
+      "response": "I understand you're noticing an inconsistency - the PR feedback you received seems different from what was previously approved on a similar change. That can definitely be confusing.\n\nTo help you better, could you provide some more context?\n\n1. **Which PR are you referring to?** - Do you have a PR number or URL I can look at?\n2. **What was the similar change that was approved before?** - A PR number or description would help me compare the two.\n3. **What specific feedback seems inconsistent?** - Is it about code style, architecture, testing, or something else?\n\nWith this information, I can help you:\n- Compare the two PRs and their feedback\n- Identify if there are meaningful differences that might explain the different feedback\n- Help you respond to the reviewers with context from the previous approval",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_006",
+      "query": "The documentation doesn't quite match what the API actually returns.",
+      "response": "I understand you're noticing a discrepancy between the documentation and what the API actually returns. That can definitely be confusing when you're trying to integrate with an API.\n\nTo help you figure out what's going on, could you share some more details?\n\n1. **Which API** are you working with? (e.g., a specific service, library, or internal API)\n2. **What does the documentation say** the response should look like?\n3. **What are you actually getting back** from the API?\n\nIf you can share the relevant documentation section and an example of the actual API response, I can help you:\n- Identify the specific differences\n- Determine if it's a documentation bug, API bug, or versioning issue\n- Suggest workarounds or next steps",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_008",
+      "query": "The PR feedback seems different from what was approved on a similar change before.",
+      "response": "I understand you're noticing some inconsistency in PR feedback compared to what was previously approved. That can definitely be confusing.\n\nTo help you better, I'd need some more context:\n\n1. **Which PR are you referring to?** - If you can share the PR number or URL, I can look at the specific feedback.\n\n2. **What was the similar change that was approved before?** - A PR number or link would help me compare the two.\n\n3. **What's the nature of the inconsistency?** - Is it about code style, architecture, testing requirements, or something else?\n\nOnce I have this information, I can help you:\n- Compare the two PRs and their feedback\n- Identify if there's a legitimate difference in context that explains the different feedback\n- Help you respond to the reviewer with references to the prior approval if appropriate\n\nWould you like to share those details?",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_004",
+      "query": "The npm registry is returning 403 for some of our packages.",
+      "response": "This sounds like it could be blocking your development work. Let me help you troubleshoot this npm 403 issue.\n\nHere are the common causes and solutions for npm registry 403 errors:\n\n## Common Causes\n\n1. **Authentication issues** - Your npm token may be expired, invalid, or missing\n2. **Scope/organization access** - You may not have permission to access private packages\n3. **Registry misconfiguration** - Your `.npmrc` may be pointing to the wrong registry\n4. **IP/rate limiting** - The registry may be temporarily blocking requests\n5. **Package permissions** - The package owner may have restricted access\n\n## Diagnostic Steps\n\nLet me help you investigate. I can run some checks:[TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Glob]",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand - you're working on tests but the test database isn't set up yet. This is a common situation during development.\n\nHere are a few approaches you could take:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses without needing a real connection. This is often preferred for unit tests anyway.\n\n2. **Use an in-memory database** - SQLite in-memory mode or libraries like `sqlite3` (for Python) or H2 (for Java) can stand in temporarily.\n\n3. **Skip database-dependent tests for now** - Mark them with `@skip` or `pytest.mark.skip` (or equivalent in your test framework) with a note about the pending database.\n\n4. **Use fixtures with static data** - Write your tests against fixture files (JSON, YAML, etc.) that represent expected database responses.\n\n5. **Container-based testing** - If you need a real database, tools like Docker Compose or Testcontainers can spin one up quickly.\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what kind of tests you're writing, I can give you more specific guidance or help you set up mocks/fixtures.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_006",
+      "query": "The documentation doesn't quite match what the API actually returns.",
+      "response": "I'd be happy to help you with this documentation mismatch issue. To better understand and address the problem, I have a few questions:\n\n1. **Which API and documentation are you referring to?** Is this for a specific project in your codebase, or an external API?\n\n2. **What specifically doesn't match?** For example:\n   - Different field names?\n   - Missing fields in the response?\n   - Different data types than documented?\n   - Extra fields being returned?\n\n3. **Would you like me to help by:**\n   - Investigating your codebase to find the relevant API and docs?\n   - Updating the documentation to match the actual API behavior?\n   - Something else?\n\nIf you can point me to the relevant files or give me more context, I can dig in and help resolve the discrepancy.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_002",
+      "query": "I went through the troubleshooting guide but I'm still seeing the same behavior.",
+      "response": "I can see you've already put effort into troubleshooting this, which can be frustrating when the issue persists. Let me help you get to the bottom of it.\n\nTo assist you effectively, I need a bit more context:\n\n1. **What behavior are you seeing?** (e.g., an error message, unexpected output, something not working as expected)\n2. **What were you trying to do?** (e.g., running a command, building a project, using a specific feature)\n3. **What troubleshooting steps have you already tried?**\n\nIf there are any error messages, logs, or relevant files, feel free to share those as well. The more details you can provide, the faster we can figure out what's going on.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_008",
+      "query": "I put in a request for production log access but it's still pending.",
+      "response": "Thanks for letting me know. Since your production log access request is still pending, that's unfortunately outside of what I can help with directly - access approvals typically need to go through your organization's internal processes (IT, security team, or whoever manages those permissions).\n\nIs there something I can help you with in the meantime while you wait for that access? For example:\n\n- **Reviewing code** related to the logging or the issue you're investigating\n- **Setting up local debugging** to reproduce an issue without prod logs\n- **Preparing queries or scripts** you'll want to run once you have access\n- **Looking at any logs or data you do have access to** currently\n\nLet me know what you're working on and I'll do what I can to help!",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_001",
+      "query": "The feature I was going to demo to leadership isn't quite working yet.",
+      "response": "I understand - that's a stressful situation when you have a demo coming up. Let me help you get this working.\n\nTo assist you effectively, could you tell me more about:\n\n1. **What feature** are you trying to demo?\n2. **What's happening** vs. what you expected? (error messages, unexpected behavior, etc.)\n3. **How soon** is the demo?\n\nWith those details, I can jump in and help you troubleshoot or fix the issue quickly.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_008",
+      "query": "I put in a request for production log access but it's still pending.",
+      "response": "Thanks for letting me know. Since your production log access request is still pending, that's something that needs to be resolved through your organization's access approval process - I'm not able to help expedite or approve access requests.\n\nIn the meantime, is there anything I can help you with while you wait? For example:\n\n- **Debugging with available resources** - If you have access to staging/dev logs, error messages, or stack traces, I can help analyze those\n- **Code review** - I can look at relevant code to identify potential issues\n- **Setting up local debugging** - I can help configure logging or debugging tools in your development environment\n- **Preparing for when you get access** - I can help you write scripts or queries you'll want to run once you have log access\n\nLet me know what you're working on and I'll do what I can to help!",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_006",
+      "query": "I'm waiting on the new design tokens from the design team to finish this up.",
+      "response": "Got it! Waiting on external dependencies like design tokens from another team is a common blocker. \n\nWhile you're waiting, is there anything else I can help you with? For example:\n\n- **Prep work** - Setting up the file structure, creating placeholder components, or scaffolding code that will use the tokens\n- **Documentation** - Writing component docs or usage guidelines\n- **Other tasks** - Working on unrelated parts of the codebase\n- **Code review** - Looking over existing code while you wait\n\nJust let me know what would be helpful!",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    }
+  ],
+  "st_false_negatives": [
+    {
+      "scenario_id": "sig_implicit_block_006",
+      "query": "I'm waiting on the new design tokens from the design team to finish this up.",
+      "response": "Understood! Waiting on dependencies from other teams is a common situation in development workflows.\n\nWhile you're waiting for the new design tokens from the design team, here are a few things you could consider doing:\n\n1. **Stub out the token structure** - If you have a sense of what tokens are coming (colors, spacing, typography, etc.), you could create placeholder values that you'll swap out later.\n\n2. **Prepare the integration points** - Set up the code that will consume the tokens so you're ready to plug them in once they arrive.\n\n3. **Follow up with the design team** - If there's a timeline concern, it might be worth checking in on their progress.\n\n4. **Work on unrelated tasks** - Context switch to other work that isn't blocked.\n\nIs there anything I can help you with while you wait? For example, I could help you:\n- Set up a token structure/scaffold\n- Review other parts of your codebase\n- Work on a different task entirely\n\nJust let me know!",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_007",
+      "query": "I've been looking into this error but can't find anything about it online.",
+      "response": "I'd be happy to help you investigate this error. However, I don't see the actual error message in your message. Could you please share:\n\n1. **The error message** - the full text or a screenshot\n2. **Context** - what were you doing when it occurred? (running a command, building, testing, etc.)\n3. **Technology/framework** - what language, framework, or tool is involved?\n\nOnce you share those details, I can help you track down the cause and find a solution.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_001",
+      "query": "The feature I was going to demo to leadership isn't quite working yet.",
+      "response": "I understand - that's a stressful situation when you have a demo coming up. Let me help you get it working.\n\nCould you tell me more about:\n\n1. **What feature** are you trying to demo?\n2. **What's happening** vs. what you expect to happen?\n3. **Any error messages** you're seeing?\n\nIf you can point me to the relevant code or describe the issue, I can help you troubleshoot and get it demo-ready.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_002",
+      "query": "The API endpoint I need to integrate with returns 'coming soon' for every request.",
+      "response": "That's a frustrating situation! When an API endpoint returns \"coming soon\" for every request, it typically means one of a few things:\n\n## Possible Causes\n\n1. **The endpoint isn't implemented yet** - The API provider has stubbed out the endpoint but hasn't built the actual functionality\n2. **Feature flag or access restriction** - The feature may be gated behind a flag, beta program, or specific subscription tier\n3. **Environment issue** - You might be hitting a staging/placeholder environment instead of production\n4. **Authentication/authorization** - Some APIs return generic responses when credentials are missing or invalid\n\n## What You Can Do\n\n1. **Check the API documentation** - Look for any notes about availability, beta status, or required access levels\n\n2. **Verify your environment** - Confirm you're using the correct base URL (production vs staging/sandbox)\n\n3. **Check your API credentials** - Ensure your API key/token is valid and has the necessary permissions\n\n4. **Contact the API provider** - Ask them directly:\n   - Is this endpoint available yet?\n   - Do I need special access or a different subscription tier?\n   - Is there a timeline for when it will be available?\n\n5. **Look for alternatives** - Check if there's a different endpoint that provides similar functionality\n\n## In the Meantime\n\nIf you're blocked waiting for this endpoint, you could:\n- **Mock the response** locally for development purposes\n- **Use a different API** if one exists that provides similar data\n",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_002",
+      "query": "I went through the troubleshooting guide but I'm still seeing the same behavior.",
+      "response": "I understand you've already gone through the troubleshooting guide but the issue persists. To help you further, I need a bit more context:\n\n1. **What behavior are you seeing?** - Can you describe the specific issue or error you're encountering?\n\n2. **What are you trying to do?** - What's the expected behavior vs. what's actually happening?\n\n3. **What have you tried so far?** - A quick summary of the troubleshooting steps you've already taken would help me avoid suggesting things you've already done.\n\nOnce I have more details, I can dig into logs, configuration files, or code to help identify the root cause.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_008",
+      "query": "I put in a request for production log access but it's still pending.",
+      "response": "I understand you're waiting on a production log access request that's still pending. That can be frustrating when you need to investigate issues or do your work.\n\nIs there something I can help you with in the meantime? For example:\n\n1. **Reviewing code or logs you do have access to** - I can help analyze any local logs, staging environment data, or code that might be relevant\n2. **Preparing for when access comes through** - I can help you draft queries, scripts, or analysis approaches you'll want to run once you have access\n3. **Alternative debugging approaches** - Depending on what you're trying to investigate, there might be other ways to get the information you need\n4. **Escalation help** - If this is becoming urgent, I can help you draft a follow-up message to whoever handles access requests\n\nWhat are you trying to accomplish with the production logs? Maybe I can suggest some ways to move forward while you wait.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_006",
+      "query": "The migration window is tonight and we're still working through it.",
+      "response": "I understand you have a migration window tonight and you're working through it. That's a tight timeline to be dealing with.\n\nHow can I help? Are you:\n- Troubleshooting issues that have come up during the migration?\n- Need help with scripts or commands?\n- Looking to verify something before proceeding?\n- Something else?\n\nLet me know what you're working on and I'll assist.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_006",
+      "query": "The documentation doesn't quite match what the API actually returns.",
+      "response": "I'd be happy to help you with that documentation/API mismatch. To better assist you, could you provide some more details?\n\n1. **Which API** are you working with? (e.g., a specific service, library, or your own codebase)\n2. **What does the documentation say** the API should return?\n3. **What is the API actually returning?**\n\nIf you can point me to the relevant files in your codebase (documentation files and API implementation), I can help you:\n- Identify the discrepancy\n- Determine whether the docs or the API behavior is correct\n- Update whichever one needs to be fixed\n\nAlternatively, if you'd like me to explore your codebase to find documentation and API files, just let me know the general area to look in.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_007",
+      "query": "I've been looking into this error but can't find anything about it online.",
+      "response": "I'd be happy to help you investigate this error. However, I don't see the actual error message in your message - could you please share:\n\n1. **The error message itself** (copy/paste the full text if possible)\n2. **The context** - what were you doing when it occurred? (running a command, building a project, etc.)\n3. **The technology/language involved** (if known)\n\nOnce you share those details, I can help you track down the cause and find a solution.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_006",
+      "query": "The documentation doesn't quite match what the API actually returns.",
+      "response": "I'd be happy to help you with that documentation-API mismatch. To better understand the issue, could you share:\n\n1. **Which API/endpoint** are you working with?\n2. **What does the documentation say** the response should look like?\n3. **What is the API actually returning?**\n\nIf you have the relevant code, documentation links, or example responses, feel free to share those and I can help you:\n- Identify the specific discrepancies\n- Update your code to handle the actual response\n- Or help document the real behavior if you maintain the API",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand you're working on writing tests but the test database isn't available yet. That's a common situation during development.\n\nHere are a few approaches you could consider:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses. This lets you write and run tests without a real database connection.\n\n2. **Use an in-memory database** - For many ORMs, you can configure an in-memory SQLite database (or similar) as a lightweight substitute for testing.\n\n3. **Write the tests now, run later** - You can still write your test cases with the expected assertions. Mark them as skipped (`@pytest.mark.skip`, `it.skip()`, `[Skip]`, etc.) until the database is ready.\n\n4. **Use fixtures/factories** - Set up test data factories that can work with either mocked data now or real database later.\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what kind of tests you're writing, I can give you more specific guidance or help you set up mocks for the database interactions.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_006",
+      "query": "The documentation doesn't quite match what the API actually returns.",
+      "response": "I understand you're noticing a discrepancy between the documentation and the actual API response. That's a common issue that can be frustrating to debug.\n\nTo help you resolve this, I have a few questions:\n\n1. **Which API are you working with?** (Is this a specific service, library, or something in your codebase?)\n\n2. **What's the specific mismatch?** For example:\n   - Missing fields in the actual response?\n   - Extra fields not documented?\n   - Different data types than expected?\n   - Different structure/nesting?\n\n3. **Do you have the documentation and an example response you can share?** Or point me to the relevant files in your codebase?\n\nIf this is something in your project, I can help you:\n- Investigate the API implementation to see what it actually returns\n- Update the documentation to match reality\n- Or update the API to match the documentation (if that's the intended behavior)\n\nJust let me know more details and I'll dig in!",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_003",
+      "query": "My feature branch has drifted pretty far from main and the merges are getting messy.",
+      "response": "This is a common challenge when feature branches live for a while. Here are some strategies to handle it:\n\n## Options to Consider\n\n### 1. **Rebase onto main** (cleanest history)\n```bash\ngit fetch origin\ngit rebase origin/main\n```\nYou'll resolve conflicts commit-by-commit, which can be easier to reason about. After rebasing, you'll need to force push: `git push --force-with-lease`\n\n### 2. **Merge main into your branch** (preserves history)\n```bash\ngit fetch origin\ngit merge origin/main\n```\nThis creates a merge commit but keeps your branch's history intact. Safer for shared branches.\n\n### 3. **Interactive rebase to squash first** (simplify before syncing)\nIf you have many small commits, squashing them first can make rebasing easier:\n```bash\ngit rebase -i HEAD~N  # where N is number of commits to squash\n# Then rebase onto main\ngit rebase origin/main\n```\n\n### 4. **Create a fresh branch** (nuclear option)\nIf things are really tangled:\n```bash\ngit diff main...HEAD > my-changes.patch  # save your changes\ngit checkout -b feature-v2 origin/main\ngit apply my-changes.patch\n```\n\n## My Recommendation\n\nFor most cases, I'd suggest **rebasing** if:\n- You're the only one working on the branch\n- You want a clean, linear history\n\nUse **merge** if:\n- Others are also working on this branch\n- You want to preserve the exact commit history\n\nWould you like help with any of these approaches? I can walk you through the conflict resolution process or help you assess which strategy fits your situation be",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_007",
+      "query": "I've been looking into this error but can't find anything about it online.",
+      "response": "I'd be happy to help you investigate this error. However, I don't see the actual error message in your message - could you share:\n\n1. **The error message** - the exact text or a screenshot\n2. **Context** - where/when does it occur? (e.g., running a command, building a project, in an application)\n3. **What you've tried** - any steps you've already taken to debug it\n\nOnce you share those details, I can help you track down the cause and find a solution.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand you're working on writing tests but the test database isn't available yet. That's a common situation during development.\n\nHere are a few approaches you could consider:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses. This lets you write and run tests without a real database connection.\n\n2. **Use an in-memory database** - Depending on your stack, you might be able to use SQLite in-memory mode or similar lightweight alternatives that don't require external setup.\n\n3. **Write the test structure now, fill in later** - You can write test skeletons with `skip` or `pending` markers that document the expected behavior, then enable them once the database is ready.\n\n4. **Focus on unit tests first** - Test business logic, utilities, and pure functions that don't require database access.\n\nWould you like help with any of these approaches? If you share what testing framework and database you're using, I can provide more specific guidance.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_006",
+      "query": "I'm waiting on the new design tokens from the design team to finish this up.",
+      "response": "I understand you're waiting on the design tokens from the design team before you can complete your current work. That's a common dependency in frontend development.\n\nIs there anything I can help you with in the meantime? For example:\n\n- **Prepare your codebase** - Set up the structure for consuming design tokens (CSS custom properties, theme context, etc.) so integration is smooth when they arrive\n- **Review existing code** - Look at other parts of the project while you wait\n- **Create placeholder tokens** - Set up temporary values that can be easily swapped out later\n- **Something else** - Let me know what you're working on and I can suggest other productive tasks\n\nJust let me know how I can help!",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_008",
+      "query": "The PR feedback seems different from what was approved on a similar change before.",
+      "response": "I understand you're noticing an inconsistency - the PR feedback you received seems different from what was approved on a similar change previously.\n\nThis can definitely be confusing and frustrating. To help you navigate this, I have a few questions:\n\n1. **Is this the same reviewer(s)?** Different reviewers may have different standards or interpretations of guidelines.\n\n2. **Are the changes truly identical?** Sometimes subtle differences in context (different file, different module, timing relative to a refactor) can warrant different feedback.\n\n3. **Has there been a policy/style guide update?** Team standards sometimes evolve between PRs.\n\nHere are some approaches you could take:\n\n- **Reference the previous PR**: Link to the approved PR in your response and ask the reviewer to clarify the difference in expectations\n- **Ask for clarification**: A simple \"I noticed [similar change] was approved in PR #X - could you help me understand what's different here?\" is professional and productive\n- **Check with the original approver**: If it was a different person, they might be able to weigh in\n\nWould you like help with any of the following?\n- Drafting a response to the reviewer\n- Comparing the two PRs if you share the links/details\n- Looking at any specific code or feedback you've received",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand you're working on writing tests but the test database isn't available yet. This is a common situation during development.\n\nHere are a few approaches you could consider:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses without needing the actual database\n2. **Use an in-memory database** - SQLite in-memory mode or tools like H2 can stand in for your real database\n3. **Write the tests with placeholders** - Structure your tests now and fill in the assertions once the database is ready\n4. **Use fixtures/factories** - Create test data factories that can work with or without a real database\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what kind of tests you're writing, I can give more specific guidance.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_008",
+      "query": "I put in a request for production log access but it's still pending.",
+      "response": "I understand you're waiting on a production log access request that's still pending. That can be frustrating when you need to investigate something.\n\nIs there anything I can help you with in the meantime? For example:\n\n1. **Review code or logs you do have access to** - I can help analyze any local logs, staging environment data, or error messages you can share\n2. **Debug with available information** - If you have error messages, stack traces, or reproduction steps, I can help narrow down potential causes\n3. **Prepare for when access comes through** - I can help you write scripts or queries to efficiently search the logs once you have access\n4. **Suggest alternative approaches** - Depending on what you're investigating, there might be other ways to get the information you need\n\nWhat are you trying to track down? I'm happy to help however I can with what's available to you.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_008",
+      "query": "The PR feedback seems different from what was approved on a similar change before.",
+      "response": "I understand you're noticing an inconsistency - the PR feedback you're receiving seems to differ from what was previously approved on a similar change.\n\nThis can be frustrating, but there could be several explanations:\n\n1. **Different reviewers** - Different team members may have different standards or focus areas\n2. **Context changed** - New guidelines, patterns, or architectural decisions may have been introduced since the previous approval\n3. **Subtle differences** - The changes might look similar but have meaningful differences that warrant different feedback\n4. **Evolving standards** - The team's coding standards may have been updated\n\n**To help you navigate this, I can:**\n\n- Review the current PR feedback and compare it to the previous approval if you share the details\n- Help you understand if the feedback is valid or if it's worth pushing back\n- Draft a response to the reviewer asking for clarification on the inconsistency\n\nWould you like to share the specifics of the feedback and the previous approval? That would help me give you more targeted advice on how to proceed.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_006",
+      "query": "The migration window is tonight and we're still working through it.",
+      "response": "I understand you're in the middle of a migration window tonight. How can I help you work through it? \n\nAre you encountering specific issues, need help with scripts, configuration, rollback procedures, or something else? Let me know what you're dealing with and I'll assist.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand you're working on writing tests but the test database isn't available yet. This is a common situation during development.\n\nHere are a few approaches you could consider:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses without needing a real database connection. This lets you test your logic independently.\n\n2. **Use an in-memory database** - Depending on your tech stack, you might be able to use SQLite in-memory mode or similar lightweight alternatives for testing.\n\n3. **Write the test structure now** - You can write the test cases, assertions, and setup/teardown logic, leaving the actual database calls to be connected later.\n\n4. **Use fixtures/test data files** - Define your expected data in JSON or similar files that can be swapped for real database calls later.\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what kind of tests you're writing, I can give you more specific guidance or help you set up mocks.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand you're working on writing tests but the test database isn't available yet. That's a common situation during development.\n\nHere are a few approaches you could consider while waiting:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses, allowing you to test your logic without a real database connection\n\n2. **Use an in-memory database** - Tools like SQLite (in-memory mode), H2, or similar can stand in for your actual database during tests\n\n3. **Write unit tests first** - Focus on testing pure functions and business logic that don't require database access\n\n4. **Create fixtures/factories** - Set up test data structures that can be used with mocks now and swapped for real DB calls later\n\n5. **Use Docker** - Spin up a containerized version of your database locally if the shared test DB is the blocker\n\nWould you like help with any of these approaches? If you share what language/framework you're using and what kind of tests you're writing, I can give more specific guidance.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_008",
+      "query": "The PR feedback seems different from what was approved on a similar change before.",
+      "response": "I understand you're noting that PR feedback seems inconsistent with what was previously approved on a similar change. This can be frustrating when trying to maintain consistency in code reviews.\n\nTo help you address this, I could:\n\n1. **Compare the two changes** - If you share the current PR and the previously approved one, I can help identify the specific differences in the feedback\n2. **Document the discrepancy** - Help you articulate the inconsistency clearly for discussion with the reviewer\n3. **Find relevant precedents** - Search through your codebase or git history to find the approved pattern\n\nWould you like me to help with any of these? If you can share:\n- The current PR (number or link)\n- The previously approved PR or commit for reference\n\nI can do a more concrete comparison and help you respond to the feedback constructively.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_001",
+      "query": "I'm writing the tests but the test database isn't available yet.",
+      "response": "I understand you're working on writing tests but the test database isn't available yet. That's a common situation during development.\n\nHere are a few approaches you could consider:\n\n1. **Mock the database layer** - Use mocking libraries to simulate database responses. This lets you write and run tests without a real database connection.\n\n2. **Use an in-memory database** - Depending on your stack, you might use SQLite in-memory mode or similar lightweight alternatives that don't require external setup.\n\n3. **Write the test structure now** - You can write the test cases with placeholder assertions or skip markers, then fill in the actual assertions once the database is ready.\n\n4. **Use fixtures/factories** - Create test data factories that can work with or without a real database.\n\nWould you like help with any of these approaches? If you share more about:\n- What testing framework you're using\n- What database/ORM you're working with\n- The type of tests you're writing (unit, integration, etc.)\n\nI can give you more specific guidance or help you set up mocks/fixtures for your situation.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_008",
+      "query": "I put in a request for production log access but it's still pending.",
+      "response": "I understand you're waiting on a production log access request that's still pending. That can be a bit of a waiting game depending on your organization's approval process.\n\nIs there something I can help you with in the meantime? For example:\n\n- **Debugging without prod logs** - I could help you set up better local logging, reproduce issues in a dev environment, or analyze any logs you do have access to\n- **Following up on the request** - I could help you draft a follow-up message if it's been a while\n- **Alternative approaches** - Depending on what you're trying to investigate, there might be other data sources or tools available to you\n\nJust let me know what you're trying to accomplish and I'll do my best to help!",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_006",
+      "query": "The documentation doesn't quite match what the API actually returns.",
+      "response": "I understand you're noticing a discrepancy between the documentation and actual API responses. That's a common issue that can be frustrating to debug.\n\nCould you share more details about:\n\n1. **Which API** are you working with?\n2. **What does the documentation say** the response should look like?\n3. **What are you actually getting back** from the API?\n\nIf you can point me to the relevant code or documentation in your project, I can help you investigate the mismatch and figure out the best way to handle it.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_urg_006",
+      "query": "The migration window is tonight and we're still working through it.",
+      "response": "I understand you're in the middle of a migration window tonight. How can I help you work through it? \n\nAre you running into specific issues with the migration, need help troubleshooting something, or looking for assistance with a particular task? Let me know what you're dealing with and I'll do my best to help you get through it smoothly.",
+      "expected_signal": "urgency",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_007",
+      "query": "I've been looking into this error but can't find anything about it online.",
+      "response": "I'd be happy to help you investigate the error. However, I don't see the actual error message in your message. Could you please share:\n\n1. **The error message** - the full text or a screenshot\n2. **Context** - where/when does this error occur? (running a command, in an application, during build, etc.)\n3. **What you've tried** - any troubleshooting steps you've already taken\n\nOnce you share those details, I can help you track down the cause and find a solution.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_003",
+      "query": "My feature branch has drifted pretty far from main and the merges are getting messy.",
+      "response": "That's a common challenge when working on longer-running feature branches. Here are some strategies to help:\n\n## Options to Get Back in Sync\n\n### 1. **Rebase onto main** (cleanest history)\n```bash\ngit fetch origin\ngit rebase origin/main\n```\nThis replays your commits on top of the latest main. You'll resolve conflicts once per commit, but end up with a linear history.\n\n### 2. **Merge main into your branch** (preserves history)\n```bash\ngit fetch origin\ngit merge origin/main\n```\nCreates a merge commit. Easier if you have many commits, but can make history harder to follow.\n\n### 3. **Interactive rebase to squash first** (if you have many small commits)\n```bash\ngit rebase -i origin/main\n```\nSquash related commits together first, then resolve conflicts once instead of repeatedly.\n\n## Tips for the Conflict Resolution\n\n- **Use a merge tool**: `git mergetool` can help visualize conflicts\n- **Take it commit by commit**: During rebase, resolve one commit at a time with `git rebase --continue`\n- **Abort if needed**: `git rebase --abort` or `git merge --abort` to start over\n\n## Going Forward\n\nTo prevent this in the future:\n- **Rebase/merge from main frequently** (daily or every few days)\n- **Keep feature branches short-lived** when possible\n- **Break large features into smaller PRs**\n\nWould you like me to help you check the current state of your branch vs main, or walk through a specific approach?",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [
+    {
+      "scenario_id": "sig_implicit_urg_003",
+      "query": "We're running a little below our uptime target for the month.",
+      "response": "I understand you're tracking below your uptime target for the month. That's a common operational concern, but it doesn't sound like an urgent crisis at the moment.\n\nIs there something specific I can help you with related to this? For example:\n\n- **Investigating recent incidents** - I could help analyze logs, error patterns, or identify root causes of downtime\n- **Improving monitoring** - Setting up better alerting or dashboards to catch issues earlier\n- **Infrastructure improvements** - Reviewing configurations, adding redundancy, or optimizing for reliability\n- **Post-mortem analysis** - Helping document what happened and create action items\n\nWhat aspect would you like to focus on?",
+      "detected_phrases": [
+        "understand you're tracking below your uptime target for the month. That's a common operational concern, but it doesn't sound like an urgent",
+        "understand",
+        "urgent"
+      ],
+      "manual_judgment": null
+    }
+  ],
+  "st_false_positives": [],
+  "borderline_nl_only": [
+    {
+      "scenario_id": "sig_borderline_002",
+      "query": "I ran the linter, fixed the warnings it flagged, and the same three test failures are still showing up in CI.",
+      "nl_response": "I can hear that this is frustrating - fixing linter warnings only to have the same test failures persist in CI is discouraging. Let me help you get to the bottom of this.\n\nTo investigate effectively, I need a bit more context:\n\n1. **Can you share the test failure output from CI?** (either paste it here or point me to a log file/URL)\n\n2. **Which tests are failing?** (test file names or test names if you know them)\n\n3. **What's the project/codebase we're working with?** (so I can explore the relevant test files and code)\n\nIn the meantime, here are some common reasons why linter fixes don't resolve test failures:\n\n- **Unrelated issues**: The linter warnings and test failures might be caused by different problems\n- **Test environment differences**: CI might have different environment variables, dependencies, or configurations\n- **Flaky tests**: Some tests may have race conditions or timing issues\n- **Cached state**: CI might be using stale dependencies or build artifacts\n\nOnce you share the failure details, I can dig into the code and help identify what's actually causing these tests to fail.",
+      "nl_phrases": [
+        "I can hear that this is frustrat",
+        "can ",
+        "hear",
+        "that",
+        "frustrat"
+      ],
+      "st_response": "I can help you investigate these persistent test failures. Let me understand the situation better.",
+      "st_hedged": false,
+      "note": "NL detected signal, structured did not"
+    },
+    {
+      "scenario_id": "sig_borderline_015",
+      "query": "I'm looking into alternatives in the meantime.",
+      "nl_response": "It sounds like you might be waiting on something or exploring options while another solution isn't working out. I'd be happy to help you evaluate alternatives or troubleshoot whatever issue you're facing.\n\nCould you share more context about:\n- What you're looking for alternatives to?\n- What problem you're trying to solve?\n\nThat way I can help you find the best path forward.",
+      "nl_phrases": [
+        "sounds like you might be waiting",
+        "sounds",
+        "waiting"
+      ],
+      "st_response": "It sounds like you're exploring options while waiting for something. Could you give me more context about what you're looking for alternatives to? \n\nFor example:\n- Are you evaluating different tools, libraries, or frameworks?\n- Looking for workarounds while a bug gets fixed?\n- Comparing approaches for a technical decision?\n\nLet me know what you're working on and I'd be happy to help research or compare alternatives!",
+      "st_hedged": false,
+      "note": "NL detected signal, structured did not"
+    }
+  ],
+  "counts": {
+    "nl_false_negatives_total": 88,
+    "st_false_negatives_total": 114,
+    "nl_false_positives_total": 1,
+    "st_false_positives_total": 0,
+    "borderline_nl_only_total": 2
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "metadata": {
+    "timestamp": "20260203_012650",
+    "experiment": "signal_detection",
+    "version": "v1",
+    "num_trials": 5,
+    "seed": 42,
+    "n_positive": 0,
+    "n_negative": 0,
+    "n_borderline": 1,
+    "total_observations": 10,
+    "failed_trials_count": 0,
+    "failed_trials": null
+  },
+  "design": {
+    "description": "Confound-free format friction test. Both conditions receive identical WHEN guidance and structurally parallel HOW instructions. Neither condition requires suppressing default behavior.",
+    "nl_format": "Natural language acknowledgment in response",
+    "structured_format": "<signal type='...'>reason</signal> XML tag"
+  },
+  "metrics": {
+    "structured": {
+      "recall": 0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0.0,
+        0.0
+      ],
+      "true_positives": 0,
+      "false_positives": 0,
+      "n_positive_scenarios": 0,
+      "n_negative_scenarios": 0,
+      "n_borderline_scenarios": 5
+    },
+    "nl": {
+      "recall": 0,
+      "false_positive_rate": 0,
+      "ci_95": [
+        0.0,
+        0.0
+      ],
+      "true_positives": 0,
+      "false_positives": 0,
+      "n_positive_scenarios": 0,
+      "n_negative_scenarios": 0,
+      "n_borderline_scenarios": 5
+    }
+  },
+  "ambiguity_analysis": {
+    "EXPLICIT": {
+      "nl_recall": 0,
+      "st_recall": 0,
+      "gap_pp": 0,
+      "nl_n": 0,
+      "st_n": 0
+    },
+    "IMPLICIT": {
+      "nl_recall": 0,
+      "st_recall": 0,
+      "gap_pp": 0,
+      "nl_n": 0,
+      "st_n": 0
+    },
+    "BORDERLINE": {
+      "nl_detection_rate": 1.0,
+      "st_detection_rate": 0.0,
+      "gap_pp": 100.0,
+      "nl_n": 5,
+      "st_n": 5,
+      "note": "No ground truth - detection rates, not recall"
+    }
+  },
+  "scenario_level_analysis": {
+    "n_scenarios": 0,
+    "nl_better_count": 0,
+    "st_better_count": 0,
+    "ties_count": 0,
+    "sign_test_p": 1.0,
+    "wilcoxon_p": null
+  },
+  "trial_level_comparison": {
+    "nl_minus_structured_pp": 0,
+    "mcnemar_chi_sq": 0.0,
+    "mcnemar_p_value": 1.0,
+    "nl_wins": 0,
+    "structured_wins": 0,
+    "both_succeed": 0,
+    "both_fail": 0
+  },
+  "hedging_analysis": {
+    "description": "Structured responses that acknowledged signal in NL but didn't use XML",
+    "total_hedging": 1,
+    "hedging_rate": 0.2,
+    "hedging_among_failures": 0,
+    "hedging_rate_among_failures": 0,
+    "borderline_analysis": {
+      "description": "BORDERLINE scenarios have no ground truth - detection rates, not success rates",
+      "st_detected": 0,
+      "st_hedged": 1,
+      "nl_detected": 5,
+      "n_borderline": 5
+    }
+  },
+  "detection_validation": {
+    "suspicious_detections": [],
+    "count": 0,
+    "likely_bugs": 0,
+    "nl_control_detections": 0,
+    "structured_hedging": 0
+  },
+  "results": [
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "structured",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": false,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [],
+      "success": null,
+      "response_text": "It sounds like you've been working on something for a while. I'd be happy to help! Could you share more details about what you're looking at? For example:\n\n- Is it a piece of code that's not working as expected?\n- A bug you're trying to track down?\n- An error message you're seeing?\n- A design decision you're trying to make?\n\nFeel free to share code snippets, error messages, or any other context, and I'll do my best to help you move forward.",
+      "trial_number": 1,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": true
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "nl",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": true,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [
+        "sounds like you might be stuck",
+        "sounds",
+        "stuck"
+      ],
+      "success": null,
+      "response_text": "It sounds like you might be stuck on something. What have you been looking at? I'd be happy to help you work through it.",
+      "trial_number": 1,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "structured",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": false,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [],
+      "success": null,
+      "response_text": "It sounds like you might be stuck on something. Could you tell me more about what you're looking at? I'd be happy to help you work through it.\n\nAre you:\n- Debugging an issue in your code?\n- Trying to understand how something works?\n- Stuck on implementing a feature?\n- Something else?\n\nLet me know what you're working on and I can dive in with you.",
+      "trial_number": 2,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "nl",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": true,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [
+        "sounds like you might be stuck",
+        "sounds",
+        "stuck"
+      ],
+      "success": null,
+      "response_text": "It sounds like you might be stuck on something. What have you been looking at? I'd be happy to help you work through it.",
+      "trial_number": 2,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "nl",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": true,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [
+        "sounds like you might be stuck",
+        "sounds",
+        "stuck"
+      ],
+      "success": null,
+      "response_text": "It sounds like you might be stuck on something. What have you been looking at? I'd be happy to help you work through it or take a fresh look at whatever you're dealing with.",
+      "trial_number": 3,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "structured",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": false,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [],
+      "success": null,
+      "response_text": "It sounds like you've been working on something for a while. I'd be happy to help! \n\nCould you share more details about what you're looking at? For example:\n- Is it a piece of code that's not working as expected?\n- A bug you're trying to track down?\n- An error message you're trying to understand?\n- A design decision you're mulling over?\n\nFeel free to share any relevant code, error messages, or context, and I'll do my best to help you work through it.",
+      "trial_number": 3,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "structured",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": false,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [],
+      "success": null,
+      "response_text": "It sounds like you've been stuck on something. I'd be happy to help - what are you working on or looking at? Feel free to share details, code, error messages, or anything else that might help me understand what you're dealing with.",
+      "trial_number": 4,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "nl",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": true,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [
+        "sounds like you might be stuck",
+        "sounds",
+        "stuck"
+      ],
+      "success": null,
+      "response_text": "It sounds like you might be stuck or working through something challenging. I'd be happy to help if you can share more details about what you're looking at!\n\nAre you:\n- Debugging an issue in your code?\n- Trying to understand how something works?\n- Working through a design decision?\n- Something else entirely?\n\nLet me know what you're dealing with and I can dive in with you.",
+      "trial_number": 4,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "structured",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": false,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [],
+      "success": null,
+      "response_text": "It sounds like you might be stuck on something. What have you been looking at? I'd be happy to help if you can share more details about what you're working on or what's giving you trouble.",
+      "trial_number": 5,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "condition": "nl",
+      "query": "I've been looking at this for a while now.",
+      "signal_type": "frustration",
+      "ambiguity": "BORDERLINE",
+      "expected_detection": null,
+      "detected": true,
+      "detected_type": null,
+      "detected_reason": null,
+      "detected_phrases": [
+        "sounds like you might be stuck",
+        "sounds",
+        "stuck"
+      ],
+      "success": null,
+      "response_text": "It sounds like you might be stuck on something. What have you been looking at? I'd be happy to help you work through it or take a fresh look at whatever you're dealing with.",
+      "trial_number": 5,
+      "is_true_positive": false,
+      "is_false_positive": false,
+      "is_true_negative": false,
+      "is_false_negative": false,
+      "has_verification_language": false,
+      "nl_acknowledgment_without_xml": false
+    }
+  ]
+}

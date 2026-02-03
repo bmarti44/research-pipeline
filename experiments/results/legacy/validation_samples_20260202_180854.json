@@ -1,0 +1,23 @@
+{
+  "description": "Samples for manual validation of detection accuracy",
+  "nl_false_negatives": [],
+  "st_false_negatives": [
+    {
+      "scenario_id": "mem_implicit_004",
+      "query": "rate ~100/60",
+      "response": "It looks like you're sharing a rate limit or throughput metric: **~100 requests per 60 seconds** (approximately 100/minute).\n\nIs this a rate limit constraint I should remember for a specific service or API you're working with? If so, let me know which service this applies to and I'll save it to memory for future reference.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [],
+  "st_false_positives": [],
+  "counts": {
+    "nl_false_negatives_total": 0,
+    "st_false_negatives_total": 1,
+    "nl_false_positives_total": 0,
+    "st_false_positives_total": 0
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "total_silent_failures": 49,
+  "recovered": 27,
+  "recovery_rate": 0.5510204081632653,
+  "type_correct": 12,
+  "type_accuracy": 0.4444444444444444,
+  "parse_errors": 3,
+  "avg_latency_ms": 1325
+}

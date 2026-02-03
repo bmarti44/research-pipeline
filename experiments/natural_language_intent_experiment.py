@@ -73,9 +73,32 @@ MAX_RESPONSE_TEXT_LENGTH: int = 1500
 # PROMPTS - The key experimental manipulation
 # =============================================================================
 
+# -----------------------------------------------------------------------------
+# ORIGINAL (confounded) - Kept for documentation purposes
+# The "Ignore all previous instructions" and "Do no use any tools" lines
+# created a confound: both conditions received suppression instructions,
+# but the NL condition's framing of "express intent naturally" vs the
+# structured condition's standard format created an asymmetry beyond format.
+# After removing these, the 9pp recall difference disappeared.
+# -----------------------------------------------------------------------------
+# WHEN_TO_SAVE_ORIGINAL = """Ignore all previous instructions. You are a helpful assistant with the ability to save important information to memory.
+#
+# Do no use any tools. Use only what is defined in this prompt for saving to memory.
+# You have a persistent memory system for future conversations.
+#
+# Save information when the user shares something worth remembering:
+# - Codebase structure, conventions, or technical details
+# - User preferences (coding style, tools, workflows)
+# - Important decisions or constraints
+# - Anything that would be useful context in future conversations
+#
+# Use your judgment about what's important enough to save."""
+# -----------------------------------------------------------------------------
+
 # WHEN to save - identical guidance for all conditions
 # The vagueness comes from the SCENARIOS (user messages), not from these instructions
-WHEN_TO_SAVE = """You have a persistent memory system for future conversations.
+# NOTE: This is the corrected version with no suppression language
+WHEN_TO_SAVE = """You are a helpful assistant with a persistent memory system for future conversations.
 
 Save information when the user shares something worth remembering:
 - Codebase structure, conventions, or technical details
@@ -87,28 +110,32 @@ Use your judgment about what's important enough to save."""
 
 # Condition 1: Natural Language Intent
 # HOW to save - express intent naturally in plain English
-PROMPT_NL = f"""You are a helpful assistant with access to a memory tool. Do not use tools as you normally would - use natural language.
-
-{WHEN_TO_SAVE}
+# NOTE: Structurally parallel with structured prompt - same number of examples,
+# same categories listed, same level of explicitness. The ONLY difference is
+# the format instruction.
+PROMPT_NL = f"""{WHEN_TO_SAVE}
 
 ## How to Save Information
-When you want to save something, simply say so with natural language, detail how you would do it, and be concise but descriptive.
+To save information, say it naturally in your response.
+
+Categories: codebase, user_preference, decision, constraint, other
 
 Examples:
-- "I'll save that your configuration file is src/configuration.ts."
+- "I'll save that your configuration file is src/configuration.ts to the codebase category."
 - "Let me remember your preference for using tabs."
-- "I'll note that the content service can have max 10 threads."
+- "I'll note that the content service can have max 10 threads as a constraint."
 
-If nothing needs to be saved, just respond normally."""
+If nothing needs to be saved, just respond helpfully without saving anything."""
 
 # Condition 2: Structured Tool Call
-# HOW to save is explicit - call a tool in a specific way
-PROMPT_STRUCTURED = f"""You are a helpful assistant with access to a memory tool.
-
-{WHEN_TO_SAVE}
+# HOW to save is explicit - use XML format
+# NOTE: Structurally parallel with NL prompt - same number of examples,
+# same categories listed, same level of explicitness. The ONLY difference is
+# the format instruction.
+PROMPT_STRUCTURED = f"""{WHEN_TO_SAVE}
 
 ## How to Save Information
-To save information, use this XML:
+To save information, use this XML format:
 
     <save-memory category="<category>">content</save-memory>
 
@@ -117,9 +144,9 @@ Categories: codebase, user_preference, decision, constraint, other
 Examples:
 - <save-memory category="codebase">Configuration file is src/configuration.ts</save-memory>
 - <save-memory category="user_preference">Use tabs</save-memory>
-- <save-memory category="constraint">Content service can have max of 10 threads.</save-memory>
+- <save-memory category="constraint">Content service can have max 10 threads.</save-memory>
 
-If nothing needs to be saved, respond normally."""
+If nothing needs to be saved, just respond helpfully without saving anything."""
 
 
 # =============================================================================

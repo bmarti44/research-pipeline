@@ -1,0 +1,645 @@
+{
+  "description": "Samples for manual validation of detection accuracy",
+  "nl_false_negatives": [
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for the new API! However, I need a bit more context to give you the most useful assistance.\n\nCould you clarify what you're looking for?\n\n1. **Setting up a new GraphQL API** - Are you building a new GraphQL server/endpoint?\n2. **Consuming a GraphQL API** - Are you integrating with an existing GraphQL API?\n3. **Migrating to GraphQL** - Are you converting a REST API to GraphQL?\n4. **Specific implementation help** - Do you have an existing codebase where you need to add GraphQL?\n\nIf you have a codebase you're working in, I can explore it to understand your current setup and provide more targeted guidance. Just let me know what you're trying to accomplish!",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for your new API! However, I need a bit more context to provide the most useful assistance.\n\nCould you tell me more about what you're looking for?\n\n1. **Setting up GraphQL** - Are you starting a new GraphQL API from scratch and need help with the initial setup?\n\n2. **Schema design** - Do you need help designing your GraphQL schema (types, queries, mutations)?\n\n3. **Integration** - Are you adding GraphQL to an existing project/codebase?\n\n4. **Specific implementation** - Do you have a particular feature or resolver you need help with?\n\n5. **Migration** - Are you migrating from REST to GraphQL?\n\nAlso, what technology stack are you working with? (e.g., Node.js with Apollo Server, Python with Graphene, Ruby, Go, etc.)\n\nIf you have an existing codebase, I can explore it to understand your current setup and provide more tailored recommendations.",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file for you.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file from the root directory.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file to help you with whatever you need.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_008",
+      "query": "mediator.kt is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_008",
+      "query": "mediator.kt is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file from the root directory.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'd be happy to help with adding 2FA to the admin panel. However, I need a bit more context to provide the best solution.\n\nLet me first explore your codebase to understand the current authentication setup and admin panel structure.[TOOL_ATTEMPT: Task][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for a new API! However, I need a bit more context to give you the most relevant assistance.\n\nCould you clarify what you're looking for?\n\n1. **Setting up a GraphQL API** - Are you building a new GraphQL server/backend?\n2. **Consuming a GraphQL API** - Are you integrating with an existing GraphQL endpoint?\n3. **Migrating to GraphQL** - Are you converting a REST API to GraphQL?\n4. **Specific implementation details** - Do you have an existing codebase where you want to add GraphQL?\n\nIf you have a codebase you're working in, I can explore it to understand your current setup and provide more tailored guidance. Just let me know what you're trying to accomplish!",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for a new API! However, I need a bit more context to provide useful assistance.\n\nCould you clarify what you're looking for? For example:\n\n1. **Setting up a GraphQL API** - Are you building a new GraphQL server/backend?\n2. **Consuming a GraphQL API** - Are you integrating with an existing GraphQL endpoint?\n3. **Migrating to GraphQL** - Are you converting a REST API to GraphQL?\n4. **Specific implementation** - Do you have a codebase where you want to add GraphQL?\n\nIf you have an existing project, I can explore the codebase to understand the current structure and help you integrate GraphQL appropriately. Just let me know the direction you'd like to take!",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_008",
+      "query": "mediator.kt is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_003",
+      "query": "coordinator.go is in ./internal",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_008",
+      "query": "mediator.kt is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I understand you want to add two-factor authentication (2FA) to an admin panel. This is a non-trivial implementation task with multiple valid approaches and architectural decisions to make.\n\nLet me enter plan mode to explore your codebase and design an appropriate 2FA implementation for your admin panel.[TOOL_ATTEMPT: EnterPlanMode]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'd be happy to help you add 2FA (two-factor authentication) to your admin panel. However, I need a bit more context to provide the best solution.\n\nLet me first explore your codebase to understand the current authentication setup and admin panel structure.[TOOL_ATTEMPT: Task][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Grep][TOOL_ATTEMPT: Grep][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for a new API! However, I need a bit more context to provide the most useful guidance.\n\nCould you tell me more about what you're looking for?\n\n1. **Setting up a new GraphQL API** - Are you starting from scratch and need help with schema design, server setup, or choosing a framework?\n\n2. **Adding GraphQL to an existing project** - Do you have a codebase I should look at to understand the current structure?\n\n3. **Learning GraphQL concepts** - Are you looking for explanations of queries, mutations, subscriptions, resolvers, etc.?\n\n4. **Specific implementation questions** - Do you have a particular problem or feature you're trying to implement?\n\nIf you have an existing project, I can explore your codebase to understand the current setup and provide tailored recommendations. Just let me know which direction you'd like to go!",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'd be happy to help you add 2FA (two-factor authentication) to your admin panel. However, I need a bit more context to provide the best solution.\n\nLet me first explore your codebase to understand its structure and then we can plan the implementation.[TOOL_ATTEMPT: EnterPlanMode]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'll help you add two-factor authentication (2FA) to the admin panel. Let me first explore the codebase to understand the current structure and authentication setup.[TOOL_ATTEMPT: Task][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Glob][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash][TOOL_ATTEMPT: Read][TOOL_ATTEMPT: Bash]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_008",
+      "query": "mediator.kt is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file from the root directory.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "st_false_negatives": [
+    {
+      "scenario_id": "mem_precision_003",
+      "query": "timeout is 30000ms, not 30s",
+      "response": "I understand - the timeout value is 30000ms (30,000 milliseconds), which equals 30 seconds. These are equivalent values:\n\n- 30000ms = 30,000 milliseconds = 30 seconds\n\nSo \"30000ms\" and \"30s\" represent the same duration. Is there something specific about timeout configuration you'd like to discuss or adjust?",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_007",
+      "query": "models.py is in ./app",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_precision_003",
+      "query": "timeout is 30000ms, not 30s",
+      "response": "You're right, I apologize for the confusion. The timeout parameter for the Bash tool is specified in milliseconds, so:\n\n- 30000ms = 30 seconds\n- 30s would be written as 30000 (in milliseconds)\n\nSo `timeout: 30000` means a 30-second timeout, not \"30s\" as a string. The parameter accepts a number representing milliseconds, with a maximum of 600000ms (10 minutes).\n\nIs there something specific you'd like me to help you with?",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_010",
+      "query": "reconciler.zig is in ./core",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file to help you understand the project.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_007",
+      "query": "models.py is in ./app",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file from the root directory.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_004",
+      "query": "__init__.py is in ./src",
+      "response": "Thank you for letting me know! So the `__init__.py` file is located at `./src/__init__.py`. Is there something specific you'd like me to do with this file, such as reading its contents, modifying it, or using it as a reference point for exploring the codebase?",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_007",
+      "query": "handler.ex is in ./lib",
+      "response": "I see you're pointing me to a file location. Let me read the `handler.ex` file for you.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for a new API. However, I need a bit more context to give you the most relevant guidance.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'll help you add two-factor authentication (2FA) to the admin panel. This is a non-trivial implementation task with multiple valid approaches, so let me enter plan mode to explore your codebase and design the right solution.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_010",
+      "query": "reconciler.zig is in ./core",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file from the root directory.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'd be happy to help you add 2FA (two-factor authentication) to your admin panel. However, I need to understand your codebase and requirements better before implementing this.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_010",
+      "query": "reconciler.zig is in ./core",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_008",
+      "query": "mediator.kt is in ./src",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "I've noted that `app.ts` is located in `./src`. Let me verify this file exists:",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for a new API! However, I need a bit more context to give you the most useful guidance.\n\nCould you clarify what you're looking for?",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_018",
+      "query": "graphql for the new api",
+      "response": "I'd be happy to help you with GraphQL for a new API! However, I need a bit more context to provide the most useful assistance.\n\nCould you clarify what you're looking for?",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'd be happy to help you add 2FA (two-factor authentication) to your admin panel. This is a significant feature that could be implemented in several ways, so let me first understand your codebase and then propose an approach.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_precision_003",
+      "query": "timeout is 30000ms, not 30s",
+      "response": "I understand - you're clarifying that the timeout value is 30000ms (milliseconds), not 30s (seconds). These are actually equivalent (30000ms = 30 seconds), but I'll make sure to use the correct unit notation (ms) when referring to timeouts.\n\nIs there something specific you'd like me to help you with regarding timeouts or any other task?",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_008",
+      "query": "mediator.kt is in ./src",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_006",
+      "query": "processor.scala is in ./app",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_low_010",
+      "query": "reconciler.zig is in ./core",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'd be happy to help you add 2FA (two-factor authentication) to your admin panel. This is a significant feature that involves several decisions about implementation approach.\n\nLet me first explore your codebase to understand the current authentication setup and admin panel structure before proposing a plan.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_019",
+      "query": "admin panel needs 2fa",
+      "response": "I'd be happy to help you add 2FA (two-factor authentication) to your admin panel. This is a significant feature that could be implemented in several ways, so let me first understand your codebase and then propose an approach.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_007",
+      "query": "models.py is in ./app",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_filepath_high_010",
+      "query": "README.md is in root",
+      "response": "I'll read the README.md file to help you understand the project.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so I don't have a record of you mentioning that you use React.\n\nBut now that you've told me - I'll save that your project uses React. This will be helpful context for our future conversations!\n\nIs there anything else about your tech stack or preferences you'd like me to remember?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_opinion_001",
+      "query": "React has more GitHub stars than Vue",
+      "response": "That's correct! React does have more GitHub stars than Vue. As of recent counts, React has around 220,000+ stars while Vue has around 206,000+ stars on GitHub, making React the more starred repository of the two.\n\nThough it's worth noting that GitHub stars are just one metric and don't necessarily reflect which framework is \"better\" - both are excellent choices with their own strengths, active communities, and widespread adoption in production applications.\n\nIs there anything specific about React or Vue you'd like to discuss or compare?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "noting that",
+        "that"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you mentioning React before in our previous conversations. This appears to be the first time you're telling me about it.\n\nI'll save that your project uses React for future reference.\n\nIs there anything specific about your React setup you'd like me to remember, such as which version you're using, whether you use TypeScript with it, or any particular patterns or libraries (like Redux, React Query, etc.)?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you mentioning that before. This appears to be our first conversation, so I don't have any saved context about your project or tech stack yet.\n\nBut now I know! I'll save that your project uses React for future reference.\n\nIs there anything else about your codebase or preferences you'd like me to remember?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so I don't have a record of you mentioning that you use React.\n\nBut now that you've told me - would you like me to remember that your project uses React? I'd be happy to save that for future conversations!",
+      "detected_intent": true,
+      "intent_phrases": [
+        "save that",
+        "that"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_opinion_001",
+      "query": "React has more GitHub stars than Vue",
+      "response": "I'll save that React has more GitHub stars than Vue. This is a useful piece of trivia about JavaScript framework popularity.",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so this would be the first time you're telling me that you use React.\n\nI'll save that your project uses React for future reference.\n\nIs there anything specific about your React setup you'd like me to know, such as whether you're using TypeScript, your state management approach, or any particular patterns or conventions your team follows?",
+      "detected_intent": true,
+      "intent_phrases": [
+        "I'll save"
+      ],
+      "expected_action": false,
+      "manual_judgment": null
+    }
+  ],
+  "st_false_positives": [
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you telling me that before. This appears to be the start of our conversation, so I don't have any previous context about your project or tech stack.\n\nBut now I know! Would you like me to remember that your project uses React for future conversations?\n\n<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so I don't have a record of you mentioning that you use React. Each conversation starts fresh for me unless information was explicitly saved to my memory system.\n\nBut now that you've told me - would you like me to remember that your project uses React for future conversations?\n\n<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so this would be the first time you're telling me that you use React.\n\nBut now I know! Let me save that for future reference.\n\n<save-memory category=\"codebase\">Project uses React</save-memory>\n\nIs there anything specific about your React setup you'd like me to know, such as:\n- React version (e.g., React 18, React 19)\n- State management approach (Redux, Zustand, Context API, etc.)\n- Component style preference (functional components with hooks, etc.)\n- Testing framework (Jest, React Testing Library, Vitest, etc.)\n- Any other conventions or patterns you follow?",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any memory of previous conversations with you, so I don't have a record of you telling me that you use React. Each conversation starts fresh for me unless information was explicitly saved to my memory system.\n\nBut now that you've mentioned it, I can save this for future reference!\n\n<save-memory category=\"codebase\">Project uses React</save-memory>\n\nIs there anything else about your tech stack or project conventions you'd like me to remember for future conversations?",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "ctrl_known_001",
+      "query": "Did I already tell you we use React?",
+      "response": "I don't have any record of you mentioning React before. This appears to be the start of our conversation, so you haven't told me anything yet about your tech stack.\n\nBut now I know! Would you like me to remember that your project uses React for future conversations?\n\n<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "tool_called": true,
+      "tool_content": "<save-memory category=\"codebase\">Project uses React</save-memory>",
+      "expected_action": false,
+      "manual_judgment": null
+    }
+  ],
+  "counts": {
+    "nl_false_negatives_total": 26,
+    "st_false_negatives_total": 49,
+    "nl_false_positives_total": 7,
+    "st_false_positives_total": 5
+  }
+}

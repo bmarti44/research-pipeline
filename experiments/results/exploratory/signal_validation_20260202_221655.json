@@ -1,0 +1,87 @@
+{
+  "description": "Samples for manual validation of signal detection accuracy",
+  "nl_false_negatives": [
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you've reported this issue before. To help you effectively, I need a bit more context:\n\n1. **Which endpoint** is returning 500 errors?\n2. **What codebase/project** are you working in?\n3. **Do you have access to logs** or error messages that might help diagnose the issue?\n\nIf you can point me to the relevant code, ticket, or error logs, I can help investigate the root cause of the 500 errors.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you've reported this issue previously. To help you effectively, I need a bit more context:\n\n1. **Which endpoint** is returning 500 errors?\n2. **What codebase/project** are we looking at?\n3. **Do you have any error logs or stack traces** from the recent occurrences?\n\nIf you can point me to the relevant code or share the ticket details, I can investigate the root cause and help resolve this recurring issue.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you've reported this issue previously. To help you effectively, I need a bit more context:\n\n1. **Which endpoint** is returning 500 errors?\n2. **What codebase/project** are we looking at?\n3. **Do you have a ticket number or link** to the previous report?\n\nIf you'd like, I can help by:\n- Investigating the endpoint code to identify the root cause\n- Looking at error logs or stack traces if available\n- Reviewing any recent changes that might have introduced the issue\n\nCould you point me to the relevant code or give me more details about the endpoint?",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you've reported this issue before. To help you effectively, I need a bit more context:\n\n1. **Which endpoint** is returning the 500 errors?\n2. **What codebase/project** are we looking at? (I can see your current directory if you'd like me to investigate)\n3. **Do you have any error logs or stack traces** from the 500 responses?\n4. **Is this happening consistently** or intermittently?\n\nIf you'd like, I can start exploring your codebase to find the endpoint in question and investigate potential causes of the 500 errors. Just point me in the right direction!",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_phrases": [],
+      "manual_judgment": null
+    }
+  ],
+  "st_false_negatives": [
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you're following up on a previously reported issue with an endpoint returning 500 errors. To help you effectively, I need some more context:\n\n1. **Which endpoint** is returning the 500 errors?\n2. **Is this still happening currently**, or are you looking to check the status of the fix?\n3. **Do you have any error logs, stack traces, or reproduction steps** you can share?\n\nIf you'd like, I can help you:\n- Investigate the endpoint code to identify potential causes\n- Search the codebase for related error handling\n- Look at recent changes that might have introduced the issue\n\nJust point me to the relevant code or give me more details about the endpoint, and I'll dig in.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you've reported this issue previously. To help you effectively, I need a bit more context:\n\n1. **Which endpoint** is returning the 500 errors?\n2. **Is this happening in production** or a development/staging environment?\n3. **Do you have any error logs or stack traces** I can look at?\n4. **What ticket/issue number** was it reported under (so I can check for any previous investigation)?\n\nIf you can point me to the relevant code or logs, I can help investigate the root cause of these 500 errors.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you've reported this issue previously. To help you effectively, I need a bit more context:\n\n1. **Which endpoint** is returning 500 errors?\n2. **What's the current behavior** - is it happening consistently, intermittently, or under specific conditions?\n3. **Do you have access to the codebase** where this endpoint is implemented, or are you consuming an external API?\n\nIf you can point me to the relevant code or logs, I can help investigate the root cause of the 500 errors.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_frust_001",
+      "query": "I've opened a ticket about this endpoint returning 500 errors before.",
+      "response": "I understand you've previously reported issues with an endpoint returning 500 errors. To help you effectively, I need a bit more context:\n\n1. **Which endpoint** is returning the 500 errors?\n2. **Is this the same issue** recurring, or a new/different manifestation?\n3. **Do you have any error logs, request details, or a ticket reference** I can look at?\n4. **What would you like me to help with?** For example:\n   - Investigate the root cause in the codebase\n   - Review recent changes that might have caused a regression\n   - Help debug the issue\n   - Something else?\n\nLet me know the details and I'll dig into it.",
+      "expected_signal": "frustration",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [],
+  "st_false_positives": [],
+  "counts": {
+    "nl_false_negatives_total": 4,
+    "st_false_negatives_total": 4,
+    "nl_false_positives_total": 0,
+    "st_false_positives_total": 0
+  }
+}

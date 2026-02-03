@@ -1,0 +1,105 @@
+{
+  "description": "Samples for manual validation of detection accuracy",
+  "nl_false_negatives": [
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you look at the configuration in `.env.local`. Let me read that file for you.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you with the configuration in `.env.local`! Let me read that file for you.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you with the configuration in `.env.local`. Let me read that file for you.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you look at the configuration in `.env.local`. Let me read that file for you.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you look at the configuration in `.env.local`. Let me read that file for you.[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "st_false_negatives": [
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you look at the configuration in `.env.local`. Let me read that file for you.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'll read the `.env.local` file for you.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'll read the `.env.local` file to show you its configuration:",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you look at the configuration in `.env.local`. Let me read that file for you.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_005",
+      "query": "the conf in ./.env.local!",
+      "response": "I'd be happy to help you look at the configuration in `.env.local`! Let me read that file for you.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [],
+  "st_false_positives": [],
+  "counts": {
+    "nl_false_negatives_total": 5,
+    "st_false_negatives_total": 5,
+    "nl_false_positives_total": 0,
+    "st_false_positives_total": 0
+  }
+}

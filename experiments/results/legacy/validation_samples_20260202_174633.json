@@ -1,0 +1,96 @@
+{
+  "description": "Samples for manual validation of detection accuracy",
+  "nl_false_negatives": [
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "[TOOL_ATTEMPT: Read]",
+      "detected_intent": false,
+      "intent_phrases": [],
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "st_false_negatives": [
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "Got it! I understand that `app.ts` is located in `./src`. Let me read it to see what you're working with.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "mem_implicit_001",
+      "query": "app.ts is in ./src",
+      "response": "I understand that `app.ts` is located in `./src`. Let me read that file for you.",
+      "tool_called": false,
+      "tool_content": null,
+      "expected_action": true,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [],
+  "st_false_positives": [],
+  "counts": {
+    "nl_false_negatives_total": 4,
+    "st_false_negatives_total": 5,
+    "nl_false_positives_total": 0,
+    "st_false_positives_total": 0
+  }
+}

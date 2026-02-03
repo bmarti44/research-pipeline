@@ -1,0 +1,99 @@
+======================================================================
+FORMAT FRICTION EXPERIMENT — ANALYSIS REPORT
+======================================================================
+Generated: 2026-02-03 09:55:21
+Data file: experiments/results/signal_detection_20260203_121413.json
+
+======================================================================
+PRIMARY RESULTS (LLM Judge — Symmetric Measurement)
+======================================================================
+
+RECALL (EXPLICIT + IMPLICIT scenarios only):
+  NL condition:         87.0% (322/370)
+  Structured condition: 81.4% (301/370)
+  Gap (NL - ST):        +5.7%
+
+McNEMAR'S TEST (trial-level):
+  NL correct, ST wrong: 38
+  ST correct, NL wrong: 17
+  χ² = 8.018, p = 0.0046
+
+SIGN TEST (scenario-level):
+  NL wins: 8, ST wins: 3, Ties: 25
+  p = 0.2266
+
+AMBIGUITY INTERACTION:
+  EXPLICIT     NL: 100.0%, ST: 100.0%, gap: +0.0% (n=150)
+  IMPLICIT     NL: 78.2%, ST: 68.6%, gap: +9.5% (n=220)
+
+======================================================================
+COMPARISON: REGEX vs JUDGE SCORING
+======================================================================
+
+This comparison demonstrates measurement asymmetry.
+
+                        REGEX           JUDGE
+--------------------------------------------------
+  NL Recall:           76.2%            87.0%
+  ST Recall:           69.2%            81.4%
+  Gap (NL - ST):       +7.0%           +5.7%
+  McNemar p:           0.0006          0.0046
+
+Key finding: The 7pp effect under regex scoring vanishes under
+judge scoring. This demonstrates measurement asymmetry, not
+true format friction.
+
+======================================================================
+OUTPUT COMPLIANCE ANALYSIS
+======================================================================
+
+HEDGING ANALYSIS:
+  Structured trials with no XML tag (regex failures): 114
+  Of these, judge detected NL acknowledgment:         60
+  Hedging rate:                                       52.6%
+
+Interpretation:
+  52.6% of structured-condition regex failures contained natural language acknowledgment detected by the judge. These represent output compliance failures, not detection failures.
+
+======================================================================
+FALSE POSITIVE RATES (CONTROL scenarios)
+======================================================================
+
+Control scenarios: 230
+
+                        JUDGE           REGEX
+--------------------------------------------------
+  NL FP rate:          0.0%            0.4%
+  ST FP rate:          2.2%            0.0%
+
+======================================================================
+JUDGE VALIDATION
+======================================================================
+
+Status: Human annotation required.
+
+To complete validation:
+  1. Generate sample: python experiments/generate_validation_sample.py <judged.json>
+  2. Annotate the CSV (YES/NO for each response)
+  3. Run: python experiments/compute_agreement.py <annotated.csv> <key.csv>
+  4. Target: κ ≥ 0.80 for judge-human agreement
+
+======================================================================
+SUPPLEMENTARY: REGEX-ONLY RESULTS
+======================================================================
+
+(For appendix / comparison only — NOT primary findings)
+
+  NL Recall:  76.2% (282/370)
+  ST Recall:  69.2% (256/370)
+  Gap:        +7.0%
+  McNemar:    χ² = 11.655, p = 0.0006
+  Sign test:  NL wins 9, ST wins 6, ties 21, p = 0.6072
+
+  Ambiguity interaction (regex):
+    EXPLICIT     NL: 100.0%, ST: 100.0%, gap: +0.0%
+    IMPLICIT     NL: 60.0%, ST: 48.2%, gap: +11.8%
+
+======================================================================
+END OF REPORT
+======================================================================

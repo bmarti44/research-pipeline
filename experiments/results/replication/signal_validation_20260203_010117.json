@@ -1,0 +1,157 @@
+{
+  "description": "Samples for manual validation of signal detection accuracy",
+  "nl_false_negatives": [],
+  "st_false_negatives": [
+    {
+      "scenario_id": "sig_implicit_block_002",
+      "query": "The API endpoint I need to integrate with returns 'coming soon' for every request.",
+      "response": "That's frustrating! A \"coming soon\" response from an API endpoint you need to integrate with is a common issue. Here are some things to consider:\n\n## Possible Causes & Solutions\n\n### 1. **The API is genuinely not ready yet**\n   - Check the API provider's documentation, changelog, or status page\n   - Look for a release timeline or beta access program\n   - Contact the API provider to ask about availability\n\n### 2. **You might be hitting the wrong endpoint**\n   - Verify you're using the correct base URL (production vs staging vs sandbox)\n   - Check if there's a version mismatch (e.g., `/v1/` vs `/v2/`)\n   - Ensure you're not hitting a placeholder or deprecated endpoint\n\n### 3. **Authentication/Authorization issue**\n   - Some APIs return generic messages when auth fails\n   - Verify your API key, token, or credentials are correct\n   - Check if your account has access to that specific feature\n\n### 4. **Feature flagging**\n   - The endpoint might exist but be gated behind a feature flag\n   - You may need to request access or be on a specific pricing tier\n\n## What would help me assist you further:\n\n- What API are you trying to integrate with?\n- Can you share the endpoint URL and the full response you're getting?\n- Do you have access to the API documentation?\n\nIf this is blocking your work and you have a deadline, there may be workarounds like mocking the response or finding an alternative API.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_002",
+      "query": "The API endpoint I need to integrate with returns 'coming soon' for every request.",
+      "response": "That's a frustrating situation! An API endpoint returning \"coming soon\" for every request typically means one of a few things:\n\n## Possible Causes\n\n1. **The endpoint isn't implemented yet** - The API provider has stubbed out the endpoint but hasn't built the actual functionality\n2. **Feature flag / environment issue** - The feature might be disabled in the environment you're hitting (e.g., staging vs. production)\n3. **Authentication/authorization issue** - Some APIs return generic messages when credentials are missing or invalid, rather than proper error codes\n4. **Wrong API version** - You might be hitting a deprecated or preview version of the API\n5. **Regional availability** - The feature might not be available in your region yet\n\n## Suggested Next Steps\n\n1. **Check the API documentation** - Look for:\n   - Beta/preview flags on that endpoint\n   - Required headers or query parameters\n   - Expected release dates\n\n2. **Verify your request** - Make sure you're hitting the correct:\n   - Base URL (production vs staging vs sandbox)\n   - API version\n   - Authentication headers\n\n3. **Contact the API provider** - If the docs don't clarify:\n   - Check their status page\n   - Look at their changelog for release notes\n   - Open a support ticket or check their developer forums\n\n4. **Look for alternatives** - If this is blocking your work:\n   - Is there a different endpoint that provides similar data?\n   - Can you mock the response for now and integrate later?\n\n---\n\nWould you like help wi",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_002",
+      "query": "The API endpoint I need to integrate with returns 'coming soon' for every request.",
+      "response": "That's a frustrating situation! When an API endpoint returns \"coming soon\" for every request, it typically means one of a few things:\n\n## Possible Causes\n\n1. **The endpoint isn't implemented yet** - The API provider may have documented or exposed endpoints that aren't actually functional yet\n\n2. **Wrong environment** - You might be hitting a staging/mock server instead of production\n\n3. **Feature flag or access level** - The functionality might be gated behind a feature flag or require a higher access tier/subscription\n\n4. **Incorrect endpoint version** - You could be calling a deprecated or future version of the API\n\n## Suggested Next Steps\n\n1. **Check the API documentation** - Look for any notes about endpoint availability, beta status, or required access levels\n\n2. **Verify your base URL** - Make sure you're pointing to the correct environment (production vs staging vs sandbox)\n\n3. **Check your API key/credentials** - Some providers return placeholder responses for invalid or limited-access credentials\n\n4. **Contact the API provider** - If the endpoint is documented as available, reach out to their support to clarify the status\n\n5. **Look for alternatives** - Check if there's a different endpoint that provides the same data\n\n---\n\nWould you like help with any of these steps? If you share more details about which API you're integrating with or show me the response you're getting, I can provide more specific guidance.",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_002",
+      "query": "The API endpoint I need to integrate with returns 'coming soon' for every request.",
+      "response": "That's a frustrating situation! An API that returns \"coming soon\" for every request typically means one of a few things:\n\n## Possible Causes\n\n1. **The API isn't actually live yet** - The endpoint exists but the functionality hasn't been deployed\n2. **Feature flag / environment issue** - The feature may be gated and not enabled for your account or environment\n3. **Wrong endpoint version** - You might be hitting a placeholder or deprecated version of the API\n4. **Authentication/authorization issue** - Some APIs return generic responses when credentials are missing or invalid rather than proper error codes\n\n## Recommended Next Steps\n\n1. **Check the API documentation** - Confirm the endpoint is supposed to be live and you're using the correct URL/version\n2. **Contact the API provider** - Ask them directly about the timeline and whether there's a working alternative\n3. **Check your API credentials** - Ensure you're properly authenticated (check headers, API keys, tokens)\n4. **Try different environments** - If they have staging/sandbox vs production, try both\n5. **Look for beta/preview access** - Some features require explicit opt-in\n\n## Quick Debugging\n\nIf you can share:\n- The API documentation or provider name\n- The request you're making (sanitized of secrets)\n- The full response (headers + body)\n\nI can help you diagnose whether this is a configuration issue on your end or genuinely an unavailable feature.\n\nIs this blocking your work, or do you have a workaround available?",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_implicit_block_002",
+      "query": "The API endpoint I need to integrate with returns 'coming soon' for every request.",
+      "response": "That's a frustrating situation! When an API endpoint returns \"coming soon\" for every request, it typically means one of a few things:\n\n## Possible Causes\n\n1. **The endpoint isn't implemented yet** - The API provider has stubbed out the endpoint but hasn't built the actual functionality\n2. **Feature flag / access control** - The feature might be gated behind a flag or require special access permissions\n3. **Wrong environment** - You might be hitting a staging/development server that has placeholder responses\n4. **API version mismatch** - The endpoint might exist in a newer API version that you don't have access to yet\n\n## What You Can Do\n\n1. **Check the API documentation** - Look for any notes about endpoint availability, beta access, or release timelines\n\n2. **Verify your API credentials/tier** - Some endpoints are only available to certain subscription levels or require beta access\n\n3. **Contact the API provider** - Ask them:\n   - When will this endpoint be available?\n   - Is there beta access you can request?\n   - Is there an alternative endpoint that provides similar functionality?\n\n4. **Check for alternative endpoints** - There might be a different endpoint that provides the data you need\n\n5. **Look for webhooks or other integration methods** - Sometimes providers offer alternative ways to get the same data\n\n## In the Meantime\n\nIf you need to continue development while waiting:\n- **Mock the expected response** - Create a mock service that returns the expected data structu",
+      "expected_signal": "blocking_issue",
+      "ambiguity": "IMPLICIT",
+      "detected_type": null,
+      "manual_judgment": null
+    }
+  ],
+  "nl_false_positives": [
+    {
+      "scenario_id": "sig_control_002",
+      "query": "What's the difference between useEffect and useLayoutEffect?",
+      "response": "Great question! Both are React hooks for handling side effects, but they differ in **when** they run:\n\n## `useEffect`\n- Runs **asynchronously after** the browser has painted the screen\n- **Non-blocking** \u2014 doesn't delay visual updates\n- Best for most side effects: data fetching, subscriptions, logging, etc.\n\n```javascript\nuseEffect(() => {\n  // Runs after paint \u2014 user sees the initial render first\n  fetchData();\n}, [dependency]);\n```\n\n## `useLayoutEffect`\n- Runs **synchronously after** DOM mutations but **before** the browser paints\n- **Blocking** \u2014 delays visual updates until it completes\n- Best for DOM measurements or mutations that must happen before the user sees anything\n\n```javascript\nuseLayoutEffect(() => {\n  // Runs before paint \u2014 can measure/mutate DOM without flicker\n  const height = ref.current.getBoundingClientRect().height;\n  ref.current.style.height = `${height * 2}px`;\n}, [dependency]);\n```\n\n## When to Use Which\n\n| Use Case | Hook |\n|----------|------|\n| Data fetching | `useEffect` |\n| Event subscriptions | `useEffect` |\n| Logging/analytics | `useEffect` |\n| Reading DOM layout (measurements) | `useLayoutEffect` |\n| Mutating DOM before paint (avoid flicker) | `useLayoutEffect` |\n| Syncing with external libraries that need DOM | `useLayoutEffect` |\n\n## Key Rule of Thumb\n\n**Start with `useEffect`**. Only switch to `useLayoutEffect` if you see a visual flicker or need to measure/mutate the DOM before the user sees the result.\n\nUsing `useLayoutEffect` unnecessarily ",
+      "detected_phrases": [
+        "blocking",
+        "ing",
+        "Blocking",
+        "ing"
+      ],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_control_002",
+      "query": "What's the difference between useEffect and useLayoutEffect?",
+      "response": "Great question! Both are React hooks for handling side effects, but they differ in **when** they run relative to the browser painting the screen.\n\n## `useEffect`\n\n- Runs **asynchronously after** the browser has painted\n- **Non-blocking** \u2014 doesn't delay visual updates\n- Use for most side effects: data fetching, subscriptions, logging, etc.\n\n```javascript\nuseEffect(() => {\n  // Runs after paint \u2014 user sees the UI first\n  fetchData();\n}, [dependency]);\n```\n\n## `useLayoutEffect`\n\n- Runs **synchronously after** DOM mutations but **before** the browser paints\n- **Blocking** \u2014 delays visual updates until it completes\n- Use when you need to measure or mutate the DOM before the user sees it\n\n```javascript\nuseLayoutEffect(() => {\n  // Runs before paint \u2014 can measure/modify DOM without flicker\n  const height = ref.current.getBoundingClientRect().height;\n  setCalculatedHeight(height);\n}, [dependency]);\n```\n\n## Visual Timeline\n\n```\nDOM Update \u2192 useLayoutEffect \u2192 Browser Paint \u2192 useEffect\n```\n\n## When to Use Each\n\n| Scenario | Hook |\n|----------|------|\n| Data fetching | `useEffect` |\n| Event listeners / subscriptions | `useEffect` |\n| Logging / analytics | `useEffect` |\n| Measuring DOM elements (width, height, position) | `useLayoutEffect` |\n| Synchronously adjusting DOM before paint (avoiding flicker) | `useLayoutEffect` |\n| Animations that need initial measurements | `useLayoutEffect` |\n\n## Rule of Thumb\n\n**Start with `useEffect`**. Only switch to `useLayoutEffect` if you see visual fl",
+      "detected_phrases": [
+        "blocking",
+        "ing",
+        "Blocking",
+        "ing"
+      ],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_control_015",
+      "query": "I found the issue - it was a typo in the config file.",
+      "response": "Glad you found it! Typos in config files are a classic source of frustrating bugs. Is there anything else I can help you with?",
+      "detected_phrases": [
+        "frustrating",
+        "ing"
+      ],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_control_002",
+      "query": "What's the difference between useEffect and useLayoutEffect?",
+      "response": "Great question! Both are React hooks for handling side effects, but they differ in **when** they run:\n\n## `useEffect`\n- Runs **asynchronously after** the browser has painted the screen\n- **Non-blocking** \u2014 doesn't delay visual updates\n- Best for most side effects: data fetching, subscriptions, logging, etc.\n\n```javascript\nuseEffect(() => {\n  // Runs after paint \u2014 user sees the initial render first\n  fetchData();\n}, [dependency]);\n```\n\n## `useLayoutEffect`\n- Runs **synchronously after** DOM mutations but **before** the browser paints\n- **Blocking** \u2014 delays the visual update until it completes\n- Best for: reading/modifying DOM layout before the user sees it\n\n```javascript\nuseLayoutEffect(() => {\n  // Runs before paint \u2014 can measure/mutate DOM without flicker\n  const height = ref.current.getBoundingClientRect().height;\n  ref.current.style.marginTop = `${height}px`;\n}, [dependency]);\n```\n\n## When to Use Which\n\n| Use `useEffect` | Use `useLayoutEffect` |\n|-----------------|----------------------|\n| Data fetching | Measuring DOM elements |\n| Event listeners | Preventing visual flicker |\n| Logging/analytics | Synchronizing DOM mutations |\n| Most side effects | Tooltips/popovers positioning |\n\n## Key Takeaway\n\n**Default to `useEffect`**. Only reach for `useLayoutEffect` when you:\n1. Need to read layout (e.g., `getBoundingClientRect`)\n2. Need to mutate the DOM before the user sees it\n3. Are seeing a visual \"flicker\" with `useEffect`\n\nUsing `useLayoutEffect` unnecessarily can hurt per",
+      "detected_phrases": [
+        "blocking",
+        "ing",
+        "Blocking",
+        "ing"
+      ],
+      "manual_judgment": null
+    },
+    {
+      "scenario_id": "sig_control_002",
+      "query": "What's the difference between useEffect and useLayoutEffect?",
+      "response": "Great question! Here's the difference between `useEffect` and `useLayoutEffect` in React:\n\n## `useEffect`\n- Runs **asynchronously after** the browser has painted the screen\n- **Non-blocking** \u2014 doesn't delay visual updates\n- Best for most side effects: data fetching, subscriptions, logging, etc.\n\n```javascript\nuseEffect(() => {\n  // Runs after paint - user sees the initial render first\n  fetchData();\n}, [dependency]);\n```\n\n## `useLayoutEffect`\n- Runs **synchronously after** DOM mutations but **before** the browser paints\n- **Blocking** \u2014 delays visual updates until it completes\n- Best for DOM measurements/mutations that need to happen before the user sees anything\n\n```javascript\nuseLayoutEffect(() => {\n  // Runs before paint - can measure/mutate DOM without flicker\n  const height = ref.current.getBoundingClientRect().height;\n  ref.current.style.height = `${height * 2}px`;\n}, [dependency]);\n```\n\n## When to Use Which\n\n| Use `useEffect` for: | Use `useLayoutEffect` for: |\n|---------------------|---------------------------|\n| API calls / data fetching | Measuring DOM elements |\n| Setting up subscriptions | Synchronous DOM mutations |\n| Logging / analytics | Preventing visual flicker |\n| Most side effects | Tooltip/popover positioning |\n\n## Visual Timeline\n\n```\nDOM Update \u2192 useLayoutEffect \u2192 Browser Paint \u2192 useEffect\n```\n\n## Rule of Thumb\n\n**Start with `useEffect`**. Only switch to `useLayoutEffect` if you see visual flickering or need to measure/mutate the DOM before the user see",
+      "detected_phrases": [
+        "blocking",
+        "ing",
+        "Blocking",
+        "ing"
+      ],
+      "manual_judgment": null
+    }
+  ],
+  "st_false_positives": [],
+  "borderline_nl_only": [
+    {
+      "scenario_id": "sig_borderline_013",
+      "query": "I'm waiting on some information before I can continue.",
+      "nl_response": "I understand you're waiting on some information before you can continue. Is there anything I can help you with in the meantime? For example, I could:\n\n- **Help with research or exploration** - Look into documentation, code patterns, or technical questions\n- **Review or prepare** - Look at code, documentation, or other materials you'll need once you get the information\n- **Work on something else** - If you have other tasks that aren't blocked\n\nJust let me know what you need, or feel free to reach out when you have the information you're waiting for!",
+      "nl_phrases": [
+        "blocked"
+      ],
+      "st_response": "I understand you're waiting on some information before you can continue. That's completely normal during a project or task.\n\nIs there anything I can help you with while you wait? For example, I could:\n\n- **Research or explore** something related to your current work\n- **Review code** or documentation you've already written\n- **Prepare** for the next steps once you get the information\n- **Answer questions** about a technical topic\n- **Help with a different task** entirely\n\nJust let me know what would be most useful!",
+      "st_hedged": false,
+      "note": "NL detected signal, structured did not"
+    },
+    {
+      "scenario_id": "sig_borderline_014",
+      "query": "There's a dependency issue I need to figure out.",
+      "nl_response": "I'd be happy to help you figure out the dependency issue. To get started, could you give me a bit more context?\n\n1. **What type of project is this?** (e.g., Node.js/npm, Python/pip, Ruby/bundler, etc.)\n2. **What's the symptom?** Are you seeing:\n   - Version conflicts between packages?\n   - Missing dependencies?\n   - Build/install failures?\n   - Runtime errors related to dependencies?\n3. **Any specific error messages** you're seeing?\n\nIf you can share the error output or point me to the project directory, I can start investigating right away.",
+      "nl_phrases": [
+        "right away",
+        "right away"
+      ],
+      "st_response": "I'd be happy to help you figure out the dependency issue. To assist you effectively, I need a bit more context:\n\n1. **What type of project is this?** (e.g., Node.js/npm, Python/pip, Ruby/bundler, Java/Maven/Gradle, etc.)\n2. **What's the specific problem you're seeing?** For example:\n   - Version conflicts between packages?\n   - A package failing to install?\n   - Missing dependencies?\n   - Circular dependencies?\n3. **Are there any error messages?** If so, please share them.\n\nAlternatively, if you'd like me to take a look at your project directly, let me know where the relevant files are (like `package.json`, `requirements.txt`, `Gemfile`, `pom.xml`, etc.) and I can investigate.",
+      "st_hedged": false,
+      "note": "NL detected signal, structured did not"
+    },
+    {
+      "scenario_id": "sig_borderline_001",
+      "query": "I've been looking at this for a while now.",
+      "nl_response": "It sounds like you might be stuck on something. What have you been looking at? I'd be happy to help you work through it.",
+      "nl_phrases": [
+        "sounds like you might be stuck",
+        "sounds",
+        "stuck"
+      ],
+      "st_response": "It sounds like you might be stuck on something. Could you share more details about what you're looking at? I'd be happy to help you work through it.\n\nAre you:\n- Debugging some code?\n- Trying to understand a file or codebase?\n- Working through an error message?\n- Something else?\n\nLet me know what you're dealing with and I can dive in with you.",
+      "st_hedged": true,
+      "note": "NL detected signal, structured did not (hedging)"
+    }
+  ],
+  "counts": {
+    "nl_false_negatives_total": 0,
+    "st_false_negatives_total": 5,
+    "nl_false_positives_total": 5,
+    "st_false_positives_total": 0,
+    "borderline_nl_only_total": 3
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "description": "Samples for manual validation of detection accuracy",
+  "nl_false_negatives": [],
+  "st_false_negatives": [],
+  "nl_false_positives": [],
+  "st_false_positives": [],
+  "counts": {
+    "nl_false_negatives_total": 0,
+    "st_false_negatives_total": 0,
+    "nl_false_positives_total": 0,
+    "st_false_positives_total": 0
+  }
+}
