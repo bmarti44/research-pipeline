@@ -1,117 +1,172 @@
 # Limitations and Scope
 
-This document outlines the known limitations of this research study on hook-based tool call validation for LLM agents.
+This document outlines the known limitations of the Format Friction study on structured output compliance in LLM tool-calling systems.
+
+---
 
 ## Model Limitations
 
-### Single Model Testing
-- **Limitation**: All experiments were conducted exclusively on Claude (Anthropic).
-- **Impact**: Findings may not generalize to other LLMs (GPT-4, Gemini, LLaMA, etc.).
-- **Mitigation**: Future work should validate on multiple models.
+### Single Model Family
+- **Limitation**: All experiments conducted exclusively on Claude Sonnet (claude-sonnet-4-5-20250929).
+- **Impact**: Format friction may be model-specific. Models with different tool-use training (GPT-4, Gemini, Llama) may show different friction profiles.
+- **Mitigation**: Future work should validate on multiple model families. Ollama-compatible models (Qwen 2.5, Llama 3.1) identified for local replication.
 
 ### Model Version Variability
-- **Limitation**: Results may vary across Claude model versions and API updates.
-- **Impact**: Reproducibility may be affected by model updates.
-- **Mitigation**: Experiment metadata records timestamps; consider version pinning.
+- **Limitation**: Results tied to a specific model snapshot.
+- **Impact**: Friction rates may change with model updates.
+- **Mitigation**: Experiment metadata records model version and timestamps.
 
 ### Temperature and Sampling
-- **Limitation**: The Claude Agent SDK does not expose temperature control.
-- **Impact**: Cannot control for sampling randomness across trials.
-- **Mitigation**: Multiple trials (n=5) per scenario provide some variance estimation.
+- **Limitation**: Default temperature used; not explicitly controlled.
+- **Impact**: Some response variability expected.
+- **Mitigation**: 10 trials per scenario provide variance estimation. Key findings (100% EXPLICIT compliance) are at ceiling, unaffected by sampling.
 
-## Dataset Limitations
+---
 
-### Limited Failure Modes
-- **Limitation**: Only 6 failure modes tested (F1, F4, F8, F10, F13, F15).
-- **Impact**: Many potential failure modes are not covered:
-  - Hallucinated API endpoints
-  - Incorrect tool parameter types
-  - Tool sequencing errors beyond location-first
-  - Context window overflow issues
-  - Multi-step reasoning failures
-- **Mitigation**: Framework is extensible; additional rules can be added.
+## Task and Scenario Limitations
 
-### Scenario Count
-- **Limitation**: 41 total scenarios (29 should-block, 12 valid control).
-- **Impact**: Limited statistical power for per-rule analysis.
-- **Mitigation**: 5 trials per scenario partially addresses this.
+### Single Task Domain
+- **Limitation**: Only signal detection (frustration/urgency/blocking) tested.
+- **Impact**: Friction patterns may differ for other tool-calling tasks:
+  - Memory operations
+  - File system interactions
+  - API calls with complex parameters
+  - Multi-step tool sequences
+- **Mitigation**: Task chosen for clean measurement (binary signal present/absent). Generalization requires follow-up studies.
+
+### Scenario Difficulty Variation
+- **Limitation**: Three IMPLICIT scenarios flagged as potentially too subtle during piloting (sig_implicit_frust_007, sig_implicit_block_001, sig_implicit_block_008).
+- **Impact**: These "HARD" scenarios may inflate friction estimates.
+- **Sensitivity Analysis**: Excluding HARD scenarios, friction drops from 12.2pp to 10.3pp. Main finding remains robust.
+
+### Scenario Relabeling
+- **Limitation**: Three scenarios relabeled from IMPLICIT to CONTROL during development after 0% detection in pilot.
+- **Impact**: Post-hoc relabeling could affect estimates.
+- **Transparency**: Relabeling documented in code with rationale. Original labels available in version history.
 
 ### English Only
-- **Limitation**: All test scenarios are in English.
-- **Impact**: Semantic classifier behavior on other languages is unknown.
-- **Mitigation**: Future work should include multilingual scenarios.
+- **Limitation**: All scenarios in English.
+- **Impact**: Format friction behavior on other languages unknown.
+- **Recommendation**: Future work should include multilingual scenarios.
 
-### Ground Truth Validity
-- **Limitation**: Expected behaviors were defined by a single annotator.
-- **Impact**: Potential annotator bias; no inter-annotator agreement measured.
-- **Recommendation**: For publication, obtain independent annotations and report Cohen's kappa.
+---
 
-## Classifier Limitations
+## Measurement Limitations
 
-### Threshold Selection
-- **Limitation**: Thresholds were selected via cross-validation on a small calibration set (30 examples per category).
-- **Impact**: Possible overfitting to calibration distribution.
-- **Mitigation**: Sensitivity analysis shows stability across ±0.10 threshold changes.
+### Judge-Human Agreement on IMPLICIT Signals
+- **Limitation**: Overall κ = 0.81 (substantial), but IMPLICIT stratum shows κ = 0.41 (moderate).
+- **Impact**: 24% disagreement on IMPLICIT scenarios where the main friction finding (20.5pp) originates.
+- **Analysis**: Human annotators tended not to count "helpful without explicit acknowledgment" as detection. Judge is more permissive.
+- **Sensitivity**: Excluding disagreement cases, IMPLICIT friction remains ~19pp. Finding is robust.
 
-### Semantic Model
-- **Limitation**: Uses `all-MiniLM-L6-v2` (384-dimensional embeddings).
-- **Impact**: Larger models might provide better semantic matching.
-- **Trade-off**: Chosen for speed (real-time validation requirement).
+### LLM Judge (Same Model Family)
+- **Limitation**: Judge model (Claude Sonnet) is same family as subject model.
+- **Impact**: Potential systematic bias if both share similar detection patterns.
+- **Mitigation**: Human validation subsample (n=150) achieved κ = 0.81. Consider different model family for judging in future work.
 
-### Category Coverage
-- **Limitation**: Only two semantic categories (static_knowledge, memory_reference) + duplicate detection.
-- **Impact**: Other semantic patterns (e.g., "opinion questions", "creative requests") not covered.
-- **Extensibility**: Additional categories can be added with new exemplars.
+### Binary Detection Measure
+- **Limitation**: Judge outputs YES/NO; cannot capture partial detection or detection quality.
+- **Impact**: Nuanced signal acknowledgment may be lost.
+- **Trade-off**: Binary measure enables clean statistical analysis and matches production behavior (tool fires or doesn't).
 
-## Experimental Design Limitations
+### Regex Measurement Asymmetry
+- **Limitation**: Regex detection uses keyword patterns (NL) vs XML parsing (structured).
+- **Impact**: Regex undercounts NL responses, inflating apparent format effect.
+- **Mitigation**: Within-condition analysis (detection vs compliance) avoids cross-condition measurement asymmetry.
 
-### Simulated Context
-- **Limitation**: F10 (duplicate search) scenarios inject prior searches via prompt, not actual tool calls.
-- **Impact**: May not perfectly simulate real conversational context.
-- **Mitigation**: Baseline context tracking added for fair comparison.
+---
 
-### Tool Environment
-- **Limitation**: Tools are limited to a mock/sandbox environment.
-- **Impact**: Real-world tool failures, latency, and error handling not tested.
-- **Consideration**: Production deployment may reveal additional failure modes.
+## Study 1 (Confound Discovery) Limitations
 
-### Convergence Behavior
-- **Limitation**: Forced termination after 5 rejections may affect score outcomes.
-- **Impact**: Some scenarios may score differently due to early termination.
-- **Trade-off**: Necessary to prevent infinite loops.
+### Small Correction Sample
+- **Limitation**: Correction validation used only n=5 per condition from single scenario.
+- **Impact**: Cannot definitively conclude prompt asymmetry *explains* the original 9pp effect.
+- **Interpretation**: Study 1 demonstrates confound *exists*; Study 2 provides the primary findings with proper controls.
+
+---
 
 ## Statistical Limitations
 
-### Effect Size
-- **Observed**: Cohen's d = 0.21 (small effect).
-- **Interpretation**: While statistically significant, practical impact is modest.
-- **Context**: Small effect is expected when baseline model is already competent.
+### Effect Size Interpretation
+- **Detection gap**: 5.7pp (NL 87.0% vs ST 81.4%), p = 0.005
+- **Compliance gap**: 12.2pp (ST detection 81.4% vs compliance 69.2%)
+- **Context**: Effects are meaningful for production systems processing thousands of requests, but not catastrophic impairment.
 
-### Catch Rate vs. Model Competence
-- **Observed**: 9.7% catch rate (vs. 60% target).
-- **Explanation**: Claude correctly handles F1/F4 scenarios without tool calls; nothing to catch.
-- **Interpretation**: Low catch rate indicates model competence, not validator failure.
+### Confidence Intervals
+Key estimates with 95% Wilson score CIs:
 
-### Power Analysis
-- **Achieved**: 84.1% power for observed effect size.
-- **Note**: Adequate for detecting effects of d=0.21, but would need ~350 pairs for smaller effects.
+| Metric | Estimate | 95% CI |
+|--------|----------|--------|
+| NL detection | 87.0% | [83.2%, 90.1%] |
+| ST detection | 81.4% | [77.1%, 85.0%] |
+| ST compliance | 69.2% | [64.3%, 73.7%] |
+| IMPLICIT friction | 20.5pp | ~[14pp, 27pp]* |
+
+*Approximate; derived from component CIs.
+
+### Trial Non-Independence
+- **Limitation**: 10 trials per scenario are not fully independent (same prompt, similar responses).
+- **Impact**: Standard errors may be underestimated.
+- **Mitigation**: Sign test at scenario level provides conservative inference.
+
+---
+
+## Two-Pass Recovery Limitations
+
+### Single Task Tested
+- **Limitation**: Recovery rates (65% Sonnet, 39% Qwen-7B) only validated on signal detection.
+- **Impact**: Recovery may differ for other tool-calling domains.
+- **Recommendation**: Test on additional tasks before generalizing.
+
+### No Fine-Tuning
+- **Limitation**: Extraction models used off-the-shelf, not task-specific fine-tuned.
+- **Impact**: Recovery rates likely underestimate potential with fine-tuning.
+- **Opportunity**: SLOT paper shows 99.5% schema accuracy achievable with fine-tuning.
+
+### Cost Analysis Incomplete
+- **Limitation**: Two-pass cost estimates don't account for latency or infrastructure overhead.
+- **Impact**: Production deployment may reveal hidden costs.
+- **Trade-off**: Even with overhead, 17pp compliance improvement may justify costs.
+
+---
+
+## Scope Clarifications
+
+### Applies To: Prompt-Based Tool Calling
+- Systems parsing XML/JSON from free-form LLM output (LangChain, ReAct, custom agents)
+- Subject to format friction
+
+### Does NOT Apply To: Native Tool-Use APIs
+- Constrained decoding systems (OpenAI function calling, Anthropic tool_use)
+- Format friction eliminated by construction
+- Different trade-offs (cannot reason in NL before committing)
+
+---
 
 ## Recommendations for Future Work
 
-1. **Multi-model validation**: Test on GPT-4, Gemini, open-source models.
-2. **Additional failure modes**: Expand rule coverage to other tool-use errors.
-3. **Multilingual testing**: Validate semantic classifier on non-English queries.
-4. **Independent annotation**: Obtain ground truth labels from multiple annotators.
-5. **Production evaluation**: Deploy in real agent systems to identify edge cases.
-6. **Adaptive thresholds**: Explore dynamic threshold adjustment based on context.
-7. **User studies**: Evaluate whether blocked tool calls improve user satisfaction.
+1. **Cross-model validation**: Test on GPT-4, Gemini, Llama, Qwen families
+2. **Multi-task validation**: Memory operations, API calls, code generation
+3. **Multilingual scenarios**: Non-English signal detection
+4. **Independent annotation**: Multiple annotators for IMPLICIT scenarios
+5. **Production evaluation**: Deploy two-pass architecture in real systems
+6. **Fine-tuned extraction**: Train small models specifically for structure recovery
+7. **Mechanistic analysis**: Attention patterns during structured vs NL output
+
+---
 
 ## Conclusion
 
-Despite these limitations, the study demonstrates:
-- Statistically significant improvement with validation (+0.22 score, p<0.01)
-- Low false positive rate (8.3%)
-- Particular value for F10 (duplicate search) scenarios (+3.0 improvement)
-- Claude's inherent competence on F1/F4 scenarios (no tool calls attempted)
+Despite these limitations, the study establishes:
 
-The validator provides marginal but measurable improvement, with primary value in scenarios where the base model struggles (duplicate searches, missing location context).
+1. **Format friction exists**: 12.2pp compliance gap in structured condition (60 silent failures / 370 trials)
+2. **Concentrates in uncertainty**: 0pp EXPLICIT vs 20.5pp IMPLICIT friction
+3. **Not reasoning impairment**: Detection rates similar across conditions (87% vs 81%)
+4. **Recoverable**: Two-pass extraction recovers 39-65% of silent failures
+5. **Confounds matter**: Prior work may overestimate format effects due to prompt asymmetry
+
+The primary limitation is single-model testing. Format friction is established for Claude Sonnet; generalization to other model families requires validation.
+
+---
+
+*Last updated: 2026-02-03*

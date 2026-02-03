@@ -57,10 +57,12 @@ def fig1_study1_before_after(output_dir: Path):
     """
     fig, ax = plt.subplots(figsize=(6, 4))
 
-    # Data (from Study 1 results)
-    conditions = ['Confounded\nPrompts', 'Corrected\nPrompts']
-    nl_values = [0.90, 0.84]
-    st_values = [0.81, 0.83]
+    # Data (from Study 1 results - Table in §3.3)
+    # With Confound: NL 89.8% (229/255), ST 80.8% (206/255)
+    # After Correction: NL 100%, ST 100% (n=5 each, preliminary)
+    conditions = ['Confounded\nPrompts', 'Corrected\nPrompts*']
+    nl_values = [0.898, 1.00]
+    st_values = [0.808, 1.00]
 
     x = np.arange(len(conditions))
     width = 0.35
@@ -81,14 +83,18 @@ def fig1_study1_before_after(output_dir: Path):
                    fontweight='bold' if abs(gap) > 0.05 else 'normal')
 
     ax.set_ylabel('Recall', fontsize=12)
-    ax.set_title('Study 1: Memory Persistence\nPrompt Asymmetry Creates Spurious Effects', fontsize=12)
+    ax.set_title('Study 1: Memory Persistence\nPrompt Asymmetry Confounds Format Effects', fontsize=12)
     ax.set_xticks(x)
     ax.set_xticklabels(conditions)
-    ax.set_ylim(0, 1.0)
+    ax.set_ylim(0, 1.05)
     ax.legend(loc='lower right')
 
     # Add horizontal line at 80%
     ax.axhline(y=0.80, color='gray', linestyle='--', alpha=0.5, linewidth=0.8)
+
+    # Add footnote for preliminary correction data
+    ax.text(0.5, -0.12, '*Corrected: preliminary validation (n=5 per condition)',
+            transform=ax.transAxes, ha='center', fontsize=8, style='italic')
 
     plt.tight_layout()
     plt.savefig(output_dir / 'fig1_study1_before_after.png', dpi=300, bbox_inches='tight')
@@ -216,15 +222,15 @@ def fig3_measurement_comparison(results: list[dict], output_dir: Path):
     regex_gap = nl_regex - st_regex
     judge_gap = nl_judge - st_judge
 
-    ax.annotate(f'Gap: {regex_gap:+.1%}\np=0.001',
+    ax.annotate(f'Gap: {regex_gap:+.1%}\np<0.001',
                xy=(0, max(nl_regex, st_regex) + 0.08),
                ha='center', fontsize=10, fontweight='bold',
                color='#c0392b')  # Red for significant
 
-    ax.annotate(f'Gap: {judge_gap:+.1%}\np=1.0',
+    ax.annotate(f'Gap: {judge_gap:+.1%}\np=0.005',
                xy=(1, max(nl_judge, st_judge) + 0.08),
-               ha='center', fontsize=10,
-               color='#27ae60')  # Green for null
+               ha='center', fontsize=10, fontweight='bold',
+               color='#e67e22')  # Orange for significant but smaller
 
     ax.set_ylabel('Recall', fontsize=12)
     ax.set_title('Measurement Method Determines Apparent Effect', fontsize=12)

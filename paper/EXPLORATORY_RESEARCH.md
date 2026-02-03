@@ -182,6 +182,30 @@ The familiarity interaction is decorative, not load-bearing. The paper doesn't n
 
 This is potentially the most impactful follow-up research. The paper proposes but doesn't validate a two-stage architecture.
 
+### External Validation: SLOT Paper (Wang et al., 2025)
+
+The SLOT paper (arXiv:2505.04016) provides strong external validation for this approach:
+
+> "Even compact models like Llama-3.2-1B can match or exceed the structured output capabilities of much larger proprietary models."
+
+Key SLOT findings relevant to our two-stage hypothesis:
+- **99.5% schema accuracy** achieved with Mistral-7B + constrained decoding
+- **94.0% content similarity** (semantic alignment with ground truth)
+- Fine-tuning is required but can be done on synthetic data
+- The approach is model-agnostic (doesn't require base model weights)
+
+**Implication for Format Friction**: If a fine-tuned 1B model can achieve 99.5% schema accuracy, then combining our high-recall NL approach (87%) with SLOT-style extraction could yield:
+- End-to-end recall: ~87% × 99.5% ≈ 86.6%
+- But with 100% schema compliance (no silent failures)
+- Net improvement: Eliminates the 12.2pp compliance gap entirely
+
+**Cost Analysis**:
+- Current (single-pass XML): Sonnet pricing, 69.2% effective recall
+- Two-pass (Sonnet NL → SLOT-7B): Sonnet + negligible 7B cost, ~86.6% effective recall
+- Two-pass (Sonnet NL → SLOT-1B): Sonnet + minimal 1B cost, ~86.0% effective recall
+
+The two-pass approach costs marginally more but recovers 17+ percentage points of effective recall.
+
 ### The Hypothesis
 
 ```
@@ -254,7 +278,58 @@ structured_output = small_model.generate(
 
 ---
 
-## 7. Content-Dependent Format Recommendations
+## 7. Extreme Friction on HARD Scenarios
+
+### Finding
+
+Exploratory analysis of the three HARD scenarios (flagged during piloting as potentially too subtle) reveals extreme format friction:
+
+| Metric | HARD Only (n=30) | All IMPLICIT (n=220) |
+|--------|------------------|----------------------|
+| NL detection | 60.0% | 78.2% |
+| ST detection | 33.3% | 68.6% |
+| ST compliance (XML) | **0.0%** | 48.2% |
+| Format friction | **+33.3pp** | +20.5pp |
+
+### Per-Scenario Breakdown
+
+| Scenario | NL det | ST det | XML | Friction |
+|----------|--------|--------|-----|----------|
+| sig_implicit_frust_007 | 0% | 0% | 0% | 0pp (too subtle for both) |
+| sig_implicit_block_001 | 90% | 30% | 0% | +30pp |
+| sig_implicit_block_008 | 90% | 70% | 0% | **+70pp** |
+
+### Interpretation
+
+The 70pp friction on sig_implicit_block_008 is striking: the model detects the signal 70% of the time but **never** produces XML. This strongly supports the "calibrated uncertainty → compliance refusal" hypothesis—under maximum ambiguity, the model acknowledges signals in natural language while refusing to commit to structured claims.
+
+### Research Questions
+
+1. **Is there a detection threshold for XML commitment?** Perhaps models only produce structured output when confidence exceeds some internal threshold.
+
+2. **Can we measure this threshold?** Logprob analysis or calibration studies might reveal the confidence level at which XML production "turns on."
+
+3. **Is this behavior desirable?** From a safety perspective, refusing to commit under uncertainty may be appropriate. From a system design perspective, it creates silent failures.
+
+4. **Can prompting overcome it?** Would instructions like "produce XML even if uncertain, with a confidence attribute" reduce friction?
+
+### Experimental Design for Follow-Up
+
+Create a **5-level ambiguity gradient** (not just EXPLICIT/IMPLICIT/HARD):
+
+| Level | Description | Predicted Friction |
+|-------|-------------|-------------------|
+| 1 | Unmistakable (current EXPLICIT) | 0pp |
+| 2 | Clear but indirect | 5-10pp |
+| 3 | Inferrable (current IMPLICIT) | 15-25pp |
+| 4 | Subtle (current HARD) | 30-40pp |
+| 5 | Borderline detectable | 50+pp? |
+
+If friction increases monotonically with ambiguity, that's strong evidence for the confidence-threshold mechanism.
+
+---
+
+## 8. Content-Dependent Format Recommendations
 
 The paper found that **different content types favor different formats**:
 
@@ -277,7 +352,7 @@ Can we build a **format selector** that chooses NL vs Structured based on conten
 
 ---
 
-## 8. Cross-Model Validation
+## 9. Cross-Model Validation
 
 The paper only tests Claude Sonnet. Critical question: **Is format friction model-specific?**
 
@@ -291,6 +366,28 @@ The paper only tests Claude Sonnet. Critical question: **Is format friction mode
 | Llama-3-70B | Light | May show smaller gap (less tool-use prior) |
 | Mistral-7B | Minimal | May show minimal friction |
 
+### Ollama-Compatible Models (36GB Mac)
+
+For local replication without API costs, the following models can run on a 36GB unified RAM Mac via Ollama:
+
+| Model | Size | Ollama Command | Notes |
+|-------|------|----------------|-------|
+| Qwen 2.5 32B Instruct | ~20GB | `ollama run qwen2.5:32b-instruct` | Best quality for size |
+| Llama 3.1 8B Instruct | ~5GB | `ollama run llama3.1:8b-instruct` | Fast, good baseline |
+| Mistral Nemo 12B | ~8GB | `ollama run mistral-nemo:12b` | Good instruction following |
+| Qwen 2.5 14B Instruct | ~10GB | `ollama run qwen2.5:14b-instruct` | Sweet spot for quality/speed |
+| DeepSeek Coder V2 16B | ~10GB | `ollama run deepseek-coder-v2:16b` | Code-focused, interesting baseline |
+
+**Recommended replication plan**:
+1. Start with Qwen 2.5 14B (good balance)
+2. If results differ from Sonnet, test Llama 3.1 8B and Qwen 32B for trend analysis
+3. Compare tool-calling trained models (Qwen) vs general models (Llama)
+
+**Expected findings**:
+- Models with less tool-use training may show lower friction (no competing prior)
+- Smaller models may show more friction (less capacity for dual reasoning+format)
+- Code-focused models may show less friction (trained on structured output)
+
 ### Prediction
 
 Models with more tool-calling fine-tuning may show:
@@ -303,7 +400,7 @@ Models with less tool-calling training may show:
 
 ---
 
-## 9. TOOL_ATTEMPT Phenomenon Deep Dive
+## 10. TOOL_ATTEMPT Phenomenon Deep Dive
 
 The review identified that 15-20% of NL false negatives show tool-calling behavior despite suppression instruction.
 
@@ -323,7 +420,7 @@ The validation samples (`validation_samples_*.json`) contain examples. Could ana
 
 ---
 
-## 10. Control Scenario Design Insights
+## 11. Control Scenario Design Insights
 
 From the validation run (2026-02-02):
 
@@ -356,7 +453,7 @@ The model extracts factual content even from questions. True negatives need to b
 
 ---
 
-## 11. Paradigm-Shift Research: Proving Format Friction is Fundamental
+## 12. Paradigm-Shift Research: Proving Format Friction is Fundamental
 
 The current paper establishes an empirical observation: format friction exists and costs ~9pp on Claude Sonnet. But this is **confirmatory**, not **paradigm-shifting**. Prior work (Tam et al., Johnson et al.) already showed format degrades performance.
 
@@ -492,4 +589,4 @@ That's publishable in Nature. The current paper is not.
 
 ---
 
-*Last updated: 2026-02-02*
+*Last updated: 2026-02-03*

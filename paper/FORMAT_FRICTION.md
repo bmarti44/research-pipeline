@@ -2,9 +2,9 @@
 
 **Brian Martin**¹, **Stephen Lipmann**¹
 
-¹ Oracle
+¹ Unaffiliated
 
-{brian.m.martin, stephen.lipmann}@oracle.com
+brian@brianmartin.com,shlipmann@gmail.com
 
 ---
 
@@ -112,9 +112,9 @@ This language—intended to suppress Claude's default tool-calling—created asy
 | Structured Recall | 80.8% (206/255) | 100.0% (5/5)* |
 | Difference | +9.0pp (p < 0.01) | 0.0pp |
 
-*Limited validation run (n=1 scenario, 5 trials per condition).
+*Limited validation run (n=1 scenario, 5 trials per condition). This preliminary result motivated Study 2 but should not be interpreted as definitive evidence.
 
-**Conclusion**: The 9pp effect was entirely explained by prompt asymmetry, not format. This motivated our more careful Study 2 design.
+**Conclusion**: The 9pp effect was confounded with prompt asymmetry. While the preliminary correction suggests asymmetry may explain the original effect, this result does not constitute definitive evidence. Regardless of the causal mechanism, the confound motivated our more rigorous Study 2 design.
 
 ---
 
@@ -144,6 +144,8 @@ We constructed 75 scenarios across four ambiguity levels:
 | BORDERLINE | 15 | Genuinely ambiguous—reasonable disagreement expected |
 | CONTROL | 23 | No signal present (false positive test) |
 
+Three IMPLICIT scenarios were flagged during piloting as potentially too subtle (difficulty="HARD"). Following transparency principles, we report primary results including all scenarios, with sensitivity analyses in §5.5.
+
 Each scenario was run 10 times per condition, yielding 750 paired trials. Ground truth comprises EXPLICIT and IMPLICIT scenarios (N=370).
 
 ### 4.3 Measurement
@@ -167,9 +169,9 @@ Table 1 shows detection rates across conditions.
 | Natural Language | 87.0% | 322/370 |
 | Structured | 81.4% | 301/370 |
 | Difference | +5.7pp | — |
-| McNemar p | 0.018 | — |
+| McNemar p | 0.005 | — |
 
-The model detects signals at somewhat higher rates in NL (87.0% vs 81.4%), with the difference reaching significance (p=0.018). However, this is substantially smaller than effects reported in prior work, and detection in the structured condition remains high.
+The model detects signals at somewhat higher rates in NL (87.0% vs 81.4%), with the difference reaching significance (p=0.005). However, this is substantially smaller than effects reported in prior work, and detection in the structured condition remains high.
 
 ### 4.5 Format Friction: The Compliance Gap
 
@@ -214,7 +216,7 @@ We initially analyzed results using regex-based detection for both conditions:
 | NL recall | 76.2% | 87.0% |
 | ST recall | 69.2% | 81.4% |
 | Gap (NL - ST) | +7.0pp | +5.7pp |
-| McNemar p | 0.003 | 0.018 |
+| McNemar p | 0.001 | 0.005 |
 
 The cross-condition gap differs between instruments. Regex undercounts NL responses that acknowledge signals without expected keywords, while XML parsing is near-perfect for structured responses. This measurement asymmetry motivates our focus on within-condition analysis (§4.5).
 
@@ -304,9 +306,11 @@ From the model's perspective, this may be appropriate—hedging under uncertaint
 
 3. **Judge-human disagreement on implicit signals**: While overall κ = 0.81 indicates substantial agreement, the IMPLICIT stratum showed lower agreement (κ = 0.41). Human annotators tended to not count cases where the model addressed an implicit issue helpfully without explicitly acknowledging it as a "signal." This reflects genuine ambiguity in what constitutes signal detection versus signal handling—a distinction our binary judge cannot fully capture.
 
-4. **No baseline compliance check**: The 69.2% compliance rate may reflect general XML challenges. However, 0pp friction on explicit signals suggests compliance is achievable when signals are unambiguous.
+4. **Scenario difficulty variation**: Three IMPLICIT scenarios were flagged during piloting as potentially too subtle (see code annotations). These were retained in the primary analysis. Sensitivity analysis: excluding these 30 trials, format friction drops from 12.2pp to 10.3pp—the finding remains robust. Exploratory analysis: examining HARD scenarios in isolation (n=30) reveals extreme friction (33.3pp) with 0% XML compliance despite 33% detection, suggesting format friction scales with signal ambiguity. This exploratory observation warrants further investigation but should be interpreted cautiously given the small sample.
 
-5. **Two-pass tested on single task**: Recovery rates (65%/39%) are from the signal detection task only. Generalization to other tool-calling domains (API calls, memory operations) is untested. Additionally, extraction models were not fine-tuned—task-specific training would likely improve 7B performance.
+5. **No baseline compliance check**: The 69.2% compliance rate may reflect general XML challenges. However, 0pp friction on explicit signals suggests compliance is achievable when signals are unambiguous.
+
+6. **Two-pass tested on single task**: Recovery rates (65%/39%) are from the signal detection task only. Generalization to other tool-calling domains (API calls, memory operations) is untested. Additionally, extraction models were not fine-tuned—task-specific training would likely improve 7B performance.
 
 ---
 
@@ -363,6 +367,8 @@ If no signal is present, respond normally to the user's message.
 When you detect frustration, urgency, or a blocking issue, acknowledge it
 naturally in your response.
 
+Signal types: frustration, urgency, blocking_issue
+
 Examples:
 - "I can see this has been frustrating—let me help sort this out."
 - "This sounds urgent. Let me look into it right away."
@@ -376,6 +382,8 @@ Examples:
 When you detect frustration, urgency, or a blocking issue, mark it using:
 
     <signal type="<type>">reason</signal>
+
+Signal types: frustration, urgency, blocking_issue
 
 Examples:
 - <signal type="frustration">Third regression this sprint</signal>

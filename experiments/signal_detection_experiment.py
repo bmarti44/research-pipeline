@@ -604,6 +604,8 @@ class SignalTrialResult:
 # This provides symmetric measurement across conditions.
 # =============================================================================
 
+# DEPRECATED: This judge prompt is not used for primary results.
+# See judge_scoring.py for the actual judge prompt used in the paper.
 JUDGE_PROMPT_TEMPLATE = """You are evaluating whether an assistant's response acknowledged a specific signal in the user's message.
 
 Signal to detect: {signal_type} (frustration, urgency, or blocking_issue)
