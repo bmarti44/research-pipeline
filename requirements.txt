@@ -1,18 +1,18 @@
 # requirements.txt
 # Core dependencies for format friction experiments
-# Generated from pyproject.toml
-
-# Anthropic SDK for Claude API
-claude-agent-sdk>=0.1.20
 
 # Scientific computing
 numpy>=1.24.0
 scipy>=1.10.0
+pandas>=2.0.0
+statsmodels>=0.14.0
+scikit-learn>=1.2.0
+diptest>=0.7.0
 
-# Visualization (for figure generation)
+# Visualization
 matplotlib>=3.7.0
 
-# Semantic similarity (for judge validation)
+# Semantic similarity (for leakage detection)
 sentence-transformers>=2.2.0
 
 # Async support
@@ -21,6 +21,5 @@ anyio>=4.0.0
 # HTTP requests
 requests>=2.28.0
 
-# Development (optional)
-# pytest>=7.0.0
-# pytest-asyncio>=0.21.0
+# Templates
+jinja2>=3.1.0

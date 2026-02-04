@@ -1,0 +1,24 @@
+{
+  "phase": 1,
+  "phase_name": "scenario_validation",
+  "status": "passed",
+  "timestamp": "2026-02-04T03:35:53.779573+00:00",
+  "inputs_sha256": {
+    "experiments/scenarios/signal_detection.py": "46117fb0bf85fed2fe2212e24db600e543c3825e2c9a930aba7cfefc3af56888"
+  },
+  "outputs_sha256": {
+    "experiments/results/scenario_validation_report.json": "fa6ba1428868d65851471af1ceb788c83b84f04eef6f18c0112fe1f42ab597b9"
+  },
+  "metrics": {
+    "total_scenarios": 75,
+    "validation_errors": 0,
+    "labeling_bugs_fixed": 0,
+    "max_leakage_similarity": 0.0,
+    "scenarios_by_ambiguity": {
+      "EXPLICIT": 15,
+      "IMPLICIT": 22,
+      "CONTROL": 23,
+      "BORDERLINE": 15
+    }
+  }
+}

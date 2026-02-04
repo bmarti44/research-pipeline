@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-02-04T03:35:53.779221+00:00",
+  "scenarios": 75,
+  "errors": [],
+  "warnings": [],
+  "scenarios_by_ambiguity": {
+    "EXPLICIT": 15,
+    "IMPLICIT": 22,
+    "CONTROL": 23,
+    "BORDERLINE": 15
+  },
+  "max_leakage_similarity": 0.0
+}

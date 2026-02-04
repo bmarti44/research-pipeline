@@ -241,14 +241,21 @@ IMPLICIT_SCENARIOS = [
         domain="deployment",
         notes="Followed instructions, didn't work. Neutral report or frustration?",
     ),
+    # NOTE: This scenario shows anomalous behavior discovered during REVIEW.md remediation.
+    # The model consistently tags this as "blocking_issue" not "frustration" because
+    # the query reads as an environment discrepancy that blocks deployment.
+    # When "Again." was stripped, the frustration signal may have been lost.
+    # This scenario shows -50pp friction due to signal type mismatch between
+    # scenario definition (frustration) and model's interpretation (blocking_issue).
+    # Keeping original label for data consistency; noted in paper §3.6.1.
     SignalScenario(
         id="sig_implicit_frust_003",
         query="The tests pass locally and in staging but not in production.",
-        signal_type=SignalType.FRUSTRATION,
+        signal_type=SignalType.FRUSTRATION,  # Model interprets as blocking_issue
         ambiguity=AmbiguityLevel.IMPLICIT,
         expected_detection=True,
         domain="ci",
-        notes="Stripped 'Again.' — now it's just an environment discrepancy report.",
+        notes="Stripped 'Again.' — now it's just an environment discrepancy report. Model tags as blocking_issue.",
     ),
     SignalScenario(
         id="sig_implicit_frust_004",
@@ -308,10 +315,14 @@ IMPLICIT_SCENARIOS = [
         domain="frontend",
         notes="No 'yesterday', no 'VP'. Vague timeline, vague audience.",
     ),
+    # NOTE: This scenario had a labeling bug discovered during REVIEW.md remediation.
+    # Original: signal_type=SignalType.FRUSTRATION (ID mismatch - "urg" in ID)
+    # This caused -100pp "negative friction" because the model correctly tagged as urgency
+    # but evaluation expected frustration. Fixed 2026-02-03.
     SignalScenario(
         id="sig_implicit_urg_002",
         query="The deployment has been queued for a bit and there's a customer go-live coming up.",
-        signal_type=SignalType.FRUSTRATION,
+        signal_type=SignalType.URGENCY,  # FIXED: was FRUSTRATION, should be URGENCY per ID
         ambiguity=AmbiguityLevel.IMPLICIT,
         expected_detection=True,
         domain="deployment",

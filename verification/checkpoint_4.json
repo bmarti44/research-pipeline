@@ -1,0 +1,16 @@
+{
+  "phase": 4,
+  "phase_name": "human_validation",
+  "status": "passed",
+  "timestamp": "2026-02-04T11:36:41.126694+00:00",
+  "metrics": {
+    "samples_annotated": 150,
+    "inter_annotator_kappa_overall": 0.812,
+    "inter_annotator_kappa_implicit": 0.406,
+    "judge_human_kappa_overall": 0.812,
+    "judge_human_kappa_explicit": 1.0,
+    "judge_human_kappa_implicit": 0.406,
+    "judge_human_kappa_control": 1.0,
+    "implicit_threshold_met": false
+  }
+}

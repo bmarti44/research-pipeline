@@ -1,0 +1,54 @@
+{
+  "primary": {
+    "hypothesis": "H1",
+    "test": "one-sided sign test",
+    "n_positive": 11,
+    "n_negative": 2,
+    "n_zero": 9,
+    "n_total": 13,
+    "p_value": 0.01123046875,
+    "significant": true
+  },
+  "secondary": {
+    "h2": {
+      "mean_friction": 0.0,
+      "n_nonzero": 0,
+      "zero_friction_confirmed": true
+    }
+  },
+  "bootstrap_ci": {
+    "mean": 20.454545454545453,
+    "median": 5.000000000000004,
+    "lower": 0.9090909090909096,
+    "upper": 39.09090909090909,
+    "n_bootstrap": 10000,
+    "seed": 42
+  },
+  "distribution": {
+    "mean": 20.454545454545453,
+    "median": 5.000000000000004,
+    "std": 44.87125752713106,
+    "iqr": 62.5,
+    "min": -100.0,
+    "max": 90.0,
+    "percentiles": {
+      "p10": 0.0,
+      "p25": 0.0,
+      "p50": 5.000000000000004,
+      "p75": 62.5,
+      "p90": 80.0
+    },
+    "n_zero": 9,
+    "n_severe": 7,
+    "pct_zero": 40.909090909090914,
+    "pct_severe": 31.818181818181817,
+    "dip_statistic": 0.0,
+    "dip_pvalue": 1.0
+  },
+  "scenario_count": {
+    "implicit": 22,
+    "explicit": 15,
+    "total": 37
+  },
+  "seed": 42
+}

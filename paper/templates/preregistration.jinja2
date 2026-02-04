@@ -1,0 +1,107 @@
+# Pre-Registration: {{ title }}
+
+**Title**: {{ title }}
+
+**Date**: {{ date }}
+
+**Authors**: {{ authors | default("[Authors]") }}
+
+---
+
+## 1. Study Information
+
+### Research Questions
+{% for q in research_questions | default(["Do LLMs detect implicit user signals but fail to report them in structured format?", "Is this 'format friction' phenomenon robust to cross-family judge validation?", "Does format friction generalize across model families?"]) %}
+{{ loop.index }}. {{ q }}
+{% endfor %}
+
+---
+
+## 2. Hypotheses
+
+### Primary Hypothesis (H1)
+> {{ primary_hypothesis | default("On IMPLICIT scenarios, the proportion of trials where the signal is detected (by judge) but NOT reported in compliant XML format is greater than zero.") }}
+
+**Formal specification**:
+- Unit of analysis: {{ unit_of_analysis | default("Scenario (not trial)") }}
+- Test: {{ primary_test | default("One-sided sign test on scenario-level friction") }}
+- α = {{ alpha | default("0.05") }} (two-sided for secondary)
+- Minimum detectable effect: {{ min_effect | default("15pp (based on original 29pp finding)") }}
+
+### Secondary Hypotheses
+{% for h in secondary_hypotheses | default(["H2: EXPLICIT scenarios show zero friction (detection = compliance)", "H3: Cross-family judge (GPT-4) agrees with Claude judge (κ≥0.75)", "H4: Friction replicates across model families (Codex, Gemini)"]) %}
+- {{ h }}
+{% endfor %}
+
+### Exploratory Hypothesis
+- {{ exploratory_hypothesis | default("H5: Signal-type-agnostic friction shows same pattern as signal-type-specific") }}
+
+---
+
+## 3. Exclusion Criteria
+
+| Criterion | Scope | Justification |
+|-----------|-------|---------------|
+{% for exc in exclusion_criteria | default([{"criterion": "API errors", "scope": "Exclude trial", "justification": "Technical failure, not model behavior"}, {"criterion": "Empty responses", "scope": "Exclude trial", "justification": "API failure"}, {"criterion": "HARD scenarios", "scope": "Exclude 3 scenarios", "justification": "Cannot be solved by XML compliance"}]) %}
+| {{ exc.criterion }} | {{ exc.scope }} | {{ exc.justification }} |
+{% endfor %}
+
+**NO other exclusions permitted.** All scenarios with valid responses are included.
+
+---
+
+## 4. Analysis Plan
+
+### Primary Analysis
+```python
+{{ primary_analysis_code | default('''def primary_analysis(scenario_results: list[ScenarioStats]) -> HypothesisTest:
+    """Pre-registered primary analysis for H1."""
+    implicit_scenarios = [s for s in scenario_results if s.ambiguity == "IMPLICIT"]
+
+    # Compute friction per scenario
+    frictions = [s.detection_rate - s.compliance_rate for s in implicit_scenarios]
+
+    # Count positive friction scenarios
+    n_positive = sum(1 for f in frictions if f > 0)
+    n_total = len(frictions)
+
+    # One-sided sign test (H1: friction > 0)
+    from scipy.stats import binomtest
+    result = binomtest(n_positive, n_total, 0.5, alternative=\'greater\')
+
+    return HypothesisTest(
+        hypothesis="H1",
+        test="one-sided sign test",
+        n_positive=n_positive,
+        n_total=n_total,
+        p_value=result.pvalue,
+        significant=result.pvalue < 0.05
+    )''') }}
+```
+
+### Statistical Methods
+| Method | Application | Specification |
+|--------|-------------|---------------|
+{% for method in statistical_methods | default([{"method": "Sign test", "application": "Primary H1", "spec": "Scenario-level, one-sided"}, {"method": "Bootstrap CI", "application": "Effect size", "spec": "10,000 replicates, seed=42, percentile"}, {"method": "Wilson interval", "application": "Proportions", "spec": "For detection/compliance rates"}, {"method": "Cohen's κ", "application": "Agreement", "spec": "By stratum (EXPLICIT, IMPLICIT, etc.)"}, {"method": "Benjamini-Hochberg", "application": "Multiple tests", "spec": "For secondary/exploratory"}, {"method": "Dip test", "application": "Bimodality", "spec": "Hartigan's dip statistic"}]) %}
+| {{ method.method }} | {{ method.application }} | {{ method.spec }} |
+{% endfor %}
+
+---
+
+## 5. Sample Size
+
+- N = {{ n_trials | default("30") }} trials per scenario
+- {{ n_scenarios | default("75") }} scenarios total
+- {{ n_conditions | default("2") }} conditions (freeform, XML-constrained)
+- Total observations: {{ total_observations | default("4,500") }}
+
+---
+
+## 6. Locked Files
+
+The following files are locked and MUST NOT change after pre-registration:
+{% for f in locked_files | default(["paper/PREREGISTRATION.md", "experiments/run_analysis.py", "experiments/scenarios/signal_detection.py"]) %}
+- {{ f }}
+{% endfor %}
+
+SHA256 checksums recorded in: verification/preregistration_lock.json
