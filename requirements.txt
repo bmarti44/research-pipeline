@@ -15,6 +15,11 @@ matplotlib>=3.7.0
 # Semantic similarity (for leakage detection)
 sentence-transformers>=2.2.0
 
+# LLM API SDKs
+anthropic>=0.77.0
+openai>=2.0.0
+google-generativeai>=0.8.0
+
 # Async support
 anyio>=4.0.0
 

@@ -2,8 +2,7 @@
 Core modules for format friction analysis.
 
 This package provides shared utilities for statistical analysis,
-LLM judging, CLI wrappers for subscription-based model access,
-and checkpoint management.
+LLM judging, API providers for model access, and checkpoint management.
 """
 
 from .statistics import (
@@ -15,8 +14,8 @@ from .statistics import (
     compute_distribution_metrics,
 )
 from .bootstrap import bootstrap_mean_ci, bootstrap_difference_ci
-from .judge import claude_judge, gpt4_judge, agnostic_judge
-from .cli_wrappers import call_claude, call_codex, call_gemini, CLIResponse
+from .judge import claude_judge, gpt4_judge, gemini_judge, agnostic_judge, APIKeyError, APICallError
+from .api_providers import call_model, check_api_keys, list_available_models, MODELS, APIResponse
 from .checkpoint import (
     write_checkpoint,
     read_checkpoint,
@@ -38,12 +37,16 @@ __all__ = [
     # Judge
     "claude_judge",
     "gpt4_judge",
+    "gemini_judge",
     "agnostic_judge",
-    # CLI Wrappers
-    "call_claude",
-    "call_codex",
-    "call_gemini",
-    "CLIResponse",
+    "APIKeyError",
+    "APICallError",
+    # API Providers
+    "call_model",
+    "check_api_keys",
+    "list_available_models",
+    "MODELS",
+    "APIResponse",
     # Checkpoint
     "write_checkpoint",
     "read_checkpoint",

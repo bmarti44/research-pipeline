@@ -42,7 +42,7 @@ from experiments.core.checkpoint import (
     create_preregistration_lock,
     get_all_checkpoints,
 )
-from experiments.core.cli_wrappers import get_available_clis
+from experiments.core.api_providers import check_api_keys
 
 
 def cmd_generate_preregistration(args: argparse.Namespace) -> int:
@@ -85,8 +85,8 @@ def cmd_generate_preregistration(args: argparse.Namespace) -> int:
     lock_path = create_preregistration_lock(lock_files)
     print(f"Created lock file: {lock_path}")
 
-    # Check CLI availability
-    clis = get_available_clis()
+    # Check API key availability
+    api_keys = check_api_keys()
 
     write_checkpoint(
         phase=0,
@@ -99,9 +99,9 @@ def cmd_generate_preregistration(args: argparse.Namespace) -> int:
             "osf_url": args.osf_url if hasattr(args, "osf_url") and args.osf_url else None,
             "osf_url_valid": False,  # Will be updated when OSF URL provided
             "git_tag_created": False,  # Will be updated by pipeline
-            "cli_claude_available": clis.get("claude", False),
-            "cli_codex_available": clis.get("codex", False),
-            "cli_gemini_available": clis.get("gemini", False),
+            "api_anthropic_available": api_keys.get("anthropic", False),
+            "api_openai_available": api_keys.get("openai", False),
+            "api_google_available": api_keys.get("google", False),
         },
     )
 
