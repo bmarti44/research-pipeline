@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-02-04T22:06:06.234373+00:00",
+  "source_file": "experiments/results/raw/trials_run_20260204_220309_42.json",
+  "n_trials": 100,
+  "primary_analysis": {
+    "nl_n": 30,
+    "nl_correct": 30,
+    "nl_accuracy": 1.0,
+    "json_n": 70,
+    "json_correct": 70,
+    "json_accuracy": 1.0,
+    "friction_pp": 0.0,
+    "ci_lower_pp": 0.0,
+    "ci_upper_pp": 0.0,
+    "significant": false,
+    "practical_significance": false
+  },
+  "manipulation_checks": {
+    "nl_declined": 0,
+    "json_declined": 0
+  },
+  "seed": 42,
+  "n_bootstrap": 10000
+}

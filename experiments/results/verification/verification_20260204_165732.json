@@ -1,0 +1,207 @@
+{
+  "timestamp": "2026-02-04T21:57:32.682133+00:00",
+  "total_checks": 22,
+  "passed": 21,
+  "failed": 1,
+  "all_passed": false,
+  "results": [
+    {
+      "phase": "infrastructure",
+      "check_name": "rng_determinism",
+      "passed": true,
+      "expected": "identical sequences",
+      "actual": "identical",
+      "message": "RNG with same seed produces identical sequences",
+      "timestamp": "2026-02-04T21:57:32.662255+00:00"
+    },
+    {
+      "phase": "infrastructure",
+      "check_name": "bootstrap_determinism",
+      "passed": true,
+      "expected": "identical CIs",
+      "actual": "CI1=[3.7000, 7.3000], CI2=[3.7000, 7.3000]",
+      "message": "Bootstrap CIs are deterministic",
+      "timestamp": "2026-02-04T21:57:32.680804+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "deleted_cli_wrappers.cpython-312.pyc",
+      "passed": true,
+      "expected": "file deleted",
+      "actual": "deleted",
+      "message": "experiments/core/__pycache__/cli_wrappers.cpython-312.pyc correctly removed",
+      "timestamp": "2026-02-04T21:57:32.680876+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "deleted_.DS_Store",
+      "passed": true,
+      "expected": "file deleted",
+      "actual": "deleted",
+      "message": "experiments/.DS_Store correctly removed",
+      "timestamp": "2026-02-04T21:57:32.680892+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "deleted_.DS_Store",
+      "passed": true,
+      "expected": "file deleted",
+      "actual": "deleted",
+      "message": "experiments/results/.DS_Store correctly removed",
+      "timestamp": "2026-02-04T21:57:32.680906+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "created_validation",
+      "passed": true,
+      "expected": "directory exists",
+      "actual": "exists",
+      "message": "experiments/validation exists",
+      "timestamp": "2026-02-04T21:57:32.680921+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "created_analysis",
+      "passed": true,
+      "expected": "directory exists",
+      "actual": "exists",
+      "message": "experiments/analysis exists",
+      "timestamp": "2026-02-04T21:57:32.680932+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "created_pilot",
+      "passed": true,
+      "expected": "directory exists",
+      "actual": "exists",
+      "message": "experiments/results/pilot exists",
+      "timestamp": "2026-02-04T21:57:32.680941+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "created_primary",
+      "passed": true,
+      "expected": "directory exists",
+      "actual": "exists",
+      "message": "experiments/results/primary exists",
+      "timestamp": "2026-02-04T21:57:32.680950+00:00"
+    },
+    {
+      "phase": "phase0_cleanup",
+      "check_name": "created_raw",
+      "passed": true,
+      "expected": "directory exists",
+      "actual": "exists",
+      "message": "experiments/results/raw exists",
+      "timestamp": "2026-02-04T21:57:32.680959+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_api_providers",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/api_providers.py exists",
+      "timestamp": "2026-02-04T21:57:32.680971+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_bootstrap",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/bootstrap.py exists",
+      "timestamp": "2026-02-04T21:57:32.680981+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_statistics",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/statistics.py exists",
+      "timestamp": "2026-02-04T21:57:32.680991+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_config",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/config.py exists",
+      "timestamp": "2026-02-04T21:57:32.681000+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_tools",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/tools.py exists",
+      "timestamp": "2026-02-04T21:57:32.681008+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_prompts",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/prompts.py exists",
+      "timestamp": "2026-02-04T21:57:32.681018+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_extractor",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/extractor.py exists",
+      "timestamp": "2026-02-04T21:57:32.681028+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_judge",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/judge.py exists",
+      "timestamp": "2026-02-04T21:57:32.681037+00:00"
+    },
+    {
+      "phase": "phase1_infrastructure",
+      "check_name": "module_harness",
+      "passed": true,
+      "expected": "file exists",
+      "actual": "exists",
+      "message": "experiments/core/harness.py exists",
+      "timestamp": "2026-02-04T21:57:32.681045+00:00"
+    },
+    {
+      "phase": "phase2_validation",
+      "check_name": "extraction_gt_count",
+      "passed": true,
+      "expected": ">= 50",
+      "actual": "55",
+      "message": "Extraction ground truth has 55 examples",
+      "timestamp": "2026-02-04T21:57:32.681520+00:00"
+    },
+    {
+      "phase": "phase2_validation",
+      "check_name": "judgment_gt_count",
+      "passed": true,
+      "expected": ">= 100",
+      "actual": "105",
+      "message": "Judgment ground truth has 105 examples",
+      "timestamp": "2026-02-04T21:57:32.682075+00:00"
+    },
+    {
+      "phase": "reproducibility",
+      "check_name": "environment_locked",
+      "passed": false,
+      "expected": "both files exist",
+      "actual": "env=False, config=False",
+      "message": "Environment not locked!",
+      "timestamp": "2026-02-04T21:57:32.682127+00:00"
+    }
+  ]
+}

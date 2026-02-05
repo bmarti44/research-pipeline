@@ -37,12 +37,12 @@ def bootstrap_mean_ci(
             "seed": seed,
         }
 
-    np.random.seed(seed)
+    rng = np.random.default_rng(seed)
     values_arr = np.array(values)
     n = len(values_arr)
 
     bootstrap_means = np.array(
-        [np.mean(np.random.choice(values_arr, size=n, replace=True)) for _ in range(n_bootstrap)]
+        [np.mean(rng.choice(values_arr, size=n, replace=True)) for _ in range(n_bootstrap)]
     )
 
     alpha = 1 - ci
@@ -90,7 +90,7 @@ def bootstrap_difference_ci(
             "seed": seed,
         }
 
-    np.random.seed(seed)
+    rng = np.random.default_rng(seed)
     arr1 = np.array(values1)
     arr2 = np.array(values2)
 
@@ -101,15 +101,15 @@ def bootstrap_difference_ci(
         n = len(arr1)
         bootstrap_diffs = []
         for _ in range(n_bootstrap):
-            indices = np.random.choice(n, size=n, replace=True)
+            indices = rng.choice(n, size=n, replace=True)
             diff = np.mean(arr1[indices]) - np.mean(arr2[indices])
             bootstrap_diffs.append(diff)
     else:
         # Unpaired bootstrap: resample each independently
         bootstrap_diffs = []
         for _ in range(n_bootstrap):
-            mean1 = np.mean(np.random.choice(arr1, size=len(arr1), replace=True))
-            mean2 = np.mean(np.random.choice(arr2, size=len(arr2), replace=True))
+            mean1 = np.mean(rng.choice(arr1, size=len(arr1), replace=True))
+            mean2 = np.mean(rng.choice(arr2, size=len(arr2), replace=True))
             bootstrap_diffs.append(mean1 - mean2)
 
     bootstrap_diffs = np.array(bootstrap_diffs)
@@ -159,13 +159,13 @@ def bootstrap_proportion_ci(
             "seed": seed,
         }
 
-    np.random.seed(seed)
+    rng = np.random.default_rng(seed)
 
     # Create binary array
     values = np.array([1] * successes + [0] * (total - successes))
 
     bootstrap_props = np.array(
-        [np.mean(np.random.choice(values, size=total, replace=True)) for _ in range(n_bootstrap)]
+        [np.mean(rng.choice(values, size=total, replace=True)) for _ in range(n_bootstrap)]
     )
 
     alpha = 1 - ci

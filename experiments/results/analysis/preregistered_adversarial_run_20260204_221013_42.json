@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-02-04T22:12:32.426616+00:00",
+  "source_file": "experiments/results/raw/adversarial_run_20260204_221013_42.json",
+  "seed": 42,
+  "n_bootstrap": 10000,
+  "primary": {
+    "n_nl": 35,
+    "n_json": 30,
+    "n_tasks_nl": 7,
+    "n_tasks_json": 6,
+    "accuracy_nl": 0.3142857142857143,
+    "accuracy_json": 0.6666666666666666,
+    "risk_difference": -0.35238095238095235,
+    "risk_difference_ci": [
+      -0.5714285714285715,
+      -0.12857142857142856
+    ],
+    "relative_risk": 0.4714285714285714,
+    "relative_risk_ci": [
+      0.27174568040857466,
+      0.8178415113168841
+    ],
+    "z_statistic": -2.8355900738887723,
+    "p_value": 0.0045741114571533625,
+    "significant_at_05": 

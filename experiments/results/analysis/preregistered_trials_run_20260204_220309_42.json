@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-02-04T22:08:16.806994+00:00",
+  "source_file": "experiments/results/raw/trials_run_20260204_220309_42.json",
+  "seed": 42,
+  "n_bootstrap": 10000,
+  "primary": {
+    "n_nl": 30,
+    "n_json": 70,
+    "n_tasks_nl": 3,
+    "n_tasks_json": 7,
+    "accuracy_nl": 1.0,
+    "accuracy_json": 1.0,
+    "risk_difference": 0.0,
+    "risk_difference_ci": [
+      0.0,
+      0.0
+    ],
+    "relative_risk": 1.0,
+    "relative_risk_ci": [
+      0.0,
+      Infinity
+    ],
+    "z_statistic": 0.0,
+    "p_value": 1.0,
+    "significant_at_05": false,
+    "friction_pp": 0.0,
+    "practically_significant": false,
+    "icc": 0.0,
+    "trial_level_valid": true
+  },
+  "icc": {
+    "icc": 0.0,
+    "n_tasks": 10,
+    "n_trials": 100,
+    "mean_cluster_size": 10.0,
+    "interpretation": "trial_level_valid",
+    "design_effect": 1.0,
+    "effective_n": 100.0
+  },
+  "task_level": {
+    "accuracy_nl": 1.0,
+    "accuracy_json": 1.0,
+    "friction_pp": 0.0,
+    "ci": [
+      0.0,
+      0.0
+    ]
+  },
+  "trial_level": {
+    "accuracy_nl": 1.0,
+    "accuracy_json": 1.0,
+    "friction_pp": 0.0,
+    "ci": [
+      0.0,
+      0.0
+    ]
+  },
+  "manipulation_checks": {
+    "nl_declined": 0,
+    "nl_declined_rate": 0.0,
+    "json_declined": 0,
+    "json_declined_rate": 0.0,
+    "json_attempted_json": 70,
+    "json_syntactically_valid": 70,
+    "json_valid_rate": 1.0,
+    "nl_correct_conditional": 30,
+    "nl_n_conditional": 30,
+    "nl_accuracy_conditional": 1.0,
+    "json_correct_conditional": 70,
+    "json_n_conditional": 70,
+    "json_accuracy_conditional": 1.0,
+    "conditional_friction_pp": 0.0
+  },
+  "notes": []
+}

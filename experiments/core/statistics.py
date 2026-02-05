@@ -90,12 +90,12 @@ def bootstrap_ci(
     if not values:
         return (0.0, 0.0)
 
-    np.random.seed(seed)
+    rng = np.random.default_rng(seed)
     values_arr = np.array(values)
     n = len(values_arr)
 
     means = np.array(
-        [np.mean(np.random.choice(values_arr, size=n, replace=True)) for _ in range(n_bootstrap)]
+        [np.mean(rng.choice(values_arr, size=n, replace=True)) for _ in range(n_bootstrap)]
     )
 
     lower = np.percentile(means, (1 - ci) / 2 * 100)
