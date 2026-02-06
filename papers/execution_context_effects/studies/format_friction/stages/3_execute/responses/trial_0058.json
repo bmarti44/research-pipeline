@@ -1,0 +1,16 @@
+{
+  "trial_id": "trial_0058",
+  "task_id": "edit_001",
+  "condition": "json_only",
+  "prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+  "system_prompt": "You are an assistant with access to the following tools:\n\n- read_file: Read the contents of a file\n- write_file: Write content to a file (creates or overwrites)\n- edit_file: Edit an existing file by replacing text\n\nTool schemas:\n[\n  {\n    \"name\": \"read_file\",\n    \"description\": \"Read the contents of a file\",\n    \"parameters\": {\n      \"path\": {\n        \"type\": \"string\",\n        \"description\": \"Path to the file\"\n      }\n    }\n  },\n  {\n    \"name\": \"write_file\",\n    \"description\": \"Write content to ...",
+  "response": "{\"tool\": \"edit_file\", \"args\": {\"path\": \"config.yaml\", \"old_text\": \"debug: false\", \"new_text\": \"debug: true\"}}",
+  "success": true,
+  "error": null,
+  "model": "claude-sonnet-4-20250514",
+  "timestamp": "2026-02-05T03:58:42.411843+00:00",
+  "latency_ms": 1547,
+  "input_tokens": 444,
+  "output_tokens": 43,
+  "retry_count": 0
+}

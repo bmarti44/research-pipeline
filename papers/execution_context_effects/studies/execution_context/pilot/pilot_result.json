@@ -1,0 +1,24 @@
+{
+  "passed": false,
+  "criteria_met": {
+    "min_trials": false,
+    "min_response_rate": true,
+    "max_error_rate": true,
+    "min_evaluation_determinism": true
+  },
+  "messages": [
+    "Insufficient trials: 16 < 20",
+    "Critical pilot criteria not met. Review and fix issues before proceeding."
+  ],
+  "recommendation": "abort",
+  "observed_metrics": {
+    "trial_count": 16,
+    "response_rate": 1.0,
+    "error_rate": 0.0,
+    "successful_responses": 16,
+    "evaluation_deterministic": true,
+    "effect_size": 0.0,
+    "p_value": 1.0
+  },
+  "timestamp": "2026-02-05T03:38:26.114738+00:00"
+}

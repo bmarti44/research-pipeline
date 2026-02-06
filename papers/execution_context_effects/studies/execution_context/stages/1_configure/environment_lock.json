@@ -1,0 +1,10 @@
+{
+  "python_version": "3.12.11",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "packages": {
+    "anthropic": "0.77.1",
+    "scipy": "1.17.0",
+    "numpy": "2.4.2"
+  },
+  "timestamp": "2026-02-05T03:38:46.284950+00:00"
+}

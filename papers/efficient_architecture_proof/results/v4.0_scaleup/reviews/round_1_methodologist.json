@@ -1,0 +1,124 @@
+{
+  "reviewer": "Methodologist",
+  "checkpoint": "post_statistical_analysis",
+  "round": 1,
+  "timestamp": "2026-02-06T00:00:00Z",
+  "files_reviewed": [
+    "/Users/briamart/github/tool-calling/papers/efficient_architecture_proof/results/v4.0_scaleup/statistical_analysis.md",
+    "/Users/briamart/github/tool-calling/papers/efficient_architecture_proof/results/v4.0_scaleup/all_results_final.json",
+    "/Users/briamart/github/tool-calling/papers/efficient_architecture_proof/results/v4.0_scaleup/baseline_1000/seed_42/baseline_results.json",
+    "/Users/briamart/github/tool-calling/papers/efficient_architecture_proof/results/v4.0_scaleup/coconut_warmstart/seed_42/coconut_only_results.json"
+  ],
+  "findings": [
+    {
+      "id": "F001",
+      "severity": "critical",
+      "category": "design",
+      "description": "Warm-start design creates fundamental confound: coconut_warmstart is NOT independent of baseline_1000. By initializing COCONUT from the baseline_1000 checkpoint, you are comparing 'baseline trained for 1000 steps' against 'baseline trained for 1000 steps THEN coconut trained for 1000 more steps'. This is a sequential comparison, not a controlled experiment.",
+      "location": "Statistical analysis section 3.1, coconut_warmstart condition definition",
+      "recommendation": "REQUIRED: Add a condition 'coconut_from_scratch' (n=5 minimum) trained for 2000 steps total with COCONUT from initialization. This is the only valid comparison to baseline_2000. The warm-start comparison answers a DIFFERENT question: 'Can we improve an already-trained baseline by adding COCONUT?' which is valuable but distinct from 'Does COCONUT architecture outperform baseline architecture?'",
+      "resolution_required": true
+    },
+    {
+      "id": "F002",
+      "severity": "critical",
+      "category": "design",
+      "description": "Sample size imbalance creates unequal statistical power across comparisons. baseline_1000, coconut_warmstart, and full_abc_warmstart all have n=10, but critical control conditions (baseline_6000, baseline_2000_dropout, baseline_2000) have only n=5-6. This means conclusions about FLOP confound and regularization have 44% less power than the main effect.",
+      "location": "Section 1: Descriptive Statistics",
+      "recommendation": "For publication-ready results: Run additional seeds to bring ALL conditions to n=10. Priority order: (1) baseline_6000 (FLOP control), (2) baseline_2000_dropout (regularization control), (3) baseline_2000. Alternatively, clearly document in limitations that control conditions are underpowered and effect sizes may be underestimated.",
+      "resolution_required": true
+    },
+    {
+      "id": "F003",
+      "severity": "major",
+      "category": "design",
+      "description": "FLOP accounting conflates training steps with forward passes. baseline_6000 performs 6000 optimizer steps with 1 forward pass each. coconut_warmstart performs 1000 baseline steps + 1000 COCONUT steps where each COCONUT step includes 5 forward passes for the iterative reasoning. These are NOT equivalent computationally because: (a) COCONUT's 5 passes are serial within a single batch, not 5 independent batches, (b) gradient updates happen at different frequencies (every step vs every 5 passes), (c) learning rate schedules differ.",
+      "location": "Section 3.1: Compute Breakdown table",
+      "recommendation": "Clarify that 'FLOP-matched' means 'total forward passes matched' but NOT 'training trajectory matched'. The fact that baseline_6000 overfits doesn't prove COCONUT is better—it proves that naively extending baseline training duration is harmful. To properly control for compute: (1) Report wall-clock time per condition, (2) Compare baseline_1000 to coconut_warmstart at matched wall-clock time, OR (3) Run baseline_adaptive that uses early stopping at its best checkpoint (already partially addressed with 'best-ever' analysis in 3.3).",
+      "resolution_required": true
+    },
+    {
+      "id": "F004",
+      "severity": "major",
+      "category": "design",
+      "description": "Missing factorial design prevents understanding component contributions. Only 3 of 8 possible conditions tested: baseline (000), coconut_only (100), full_abc (111). Missing: memory_only (010), mod_only (001), coconut+memory (110), coconut+mod (101), memory+mod (011). Cannot determine whether synergy claim (F099-F100) is due to specific interactions or general additivity.",
+      "location": "Entire experimental design",
+      "recommendation": "For full paper: Run missing conditions (minimum n=5 each). For current analysis: Change claim from 'synergy confirmed' to 'full A+B+C provides additional benefit beyond A alone; specific component contributions require factorial design'. Acknowledge in limitations that you cannot distinguish between: (a) COCONUT+MoD synergy, (b) COCONUT+Memory synergy, (c) MoD+Memory synergy, (d) three-way interaction.",
+      "resolution_required": true
+    },
+    {
+      "id": "F005",
+      "severity": "major",
+      "category": "analysis",
+      "description": "Comparing coconut_warmstart to baseline_1000 violates independence assumption of t-test. coconut_warmstart literally CONTAINS baseline_1000 as its first 1000 steps (warm-start initialization). These samples are not independent; they share common history. The appropriate comparison is either: (a) paired t-test (treating each seed as a pair: baseline_1000 vs coconut_warmstart from same seed), OR (b) repeated measures ANOVA acknowledging within-seed correlation.",
+      "location": "Section 2: Pairwise t-tests, line 32",
+      "recommendation": "Re-run analysis as PAIRED t-test since the same 10 seeds are used for both conditions and coconut starts from baseline checkpoints. Report: 'paired t(9) = X, p = Y, d = Z'. This will likely INCREASE power (reduce p-value) because within-seed variance is removed, making the finding even stronger. Update statistical analysis document with corrected test.",
+      "resolution_required": true
+    },
+    {
+      "id": "F006",
+      "severity": "major",
+      "category": "analysis",
+      "description": "Dropout control comparison is underpowered and methodologically flawed. With n=5, you have only 61% power to detect a medium effect (d=0.5) at alpha=0.05. The conclusion 'not regularization' is premature. Additionally, comparing baseline_2000_dropout (2000 steps, dropout=0.2) to baseline_1000 (1000 steps, dropout=0.1) confounds dropout with training duration.",
+      "location": "Section 4: Regularization Control",
+      "recommendation": "CRITICAL FIX: Compare baseline_1000 with dropout=0.1 (current) vs baseline_1000_dropout with dropout=0.2 (NEW condition, same 1000 steps). Current comparison is invalid. Alternative: compare baseline_2000 (dropout=0.1) vs baseline_2000_dropout (dropout=0.2), both at 2000 steps. As currently designed, you cannot conclude anything about regularization.",
+      "resolution_required": true
+    },
+    {
+      "id": "F007",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "Multiple comparisons correction (Holm-Bonferroni) is appropriate but inflates Type I error protection beyond what's needed. With 6 comparisons and family-wise alpha=0.05, you are testing at effective alpha levels from 0.0083 to 0.05. Given that this is exploratory research (not clinical trials), consider also reporting uncorrected p-values with a note, or using False Discovery Rate (FDR) control instead.",
+      "location": "Section 2: Pairwise t-tests header",
+      "recommendation": "Keep Holm-Bonferroni as primary analysis (conservative, defensible). In supplementary materials or footnote, report: 'All effects remain significant even without correction for multiple comparisons (all uncorrected p < 0.001)' to demonstrate robustness. Consider FDR (Benjamini-Hochberg) as sensitivity analysis.",
+      "resolution_required": false
+    },
+    {
+      "id": "F008",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "Effect sizes are reported but lack interpretation. Cohen's d values of -6.28, -19.56, and 22.31 are far beyond typical 'large effect' thresholds (d > 0.8). These extremely large effects suggest either: (a) highly deterministic phenomenon with minimal noise, (b) measurement with very low variance, or (c) potential data quality issue. No discussion of whether these effect sizes are plausible given the domain.",
+      "location": "Section 2: Cohen's d column",
+      "recommendation": "Add interpretation: 'Effect sizes are exceptionally large (d > 6) due to low inter-seed variance (std < 0.05 PPL) relative to mean differences (0.1-0.6 PPL). This indicates highly reproducible effects across random seeds, consistent with deterministic architecture differences rather than stochastic training noise.' Verify that low variance is not due to computational artifact (e.g., insufficient model capacity leading to convergence to same local minimum).",
+      "resolution_required": false
+    },
+    {
+      "id": "F009",
+      "severity": "minor",
+      "category": "design",
+      "description": "Best-ever comparison (Section 3.3) is exploratory and post-hoc. While valuable, extracting 'best-ever PPL' from the training curves was not preregistered and involves implicit multiple testing (choosing the best of N checkpoints). This inflates the chance of finding spurious differences.",
+      "location": "Section 3.3: Best-Ever Comparison",
+      "recommendation": "Label this analysis as 'exploratory post-hoc analysis' in the manuscript. Do not use it as primary evidence. Keep it as supplementary support for the claim that even with optimal early stopping, baseline cannot match COCONUT. Consider formal checkpoint selection procedure (e.g., validation-set-based early stopping with fixed lookback window) if this analysis is to be promoted to confirmatory status.",
+      "resolution_required": false
+    },
+    {
+      "id": "F010",
+      "severity": "suggestion",
+      "category": "design",
+      "description": "Seed selection appears arbitrary but is actually shared across conditions. Using the same 10 seeds (42, 123, 456, 789, 1001, 1234, 2345, 3456, 4567, 5678) for baseline_1000, coconut_warmstart, and full_abc_warmstart is excellent for paired analysis (see F005). However, this is not documented in the methods.",
+      "location": "Section 7: Raw Data, seed listings",
+      "recommendation": "In methods section, explicitly state: 'To enable paired statistical comparisons and control for seed-specific variance, all main conditions used identical random seeds: [list]. Control conditions used a subset of these seeds due to computational constraints.' This transparency strengthens the design rationale.",
+      "resolution_required": false
+    },
+    {
+      "id": "F011",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "One-way ANOVA (Section 6) is redundant given the pairwise t-tests. ANOVA tests 'are any groups different?' but you already know they are from the t-tests. The ANOVA does not add information and may confuse readers about the analysis strategy.",
+      "location": "Section 6: One-Way ANOVA",
+      "recommendation": "Remove this section or move to supplementary materials. If retained, add clarification: 'One-way ANOVA confirms omnibus effect (at least one condition differs); pairwise t-tests (Section 2) localize specific differences.' Alternatively, use ANOVA as a gateway: 'Because ANOVA was significant, we proceeded with pairwise comparisons.'",
+      "resolution_required": false
+    },
+    {
+      "id": "F012",
+      "severity": "critical",
+      "category": "design",
+      "description": "Training stage transitions in COCONUT create internal confounds. Looking at coconut_warmstart seed 42 results, the model undergoes 4 'stages' (lines 10, 29, 69, 109, 149 in JSON) with throughput dropping from 1873 tok/sec in stage 0 to 513 tok/sec in stage 3. These stage transitions are not explained and may represent changes in the COCONUT mechanism itself (e.g., increasing numbers of reasoning passes). If stages change the computational cost or reasoning depth, then the comparison to baseline is confounded.",
+      "location": "coconut_only_results.json: n_stages=4, stage field in train_history",
+      "recommendation": "REQUIRED: Document what 'stages' are. If stages represent curriculum learning or adaptive reasoning depth, this must be described in methods. If different seeds have different numbers of stages, this is a major confound. Verify: (1) All coconut seeds have same stage structure, (2) Stages are deterministic (not adaptive to training dynamics), (3) Total forward passes accounting includes all stage-specific overhead. Add to methods: 'COCONUT training proceeds in N stages, each corresponding to [describe mechanism].'",
+      "resolution_required": true
+    }
+  ],
+  "overall_assessment": "pass_with_conditions",
+  "summary": "The experiment demonstrates compelling evidence for COCONUT's effectiveness, but has several critical methodological issues that must be addressed before publication. Most serious: (1) warm-start design conflates sequential improvement with architectural superiority, (2) sample size imbalance reduces power for critical controls, (3) regularization control is confounded, (4) paired statistical tests required due to shared seeds, (5) COCONUT 'stages' are undocumented. The baseline_6000 overfitting result is valuable but doesn't validate FLOP-matching claim due to optimizer step vs forward pass confusion. Recommend: add coconut_from_scratch condition, balance sample sizes, fix regularization control, re-run as paired tests, document COCONUT stages, and temper claims about synergy given incomplete factorial design."
+}

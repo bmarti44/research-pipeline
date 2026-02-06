@@ -1,0 +1,119 @@
+# Study: Non-Uniform Instruction Decay Across Context Length
+
+study:
+  name: instruction_decay
+  title: "Non-Uniform Instruction Decay Across Context Length"
+  version: "1.0.0"
+
+hypothesis:
+  text: |
+    As context length increases, safety/refusal instructions degrade significantly
+    slower than formatting instructions, which degrade slower than factual constraint
+    instructions. The degradation curve is non-linear with a model-specific "cliff."
+  direction: "differential"  # Different rates across categories
+  alpha: 0.05
+
+conditions:
+  # Context length levels
+  - name: context_1k
+    description: "1K tokens of padding"
+    context_tokens: 1000
+
+  - name: context_4k
+    description: "4K tokens of padding"
+    context_tokens: 4000
+
+  - name: context_16k
+    description: "16K tokens of padding"
+    context_tokens: 16000
+
+  - name: context_32k
+    description: "32K tokens of padding"
+    context_tokens: 32000
+
+  - name: context_64k
+    description: "64K tokens of padding"
+    context_tokens: 64000
+
+  - name: context_128k
+    description: "128K tokens of padding"
+    context_tokens: 128000
+
+factors:
+  - name: context_length
+    type: ordinal
+    levels: [1000, 4000, 16000, 32000, 64000, 128000]
+
+  - name: instruction_category
+    type: categorical
+    levels:
+      - safety_refusal
+      - output_formatting
+      - factual_constraints
+      - persona_maintenance
+      - tool_use_rules
+
+design:
+  type: "factorial"
+  within_subjects: true
+  trials_per_cell: 5
+  total_expected: 150  # 6 lengths × 5 categories × 5 reps
+
+models:
+  - name: "claude-sonnet-4-20250514"
+    provider: anthropic
+    temperature: 0
+    max_context: 200000
+  - name: "gpt-4o-2024-11-20"
+    provider: openai
+    temperature: 0
+    max_context: 128000
+  - name: "gemini-2.0-flash"
+    provider: google
+    temperature: 0
+    max_context: 1000000
+
+evaluation:
+  evaluator: "instruction_compliance"
+  metrics:
+    - name: compliance_rate
+      description: "Did the model follow the instruction?"
+      type: binary
+    - name: partial_compliance
+      description: "Partial compliance score (0-1)"
+      type: continuous
+    - name: instruction_acknowledged
+      description: "Did response reference the instruction?"
+      type: binary
+
+analysis:
+  primary_test: "mixed_anova"
+  secondary_tests:
+    - "trend_analysis"
+    - "pairwise_t"
+    - "cliff_detection"
+
+  comparisons:
+    - name: "safety_vs_formatting"
+      description: "Compare decay rates"
+      contrast: "safety_refusal vs output_formatting at each length"
+    - name: "formatting_vs_factual"
+      description: "Compare decay rates"
+      contrast: "output_formatting vs factual_constraints at each length"
+    - name: "cliff_detection"
+      description: "Find sharp degradation point"
+      method: "changepoint_detection"
+
+pilot:
+  enabled: true
+  fraction: 0.2
+  criteria:
+    min_trials: 30
+    response_rate: 0.95
+    variance_present: true
+
+execution:
+  batch_size: 5
+  rate_limit_rpm: 30
+  retry_attempts: 3
+  checkpoint_frequency: 5

@@ -1,0 +1,24 @@
+# Task Definitions Template
+# =========================
+#
+# Tasks are instances of pipeline.models.Task
+# Each task represents a single experimental stimulus.
+
+tasks:
+  - id: task_001
+    category: default
+    prompt: "Your task prompt here"
+    expected:
+      answer: "Expected answer"
+    metadata:
+      difficulty: easy
+
+  - id: task_002
+    category: default
+    prompt: "Another task prompt"
+    expected:
+      answer: "Another expected answer"
+    metadata:
+      difficulty: medium
+
+# Add more tasks as needed...

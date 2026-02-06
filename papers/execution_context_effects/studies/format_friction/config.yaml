@@ -1,0 +1,75 @@
+# Format Friction Study
+# Negative result: JSON serialization is NOT the problem
+
+study:
+  name: "format_friction"
+  version: "1.0.0"
+  hypothesis: |
+    LLMs exhibit higher error rates when producing structured JSON tool calls
+    compared to expressing the same intent in natural language.
+
+    STATUS: PILOT REFUTED THIS HYPOTHESIS
+    - JSON syntax validity: 100%
+    - JSON schema correctness: 98.5%
+    - True serialization failures: 1.5%
+
+    The "friction" observed was actually behavioral adaptation, not serialization failure.
+
+research_questions:
+  - id: rq1
+    question: "Does JSON format cause serialization failures that wouldn't occur with NL?"
+  - id: rq2
+    question: "What is the rate of true format friction (correct intent, incorrect output)?"
+
+conditions:
+  - name: nl_only
+    description: "Natural language description of tool call"
+    prompt_template: nl_template
+  - name: json_only
+    description: "Structured JSON tool call output"
+    prompt_template: json_template
+
+models:
+  - alias: claude-sonnet
+    provider: anthropic
+    temperature: 0.0
+
+tasks:
+  source: tasks.py
+  categories:
+    - control
+    - simple
+    - medium
+    - complex
+    - adv_json
+    - adv_escape
+    - adv_unicode
+    - adv_combined
+
+trials:
+  repetitions: 5
+  seed: 42
+  randomize_order: true
+
+evaluation:
+  source: evaluation.py
+  modes:
+    - strict
+    - intent
+    - functional
+
+analysis:
+  source: analysis.py
+  tests:
+    - name: mcnemar
+      description: "Paired comparison NL vs JSON correctness"
+    - name: two_proportion_z
+      description: "Compare signal detection rates"
+  alpha: 0.05
+
+environment:
+  python_version: "3.11"
+  required_packages:
+    - anthropic>=0.18.0
+    - scipy>=1.11.0
+    - numpy>=1.24.0

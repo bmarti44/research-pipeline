@@ -1,0 +1,57 @@
+{
+  "trial_id": "trial_0056",
+  "modes": {
+    "strict": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "edit_file",
+        "actual_args": {
+          "path": "config.yaml",
+          "old_text": "debug: false",
+          "new_text": "debug: true"
+        }
+      },
+      "format_friction": false
+    },
+    "intent": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "edit_file",
+        "actual_args": {
+          "path": "config.yaml",
+          "old_text": "debug: false",
+          "new_text": "debug: true"
+        }
+      },
+      "format_friction": false
+    },
+    "functional": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "edit_file",
+        "actual_args": {
+          "path": "config.yaml",
+          "old_text": "debug: false",
+          "new_text": "debug: true"
+        }
+      },
+      "format_friction": false
+    }
+  },
+  "timestamp": "2026-02-05T03:45:36.303727+00:00"
+}

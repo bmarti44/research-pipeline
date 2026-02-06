@@ -1,0 +1,75 @@
+# Paper: Persona-Induced Reasoning Degradation and Stereotype Activation
+
+paper:
+  title: "Persona-Induced Reasoning Degradation Is Mediated by Stereotype Activation, Not Cognitive Load"
+  short_title: "Persona Stereotype Mediation"
+
+  authors:
+    - name: "Author Name"
+      affiliation: "Institution"
+      email: "author@example.com"
+      corresponding: true
+
+  abstract: |
+    We investigate whether persona-induced reasoning degradation in LLMs is caused by
+    stereotype activation or cognitive load from additional prompt text. In a preregistered
+    study using 8 demographic personas × 5 persona conditions × 200 reasoning questions,
+    we find that degradation is primarily mediated by stereotype activation: personas with
+    counter-stereotypical expertise (e.g., "elderly mathematician") show significantly
+    less degradation than demographic-only personas, while nonsense control text of equal
+    length shows no degradation. This supports the stereotype activation mechanism over
+    cognitive load, with direct implications for persona-based chatbot design: always pair
+    demographic personas with capability descriptors.
+
+  keywords:
+    - persona prompting
+    - stereotypes
+    - reasoning degradation
+    - AI bias
+    - prompt engineering
+
+  version: "1.0.0"
+  created: "2026-02-05"
+  status: "designed"
+
+studies:
+  - name: stereotype_mediation
+    role: "Study 1"
+    title: "Stereotype vs Cognitive Load in Persona Degradation"
+    hypothesis: |
+      Persona-induced reasoning degradation is eliminated when demographic
+      personas include counter-stereotypical expertise, supporting stereotype
+      activation over cognitive load as the mechanism.
+    status: "designed"
+    finding: null
+
+narrative:
+  story_arc: |
+    1. Persona prompting is common in chatbots and simulations
+    2. Prior work shows up to 70% reasoning degradation with some personas
+    3. Two competing explanations: cognitive load vs stereotype activation
+    4. We use counter-stereotypical expertise to disentangle mechanisms
+    5. Find stereotype activation is primary driver; fix is to pair with capability descriptors
+
+  key_contribution: |
+    Mechanistic evidence that persona degradation is caused by stereotype activation,
+    not cognitive load, with a practical fix (capability descriptors).
+
+  implications:
+    - Always pair demographic personas with expertise/capability descriptions
+    - "Elderly mathematician" better than "elderly person" for reasoning tasks
+    - Cognitive load from prompt text is not the issue
+
+manuscript:
+  format: preprint
+  venue: "arXiv / ICLR 2027"
+  target_length: "8-10 pages"
+
+reproducibility:
+  seed: 42
+  models:
+    - "claude-sonnet-4-20250514"
+    - "gpt-4o-2024-11-20"
+    - "gemini-2.0-flash"
+  data_available: true
+  code_available: true

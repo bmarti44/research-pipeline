@@ -1,0 +1,51 @@
+{
+  "trial_id": "trial_0065",
+  "modes": {
+    "strict": {
+      "correct": false,
+      "details": {
+        "correct": false,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "package.json"
+        }
+      },
+      "format_friction": false
+    },
+    "intent": {
+      "correct": false,
+      "details": {
+        "correct": false,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "package.json"
+        }
+      },
+      "format_friction": false
+    },
+    "functional": {
+      "correct": false,
+      "details": {
+        "correct": false,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "package.json"
+        }
+      },
+      "format_friction": false
+    }
+  },
+  "timestamp": "2026-02-05T03:45:36.293393+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "trial_id": "trial_0000",
+  "task_id": "control_001",
+  "condition": "nl_only",
+  "prompt": "What tools are available to you?",
+  "system_prompt": "You are an assistant with access to the following tools:\n\n- read_file: Read the contents of a file\n- write_file: Write content to a file (creates or overwrites)\n- edit_file: Edit an existing file by replacing text\n\nTool schemas:\n[\n  {\n    \"name\": \"read_file\",\n    \"description\": \"Read the contents of a file\",\n    \"parameters\": {\n      \"path\": {\n        \"type\": \"string\",\n        \"description\": \"Path to the file\"\n      }\n    }\n  },\n  {\n    \"name\": \"write_file\",\n    \"description\": \"Write content to ...",
+  "response": "I have access to three file manipulation tools:\n\n1. **read_file** - This allows me to read and display the contents of any file by providing its path. I would use this when you want to see what's currently in a file.\n\n2. **write_file** - This lets me create a new file or completely overwrite an existing file with new content. I would use this when you want to create a brand new file or replace all the contents of an existing file.\n\n3. **edit_file** - This allows me to make targeted changes to an existing file by finding specific text and replacing it with new text. I would use this when you want to modify just a portion of a file without changing everything else.\n\nThese tools allow me to help you read, create, modify, and manage text files on your system. Just let me know what file operation you'd like to perform!",
+  "success": true,
+  "error": null,
+  "model": "claude-sonnet-4-20250514",
+  "timestamp": "2026-02-05T03:37:57.886767+00:00",
+  "latency_ms": 4304,
+  "input_tokens": 417,
+  "output_tokens": 190,
+  "retry_count": 0
+}

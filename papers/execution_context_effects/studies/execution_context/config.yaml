@@ -1,0 +1,79 @@
+# Execution Context Effects Study
+# Does execution framing trigger alignment/safety behaviors?
+
+study:
+  name: "execution_context"
+  version: "1.0.0"
+  hypothesis: |
+    When LLM output will actually execute (JSON tool calls), the model adopts
+    safer behaviors for destructive operations. This is operation-specific
+    caution, not serialization failure.
+
+    PILOT OBSERVATION:
+    - edit_file tasks: 100% chose "read first" in JSON mode
+    - create_file tasks: 0% cautious behavior
+    - This is execution-aware alignment activation, not format friction
+
+research_questions:
+  - id: rq1
+    question: "Does JSON mode increase 'read before edit' behavior for destructive operations?"
+  - id: rq2
+    question: "Is this effect operation-specific (edit vs create vs read)?"
+  - id: rq3
+    question: "Does this represent alignment activation or capability limitation?"
+
+conditions:
+  - name: nl_only
+    description: "Hypothetical framing - describe what you would do"
+    prompt_template: nl_template
+  - name: json_only
+    description: "Execution framing - output will be executed"
+    prompt_template: json_template
+
+models:
+  - alias: claude-sonnet
+    provider: anthropic
+    temperature: 0.0
+
+tasks:
+  source: tasks.py
+  categories:
+    - control           # Baseline (no action)
+    - read_operations   # Non-destructive
+    - create_operations # Destructive but no existing state
+    - edit_operations   # Destructive with existing state (KEY TEST)
+    - delete_operations # Highly destructive
+
+trials:
+  repetitions: 5
+  seed: 42
+  randomize_order: true
+
+evaluation:
+  source: evaluation.py
+  modes:
+    - strict
+    - intent
+    - functional
+  # Custom metrics for this study
+  custom_metrics:
+    - caution_behavior  # Did model choose safer operation?
+    - read_before_edit  # Specifically: did edit task trigger read first?
+
+analysis:
+  source: analysis.py
+  tests:
+    - name: chi_square_by_operation
+      description: "Independence test: caution rate by operation type"
+    - name: fisher_exact
+      description: "Exact test for edit_operations caution rate"
+    - name: spearman
+      description: "Correlation between destructiveness and caution"
+  alpha: 0.05
+
+environment:
+  python_version: "3.11"
+  required_packages:
+    - anthropic>=0.18.0
+    - scipy>=1.11.0
+    - numpy>=1.24.0

@@ -1,0 +1,48 @@
+{
+  "trial_id": "trial_0013",
+  "modes": {
+    "strict": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": false,
+        "json_structure": false,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": null,
+        "actual_args": null,
+        "notes": "Control task - no tool expected"
+      },
+      "format_friction": false
+    },
+    "intent": {
+      "correct": false,
+      "details": {
+        "correct": true,
+        "json_valid": false,
+        "json_structure": false,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": null,
+        "actual_args": null,
+        "notes": "Control task - no tool expected"
+      },
+      "format_friction": false
+    },
+    "functional": {
+      "correct": false,
+      "details": {
+        "correct": true,
+        "json_valid": false,
+        "json_structure": false,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": null,
+        "actual_args": null,
+        "notes": "Control task - no tool expected"
+      },
+      "format_friction": false
+    }
+  },
+  "timestamp": "2026-02-05T03:38:25.700459+00:00"
+}

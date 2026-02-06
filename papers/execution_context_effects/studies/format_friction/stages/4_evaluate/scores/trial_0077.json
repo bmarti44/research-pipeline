@@ -1,0 +1,51 @@
+{
+  "trial_id": "trial_0077",
+  "modes": {
+    "strict": {
+      "correct": false,
+      "details": {
+        "correct": false,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "main.py"
+        }
+      },
+      "format_friction": false
+    },
+    "intent": {
+      "correct": false,
+      "details": {
+        "correct": false,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "main.py"
+        }
+      },
+      "format_friction": false
+    },
+    "functional": {
+      "correct": false,
+      "details": {
+        "correct": false,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "main.py"
+        }
+      },
+      "format_friction": false
+    }
+  },
+  "timestamp": "2026-02-05T04:01:34.080364+00:00"
+}

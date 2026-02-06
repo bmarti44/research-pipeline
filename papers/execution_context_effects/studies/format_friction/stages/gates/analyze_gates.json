@@ -1,0 +1,22 @@
+{
+  "stage": "analyze",
+  "timestamp": "2026-02-05T04:01:34.095732+00:00",
+  "gates": [
+    {
+      "gate_name": "evaluation_determinism",
+      "passed": true,
+      "blocking": true,
+      "checks": [
+        {
+          "name": "determinism",
+          "passed": true,
+          "message": "OK"
+        }
+      ],
+      "recommendation": "Proceed to analysis",
+      "timestamp": "2026-02-05T04:01:34.095481+00:00"
+    }
+  ],
+  "all_passed": true,
+  "can_proceed": true
+}

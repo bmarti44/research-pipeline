@@ -1,0 +1,1262 @@
+[
+  {
+    "trial_id": "trial_0033",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0051",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0040",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0028",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0061",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0025",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0000",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0060",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0021",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0037",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0018",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0042",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0026",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0057",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0050",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0004",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0027",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0024",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0017",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0007",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0029",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0071",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0079",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0075",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0055",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0069",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0005",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0001",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0058",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0043",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0002",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0045",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0063",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0073",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0020",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0067",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0072",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0032",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0039",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0023",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0076",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0059",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0015",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0009",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0031",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0052",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0016",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0044",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0048",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0046",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0056",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0062",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0003",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0034",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0030",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0010",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0068",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0074",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0054",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0049",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0006",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0038",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0070",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0011",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0078",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0041",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0022",
+    "task_id": "read_002",
+    "task": {
+      "task_id": "read_002",
+      "category": "read_operations",
+      "user_prompt": "Show me what's in the README.md file",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "README.md"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0019",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0035",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0064",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0047",
+    "task_id": "create_002",
+    "task": {
+      "task_id": "create_002",
+      "category": "create_operations",
+      "user_prompt": "Write a Python script to /tmp/test.py that prints 'test'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "/tmp/test.py",
+        "content": "print('test')"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0012",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0053",
+    "task_id": "edit_001",
+    "task": {
+      "task_id": "edit_001",
+      "category": "edit_operations",
+      "user_prompt": "In the file config.yaml, change 'debug: false' to 'debug: true'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "config.yaml",
+        "old_text": "debug: false",
+        "new_text": "debug: true"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0014",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 4
+  },
+  {
+    "trial_id": "trial_0013",
+    "task_id": "read_001",
+    "task": {
+      "task_id": "read_001",
+      "category": "read_operations",
+      "user_prompt": "Read the configuration file at /etc/config.yaml",
+      "expected_tool": "read_file",
+      "expected_args": {
+        "path": "/etc/config.yaml"
+      }
+    },
+    "condition": "nl_only",
+    "repetition": 3
+  },
+  {
+    "trial_id": "trial_0066",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0036",
+    "task_id": "create_001",
+    "task": {
+      "task_id": "create_001",
+      "category": "create_operations",
+      "user_prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+      "expected_tool": "write_file",
+      "expected_args": {
+        "path": "hello.txt",
+        "content": "Hello, World!"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 1
+  },
+  {
+    "trial_id": "trial_0065",
+    "task_id": "edit_002",
+    "task": {
+      "task_id": "edit_002",
+      "category": "edit_operations",
+      "user_prompt": "Update the version in package.json from '1.0.0' to '1.1.0'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "package.json",
+        "old_text": "'1.0.0'",
+        "new_text": "'1.1.0'"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 0
+  },
+  {
+    "trial_id": "trial_0077",
+    "task_id": "edit_003",
+    "task": {
+      "task_id": "edit_003",
+      "category": "edit_operations",
+      "user_prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "main.py",
+        "old_text": "pritn",
+        "new_text": "print"
+      }
+    },
+    "condition": "json_only",
+    "repetition": 2
+  },
+  {
+    "trial_id": "trial_0008",
+    "task_id": "control_001",
+    "task": {
+      "task_id": "control_001",
+      "category": "control",
+      "user_prompt": "What tools are available to you?",
+      "expected_tool": null,
+      "expected_args": {}
+    },
+    "condition": "json_only",
+    "repetition": 3
+  }
+]

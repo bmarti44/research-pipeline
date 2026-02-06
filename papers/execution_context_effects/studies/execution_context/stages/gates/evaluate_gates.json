@@ -1,0 +1,32 @@
+{
+  "stage": "evaluate",
+  "timestamp": "2026-02-05T03:43:06.988845+00:00",
+  "gates": [
+    {
+      "gate_name": "execution_integrity",
+      "passed": true,
+      "blocking": true,
+      "checks": [
+        {
+          "name": "completion_rate",
+          "passed": true,
+          "message": "Completion rate: 100.0% (80/80)"
+        },
+        {
+          "name": "error_rate",
+          "passed": true,
+          "message": "Error rate: 0.0% (0/80)"
+        },
+        {
+          "name": "model_consistency",
+          "passed": true,
+          "message": "Models used: {'claude-sonnet-4-20250514'}"
+        }
+      ],
+      "recommendation": "Proceed to evaluation",
+      "timestamp": "2026-02-05T03:43:06.988728+00:00"
+    }
+  ],
+  "all_passed": true,
+  "can_proceed": true
+}

@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "generated": "2026-02-05T04:03:31.812839+00:00",
+    "studies": [
+      "format_friction",
+      "execution_context"
+    ]
+  },
+  "study_1_format_friction": {
+    "hypothesis": "JSON causes serialization failures",
+    "finding": "REFUTED",
+    "nl_rate": 0.975,
+    "json_rate": 0.7,
+    "difference": 0.275,
+    "p_value": 0.000857,
+    "significant": true,
+    "interpretation": "Behavioral adaptation, not serialization failure"
+  },
+  "study_2_execution_context": {
+    "hypothesis": "Execution context triggers operation-specific caution",
+    "finding": "SUPPORTED",
+    "nl_rate": 0.9,
+    "json_rate": 0.725,
+    "difference": 0.175,
+    "p_value": 0.045,
+    "significant": true,
+    "interpretation": "Models show appropriate caution for destructive ops"
+  },
+  "combined_interpretation": {
+    "main_finding": "What appears as 'format friction' is better understood as 'alignment activation' - models being appropriately cautious when their output will actually execute.",
+    "evidence": [
+      "JSON syntax validity is 100% (no serialization failures)",
+      "JSON schema correctness is 98.5% (minimal structural errors)",
+      "Performance gap (17.5-27.5pp) is due to behavioral caution",
+      "Caution is operation-specific (edit vs create operations)"
+    ],
+    "implications": [
+      "Don't optimize to eliminate all 'friction' - some is valuable",
+      "NL benchmarks may overestimate capability",
+      "Multi-step tool calls (read \u2192 edit) may be desired behavior"
+    ]
+  },
+  "meta_analysis": {
+    "pooled_nl_rate": 0.9375,
+    "pooled_json_rate": 0.7125,
+    "average_difference": 0.225,
+    "both_significant": true,
+    "effect_direction_consistent": true
+  }
+}

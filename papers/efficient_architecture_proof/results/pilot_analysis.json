@@ -1,0 +1,44 @@
+{
+  "summary": {
+    "mod_only": {
+      "val_losses": [
+        Infinity
+      ],
+      "n_params": 19289600,
+      "mean_val_loss": Infinity,
+      "std_val_loss": 0,
+      "mean_perplexity": Infinity,
+      "n_runs": 1
+    },
+    "baseline": {
+      "val_losses": [
+        Infinity
+      ],
+      "n_params": 19288832,
+      "mean_val_loss": Infinity,
+      "std_val_loss": 0,
+      "mean_perplexity": Infinity,
+      "n_runs": 1
+    },
+    "full": {
+      "val_losses": [
+        Infinity
+      ],
+      "n_params": 20338433,
+      "mean_val_loss": Infinity,
+      "std_val_loss": 0,
+      "mean_perplexity": Infinity,
+      "n_runs": 1
+    }
+  },
+  "all_runs": [
+    "lahr_mod_only_small_20260205_074644",
+    "lahr_baseline_small_20260205_074644",
+    "lahr_full_small_20260205_074644"
+  ],
+  "conditions": [
+    "mod_only",
+    "baseline",
+    "full"
+  ]
+}

@@ -1,0 +1,156 @@
+# Study: Error Type Stratification in Multi-Pass Detection
+
+study:
+  name: pass_detection_curves
+  title: "Error Type Stratification in Multi-Pass Detection"
+  version: "1.0.0"
+
+hypothesis:
+  primary: |
+    The diminishing returns of multi-pass code review reflects error stratification:
+    distinct error types have different per-pass detection probabilities, and the
+    5-pass "knee" emerges from the aggregate of these stratified curves.
+
+  competing_hypotheses:
+    geometric_decay: |
+      Each pass catches a fixed fraction (e.g., 50%) of remaining errors,
+      producing exponential decay. Error type doesn't matter.
+
+    context_saturation: |
+      Model attention saturates after repeated exposure to the same code.
+      Detection probability decreases with pass number regardless of error type.
+
+    fixpoint_convergence: |
+      Code-fix cycles converge to local optima. The "knee" represents
+      convergence rather than detection saturation.
+
+  predictions:
+    if_stratification:
+      - "Different error types will have significantly different detection curves"
+      - "Syntax errors will plateau early (pass 1-2)"
+      - "Logic errors will plateau later (pass 4-5)"
+      - "Subtle errors will show low, flat detection curves"
+      - "Aggregate curve will show knee at ~5 passes"
+
+    if_geometric_decay:
+      - "All error types will follow similar exponential curves"
+      - "Detection probability per pass will be constant (~50%)"
+      - "No interaction between error type and pass number"
+
+  direction: "interaction"  # Error type × Pass number interaction
+  alpha: 0.05
+
+conditions:
+  # Pass numbers to test
+  pass_counts: [1, 2, 3, 4, 5, 6, 7, 8, 10]
+
+factors:
+  - name: num_passes
+    type: ordinal
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 10]
+
+  - name: error_type
+    type: categorical
+    levels:
+      - syntax_error           # Missing brackets, typos, invalid syntax
+      - type_error             # Type mismatches, wrong argument types
+      - logic_error            # Wrong operators, off-by-one, wrong conditions
+      - edge_case_error        # Unhandled null, empty input, boundary conditions
+      - security_error         # Injection, XSS, auth bypass
+      - performance_error      # N+1 queries, unnecessary loops, memory leaks
+      - concurrency_error      # Race conditions, deadlocks, thread safety
+
+  - name: code_complexity
+    type: categorical
+    levels: [simple, moderate, complex]
+
+design:
+  type: "factorial"
+  within_subjects: true  # Same code reviewed multiple times
+  trials_per_cell: 10    # 10 code samples per error type × complexity
+  total_expected: 1890   # 9 passes × 7 error types × 3 complexities × 10 samples
+
+models:
+  - name: "claude-sonnet-4-20250514"
+    provider: anthropic
+    temperature: 0
+  - name: "gpt-4o-2024-11-20"
+    provider: openai
+    temperature: 0
+
+evaluation:
+  evaluator: "error_detection"
+  metrics:
+    - name: error_detected
+      description: "Was the seeded error identified?"
+      type: binary
+    - name: error_localized
+      description: "Was the error correctly localized (right line/function)?"
+      type: binary
+    - name: fix_proposed
+      description: "Was a fix proposed?"
+      type: binary
+    - name: fix_correct
+      description: "Was the proposed fix correct?"
+      type: binary
+    - name: false_positives
+      description: "Number of non-existent errors flagged"
+      type: count
+
+analysis:
+  primary_test: "mixed_anova"  # Pass × Error Type interaction
+  secondary_tests:
+    - "survival_analysis"      # Time-to-detection curves
+    - "curve_fitting"          # Fit stratified vs geometric models
+    - "model_comparison"       # AIC/BIC for competing models
+    - "breakpoint_regression"  # Find the "knee" point
+
+  comparisons:
+    - name: "error_type_main_effect"
+      description: "Do error types differ in overall detectability?"
+      test: "one_way_anova"
+
+    - name: "pass_main_effect"
+      description: "Does detection improve with passes?"
+      test: "trend_analysis"
+
+    - name: "type_pass_interaction"
+      description: "KEY TEST: Do error types have different detection curves?"
+      test: "interaction_contrast"
+
+    - name: "geometric_vs_stratified"
+      description: "Model comparison: which fits better?"
+      test: "aic_comparison"
+
+  model_fitting:
+    geometric_model: "P(detect by pass n) = 1 - (1-p)^n, same p for all types"
+    stratified_model: "P(detect by pass n) = 1 - (1-p_type)^n, different p per type"
+
+pilot:
+  enabled: true
+  fraction: 0.15
+  criteria:
+    min_trials: 200
+    response_rate: 0.95
+    detection_variance: true  # Need variance to test hypothesis
+
+execution:
+  batch_size: 5
+  rate_limit_rpm: 30
+  retry_attempts: 3
+  checkpoint_frequency: 20
+
+review_prompt_template: |
+  Review the following code for bugs, errors, and issues.
+  Be thorough and identify any problems you find.
+
+  ```{language}
+  {code}
+  ```
+
+  List any bugs or errors you find, with:
+  1. Location (line number or function name)
+  2. Description of the issue
+  3. Suggested fix
+
+  If you find no issues, say "No issues found."

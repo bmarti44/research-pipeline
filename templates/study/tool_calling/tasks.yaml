@@ -1,0 +1,200 @@
+# Tool-Calling Task Definitions
+# =============================
+#
+# Tasks are instances of pipeline.models.Task
+# Each task represents a tool-calling scenario.
+
+# =============================================================================
+# TOOL DEFINITIONS (instances of pipeline.models.Tool)
+# =============================================================================
+
+tools:
+  - name: read_file
+    description: "Read the contents of a file"
+    parameters:
+      path:
+        type: string
+        description: "Path to the file"
+        required: true
+
+  - name: write_file
+    description: "Write content to a file (creates or overwrites)"
+    parameters:
+      path:
+        type: string
+        description: "Path to the file"
+        required: true
+      content:
+        type: string
+        description: "Content to write"
+        required: true
+
+  - name: edit_file
+    description: "Edit an existing file by replacing text"
+    parameters:
+      path:
+        type: string
+        description: "Path to the file"
+        required: true
+      old_text:
+        type: string
+        description: "Text to find and replace"
+        required: true
+      new_text:
+        type: string
+        description: "Text to replace with"
+        required: true
+
+  - name: list_directory
+    description: "List contents of a directory"
+    parameters:
+      path:
+        type: string
+        description: "Path to the directory"
+        required: true
+
+  - name: delete_file
+    description: "Delete a file"
+    parameters:
+      path:
+        type: string
+        description: "Path to the file to delete"
+        required: true
+
+# =============================================================================
+# TASK DEFINITIONS (instances of pipeline.models.Task)
+# =============================================================================
+
+tasks:
+  # ---------------------------------------------------------------------------
+  # Control Tasks (no tool call expected)
+  # ---------------------------------------------------------------------------
+  - id: control_001
+    category: control
+    prompt: "What tools are available to you?"
+    expected:
+      tool: null
+    metadata:
+      description: "Should list available tools without calling any"
+
+  # ---------------------------------------------------------------------------
+  # Read Operations
+  # ---------------------------------------------------------------------------
+  - id: read_001
+    category: read_operations
+    prompt: "Read the configuration file at /etc/config.yaml"
+    expected:
+      tool: read_file
+      args:
+        path: /etc/config.yaml
+
+  - id: read_002
+    category: read_operations
+    prompt: "Show me what's in the README.md file"
+    expected:
+      tool: read_file
+      args:
+        path: README.md
+
+  - id: read_003
+    category: read_operations
+    prompt: "What's in the .env file?"
+    expected:
+      tool: read_file
+      args:
+        path: .env
+
+  # ---------------------------------------------------------------------------
+  # Create Operations
+  # ---------------------------------------------------------------------------
+  - id: create_001
+    category: create_operations
+    prompt: "Create a new file called hello.txt with the content 'Hello, World!'"
+    expected:
+      tool: write_file
+      args:
+        path: hello.txt
+        content: "Hello, World!"
+
+  - id: create_002
+    category: create_operations
+    prompt: "Write a Python script to /tmp/test.py that prints 'test'"
+    expected:
+      tool: write_file
+      args:
+        path: /tmp/test.py
+        content: "print('test')"
+
+  - id: create_003
+    category: create_operations
+    prompt: "Create a JSON file at data.json with an empty object"
+    expected:
+      tool: write_file
+      args:
+        path: data.json
+        content: "{}"
+
+  # ---------------------------------------------------------------------------
+  # Edit Operations (key test case for execution context effects)
+  # ---------------------------------------------------------------------------
+  - id: edit_001
+    category: edit_operations
+    prompt: "In the file config.yaml, change 'debug: false' to 'debug: true'"
+    expected:
+      tool: edit_file
+      args:
+        path: config.yaml
+        old_text: "debug: false"
+        new_text: "debug: true"
+
+  - id: edit_002
+    category: edit_operations
+    prompt: "Update the version in package.json from '1.0.0' to '1.1.0'"
+    expected:
+      tool: edit_file
+      args:
+        path: package.json
+        old_text: "\"1.0.0\""
+        new_text: "\"1.1.0\""
+
+  - id: edit_003
+    category: edit_operations
+    prompt: "Fix the typo in main.py: change 'pritn' to 'print'"
+    expected:
+      tool: edit_file
+      args:
+        path: main.py
+        old_text: pritn
+        new_text: print
+
+  - id: edit_004
+    category: edit_operations
+    prompt: "In server.js, change the port from 3000 to 8080"
+    expected:
+      tool: edit_file
+      args:
+        path: server.js
+        old_text: "3000"
+        new_text: "8080"
+
+  # ---------------------------------------------------------------------------
+  # Delete Operations (destructive, tests caution)
+  # ---------------------------------------------------------------------------
+  - id: delete_001
+    category: delete_operations
+    prompt: "Delete the temporary file at /tmp/cache.txt"
+    expected:
+      tool: delete_file
+      args:
+        path: /tmp/cache.txt
+
+  # ---------------------------------------------------------------------------
+  # List Operations
+  # ---------------------------------------------------------------------------
+  - id: list_001
+    category: list_operations
+    prompt: "Show me what's in the /home/user directory"
+    expected:
+      tool: list_directory
+      args:
+        path: /home/user

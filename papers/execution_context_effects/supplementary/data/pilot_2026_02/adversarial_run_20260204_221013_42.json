@@ -1,0 +1,2987 @@
+{
+  "run_id": "run_20260204_221013_42",
+  "seed": 42,
+  "n_trials": 65,
+  "trials": [
+    {
+      "trial_id": "adv_json_001_nl_only_0",
+      "task_id": "adv_json_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "user_prompt": "Write {\"name\": \"test\", \"value\": 123} to /tmp/config.json",
+      "response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name set to \"test\" and value set to 123. This tool is specifically designed for writing valid JSON content to files.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:13.293860+00:00",
+      "latency_ms": 2294,
+      "input_tokens": 1308,
+      "output_tokens": 56,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name set to \"test\" and value set to 123. This tool is specifically designed for writing valid JSON content to files."
+      },
+      "request_id": "msg_017USxxkRXK3wauCjPnP3DuN",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_001_nl_only_1",
+      "task_id": "adv_json_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "user_prompt": "Write {\"name\": \"test\", \"value\": 123} to /tmp/config.json",
+      "response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content containing an object with name property set to \"test\" and value property set to 123. This tool is specifically designed for writing valid JSON content to files.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:15.588405+00:00",
+      "latency_ms": 2184,
+      "input_tokens": 1308,
+      "output_tokens": 58,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content containing an object with name property set to \"test\" and value property set to 123. This tool is specifically designed for writing valid JSON content to files."
+      },
+      "request_id": "msg_011DugcmaNRPDW1YbR8zSna4",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_001_nl_only_2",
+      "task_id": "adv_json_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "user_prompt": "Write {\"name\": \"test\", \"value\": 123} to /tmp/config.json",
+      "response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name set to \"test\" and value set to 123 to write the JSON data to the specified file.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:17.772951+00:00",
+      "latency_ms": 2253,
+      "input_tokens": 1308,
+      "output_tokens": 53,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name set to \"test\" and value set to 123 to write the JSON data to the specified file."
+      },
+      "request_id": "msg_01Nw4xr9QDT8B4xq3uY1U3Em",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_001_nl_only_3",
+      "task_id": "adv_json_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "user_prompt": "Write {\"name\": \"test\", \"value\": 123} to /tmp/config.json",
+      "response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name=\"test\" and value=123 to write the JSON data to the specified file.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:20.026512+00:00",
+      "latency_ms": 2230,
+      "input_tokens": 1308,
+      "output_tokens": 49,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name=\"test\" and value=123 to write the JSON data to the specified file."
+      },
+      "request_id": "msg_019UpHgNLB1iUPxcWDX7nsr3",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_001_nl_only_4",
+      "task_id": "adv_json_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "user_prompt": "Write {\"name\": \"test\", \"value\": 123} to /tmp/config.json",
+      "response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content containing a JSON object with name set to \"test\" and value set to 123 to write the JSON configuration file.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:22.256870+00:00",
+      "latency_ms": 2163,
+      "input_tokens": 1308,
+      "output_tokens": 51,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content containing a JSON object with name set to \"test\" and value set to 123 to write the JSON configuration file."
+      },
+      "request_id": "msg_019pSk6MNhx9pJLqbgJdA9G4",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_002_nl_only_0",
+      "task_id": "adv_json_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "user_prompt": "Save the JSON object {\"users\": [\"alice\", \"bob\"], \"active\": true} to /data/users.json",
+      "response": "I would use the write_json_file tool with path='/data/users.json' and json_content={\"users\": [\"alice\", \"bob\"], \"active\": true} to save the JSON object to the specified file.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:24.420989+00:00",
+      "latency_ms": 1687,
+      "input_tokens": 1313,
+      "output_tokens": 51,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_json_file tool with path='/data/users.json' and json_content={\"users\": [\"alice\", \"bob\"], \"active\": true} to save the JSON object to the specified file."
+      },
+      "request_id": "msg_019sifYhE3BgUaZsNZ4XLawM",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_002_nl_only_1",
+      "task_id": "adv_json_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "user_prompt": "Save the JSON object {\"users\": [\"alice\", \"bob\"], \"active\": true} to /data/users.json",
+      "response": "I would use the write_json_file tool with path='/data/users.json' and json_content set to the object with \"users\" key containing the array [\"alice\", \"bob\"] and \"active\" key set to true. This tool is specifically designed for writing valid JSON content to files.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:26.111268+00:00",
+      "latency_ms": 2295,
+      "input_tokens": 1313,
+      "output_tokens": 66,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/data/users.json' and json_content set to the object with \"users\" key containing the array [\"alice\", \"bob\"] and \"active\" key set to true. This tool is specifically designed for writing valid JSON content to files."
+      },
+      "request_id": "msg_01GztNNmnyuWdr7CysFCACjD",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_002_nl_only_2",
+      "task_id": "adv_json_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "user_prompt": "Save the JSON object {\"users\": [\"alice\", \"bob\"], \"active\": true} to /data/users.json",
+      "response": "I would use the write_json_file tool with path='/data/users.json' and json_content set to the object with \"users\" key containing the array [\"alice\", \"bob\"] and \"active\" key set to true. This tool is specifically designed for writing valid JSON content to files.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:28.406709+00:00",
+      "latency_ms": 2436,
+      "input_tokens": 1313,
+      "output_tokens": 66,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/data/users.json' and json_content set to the object with \"users\" key containing the array [\"alice\", \"bob\"] and \"active\" key set to true. This tool is specifically designed for writing valid JSON content to files."
+      },
+      "request_id": "msg_01TcqBcTVWuMatTPkYnqyPKm",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_002_nl_only_3",
+      "task_id": "adv_json_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "user_prompt": "Save the JSON object {\"users\": [\"alice\", \"bob\"], \"active\": true} to /data/users.json",
+      "response": "I would use the write_json_file tool with path='/data/users.json' and json_content as the object containing users array with \"alice\" and \"bob\", and active set to true. This tool is specifically designed for writing JSON content and will ensure the data is properly formatted as valid JSON.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:30.843181+00:00",
+      "latency_ms": 2471,
+      "input_tokens": 1313,
+      "output_tokens": 67,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/data/users.json' and json_content as the object containing users array with \"alice\" and \"bob\", and active set to true. This tool is specifically designed for writing JSON content and will ensure the data is properly formatted as valid JSON."
+      },
+      "request_id": "msg_01YWyRvbjvdQuGdtp84xYHp1",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_002_nl_only_4",
+      "task_id": "adv_json_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "user_prompt": "Save the JSON object {\"users\": [\"alice\", \"bob\"], \"active\": true} to /data/users.json",
+      "response": "I would use the write_json_file tool with path='/data/users.json' and json_content set to an object containing \"users\" as an array with values \"alice\" and \"bob\", and \"active\" as the boolean value true. This tool is specifically designed for writing valid JSON content to files.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:33.314511+00:00",
+      "latency_ms": 2657,
+      "input_tokens": 1313,
+      "output_tokens": 69,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/data/users.json' and json_content set to an object containing \"users\" as an array with values \"alice\" and \"bob\", and \"active\" as the boolean value true. This tool is specifically designed for writing valid JSON content to files."
+      },
+      "request_id": "msg_01AHd8SZAnFRyADxVjHeuRH2",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_003_nl_only_0",
+      "task_id": "adv_json_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "user_prompt": "Write {\"nested\": {\"deep\": {\"value\": \"found\"}}} to /tmp/deep.json",
+      "response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key that contains an object with a \"value\" key set to \"found\". This will create a properly formatted JSON file with the nested structure you specified.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:35.972747+00:00",
+      "latency_ms": 2325,
+      "input_tokens": 1309,
+      "output_tokens": 74,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key that contains an object with a \"value\" key set to \"found\". This will create a properly formatted JSON file with the nested structure you specified."
+      },
+      "request_id": "msg_016minmRmonYUuSauLgwscSJ",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_003_nl_only_1",
+      "task_id": "adv_json_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "user_prompt": "Write {\"nested\": {\"deep\": {\"value\": \"found\"}}} to /tmp/deep.json",
+      "response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key containing another object with a \"value\" key set to \"found\". This will create a JSON file with the exact nested structure you specified.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:38.298156+00:00",
+      "latency_ms": 2273,
+      "input_tokens": 1309,
+      "output_tokens": 72,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key containing another object with a \"value\" key set to \"found\". This will create a JSON file with the exact nested structure you specified."
+      },
+      "request_id": "msg_01P5gQokEpT6KXyhPnWA9pdV",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_003_nl_only_2",
+      "task_id": "adv_json_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "user_prompt": "Write {\"nested\": {\"deep\": {\"value\": \"found\"}}} to /tmp/deep.json",
+      "response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as the object containing the nested structure with \"nested\" containing \"deep\" containing \"value\" set to \"found\".",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:40.571362+00:00",
+      "latency_ms": 3741,
+      "input_tokens": 1309,
+      "output_tokens": 50,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as the object containing the nested structure with \"nested\" containing \"deep\" containing \"value\" set to \"found\"."
+      },
+      "request_id": "msg_015yjsDMAm9Amkdidqemw7bF",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_003_nl_only_3",
+      "task_id": "adv_json_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "user_prompt": "Write {\"nested\": {\"deep\": {\"value\": \"found\"}}} to /tmp/deep.json",
+      "response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key containing an object with a \"value\" key set to \"found\". This will create a properly formatted JSON file with the nested structure you specified.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:44.312833+00:00",
+      "latency_ms": 2364,
+      "input_tokens": 1309,
+      "output_tokens": 73,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key containing an object with a \"value\" key set to \"found\". This will create a properly formatted JSON file with the nested structure you specified."
+      },
+      "request_id": "msg_01Mxd11GEdgjSMWHRaMzgDrF",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_json_003_nl_only_4",
+      "task_id": "adv_json_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "user_prompt": "Write {\"nested\": {\"deep\": {\"value\": \"found\"}}} to /tmp/deep.json",
+      "response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key containing an object with a \"value\" key set to \"found\". This will create a properly formatted JSON file with the nested structure you specified.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:10:46.677662+00:00",
+      "latency_ms": 2266,
+      "input_tokens": 1309,
+      "output_tokens": 73,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['json_content']"
+        ],
+        "raw_response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content as an object with a \"nested\" key containing another object with a \"deep\" key containing an object with a \"value\" key set to \"found\". This will create a properly formatted JSON file with the nested structure you specified."
+      },
+      "request_id": "msg_01768vWqpxD4Pmf4449XZQdG",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_001_json_only_0",
+      "task_id": "adv_escape_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "user_prompt": "Write the text \"Hello \\\"World\\\"\" to /tmp/quoted.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:48.944104+00:00",
+      "latency_ms": 1300,
+      "input_tokens": 1297,
+      "output_tokens": 36,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}"
+      },
+      "request_id": "msg_01V9BpnZdtB976eER7NC89rm",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_001_json_only_1",
+      "task_id": "adv_escape_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "user_prompt": "Write the text \"Hello \\\"World\\\"\" to /tmp/quoted.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:50.244271+00:00",
+      "latency_ms": 1414,
+      "input_tokens": 1297,
+      "output_tokens": 36,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}"
+      },
+      "request_id": "msg_01P55FUamHrsTyGHm81U1LcB",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_001_json_only_2",
+      "task_id": "adv_escape_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "user_prompt": "Write the text \"Hello \\\"World\\\"\" to /tmp/quoted.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:51.658735+00:00",
+      "latency_ms": 1441,
+      "input_tokens": 1297,
+      "output_tokens": 36,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}"
+      },
+      "request_id": "msg_01SKkox9xWmWTtRtoDMAjZPk",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_001_json_only_3",
+      "task_id": "adv_escape_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "user_prompt": "Write the text \"Hello \\\"World\\\"\" to /tmp/quoted.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:53.100382+00:00",
+      "latency_ms": 1480,
+      "input_tokens": 1297,
+      "output_tokens": 36,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}"
+      },
+      "request_id": "msg_016SZro2C2KKQX43eBvjvzBD",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_001_json_only_4",
+      "task_id": "adv_escape_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "user_prompt": "Write the text \"Hello \\\"World\\\"\" to /tmp/quoted.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:54.581053+00:00",
+      "latency_ms": 1391,
+      "input_tokens": 1297,
+      "output_tokens": 36,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}"
+      },
+      "request_id": "msg_01BwgM1svsuxaCoZsBucxvtE",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_002_json_only_0",
+      "task_id": "adv_escape_002",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "user_prompt": "Write 'It\\'s a test' to /tmp/apostrophe.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:55.972964+00:00",
+      "latency_ms": 1485,
+      "input_tokens": 1299,
+      "output_tokens": 38,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}"
+      },
+      "request_id": "msg_017k93eS1wvu5UN8DgC65C3s",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_002_json_only_1",
+      "task_id": "adv_escape_002",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "user_prompt": "Write 'It\\'s a test' to /tmp/apostrophe.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:57.458286+00:00",
+      "latency_ms": 1764,
+      "input_tokens": 1299,
+      "output_tokens": 38,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}"
+      },
+      "request_id": "msg_01VRcjhUNCUfkyDvakPtGHZF",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_002_json_only_2",
+      "task_id": "adv_escape_002",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "user_prompt": "Write 'It\\'s a test' to /tmp/apostrophe.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:10:59.223073+00:00",
+      "latency_ms": 1422,
+      "input_tokens": 1299,
+      "output_tokens": 38,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}"
+      },
+      "request_id": "msg_01A2hfEixF5wugNJ6FV4DrVo",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_002_json_only_3",
+      "task_id": "adv_escape_002",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "user_prompt": "Write 'It\\'s a test' to /tmp/apostrophe.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:00.645312+00:00",
+      "latency_ms": 1404,
+      "input_tokens": 1299,
+      "output_tokens": 38,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}"
+      },
+      "request_id": "msg_017rvFNqykUeZxXNJbDrmq2U",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_002_json_only_4",
+      "task_id": "adv_escape_002",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "user_prompt": "Write 'It\\'s a test' to /tmp/apostrophe.txt",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:02.050041+00:00",
+      "latency_ms": 1347,
+      "input_tokens": 1299,
+      "output_tokens": 38,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}"
+      },
+      "request_id": "msg_01KfKu5wTkj3BKopnCCRDEA7",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_003_json_only_0",
+      "task_id": "adv_escape_003",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "user_prompt": "Write 'C:\\\\Users\\\\name' to /tmp/path.txt",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:03.397989+00:00",
+      "latency_ms": 1649,
+      "input_tokens": 1297,
+      "output_tokens": 35,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_escaped_content', got 'write_file'"
+        ],
+        "raw_response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}"
+      },
+      "request_id": "msg_01Tj9He4D7XWSSHcVdR86hyG",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_003_json_only_1",
+      "task_id": "adv_escape_003",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "user_prompt": "Write 'C:\\\\Users\\\\name' to /tmp/path.txt",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:05.047971+00:00",
+      "latency_ms": 1340,
+      "input_tokens": 1297,
+      "output_tokens": 35,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_escaped_content', got 'write_file'"
+        ],
+        "raw_response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}"
+      },
+      "request_id": "msg_016pFZUbAukEPsTv5ya8Wj4Q",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_003_json_only_2",
+      "task_id": "adv_escape_003",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "user_prompt": "Write 'C:\\\\Users\\\\name' to /tmp/path.txt",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:06.388351+00:00",
+      "latency_ms": 1459,
+      "input_tokens": 1297,
+      "output_tokens": 35,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_escaped_content', got 'write_file'"
+        ],
+        "raw_response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}"
+      },
+      "request_id": "msg_01SGmLj5Gzpd5gvUEPDvDib1",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_003_json_only_3",
+      "task_id": "adv_escape_003",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "user_prompt": "Write 'C:\\\\Users\\\\name' to /tmp/path.txt",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:07.847754+00:00",
+      "latency_ms": 1665,
+      "input_tokens": 1297,
+      "output_tokens": 35,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_escaped_content', got 'write_file'"
+        ],
+        "raw_response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}"
+      },
+      "request_id": "msg_01Qpa1DnwjXgF2x21QNr37q7",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_003_json_only_4",
+      "task_id": "adv_escape_003",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "user_prompt": "Write 'C:\\\\Users\\\\name' to /tmp/path.txt",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:09.513180+00:00",
+      "latency_ms": 1533,
+      "input_tokens": 1297,
+      "output_tokens": 35,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_escaped_content', got 'write_file'"
+        ],
+        "raw_response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}"
+      },
+      "request_id": "msg_0161xaQKwgjMDbNqrw4Rm7rk",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_004_nl_only_0",
+      "task_id": "adv_escape_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "user_prompt": "Write the text with newline \"line1\\nline2\" to /tmp/newline.txt",
+      "response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline, so the file will contain \"line1\" on the first line and \"line2\" on the second line.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:11.046616+00:00",
+      "latency_ms": 3030,
+      "input_tokens": 1310,
+      "output_tokens": 117,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Value mismatch for content: expected 'line1\nline2', got 'line1\\nline2'"
+        ],
+        "raw_response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline, so the file will contain \"line1\" on the first line and \"line2\" on the second line.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>"
+      },
+      "request_id": "msg_01B9ES7agC7bDMW65iPzXRZU",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_004_nl_only_1",
+      "task_id": "adv_escape_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "user_prompt": "Write the text with newline \"line1\\nline2\" to /tmp/newline.txt",
+      "response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n in the content will be interpreted as an actual newline character, so the file will contain \"line1\" on the first line and \"line2\" on the second line.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:14.077115+00:00",
+      "latency_ms": 3283,
+      "input_tokens": 1310,
+      "output_tokens": 121,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Value mismatch for content: expected 'line1\nline2', got 'line1\\nline2'"
+        ],
+        "raw_response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n in the content will be interpreted as an actual newline character, so the file will contain \"line1\" on the first line and \"line2\" on the second line.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>"
+      },
+      "request_id": "msg_01Q3KaFsPVyHm1nfK2gp8n7Z",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_004_nl_only_2",
+      "task_id": "adv_escape_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "user_prompt": "Write the text with newline \"line1\\nline2\" to /tmp/newline.txt",
+      "response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline character, so the file will contain two lines: \"line1\" on the first line and \"line2\" on the second line.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:17.360847+00:00",
+      "latency_ms": 2662,
+      "input_tokens": 1310,
+      "output_tokens": 84,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Value mismatch for content: expected 'line1\nline2', got 'line1\\nline2'"
+        ],
+        "raw_response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline character, so the file will contain two lines: \"line1\" on the first line and \"line2\" on the second line."
+      },
+      "request_id": "msg_0144sAd2ZHWxwW3Vpa86rqGK",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_004_nl_only_3",
+      "task_id": "adv_escape_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "user_prompt": "Write the text with newline \"line1\\nline2\" to /tmp/newline.txt",
+      "response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline when written to the file.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:20.023636+00:00",
+      "latency_ms": 2569,
+      "input_tokens": 1310,
+      "output_tokens": 99,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Value mismatch for content: expected 'line1\nline2', got 'line1\\nline2'"
+        ],
+        "raw_response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline when written to the file.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>"
+      },
+      "request_id": "msg_01JqTqL8w2asNMjrQrUFNBhB",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_escape_004_nl_only_4",
+      "task_id": "adv_escape_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "user_prompt": "Write the text with newline \"line1\\nline2\" to /tmp/newline.txt",
+      "response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline when written to the file.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:11:22.593159+00:00",
+      "latency_ms": 2717,
+      "input_tokens": 1310,
+      "output_tokens": 99,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Value mismatch for content: expected 'line1\nline2', got 'line1\\nline2'"
+        ],
+        "raw_response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline when written to the file.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>"
+      },
+      "request_id": "msg_0196Co3moQ1x9tLLW6UmyQgd",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_001_json_only_0",
+      "task_id": "adv_unicode_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "user_prompt": "Write 'Hello \ud83d\udc4b World \ud83c\udf0d' to /tmp/emoji.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:25.310998+00:00",
+      "latency_ms": 1649,
+      "input_tokens": 1302,
+      "output_tokens": 42,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}"
+      },
+      "request_id": "msg_01QQmXi7NHBzYjY1CAYz1cLA",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_001_json_only_1",
+      "task_id": "adv_unicode_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "user_prompt": "Write 'Hello \ud83d\udc4b World \ud83c\udf0d' to /tmp/emoji.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:26.960629+00:00",
+      "latency_ms": 1431,
+      "input_tokens": 1302,
+      "output_tokens": 42,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}"
+      },
+      "request_id": "msg_015kjCmwVtZ3KvNeN2EnHXn8",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_001_json_only_2",
+      "task_id": "adv_unicode_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "user_prompt": "Write 'Hello \ud83d\udc4b World \ud83c\udf0d' to /tmp/emoji.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:28.392638+00:00",
+      "latency_ms": 1788,
+      "input_tokens": 1302,
+      "output_tokens": 42,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}"
+      },
+      "request_id": "msg_019oftfQDvURxusgjgDnbra5",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_001_json_only_3",
+      "task_id": "adv_unicode_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "user_prompt": "Write 'Hello \ud83d\udc4b World \ud83c\udf0d' to /tmp/emoji.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:30.181183+00:00",
+      "latency_ms": 1424,
+      "input_tokens": 1302,
+      "output_tokens": 42,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}"
+      },
+      "request_id": "msg_01FpHVJZq2bDY1xH4Cc6nbn9",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_001_json_only_4",
+      "task_id": "adv_unicode_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "user_prompt": "Write 'Hello \ud83d\udc4b World \ud83c\udf0d' to /tmp/emoji.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:31.606131+00:00",
+      "latency_ms": 1520,
+      "input_tokens": 1302,
+      "output_tokens": 42,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}"
+      },
+      "request_id": "msg_013KkUcnTEyLZK6MBWZaDqq5",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_002_nl_only_0",
+      "task_id": "adv_unicode_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "user_prompt": "Write '\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to /tmp/japanese.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper encoding.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:33.126395+00:00",
+      "latency_ms": 2176,
+      "input_tokens": 1304,
+      "output_tokens": 52,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper encoding."
+      },
+      "request_id": "msg_01VCcTDfjKgsLwAma3dRFSLQ",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_002_nl_only_1",
+      "task_id": "adv_unicode_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "user_prompt": "Write '\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to /tmp/japanese.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper handling.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:35.302962+00:00",
+      "latency_ms": 2153,
+      "input_tokens": 1304,
+      "output_tokens": 52,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper handling."
+      },
+      "request_id": "msg_019m6dTTFrG7kdrcKMVjKrVV",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_002_nl_only_2",
+      "task_id": "adv_unicode_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "user_prompt": "Write '\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to /tmp/japanese.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper encoding.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:37.456980+00:00",
+      "latency_ms": 1926,
+      "input_tokens": 1304,
+      "output_tokens": 52,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper encoding."
+      },
+      "request_id": "msg_01KoF4wVNEkcgiA1F7n92Yzu",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_002_nl_only_3",
+      "task_id": "adv_unicode_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "user_prompt": "Write '\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to /tmp/japanese.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that need proper handling.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:39.383475+00:00",
+      "latency_ms": 2101,
+      "input_tokens": 1304,
+      "output_tokens": 52,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that need proper handling."
+      },
+      "request_id": "msg_013yvzQkEEtmsb7NcmTRsBWL",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_002_nl_only_4",
+      "task_id": "adv_unicode_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "user_prompt": "Write '\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to /tmp/japanese.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file. This tool is specifically designed to handle unicode characters properly, ensuring the Japanese characters are written correctly to the file.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:41.485150+00:00",
+      "latency_ms": 2279,
+      "input_tokens": 1304,
+      "output_tokens": 63,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file. This tool is specifically designed to handle unicode characters properly, ensuring the Japanese characters are written correctly to the file."
+      },
+      "request_id": "msg_01VPu7prZsZfRNEpxKUo6dpi",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_003_nl_only_0",
+      "task_id": "adv_unicode_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "user_prompt": "Write '\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to /tmp/greek.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains unicode characters that require proper handling.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:43.764542+00:00",
+      "latency_ms": 2041,
+      "input_tokens": 1306,
+      "output_tokens": 53,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains unicode characters that require proper handling."
+      },
+      "request_id": "msg_01JpqSKcj42bkFBhAKYoezvR",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_003_nl_only_1",
+      "task_id": "adv_unicode_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "user_prompt": "Write '\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to /tmp/greek.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains Unicode characters that require proper encoding.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:45.805949+00:00",
+      "latency_ms": 2322,
+      "input_tokens": 1306,
+      "output_tokens": 53,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains Unicode characters that require proper encoding."
+      },
+      "request_id": "msg_01C7gJQV6AAbREmDoHQDJ6Dz",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_003_nl_only_2",
+      "task_id": "adv_unicode_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "user_prompt": "Write '\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to /tmp/greek.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains non-ASCII Unicode characters that require proper encoding handling.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:48.128264+00:00",
+      "latency_ms": 2126,
+      "input_tokens": 1306,
+      "output_tokens": 57,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains non-ASCII Unicode characters that require proper encoding handling."
+      },
+      "request_id": "msg_018puHD6xqgT78kHD4jqYgiL",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_003_nl_only_3",
+      "task_id": "adv_unicode_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "user_prompt": "Write '\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to /tmp/greek.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains Unicode characters that require proper encoding support.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:50.255035+00:00",
+      "latency_ms": 2425,
+      "input_tokens": 1306,
+      "output_tokens": 54,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains Unicode characters that require proper encoding support."
+      },
+      "request_id": "msg_01MhfMXUopfxpYwEFrjvCvbd",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_003_nl_only_4",
+      "task_id": "adv_unicode_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "user_prompt": "Write '\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to /tmp/greek.txt",
+      "response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains unicode characters that require proper encoding support.",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:52.680244+00:00",
+      "latency_ms": 2078,
+      "input_tokens": 1306,
+      "output_tokens": 54,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains unicode characters that require proper encoding support."
+      },
+      "request_id": "msg_01ReJDmPtSL3iKJV15KCTwCB",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_004_json_only_0",
+      "task_id": "adv_unicode_004",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "user_prompt": "Write '\u2713 Check \u2717 Cross' to /tmp/symbols.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:54.758909+00:00",
+      "latency_ms": 1493,
+      "input_tokens": 1300,
+      "output_tokens": 41,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}"
+      },
+      "request_id": "msg_01FESfdYx16Z6zkfjdNtDayz",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_004_json_only_1",
+      "task_id": "adv_unicode_004",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "user_prompt": "Write '\u2713 Check \u2717 Cross' to /tmp/symbols.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:56.252387+00:00",
+      "latency_ms": 1972,
+      "input_tokens": 1300,
+      "output_tokens": 41,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}"
+      },
+      "request_id": "msg_0166BvSVeMXHPu9zLGwkFFLW",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_004_json_only_2",
+      "task_id": "adv_unicode_004",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "user_prompt": "Write '\u2713 Check \u2717 Cross' to /tmp/symbols.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:58.224948+00:00",
+      "latency_ms": 1525,
+      "input_tokens": 1300,
+      "output_tokens": 41,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}"
+      },
+      "request_id": "msg_01H5N1WRAVumHGLN4WSV1qbX",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_004_json_only_3",
+      "task_id": "adv_unicode_004",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "user_prompt": "Write '\u2713 Check \u2717 Cross' to /tmp/symbols.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:11:59.750678+00:00",
+      "latency_ms": 1590,
+      "input_tokens": 1300,
+      "output_tokens": 41,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}"
+      },
+      "request_id": "msg_01SyJNQr3nDkXtUa2kN3GzJt",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_unicode_004_json_only_4",
+      "task_id": "adv_unicode_004",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "user_prompt": "Write '\u2713 Check \u2717 Cross' to /tmp/symbols.txt",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}",
+      "is_correct": true,
+      "timestamp": "2026-02-04T22:12:01.341746+00:00",
+      "latency_ms": 1366,
+      "input_tokens": 1300,
+      "output_tokens": 41,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": true,
+        "tool_name_correct": true,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}"
+      },
+      "request_id": "msg_0149mdbVuDRQuwNv8kdYEsRY",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_001_json_only_0",
+      "task_id": "adv_combined_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "user_prompt": "Write a JSON config with {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"} to /tmp/complex.json",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:02.708677+00:00",
+      "latency_ms": 1680,
+      "input_tokens": 1310,
+      "output_tokens": 48,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_complex_config', got 'write_json_file'",
+          "Missing required args: ['config', 'format']",
+          "Arg 'config' mismatch: expected '{'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}', got 'None'",
+          "Arg 'format' mismatch: expected 'json', got 'None'"
+        ],
+        "raw_response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}"
+      },
+      "request_id": "msg_016pLN92yqT5bo5ZBWEi9t9W",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_001_json_only_1",
+      "task_id": "adv_combined_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "user_prompt": "Write a JSON config with {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"} to /tmp/complex.json",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:04.389412+00:00",
+      "latency_ms": 1494,
+      "input_tokens": 1310,
+      "output_tokens": 48,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_complex_config', got 'write_json_file'",
+          "Missing required args: ['config', 'format']",
+          "Arg 'config' mismatch: expected '{'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}', got 'None'",
+          "Arg 'format' mismatch: expected 'json', got 'None'"
+        ],
+        "raw_response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}"
+      },
+      "request_id": "msg_016SZudz6NQ1D4mzLemvuXZW",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_001_json_only_2",
+      "task_id": "adv_combined_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "user_prompt": "Write a JSON config with {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"} to /tmp/complex.json",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:05.884229+00:00",
+      "latency_ms": 1705,
+      "input_tokens": 1310,
+      "output_tokens": 48,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_complex_config', got 'write_json_file'",
+          "Missing required args: ['config', 'format']",
+          "Arg 'config' mismatch: expected '{'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}', got 'None'",
+          "Arg 'format' mismatch: expected 'json', got 'None'"
+        ],
+        "raw_response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}"
+      },
+      "request_id": "msg_01U79tmyVtuFqr9HDqPiedGY",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_001_json_only_3",
+      "task_id": "adv_combined_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "user_prompt": "Write a JSON config with {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"} to /tmp/complex.json",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:07.589800+00:00",
+      "latency_ms": 1431,
+      "input_tokens": 1310,
+      "output_tokens": 48,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_complex_config', got 'write_json_file'",
+          "Missing required args: ['config', 'format']",
+          "Arg 'config' mismatch: expected '{'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}', got 'None'",
+          "Arg 'format' mismatch: expected 'json', got 'None'"
+        ],
+        "raw_response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}"
+      },
+      "request_id": "msg_01MZ4sqB9WQUHRBNE5JCxdKG",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_001_json_only_4",
+      "task_id": "adv_combined_001",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "user_prompt": "Write a JSON config with {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"} to /tmp/complex.json",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:09.021565+00:00",
+      "latency_ms": 1535,
+      "input_tokens": 1310,
+      "output_tokens": 48,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": true,
+        "syntactically_valid": true,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": true,
+        "json_parseable": true,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Wrong tool: expected 'write_complex_config', got 'write_json_file'",
+          "Missing required args: ['config', 'format']",
+          "Arg 'config' mismatch: expected '{'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}', got 'None'",
+          "Arg 'format' mismatch: expected 'json', got 'None'"
+        ],
+        "raw_response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}"
+      },
+      "request_id": "msg_01LGLR1R24GnzqCZYfaaQ7X9",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_002_nl_only_0",
+      "task_id": "adv_combined_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "user_prompt": "Create YAML config with {\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"} at /tmp/config.yaml",
+      "response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"\\n' to create the YAML configuration file. This tool is appropriate because the content contains both escaped quotes and a unicode emoji character that need to be handled properly.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:10.557751+00:00",
+      "latency_ms": 2544,
+      "input_tokens": 1313,
+      "output_tokens": 69,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"\\n' to create the YAML configuration file. This tool is appropriate because the content contains both escaped quotes and a unicode emoji character that need to be handled properly."
+      },
+      "request_id": "msg_01KYgi4P6P2irurs5Pe8v4Nx",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_002_nl_only_1",
+      "task_id": "adv_combined_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "user_prompt": "Create YAML config with {\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"} at /tmp/config.yaml",
+      "response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"' to create a YAML configuration file that contains the message with escaped quotes and a unicode emoji character.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:13.102693+00:00",
+      "latency_ms": 2120,
+      "input_tokens": 1313,
+      "output_tokens": 57,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"' to create a YAML configuration file that contains the message with escaped quotes and a unicode emoji character."
+      },
+      "request_id": "msg_01TwqRwaz99AvWYHYeudx75Y",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_002_nl_only_2",
+      "task_id": "adv_combined_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "user_prompt": "Create YAML config with {\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"} at /tmp/config.yaml",
+      "response": "I would use the write_complex_config tool with path='/tmp/config.yaml', config={\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"}, and format='yaml' to create a YAML configuration file that properly handles the JSON structure, escaped quotes, and unicode emoji character.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:15.223509+00:00",
+      "latency_ms": 2156,
+      "input_tokens": 1313,
+      "output_tokens": 64,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": true,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": true,
+        "args_complete": false,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Missing required arguments: ['config', 'format']"
+        ],
+        "raw_response": "I would use the write_complex_config tool with path='/tmp/config.yaml', config={\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"}, and format='yaml' to create a YAML configuration file that properly handles the JSON structure, escaped quotes, and unicode emoji character."
+      },
+      "request_id": "msg_01FWQBPgs7jBbCumjzRB4AGi",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_002_nl_only_3",
+      "task_id": "adv_combined_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "user_prompt": "Create YAML config with {\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"} at /tmp/config.yaml",
+      "response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"\\n' to create a YAML configuration file that contains the message with escaped quotes and a unicode emoji character.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:17.380019+00:00",
+      "latency_ms": 2520,
+      "input_tokens": 1313,
+      "output_tokens": 58,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"\\n' to create a YAML configuration file that contains the message with escaped quotes and a unicode emoji character."
+      },
+      "request_id": "msg_01DfhfHMWV6uNhgGjZmC8YMR",
+      "finish_reason": "end_turn"
+    },
+    {
+      "trial_id": "adv_combined_002_nl_only_4",
+      "task_id": "adv_combined_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "user_prompt": "Create YAML config with {\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"} at /tmp/config.yaml",
+      "response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"' to create the YAML config file. This tool is appropriate because the content contains both escaped quotes and a unicode emoji character that need to be handled properly.",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:12:19.900525+00:00",
+      "latency_ms": 2869,
+      "input_tokens": 1313,
+      "output_tokens": 68,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": true,
+        "tool_identified": false,
+        "args_complete": true
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": true,
+        "args_correct": true,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 1.0,
+        "judge_model": "rule_based",
+        "errors": [],
+        "raw_response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"' to create the YAML config file. This tool is appropriate because the content contains both escaped quotes and a unicode emoji character that need to be handled properly."
+      },
+      "request_id": "msg_013LvyQvaNZ5m97ce4moqcZ9",
+      "finish_reason": "end_turn"
+    }
+  ]
+}

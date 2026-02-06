@@ -1,0 +1,16 @@
+{
+  "trial_id": "trial_0019",
+  "task_id": "read_001",
+  "condition": "json_only",
+  "prompt": "Read the configuration file at /etc/config.yaml",
+  "system_prompt": "You are an assistant with access to the following tools:\n\n- read_file: Read the contents of a file\n- write_file: Write content to a file (creates or overwrites)\n- edit_file: Edit an existing file by replacing text\n\nTool schemas:\n[\n  {\n    \"name\": \"read_file\",\n    \"description\": \"Read the contents of a file\",\n    \"parameters\": {\n      \"path\": {\n        \"type\": \"string\",\n        \"description\": \"Path to the file\"\n      }\n    }\n  },\n  {\n    \"name\": \"write_file\",\n    \"description\": \"Write content to ...",
+  "response": "{\"tool\": \"read_file\", \"args\": {\"path\": \"/etc/config.yaml\"}}",
+  "success": true,
+  "error": null,
+  "model": "claude-sonnet-4-20250514",
+  "timestamp": "2026-02-05T04:00:59.740543+00:00",
+  "latency_ms": 1537,
+  "input_tokens": 434,
+  "output_tokens": 25,
+  "retry_count": 0
+}

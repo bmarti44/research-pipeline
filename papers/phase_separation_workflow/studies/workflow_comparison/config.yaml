@@ -1,0 +1,265 @@
+# Study: Mechanisms of Phase-Separated Workflow Advantage
+
+study:
+  name: workflow_comparison
+  title: "Mechanisms of Phase-Separated Workflow Advantage"
+  version: "1.0.0"
+
+hypothesis:
+  primary: |
+    Phase-separated workflows with context clearing and external memory outperform
+    continuous-context workflows due to three mechanisms:
+    (a) Reduced mode interference between planning, critiquing, and executing
+    (b) Elimination of consistency pressure, enabling genuine adversarial critique
+    (c) Error firewalling at phase boundaries via external checkpoints
+
+  mechanisms:
+    mode_interference: |
+      Different phases require different cognitive modes. Planning requires creative
+      exploration, critiquing requires adversarial skepticism, executing requires
+      careful implementation. Mixing modes in context causes each to be done worse.
+      (Related: Teki's "Isolate" pillar)
+
+    consistency_pressure: |
+      When the model can see its prior reasoning (the plan it wrote), it feels
+      compelled to defend or rationalize it rather than genuinely critique. Context
+      clearing enables the critic to be truly adversarial.
+
+    error_firewalling: |
+      Each phase boundary with external checkpoint creates an opportunity to catch
+      errors before they propagate. Continuous context allows early errors to
+      contaminate all subsequent reasoning.
+
+    context_collapse: |
+      As identified by ACE (Prasad et al. 2025): iterative rewriting of context
+      causes progressive loss of detail and nuance. External memory preserves
+      full-fidelity artifacts; context clearing prevents accumulation of degraded
+      representations. This is distinct from mode interference—collapse happens
+      even within a single mode if context is repeatedly summarized/rewritten.
+
+  predictions:
+    - "Full workflow > continuous context (primary comparison)"
+    - "With-review > without-review (review adds value)"
+    - "Cleared-review > in-context-review (consistency pressure)"
+    - "External-memory > in-context-memory (error firewalling)"
+    - "iterative_refine_external > iterative_refine_in_context (context collapse test)"
+    - "Single-phase approaches will show mode-specific strengths but overall weakness"
+    - "If context collapse dominates: iterative conditions show large external memory effect"
+    - "If mode interference dominates: phase-separated > iterative even with external memory"
+
+  direction: "superiority"
+  alpha: 0.05
+
+# Six workflow conditions to test
+conditions:
+  - name: continuous_context
+    description: "Baseline: all phases in one continuous context"
+    phases: ["plan_and_execute"]
+    context_clearing: false
+    external_memory: false
+
+  - name: phases_no_clearing
+    description: "Distinct phases but no context clearing"
+    phases: ["plan", "review", "resolve", "execute"]
+    context_clearing: false
+    external_memory: false
+
+  - name: phases_with_clearing
+    description: "Distinct phases with context clearing but no external memory"
+    phases: ["plan", "review", "resolve", "execute"]
+    context_clearing: true
+    external_memory: false
+
+  - name: external_memory_no_clearing
+    description: "External memory but no context clearing"
+    phases: ["plan", "review", "resolve", "execute"]
+    context_clearing: false
+    external_memory: true
+
+  - name: full_workflow
+    description: "Full workflow: phases + clearing + external memory"
+    phases: ["plan", "review", "resolve", "execute"]
+    context_clearing: true
+    external_memory: true
+
+  - name: no_review
+    description: "Ablation: plan → execute with clearing, no review"
+    phases: ["plan", "execute"]
+    context_clearing: true
+    external_memory: true
+
+  - name: iterative_refine_in_context
+    description: "Context collapse test: multiple refinement iterations, no clearing"
+    phases: ["plan", "refine", "refine", "refine", "execute"]
+    context_clearing: false
+    external_memory: false
+    notes: "Tests context collapse: same mode (planning) but iterated in context"
+
+  - name: iterative_refine_external
+    description: "Context collapse control: same iterations but with external memory"
+    phases: ["plan", "refine", "refine", "refine", "execute"]
+    context_clearing: true
+    external_memory: true
+    notes: "If collapse is the mechanism, this should outperform iterative_refine_in_context"
+
+factors:
+  - name: workflow_type
+    type: categorical
+    levels:
+      - continuous_context
+      - phases_no_clearing
+      - phases_with_clearing
+      - external_memory_no_clearing
+      - full_workflow
+      - no_review
+      - iterative_refine_in_context
+      - iterative_refine_external
+
+  - name: task_complexity
+    type: categorical
+    levels: [simple, moderate, complex]
+
+  - name: task_type
+    type: categorical
+    levels:
+      - new_feature
+      - bug_fix
+      - refactoring
+      - integration
+
+design:
+  type: "between_subjects"  # Each task instance gets one workflow
+  matched_tasks: true       # Same task tested with each workflow
+  trials_per_cell: 5        # 5 matched task instances per workflow × task_type
+  total_expected: 480       # 6 workflows × 4 task_types × 4 complexities × 5 reps
+
+models:
+  - name: "claude-sonnet-4-20250514"
+    provider: anthropic
+    temperature: 0.3  # Slight temperature for plan diversity
+
+evaluation:
+  evaluator: "coding_task_success"
+  metrics:
+    - name: task_completed
+      description: "Did the workflow produce working code?"
+      type: binary
+    - name: tests_passing
+      description: "Percentage of test cases passing"
+      type: continuous
+    - name: code_quality
+      description: "LLM-judged code quality (0-10)"
+      type: continuous
+    - name: errors_in_plan
+      description: "Number of errors in initial plan"
+      type: count
+    - name: errors_caught_in_review
+      description: "Errors identified during review"
+      type: count
+    - name: errors_in_final
+      description: "Errors remaining in final code"
+      type: count
+    - name: critique_quality
+      description: "How substantive was the review? (0-10)"
+      type: continuous
+
+  # Mechanism-specific metrics
+  mechanism_metrics:
+    mode_interference:
+      - name: plan_quality
+        description: "Quality of plan independent of execution"
+      - name: execution_quality
+        description: "Quality of execution given the plan"
+      - name: plan_execution_coherence
+        description: "How well does execution follow plan?"
+
+    consistency_pressure:
+      - name: critique_identifies_real_issues
+        description: "Does critique find actual problems?"
+      - name: critique_defends_plan
+        description: "Does critique rationalize/defend the plan?"
+      - name: critique_substantiveness
+        description: "How specific and actionable is critique?"
+
+    error_firewalling:
+      - name: errors_at_each_checkpoint
+        description: "Error count at each phase boundary"
+      - name: error_propagation_rate
+        description: "What fraction of errors propagate to next phase?"
+
+    context_collapse:
+      - name: detail_preservation
+        description: "Are specific details from early phases preserved in final output?"
+      - name: iteration_degradation
+        description: "Does quality degrade with each iteration in continuous context?"
+      - name: requirement_coverage
+        description: "What fraction of original requirements addressed in final code?"
+
+analysis:
+  primary_test: "one_way_anova"
+  secondary_tests:
+    - "post_hoc_tukey"
+    - "planned_contrasts"
+    - "mediation_analysis"
+
+  contrasts:
+    - name: "full_vs_continuous"
+      description: "Primary: Does full workflow beat baseline?"
+      comparison: "full_workflow vs continuous_context"
+
+    - name: "clearing_effect"
+      description: "Effect of context clearing"
+      comparison: "phases_with_clearing vs phases_no_clearing"
+
+    - name: "external_memory_effect"
+      description: "Effect of external memory"
+      comparison: "external_memory_no_clearing vs phases_no_clearing"
+
+    - name: "review_value"
+      description: "Does review phase add value?"
+      comparison: "full_workflow vs no_review"
+
+    - name: "genuine_critique"
+      description: "Is cleared review more critical?"
+      comparison: "phases_with_clearing vs phases_no_clearing on critique_quality"
+
+    - name: "context_collapse_test"
+      description: "KEY: Does external memory help even without mode switching?"
+      comparison: "iterative_refine_external vs iterative_refine_in_context"
+      notes: "Isolates context collapse from mode interference (same mode, different memory)"
+
+    - name: "collapse_vs_interference"
+      description: "Which mechanism dominates?"
+      comparison: "Compare effect sizes of context_collapse_test vs clearing_effect"
+
+  mediation:
+    - name: "mode_interference_mediation"
+      description: "Does mode separation explain the effect?"
+      mediator: "plan_execution_coherence"
+
+    - name: "consistency_pressure_mediation"
+      description: "Does critique quality explain the effect?"
+      mediator: "critique_substantiveness"
+
+    - name: "error_firewall_mediation"
+      description: "Does error catching explain the effect?"
+      mediator: "errors_caught_in_review"
+
+    - name: "context_collapse_mediation"
+      description: "Does detail preservation explain external memory advantage?"
+      mediator: "detail_preservation"
+      notes: "Key test for ACE's context collapse hypothesis"
+
+pilot:
+  enabled: true
+  fraction: 0.2
+  criteria:
+    min_trials: 60
+    response_rate: 0.95
+    variance_present: true
+
+execution:
+  batch_size: 1  # Sequential for multi-phase workflows
+  rate_limit_rpm: 20
+  retry_attempts: 3
+  checkpoint_frequency: 10

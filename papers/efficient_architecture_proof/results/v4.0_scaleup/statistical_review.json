@@ -1,0 +1,219 @@
+{
+  "reviewer": "Statistician",
+  "checkpoint": "v4.0_scaleup_analysis",
+  "round": 2,
+  "timestamp": "2026-02-05T16:45:00Z",
+  "files_reviewed": [
+    "results/v4.0_scaleup/baseline_2000/seed_*/baseline_results.json",
+    "results/v4.0_scaleup/coconut_warmstart/seed_*/coconut_only_results.json",
+    "results/v4.0_scaleup/full_abc_warmstart/seed_*/full_abc_results.json",
+    "code/analysis/analyze_results.py"
+  ],
+
+  "data_verification": {
+    "baseline_2000": {
+      "seeds": [42, 123, 456],
+      "val_ppl_values": [2.457, 2.472, 2.436],
+      "mean": 2.455,
+      "std": 0.018,
+      "n": 3
+    },
+    "coconut_warmstart": {
+      "seeds": [42, 123, 456],
+      "val_ppl_values": [2.353, 2.318, 2.319],
+      "mean": 2.330,
+      "std": 0.020,
+      "n": 3
+    },
+    "full_abc_warmstart": {
+      "seeds": [42, 123, 456],
+      "val_ppl_values": [2.291, 2.290, 2.264],
+      "mean": 2.282,
+      "std": 0.015,
+      "n": 3
+    }
+  },
+
+  "findings": [
+    {
+      "id": "F001",
+      "severity": "major",
+      "category": "analysis",
+      "description": "Independent t-tests used instead of paired t-tests despite matched-seed design. Each condition uses the same 3 random seeds (42, 123, 456), creating natural pairing. Paired tests would account for seed-specific variance and increase statistical power.",
+      "location": "statistical_tests:1-3",
+      "recommendation": "Re-analyze using paired t-tests. Given seeds are matched across conditions, the paired design is more appropriate and will likely yield even stronger results due to reduced error variance. For n=3 pairs: use t.test(x, y, paired=TRUE) or scipy.stats.ttest_rel().",
+      "resolution_required": true,
+      "reanalysis": {
+        "note": "With paired design and n=3 pairs, df would be 2 instead of 4. However, given the extremely low variance within conditions (std ~0.02), paired tests should remain highly significant.",
+        "expected_impact": "Paired t-tests may show different t-statistics but conclusions unlikely to change given effect magnitude."
+      }
+    },
+    {
+      "id": "F002",
+      "severity": "major",
+      "category": "analysis",
+      "description": "Sample size n=3 per condition is very small, raising concerns about statistical power and robustness. While the reported p-values are highly significant, small n limits: (1) detection of subtle effects, (2) reliable variance estimation, (3) generalizability.",
+      "location": "experimental_design",
+      "recommendation": "Conduct and report post-hoc power analysis. Given observed effect sizes and variances, calculate achieved power. For prospective studies, n=5 per condition (as in v3.5_warmstart) is preferable. Current n=3 is acceptable for proof-of-concept if limitations are acknowledged.",
+      "resolution_required": true,
+      "power_analysis": {
+        "observed_d_abc_vs_baseline": 10.82,
+        "observed_d_coconut_vs_baseline": 7.76,
+        "pooled_sd_estimate": 0.017,
+        "note": "With d > 7 and such low variance, power is effectively 1.0 (>99.99%). The small n is mitigated by the enormous effect size and remarkably consistent results.",
+        "minimum_n_for_80pct_power_if_d_equals_1": 17,
+        "achieved_power_current_n_with_observed_d": ">0.9999"
+      }
+    },
+    {
+      "id": "F003",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "Effect sizes d=10.82 and d=7.76 are extraordinarily large (conventional 'large' is d=0.8). This warrants explicit acknowledgment and interpretation. Such values suggest: (a) real, massive effects, or (b) potential measurement/design issues.",
+      "location": "statistical_tests:effect_sizes",
+      "recommendation": "Report effect sizes with appropriate interpretation: 'Effect sizes exceed conventional benchmarks by an order of magnitude (d=10.82 vs. large=0.8), indicating practical significance substantially beyond statistical significance.' Consider also reporting raw effect (PPL reduction of 0.17-0.18) and percentage improvement (7-7.5%).",
+      "resolution_required": false,
+      "interpretation": {
+        "context": "In ML experiments with low stochasticity (fixed hyperparameters, deterministic training with small random variation from initialization only), very large Cohen's d values are common because between-group variance dominates within-group variance.",
+        "key_insight": "The within-condition variance (~0.02 PPL) reflects only initialization randomness, while between-condition differences (~0.17 PPL) reflect architectural changes. This ratio is what drives the large d.",
+        "validity": "Large d values are legitimate here and reflect genuine, consistent effects. Not a statistical anomaly."
+      }
+    },
+    {
+      "id": "F004",
+      "severity": "major",
+      "category": "analysis",
+      "description": "Three comparisons performed without multiple comparison correction. Testing Full A+B+C vs Baseline, COCONUT vs Baseline, and Full A+B+C vs COCONUT at alpha=0.05 each inflates family-wise error rate to approximately 0.14.",
+      "location": "statistical_tests:1-3",
+      "recommendation": "Apply Holm-Bonferroni correction. Adjusted alpha levels: Test 1 (smallest p): 0.05/3=0.0167; Test 2: 0.05/2=0.025; Test 3: 0.05/1=0.05. Given p-values of 0.0002, 0.0007, 0.0241, all tests remain significant after correction.",
+      "resolution_required": true,
+      "corrected_tests": {
+        "test_1_abc_vs_baseline": {
+          "p_observed": 0.0002,
+          "alpha_corrected": 0.0167,
+          "significant_after_correction": true
+        },
+        "test_2_coconut_vs_baseline": {
+          "p_observed": 0.0007,
+          "alpha_corrected": 0.025,
+          "significant_after_correction": true
+        },
+        "test_3_abc_vs_coconut": {
+          "p_observed": 0.0241,
+          "alpha_corrected": 0.05,
+          "significant_after_correction": true
+        }
+      },
+      "note": "All comparisons survive correction. Report both uncorrected and corrected significance."
+    },
+    {
+      "id": "F005",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "With n=3, normality assumption of t-test cannot be reliably verified. Shapiro-Wilk test has virtually no power at n=3. Small samples from normal distributions can appear non-normal, and vice versa.",
+      "location": "statistical_tests:assumptions",
+      "recommendation": "Given impossibility of verifying normality with n=3, report results with acknowledgment: 'Normality could not be verified due to small sample size.' Optionally, supplement with non-parametric tests (Wilcoxon signed-rank for paired, Mann-Whitney U for unpaired) as sensitivity analysis.",
+      "resolution_required": false,
+      "sensitivity_analysis": {
+        "wilcoxon_feasibility": "With n=3 pairs, minimum possible p-value for Wilcoxon signed-rank is 0.25 (when all differences are in same direction). This makes the test underpowered for n=3.",
+        "recommendation": "Parametric tests are acceptable here. The t-test is robust to mild normality violations, and bootstrapped CIs could supplement if desired."
+      }
+    },
+    {
+      "id": "F006",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "Variance homogeneity (Levene's test) not reported. For t-tests, unequal variances can affect Type I error rate. Observed SDs: baseline=0.018, coconut=0.020, abc=0.015.",
+      "location": "statistical_tests:assumptions",
+      "recommendation": "Variances appear comparable (ratio of largest to smallest: 0.020/0.015 = 1.33, well within acceptable range). Welch's t-test (already used per analyze_results.py) is robust to variance heterogeneity, so this is appropriately handled.",
+      "resolution_required": false,
+      "verification": {
+        "variance_ratio_coconut_baseline": 1.11,
+        "variance_ratio_abc_baseline": 0.83,
+        "variance_ratio_abc_coconut": 0.75,
+        "conclusion": "Variance ratios all < 2.0; homogeneity assumption is reasonably met. Welch's t-test provides additional robustness."
+      }
+    },
+    {
+      "id": "F007",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "Consider reporting Bayesian analysis (Bayes Factor) to quantify evidence strength beyond p-value dichotomy.",
+      "location": "statistical_tests",
+      "recommendation": "With such strong effects, Bayes Factors would be extremely large (>1000), providing additional evidence characterization. Optional but adds rigor.",
+      "resolution_required": false,
+      "estimated_bayes_factors": {
+        "note": "Rough approximation using BIC method",
+        "abc_vs_baseline_BF10": ">10000",
+        "coconut_vs_baseline_BF10": ">1000",
+        "interpretation": "Decisive evidence for H1 in all cases"
+      }
+    },
+    {
+      "id": "F008",
+      "severity": "suggestion",
+      "category": "design",
+      "description": "Degrees of freedom reported as t(4) suggests pooled variance independent t-test, but Welch's t-test (used in analyze_results.py) typically yields non-integer df via Welch-Satterthwaite approximation.",
+      "location": "statistical_tests:df",
+      "recommendation": "Clarify which t-test variant was used. If Welch's, df should be non-integer (e.g., 3.8). If equal-variance t-test, df=4 is correct for n1=n2=3. Recommend using Welch's t-test consistently given small samples.",
+      "resolution_required": false
+    }
+  ],
+
+  "overall_assessment": "pass_with_conditions",
+
+  "summary": "The statistical analysis is fundamentally sound, with all comparisons achieving significance that survives multiple comparison correction. However, three methodological improvements are required: (1) use paired t-tests to leverage the matched-seed design, (2) apply formal multiple comparison correction, and (3) report post-hoc power analysis. The extremely large effect sizes (d>7) are legitimate reflections of the low within-condition variance and large between-condition differences characteristic of controlled ML experiments. The sample size of n=3 is acceptable given achieved power >99.99%, though n=5 would be preferable for future replications.",
+
+  "recommendations_summary": {
+    "required_before_publication": [
+      "Re-run analyses with paired t-tests (matched seeds across conditions)",
+      "Apply Holm-Bonferroni correction and report adjusted significance",
+      "Report achieved power analysis demonstrating >99% power despite small n"
+    ],
+    "recommended_additions": [
+      "Add sensitivity analysis note about normality assumption with n=3",
+      "Report raw PPL differences alongside Cohen's d for interpretability",
+      "Consider supplementary Bayesian analysis for evidence quantification"
+    ],
+    "no_action_needed": [
+      "Variance homogeneity - adequately handled by Welch's t-test",
+      "Effect size magnitude - legitimate, properly interpreted",
+      "Non-parametric alternatives - underpowered at n=3, parametric acceptable"
+    ]
+  },
+
+  "corrected_analysis": {
+    "note": "Recommended re-analysis with paired t-tests",
+    "test_1_abc_vs_baseline_paired": {
+      "pair_differences": [-0.166, -0.182, -0.172],
+      "mean_difference": -0.173,
+      "sd_difference": 0.008,
+      "t_statistic": -37.5,
+      "df": 2,
+      "p_value_two_tailed": 0.0007,
+      "significant_after_holm": true,
+      "cohens_d_paired": 21.6
+    },
+    "test_2_coconut_vs_baseline_paired": {
+      "pair_differences": [-0.104, -0.154, -0.117],
+      "mean_difference": -0.125,
+      "sd_difference": 0.026,
+      "t_statistic": -8.3,
+      "df": 2,
+      "p_value_two_tailed": 0.014,
+      "significant_after_holm": true,
+      "cohens_d_paired": 4.8
+    },
+    "test_3_abc_vs_coconut_paired": {
+      "pair_differences": [-0.062, -0.028, -0.055],
+      "mean_difference": -0.048,
+      "sd_difference": 0.018,
+      "t_statistic": -4.6,
+      "df": 2,
+      "p_value_two_tailed": 0.044,
+      "significant_after_holm": true,
+      "cohens_d_paired": 2.7
+    },
+    "conclusion": "All comparisons remain significant with paired analysis. Conclusions unchanged."
+  }
+}

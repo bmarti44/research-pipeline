@@ -1,0 +1,36 @@
+{
+  "trial_id": "trial_0022",
+  "modes": {
+    "strict": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "tool_mentioned": true,
+        "args_mentioned": true,
+        "args_found": 1,
+        "args_expected": 1
+      }
+    },
+    "intent": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "tool_mentioned": true,
+        "args_mentioned": true,
+        "args_found": 1,
+        "args_expected": 1
+      }
+    },
+    "functional": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "tool_mentioned": true,
+        "args_mentioned": true,
+        "args_found": 1,
+        "args_expected": 1
+      }
+    }
+  },
+  "timestamp": "2026-02-05T04:01:34.060388+00:00"
+}

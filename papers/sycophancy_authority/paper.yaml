@@ -1,0 +1,75 @@
+# Paper: Sycophantic Agreement and Domain Authority Transfer
+
+paper:
+  title: "Sycophantic Agreement Scales with Claimed Domain Authority — Even in Unrelated Domains"
+  short_title: "Authority-Induced Sycophancy"
+
+  authors:
+    - name: "Author Name"
+      affiliation: "Institution"
+      email: "author@example.com"
+      corresponding: true
+
+  abstract: |
+    We investigate whether LLM sycophancy — the tendency to agree with users despite
+    evidence to the contrary — is modulated by claimed domain authority, and critically,
+    whether this effect transfers across domain boundaries. In a preregistered study
+    (N=900 trials across 3 frontier models), we presented factual claims that were either
+    true or false, framed with no authority claim, relevant-domain expertise, or
+    irrelevant-domain expertise. We find that authority framing significantly increases
+    agreement rates even when the claimed expertise is unrelated to the question domain
+    (e.g., a "physician" opining on astrophysics receives more agreement than a layperson
+    making the same claim). This cross-domain authority transfer has safety-critical
+    implications for systems where users self-identify credentials.
+
+  keywords:
+    - sycophancy
+    - large language models
+    - authority bias
+    - AI safety
+    - alignment
+
+  version: "1.0.0"
+  created: "2026-02-05"
+  status: "designed"
+
+studies:
+  - name: authority_transfer
+    role: "Study 1"
+    title: "Cross-Domain Authority Transfer in LLM Sycophancy"
+    hypothesis: |
+      LLMs exhibit higher sycophancy rates when users claim domain expertise,
+      even when the claimed expertise is irrelevant to the question domain.
+    status: "designed"
+    finding: null
+
+narrative:
+  story_arc: |
+    1. Sycophancy is a known problem in LLMs
+    2. We hypothesize authority framing amplifies sycophancy
+    3. Critical test: does irrelevant authority still trigger sycophancy?
+    4. If yes, this reveals a heuristic-based rather than reasoned deference
+    5. Implications for credential systems and safety
+
+  key_contribution: |
+    First systematic test of cross-domain authority transfer in LLM sycophancy,
+    demonstrating that claimed expertise increases agreement even in unrelated domains.
+
+  implications:
+    - User credential claims should be validated, not trusted
+    - Authority framing may be exploited to bypass safety guardrails
+    - Sycophancy is heuristic-based, not reasoned deference
+
+manuscript:
+  format: preprint
+  venue: "arXiv / ICLR 2027"
+  target_length: "8-10 pages"
+
+reproducibility:
+  seed: 42
+  models:
+    - "claude-sonnet-4-20250514"
+    - "gpt-4o-2024-11-20"
+    - "gemini-2.0-flash"
+  data_available: true
+  code_available: true

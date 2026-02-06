@@ -1,9 +1,0 @@
-{
-  "python_version": "3.12.11 (main, Jun  3 2025, 15:41:47) [Clang 17.0.0 (clang-1700.0.13.3)]",
-  "numpy_version": "2.4.2",
-  "scipy_version": "1.17.0",
-  "anthropic_version": "0.77.1",
-  "openai_version": "2.16.0",
-  "platform": "macOS-26.2-arm64-arm-64bit",
-  "recorded_at": "2026-02-04T22:19:13.745141+00:00"
-}

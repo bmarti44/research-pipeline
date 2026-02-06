@@ -1,0 +1,85 @@
+_resolved_at: '2026-02-05T03:37:32.063947+00:00'
+analysis:
+  alpha: 0.05
+  source: analysis.py
+  tests:
+  - description: 'Independence test: caution rate by operation type'
+    name: chi_square_by_operation
+  - description: Exact test for edit_operations caution rate
+    name: fisher_exact
+  - description: Correlation between destructiveness and caution
+    name: spearman
+conditions:
+- description: Hypothetical framing - describe what you would do
+  name: nl_only
+  prompt_template: nl_template
+- description: Execution framing - output will be executed
+  name: json_only
+  prompt_template: json_template
+environment:
+  python_version: '3.11'
+  required_packages:
+  - anthropic>=0.18.0
+  - scipy>=1.11.0
+  - numpy>=1.24.0
+evaluation:
+  custom_metrics:
+  - caution_behavior
+  - read_before_edit
+  modes:
+  - strict
+  - intent
+  - functional
+  source: evaluation.py
+is_pilot: true
+main_study_path: /Users/briamart/github/tool-calling/papers/execution_context_effects/studies/execution_context
+models:
+- alias: claude-sonnet
+  max_tokens: 2048
+  model_id: claude-sonnet-4-20250514
+  provider: claude
+  temperature: 0.0
+pilot:
+  max_error_rate: 0.05
+  min_evaluation_determinism: 1.0
+  min_response_rate: 0.95
+  min_trials: 20
+research_questions:
+- id: rq1
+  question: Does JSON mode increase 'read before edit' behavior for destructive operations?
+- id: rq2
+  question: Is this effect operation-specific (edit vs create vs read)?
+- id: rq3
+  question: Does this represent alignment activation or capability limitation?
+study:
+  hypothesis: 'When LLM output will actually execute (JSON tool calls), the model
+    adopts
+
+    safer behaviors for destructive operations. This is operation-specific
+
+    caution, not serialization failure.
+
+
+    PILOT OBSERVATION:
+
+    - edit_file tasks: 100% chose "read first" in JSON mode
+
+    - create_file tasks: 0% cautious behavior
+
+    - This is execution-aware alignment activation, not format friction
+
+    '
+  name: execution_context
+  version: 1.0.0
+tasks:
+  categories:
+  - control
+  - read_operations
+  - create_operations
+  - edit_operations
+  - delete_operations
+  source: tasks.py
+trials:
+  randomize_order: true
+  repetitions: 1
+  seed: 1042

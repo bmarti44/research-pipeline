@@ -1,0 +1,51 @@
+{
+  "trial_id": "trial_0016",
+  "modes": {
+    "strict": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "/etc/config.yaml"
+        }
+      },
+      "format_friction": false
+    },
+    "intent": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "/etc/config.yaml"
+        }
+      },
+      "format_friction": false
+    },
+    "functional": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "read_file",
+        "actual_args": {
+          "path": "/etc/config.yaml"
+        }
+      },
+      "format_friction": false
+    }
+  },
+  "timestamp": "2026-02-05T04:01:34.079747+00:00"
+}

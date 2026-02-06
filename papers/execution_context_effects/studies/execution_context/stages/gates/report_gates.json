@@ -1,0 +1,27 @@
+{
+  "stage": "report",
+  "timestamp": "2026-02-05T03:43:07.468020+00:00",
+  "gates": [
+    {
+      "gate_name": "preregistration_compliance",
+      "passed": true,
+      "blocking": false,
+      "checks": [
+        {
+          "name": "preregistration_compliance",
+          "passed": true,
+          "message": "Analysis matches preregistration"
+        },
+        {
+          "name": "all_analyses_run",
+          "passed": true,
+          "message": "All preregistered analyses conducted"
+        }
+      ],
+      "recommendation": "Proceed",
+      "timestamp": "2026-02-05T03:43:07.467886+00:00"
+    }
+  ],
+  "all_passed": true,
+  "can_proceed": true
+}

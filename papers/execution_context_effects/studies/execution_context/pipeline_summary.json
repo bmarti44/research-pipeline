@@ -1,0 +1,35 @@
+{
+  "study": "execution_context",
+  "timestamp": "2026-02-05T03:43:07.503480+00:00",
+  "elapsed_seconds": 261.2555499076843,
+  "stages": {
+    "configure": {
+      "status": "completed",
+      "error": null
+    },
+    "preregistration": {
+      "status": "completed",
+      "error": null
+    },
+    "generate": {
+      "status": "completed",
+      "error": null
+    },
+    "execute": {
+      "status": "completed",
+      "error": null
+    },
+    "evaluate": {
+      "status": "completed",
+      "error": null
+    },
+    "analyze": {
+      "status": "completed",
+      "error": null
+    },
+    "report": {
+      "status": "completed",
+      "error": null
+    }
+  }
+}

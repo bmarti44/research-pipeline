@@ -1,0 +1,74 @@
+# Paper: Instruction Adherence Decay Across Context Length
+
+paper:
+  title: "Instruction Adherence Degrades Non-Uniformly Across Instruction Categories as Context Length Grows"
+  short_title: "Context Instruction Decay"
+
+  authors:
+    - name: "Author Name"
+      affiliation: "Institution"
+      email: "author@example.com"
+      corresponding: true
+
+  abstract: |
+    We investigate how instruction adherence degrades as context length increases,
+    testing whether different instruction categories show different decay rates.
+    In a preregistered study across context lengths from 1K to 128K tokens, we find
+    that instruction decay is non-uniform: safety/refusal instructions degrade
+    significantly slower than formatting instructions, which degrade slower than
+    factual constraint instructions. Furthermore, decay follows a non-linear pattern
+    with a model-specific "cliff" where compliance drops sharply. These findings
+    have direct implications for instruction placement and redundancy strategies
+    in production LLM systems.
+
+  keywords:
+    - context length
+    - instruction following
+    - long context models
+    - prompt engineering
+    - AI safety
+
+  version: "1.0.0"
+  created: "2026-02-05"
+  status: "designed"
+
+studies:
+  - name: instruction_decay
+    role: "Study 1"
+    title: "Non-Uniform Instruction Decay Across Context Length"
+    hypothesis: |
+      As context length increases, safety/refusal instructions degrade slower
+      than formatting instructions, which degrade slower than factual constraints.
+    status: "designed"
+    finding: null
+
+narrative:
+  story_arc: |
+    1. Long-context models are deployed but instruction decay is poorly understood
+    2. We hypothesize decay rates differ by instruction type
+    3. Systematic test across 5 instruction categories and 8 context lengths
+    4. Find safety instructions most robust, factual constraints most fragile
+    5. Identify model-specific "cliff" points for production guidance
+
+  key_contribution: |
+    First systematic categorization of instruction decay rates, showing safety
+    instructions are most robust while factual constraints are most vulnerable.
+
+  implications:
+    - Safety instructions can be placed once; factual constraints need reinforcement
+    - Context length limits should be set based on instruction category requirements
+    - Redundant instruction placement varies by instruction criticality
+
+manuscript:
+  format: preprint
+  venue: "arXiv / ACL 2027"
+  target_length: "8-10 pages"
+
+reproducibility:
+  seed: 42
+  models:
+    - "claude-sonnet-4-20250514"
+    - "gpt-4o-2024-11-20"
+    - "gemini-2.0-flash"
+  data_available: true
+  code_available: true

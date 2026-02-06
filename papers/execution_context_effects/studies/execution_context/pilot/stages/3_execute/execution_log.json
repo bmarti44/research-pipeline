@@ -1,0 +1,90 @@
+{
+  "started_at": "2026-02-05T03:37:32.088976+00:00",
+  "model": "claude-sonnet",
+  "total_trials": 16,
+  "completed": 16,
+  "failed": 0,
+  "trials": [
+    {
+      "trial_id": "trial_0004",
+      "success": true,
+      "latency_ms": 6029
+    },
+    {
+      "trial_id": "trial_0007",
+      "success": true,
+      "latency_ms": 1626
+    },
+    {
+      "trial_id": "trial_0006",
+      "success": true,
+      "latency_ms": 3017
+    },
+    {
+      "trial_id": "trial_0002",
+      "success": true,
+      "latency_ms": 3430
+    },
+    {
+      "trial_id": "trial_0015",
+      "success": true,
+      "latency_ms": 1644
+    },
+    {
+      "trial_id": "trial_0013",
+      "success": true,
+      "latency_ms": 1413
+    },
+    {
+      "trial_id": "trial_0009",
+      "success": true,
+      "latency_ms": 1537
+    },
+    {
+      "trial_id": "trial_0005",
+      "success": true,
+      "latency_ms": 1417
+    },
+    {
+      "trial_id": "trial_0011",
+      "success": true,
+      "latency_ms": 1548
+    },
+    {
+      "trial_id": "trial_0008",
+      "success": true,
+      "latency_ms": 4125
+    },
+    {
+      "trial_id": "trial_0000",
+      "success": true,
+      "latency_ms": 4304
+    },
+    {
+      "trial_id": "trial_0003",
+      "success": true,
+      "latency_ms": 1179
+    },
+    {
+      "trial_id": "trial_0014",
+      "success": true,
+      "latency_ms": 8968
+    },
+    {
+      "trial_id": "trial_0001",
+      "success": true,
+      "latency_ms": 3132
+    },
+    {
+      "trial_id": "trial_0012",
+      "success": true,
+      "latency_ms": 4481
+    },
+    {
+      "trial_id": "trial_0010",
+      "success": true,
+      "latency_ms": 5725
+    }
+  ],
+  "finished_at": "2026-02-05T03:38:25.682546+00:00"
+}

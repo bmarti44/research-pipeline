@@ -1,0 +1,4397 @@
+{
+  "run_id": "run_20260204_220215_42",
+  "seed": 42,
+  "n_trials": 100,
+  "trials": [
+    {
+      "trial_id": "ctrl_001_nl_only_0",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.021216+00:00",
+      "latency_ms": 3,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_1",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025175+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_2",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025314+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_3",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025398+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_4",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025464+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_5",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025525+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_6",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025586+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_7",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025641+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_8",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025696+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "ctrl_001_nl_only_9",
+      "task_id": "ctrl_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "noop",
+      "expected_args": {},
+      "user_prompt": "Acknowledge this message without taking any action.",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025753+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_0",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025894+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_1",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.025953+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_2",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026012+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_3",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026066+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_4",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026119+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_5",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026172+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_6",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026225+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_7",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026278+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_8",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026330+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_001_nl_only_9",
+      "task_id": "simple_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/passwd"
+      },
+      "user_prompt": "Read the contents of /etc/passwd",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026383+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_0",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026464+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_1",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026518+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_2",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026574+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_3",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026627+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_4",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026704+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_5",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026757+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_6",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026810+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_7",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026863+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_8",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026916+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_002_nl_only_9",
+      "task_id": "simple_002",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/home/user/.bashrc"
+      },
+      "user_prompt": "I need to see what's in the config file at /home/user/.bashrc",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.026967+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_0",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.027033+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_1",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.027089+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_2",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.027373+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_3",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.027603+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_4",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.027755+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_5",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.027964+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_6",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028049+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_7",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028115+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_8",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028177+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_003_nl_only_9",
+      "task_id": "simple_003",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/var/log/syslog"
+      },
+      "user_prompt": "Show me the contents of /var/log/syslog",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028235+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_0",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028323+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_1",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028385+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_2",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028440+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_3",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028494+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_4",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028547+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_5",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028600+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_6",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028656+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_7",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028710+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_8",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028762+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_004_nl_only_9",
+      "task_id": "simple_004",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/tmp/old_backup.tar.gz"
+      },
+      "user_prompt": "Delete the file at /tmp/old_backup.tar.gz",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028815+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_0",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028884+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_1",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028939+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_2",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.028992+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_3",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029046+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_4",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029099+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_5",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029151+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_6",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029203+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_7",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029257+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_8",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029312+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_005_nl_only_9",
+      "task_id": "simple_005",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "delete_file",
+      "expected_args": {
+        "path": "/home/user/Downloads/temp_file.txt"
+      },
+      "user_prompt": "Remove /home/user/Downloads/temp_file.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029550+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_0",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029783+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_1",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.029919+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_2",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.030054+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_3",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.030179+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_4",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.030352+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_5",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.030532+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_6",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.030661+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_7",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.030785+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_8",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.030951+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_006_nl_only_9",
+      "task_id": "simple_006",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/var/log"
+      },
+      "user_prompt": "List all files in /var/log",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.031094+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_0",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.031303+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_1",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.031449+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_2",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.031575+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_3",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.031696+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_4",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.031815+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_5",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.031935+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_6",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.032067+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_7",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.032240+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_8",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.032406+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_007_nl_only_9",
+      "task_id": "simple_007",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "list_directory",
+      "expected_args": {
+        "path": "/home/user/Documents"
+      },
+      "user_prompt": "Show me what's in the /home/user/Documents directory",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.032554+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_0",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.032740+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_1",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033222+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_2",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033319+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_3",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033380+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_4",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033435+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_5",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033493+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_6",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033545+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_7",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033597+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_8",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033649+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "simple_008_json_only_9",
+      "task_id": "simple_008",
+      "condition": "json_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "read_file",
+      "expected_args": {
+        "path": "/etc/hosts"
+      },
+      "user_prompt": "Can you read /etc/hosts for me?",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033699+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": false,
+        "syntactically_valid": false,
+        "attempted_nl_description": null,
+        "tool_identified": null,
+        "args_complete": null
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not parse valid JSON from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_0",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033781+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_1",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033840+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_2",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033895+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_3",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.033951+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_4",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.034004+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_5",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.034057+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_6",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.034113+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_7",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.034165+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_8",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.034217+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    },
+    {
+      "trial_id": "medium_001_nl_only_9",
+      "task_id": "medium_001",
+      "condition": "nl_only",
+      "ablation": "full",
+      "model": "claude-sonnet",
+      "tool_name": "write_file",
+      "expected_args": {
+        "path": "/tmp/greeting.txt",
+        "content": "Hello, World!"
+      },
+      "user_prompt": "Write 'Hello, World!' to /tmp/greeting.txt",
+      "response": "",
+      "is_correct": false,
+      "timestamp": "2026-02-04T22:02:15.034269+00:00",
+      "latency_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "retry_count": 0,
+      "manipulation_check": {
+        "explicitly_declined": false,
+        "refusal_reason": null,
+        "attempted_json": null,
+        "syntactically_valid": null,
+        "attempted_nl_description": false,
+        "tool_identified": false,
+        "args_complete": false
+      },
+      "judgment": {
+        "is_correct": false,
+        "tool_name_correct": false,
+        "args_complete": false,
+        "args_correct": false,
+        "json_valid": false,
+        "json_parseable": false,
+        "confidence": 0.0,
+        "judge_model": "rule_based",
+        "errors": [
+          "Could not identify tool from response"
+        ],
+        "raw_response": ""
+      },
+      "request_id": null,
+      "finish_reason": null
+    }
+  ]
+}

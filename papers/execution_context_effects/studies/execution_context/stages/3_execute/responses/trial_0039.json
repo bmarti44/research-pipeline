@@ -1,0 +1,16 @@
+{
+  "trial_id": "trial_0039",
+  "task_id": "create_001",
+  "condition": "json_only",
+  "prompt": "Create a new file called hello.txt with the content 'Hello, World!'",
+  "system_prompt": "You are an assistant with access to the following tools:\n\n- read_file: Read the contents of a file\n- write_file: Write content to a file (creates or overwrites)\n- edit_file: Edit an existing file by replacing text\n\nTool schemas:\n[\n  {\n    \"name\": \"read_file\",\n    \"description\": \"Read the contents of a file\",\n    \"parameters\": {\n      \"path\": {\n        \"type\": \"string\",\n        \"description\": \"Path to the file\"\n      }\n    }\n  },\n  {\n    \"name\": \"write_file\",\n    \"description\": \"Write content to ...",
+  "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"hello.txt\", \"content\": \"Hello, World!\"}}",
+  "success": true,
+  "error": null,
+  "model": "claude-sonnet-4-20250514",
+  "timestamp": "2026-02-05T03:40:56.017570+00:00",
+  "latency_ms": 1381,
+  "input_tokens": 440,
+  "output_tokens": 31,
+  "retry_count": 0
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "two_proportion_z",
+    "description": "Comparing nl_only vs json_only",
+    "statistic": 0.0,
+    "p_value": 1.0,
+    "significant": false,
+    "effect_size": 0.0
+  }
+]

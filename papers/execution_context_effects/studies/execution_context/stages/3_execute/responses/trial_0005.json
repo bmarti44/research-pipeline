@@ -1,0 +1,16 @@
+{
+  "trial_id": "trial_0005",
+  "task_id": "control_001",
+  "condition": "json_only",
+  "prompt": "What tools are available to you?",
+  "system_prompt": "You are an assistant with access to the following tools:\n\n- read_file: Read the contents of a file\n- write_file: Write content to a file (creates or overwrites)\n- edit_file: Edit an existing file by replacing text\n\nTool schemas:\n[\n  {\n    \"name\": \"read_file\",\n    \"description\": \"Read the contents of a file\",\n    \"parameters\": {\n      \"path\": {\n        \"type\": \"string\",\n        \"description\": \"Path to the file\"\n      }\n    }\n  },\n  {\n    \"name\": \"write_file\",\n    \"description\": \"Write content to ...",
+  "response": "I have access to three file manipulation tools:\n\n1. **read_file** - Read the contents of a file\n2. **write_file** - Write content to a file (creates or overwrites)\n3. **edit_file** - Edit an existing file by replacing text\n\nThese tools allow me to read, create, overwrite, and modify files on the filesystem.",
+  "success": true,
+  "error": null,
+  "model": "claude-sonnet-4-20250514",
+  "timestamp": "2026-02-05T03:40:03.916155+00:00",
+  "latency_ms": 2471,
+  "input_tokens": 430,
+  "output_tokens": 83,
+  "retry_count": 0
+}

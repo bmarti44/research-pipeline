@@ -1,0 +1,410 @@
+{
+  "started_at": "2026-02-05T03:57:11.829662+00:00",
+  "model": "claude-sonnet",
+  "total_trials": 80,
+  "completed": 80,
+  "failed": 0,
+  "trials": [
+    {
+      "trial_id": "trial_0033",
+      "success": true,
+      "latency_ms": 3271
+    },
+    {
+      "trial_id": "trial_0051",
+      "success": true,
+      "latency_ms": 3828
+    },
+    {
+      "trial_id": "trial_0040",
+      "success": true,
+      "latency_ms": 5050
+    },
+    {
+      "trial_id": "trial_0028",
+      "success": true,
+      "latency_ms": 1647
+    },
+    {
+      "trial_id": "trial_0061",
+      "success": true,
+      "latency_ms": 6021
+    },
+    {
+      "trial_id": "trial_0025",
+      "success": true,
+      "latency_ms": 1766
+    },
+    {
+      "trial_id": "trial_0000",
+      "success": true,
+      "latency_ms": 5117
+    },
+    {
+      "trial_id": "trial_0060",
+      "success": true,
+      "latency_ms": 5184
+    },
+    {
+      "trial_id": "trial_0021",
+      "success": true,
+      "latency_ms": 6848
+    },
+    {
+      "trial_id": "trial_0037",
+      "success": true,
+      "latency_ms": 1266
+    },
+    {
+      "trial_id": "trial_0018",
+      "success": true,
+      "latency_ms": 1649
+    },
+    {
+      "trial_id": "trial_0042",
+      "success": true,
+      "latency_ms": 4441
+    },
+    {
+      "trial_id": "trial_0026",
+      "success": true,
+      "latency_ms": 1602
+    },
+    {
+      "trial_id": "trial_0057",
+      "success": true,
+      "latency_ms": 1648
+    },
+    {
+      "trial_id": "trial_0050",
+      "success": true,
+      "latency_ms": 3550
+    },
+    {
+      "trial_id": "trial_0004",
+      "success": true,
+      "latency_ms": 4619
+    },
+    {
+      "trial_id": "trial_0027",
+      "success": true,
+      "latency_ms": 1669
+    },
+    {
+      "trial_id": "trial_0024",
+      "success": true,
+      "latency_ms": 5752
+    },
+    {
+      "trial_id": "trial_0017",
+      "success": true,
+      "latency_ms": 1577
+    },
+    {
+      "trial_id": "trial_0007",
+      "success": true,
+      "latency_ms": 2174
+    },
+    {
+      "trial_id": "trial_0029",
+      "success": true,
+      "latency_ms": 1394
+    },
+    {
+      "trial_id": "trial_0071",
+      "success": true,
+      "latency_ms": 5797
+    },
+    {
+      "trial_id": "trial_0079",
+      "success": true,
+      "latency_ms": 1644
+    },
+    {
+      "trial_id": "trial_0075",
+      "success": true,
+      "latency_ms": 1419
+    },
+    {
+      "trial_id": "trial_0055",
+      "success": true,
+      "latency_ms": 1678
+    },
+    {
+      "trial_id": "trial_0069",
+      "success": true,
+      "latency_ms": 1810
+    },
+    {
+      "trial_id": "trial_0005",
+      "success": true,
+      "latency_ms": 2541
+    },
+    {
+      "trial_id": "trial_0001",
+      "success": true,
+      "latency_ms": 5584
+    },
+    {
+      "trial_id": "trial_0058",
+      "success": true,
+      "latency_ms": 1547
+    },
+    {
+      "trial_id": "trial_0043",
+      "success": true,
+      "latency_ms": 4403
+    },
+    {
+      "trial_id": "trial_0002",
+      "success": true,
+      "latency_ms": 5288
+    },
+    {
+      "trial_id": "trial_0045",
+      "success": true,
+      "latency_ms": 1475
+    },
+    {
+      "trial_id": "trial_0063",
+      "success": true,
+      "latency_ms": 4819
+    },
+    {
+      "trial_id": "trial_0073",
+      "success": true,
+      "latency_ms": 7273
+    },
+    {
+      "trial_id": "trial_0020",
+      "success": true,
+      "latency_ms": 7260
+    },
+    {
+      "trial_id": "trial_0067",
+      "success": true,
+      "latency_ms": 1757
+    },
+    {
+      "trial_id": "trial_0072",
+      "success": true,
+      "latency_ms": 8068
+    },
+    {
+      "trial_id": "trial_0032",
+      "success": true,
+      "latency_ms": 2918
+    },
+    {
+      "trial_id": "trial_0039",
+      "success": true,
+      "latency_ms": 1288
+    },
+    {
+      "trial_id": "trial_0023",
+      "success": true,
+      "latency_ms": 7302
+    },
+    {
+      "trial_id": "trial_0076",
+      "success": true,
+      "latency_ms": 1559
+    },
+    {
+      "trial_id": "trial_0059",
+      "success": true,
+      "latency_ms": 1532
+    },
+    {
+      "trial_id": "trial_0015",
+      "success": true,
+      "latency_ms": 1545
+    },
+    {
+      "trial_id": "trial_0009",
+      "success": true,
+      "latency_ms": 2199
+    },
+    {
+      "trial_id": "trial_0031",
+      "success": true,
+      "latency_ms": 2693
+    },
+    {
+      "trial_id": "trial_0052",
+      "success": true,
+      "latency_ms": 3617
+    },
+    {
+      "trial_id": "trial_0016",
+      "success": true,
+      "latency_ms": 1457
+    },
+    {
+      "trial_id": "trial_0044",
+      "success": true,
+      "latency_ms": 3566
+    },
+    {
+      "trial_id": "trial_0048",
+      "success": true,
+      "latency_ms": 1699
+    },
+    {
+      "trial_id": "trial_0046",
+      "success": true,
+      "latency_ms": 1480
+    },
+    {
+      "trial_id": "trial_0056",
+      "success": true,
+      "latency_ms": 1591
+    },
+    {
+      "trial_id": "trial_0062",
+      "success": true,
+      "latency_ms": 3958
+    },
+    {
+      "trial_id": "trial_0003",
+      "success": true,
+      "latency_ms": 4365
+    },
+    {
+      "trial_id": "trial_0034",
+      "success": true,
+      "latency_ms": 2660
+    },
+    {
+      "trial_id": "trial_0030",
+      "success": true,
+      "latency_ms": 2773
+    },
+    {
+      "trial_id": "trial_0010",
+      "success": true,
+      "latency_ms": 3065
+    },
+    {
+      "trial_id": "trial_0068",
+      "success": true,
+      "latency_ms": 1586
+    },
+    {
+      "trial_id": "trial_0074",
+      "success": true,
+      "latency_ms": 8739
+    },
+    {
+      "trial_id": "trial_0054",
+      "success": true,
+      "latency_ms": 3616
+    },
+    {
+      "trial_id": "trial_0049",
+      "success": true,
+      "latency_ms": 1521
+    },
+    {
+      "trial_id": "trial_0006",
+      "success": true,
+      "latency_ms": 2320
+    },
+    {
+      "trial_id": "trial_0038",
+      "success": true,
+      "latency_ms": 1964
+    },
+    {
+      "trial_id": "trial_0070",
+      "success": true,
+      "latency_ms": 8678
+    },
+    {
+      "trial_id": "trial_0011",
+      "success": true,
+      "latency_ms": 3151
+    },
+    {
+      "trial_id": "trial_0078",
+      "success": true,
+      "latency_ms": 2201
+    },
+    {
+      "trial_id": "trial_0041",
+      "success": true,
+      "latency_ms": 4817
+    },
+    {
+      "trial_id": "trial_0022",
+      "success": true,
+      "latency_ms": 5525
+    },
+    {
+      "trial_id": "trial_0019",
+      "success": true,
+      "latency_ms": 1537
+    },
+    {
+      "trial_id": "trial_0035",
+      "success": true,
+      "latency_ms": 1972
+    },
+    {
+      "trial_id": "trial_0064",
+      "success": true,
+      "latency_ms": 5162
+    },
+    {
+      "trial_id": "trial_0047",
+      "success": true,
+      "latency_ms": 1719
+    },
+    {
+      "trial_id": "trial_0012",
+      "success": true,
+      "latency_ms": 2815
+    },
+    {
+      "trial_id": "trial_0053",
+      "success": true,
+      "latency_ms": 3988
+    },
+    {
+      "trial_id": "trial_0014",
+      "success": true,
+      "latency_ms": 3668
+    },
+    {
+      "trial_id": "trial_0013",
+      "success": true,
+      "latency_ms": 4720
+    },
+    {
+      "trial_id": "trial_0066",
+      "success": true,
+      "latency_ms": 2026
+    },
+    {
+      "trial_id": "trial_0036",
+      "success": true,
+      "latency_ms": 1475
+    },
+    {
+      "trial_id": "trial_0065",
+      "success": true,
+      "latency_ms": 1977
+    },
+    {
+      "trial_id": "trial_0077",
+      "success": true,
+      "latency_ms": 1721
+    },
+    {
+      "trial_id": "trial_0008",
+      "success": true,
+      "latency_ms": 1480
+    }
+  ],
+  "finished_at": "2026-02-05T04:01:34.016717+00:00"
+}

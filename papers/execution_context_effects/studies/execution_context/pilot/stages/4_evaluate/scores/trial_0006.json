@@ -1,0 +1,33 @@
+{
+  "trial_id": "trial_0006",
+  "modes": {
+    "strict": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "tool_mentioned": true,
+        "args_mentioned": true,
+        "notes": "Control task - no tool expected"
+      }
+    },
+    "intent": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "tool_mentioned": true,
+        "args_mentioned": true,
+        "notes": "Control task - no tool expected"
+      }
+    },
+    "functional": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "tool_mentioned": true,
+        "args_mentioned": true,
+        "notes": "Control task - no tool expected"
+      }
+    }
+  },
+  "timestamp": "2026-02-05T03:38:25.705385+00:00"
+}

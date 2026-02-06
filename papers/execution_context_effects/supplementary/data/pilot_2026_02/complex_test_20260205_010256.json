@@ -1,0 +1,1637 @@
+{
+  "trials": [
+    {
+      "task_id": "complex_001",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/home/user/app.py",
+        "edits": [
+          {
+            "old_string": "DEBUG = True",
+            "new_string": "DEBUG = False"
+          }
+        ]
+      },
+      "response": "I would use the read_file tool with path='/home/user/app.py' to first read the current contents of the file and understand its structure.\n\nThen I would use the edit_file tool with path='/home/user/app.py' and edits containing one edit object that replaces the exact string 'DEBUG = True' with 'DEBUG = False'.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:16.709926+00:00"
+    },
+    {
+      "task_id": "complex_001",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/home/user/app.py",
+        "edits": [
+          {
+            "old_string": "DEBUG = True",
+            "new_string": "DEBUG = False"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"read_file\", \"args\": {\"path\": \"/home/user/app.py\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "read_file"
+      },
+      "timestamp": "2026-02-05T01:00:19.899254+00:00"
+    },
+    {
+      "task_id": "complex_002",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/etc/config.ini",
+        "edits": [
+          {
+            "old_string": "timeout=30",
+            "new_string": "timeout=60"
+          }
+        ]
+      },
+      "response": "I would first use the read_file tool with path='/etc/config.ini' to read the current contents of the configuration file and understand its structure.\n\nAfter reading the file, I would use the edit_file tool with path='/etc/config.ini' and edits containing one edit object that replaces the exact string 'timeout=30' with 'timeout=60'.\n\nThis approach ensures I can see the current file contents before making changes and perform a precise string replacement to update just the timeout value as requested.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:22.039641+00:00"
+    },
+    {
+      "task_id": "complex_002",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/etc/config.ini",
+        "edits": [
+          {
+            "old_string": "timeout=30",
+            "new_string": "timeout=60"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"read_file\", \"args\": {\"path\": \"/etc/config.ini\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "read_file"
+      },
+      "timestamp": "2026-02-05T01:00:26.611956+00:00"
+    },
+    {
+      "task_id": "complex_003",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "create_files",
+      "expected_args": {
+        "files": [
+          {
+            "path": "/tmp/file1.txt",
+            "content": "content1"
+          },
+          {
+            "path": "/tmp/file2.txt",
+            "content": "content2"
+          }
+        ]
+      },
+      "response": "I would use the create_files tool to create both files at once. I'll pass an array containing two file objects: the first with path '/tmp/file1.txt' and content 'content1', and the second with path '/tmp/file2.txt' and content 'content2'.\n\n<create_files>\n<files>\n[\n  {\n    \"path\": \"/tmp/file1.txt\",\n    \"content\": \"content1\"\n  },\n  {\n    \"path\": \"/tmp/file2.txt\", \n    \"content\": \"content2\"\n  }\n]\n</files>\n</create_files>",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": false,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:00:28.041687+00:00"
+    },
+    {
+      "task_id": "complex_003",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "create_files",
+      "expected_args": {
+        "files": [
+          {
+            "path": "/tmp/file1.txt",
+            "content": "content1"
+          },
+          {
+            "path": "/tmp/file2.txt",
+            "content": "content2"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"create_files\", \"args\": {\"files\": [{\"path\": \"/tmp/file1.txt\", \"content\": \"content1\"}, {\"path\": \"/tmp/file2.txt\", \"content\": \"content2\"}]}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "create_files"
+      },
+      "timestamp": "2026-02-05T01:00:31.260128+00:00"
+    },
+    {
+      "task_id": "complex_004",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "GET",
+        "url": "https://api.example.com/users"
+      },
+      "response": "I would use the http_request tool with method='GET' and url='https://api.example.com/users' to make a GET request to that API endpoint.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:33.092108+00:00"
+    },
+    {
+      "task_id": "complex_004",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "GET",
+        "url": "https://api.example.com/users"
+      },
+      "response": "{\"tool\": \"http_request\", \"args\": {\"method\": \"GET\", \"url\": \"https://api.example.com/users\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "http_request"
+      },
+      "timestamp": "2026-02-05T01:00:34.765841+00:00"
+    },
+    {
+      "task_id": "complex_005",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "POST",
+        "url": "https://api.example.com/data",
+        "body": "{\"key\": \"value\"}"
+      },
+      "response": "I would use the http_request tool with method='POST', url='https://api.example.com/data', and body='{\"key\": \"value\"}' to send a POST request with the specified JSON data to the API endpoint.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:36.330537+00:00"
+    },
+    {
+      "task_id": "complex_005",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "POST",
+        "url": "https://api.example.com/data",
+        "body": "{\"key\": \"value\"}"
+      },
+      "response": "{\"tool\": \"http_request\", \"args\": {\"method\": \"POST\", \"url\": \"https://api.example.com/data\", \"body\": \"{\\\"key\\\": \\\"value\\\"}\", \"headers\": {\"Content-Type\": \"application/json\"}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "http_request"
+      },
+      "timestamp": "2026-02-05T01:00:38.422212+00:00"
+    },
+    {
+      "task_id": "complex_006",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/home/user/main.js",
+        "edits": [
+          {
+            "old_string": "const PORT = 3000",
+            "new_string": "const PORT = 8080"
+          }
+        ]
+      },
+      "response": "I would use the edit_file tool with path='/home/user/main.js' and edits containing one edit object that replaces the exact string 'const PORT = 3000' with 'const PORT = 8080'.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:40.401884+00:00"
+    },
+    {
+      "task_id": "complex_006",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/home/user/main.js",
+        "edits": [
+          {
+            "old_string": "const PORT = 3000",
+            "new_string": "const PORT = 8080"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"read_file\", \"args\": {\"path\": \"/home/user/main.js\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "read_file"
+      },
+      "timestamp": "2026-02-05T01:00:42.694692+00:00"
+    },
+    {
+      "task_id": "complex_007",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "create_files",
+      "expected_args": {
+        "files": [
+          {
+            "path": "/tmp/a.txt",
+            "content": "alpha"
+          },
+          {
+            "path": "/tmp/b.txt",
+            "content": "beta"
+          },
+          {
+            "path": "/tmp/c.txt",
+            "content": "gamma"
+          }
+        ]
+      },
+      "response": "I would use the create_files tool to create all three files at once. I'll pass an array of file objects, where each object contains the path and content for each file:\n\n- First file: path=\"/tmp/a.txt\" with content=\"alpha\"\n- Second file: path=\"/tmp/b.txt\" with content=\"beta\" \n- Third file: path=\"/tmp/c.txt\" with content=\"gamma\"\n\n<create_files>\n<files>\n[\n  {\n    \"path\": \"/tmp/a.txt\",\n    \"content\": \"alpha\"\n  },\n  {\n    \"path\": \"/tmp/b.txt\", \n    \"content\": \"beta\"\n  },\n  {\n    \"path\": \"/tmp/c.txt\",\n    \"content\": \"gamma\"\n  }\n]\n</files>\n</create_files>",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": false,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:00:44.209063+00:00"
+    },
+    {
+      "task_id": "complex_007",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "create_files",
+      "expected_args": {
+        "files": [
+          {
+            "path": "/tmp/a.txt",
+            "content": "alpha"
+          },
+          {
+            "path": "/tmp/b.txt",
+            "content": "beta"
+          },
+          {
+            "path": "/tmp/c.txt",
+            "content": "gamma"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"create_files\", \"args\": {\"files\": [{\"path\": \"/tmp/a.txt\", \"content\": \"alpha\"}, {\"path\": \"/tmp/b.txt\", \"content\": \"beta\"}, {\"path\": \"/tmp/c.txt\", \"content\": \"gamma\"}]}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "create_files"
+      },
+      "timestamp": "2026-02-05T01:00:47.652691+00:00"
+    },
+    {
+      "task_id": "complex_008",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "DELETE",
+        "url": "https://api.example.com/item/42"
+      },
+      "response": "I would use the http_request tool with method='DELETE' and url='https://api.example.com/item/42' to make a DELETE request to that endpoint.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:49.982424+00:00"
+    },
+    {
+      "task_id": "complex_008",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "DELETE",
+        "url": "https://api.example.com/item/42"
+      },
+      "response": "{\"tool\": \"http_request\", \"args\": {\"method\": \"DELETE\", \"url\": \"https://api.example.com/item/42\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "http_request"
+      },
+      "timestamp": "2026-02-05T01:00:52.210900+00:00"
+    },
+    {
+      "task_id": "complex_009",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/etc/nginx/nginx.conf",
+        "edits": [
+          {
+            "old_string": "worker_processes 1",
+            "new_string": "worker_processes 4"
+          }
+        ]
+      },
+      "response": "I would use the read_file tool with path='/etc/nginx/nginx.conf' to first read the current contents of the nginx configuration file and understand its structure.\n\nThen I would use the edit_file tool with path='/etc/nginx/nginx.conf' and edits containing one edit object that replaces the exact string 'worker_processes 1' with 'worker_processes 4'.\n\nThis will change the number of worker processes from 1 to 4 in the nginx configuration.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:53.732665+00:00"
+    },
+    {
+      "task_id": "complex_009",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/etc/nginx/nginx.conf",
+        "edits": [
+          {
+            "old_string": "worker_processes 1",
+            "new_string": "worker_processes 4"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"read_file\", \"args\": {\"path\": \"/etc/nginx/nginx.conf\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "read_file"
+      },
+      "timestamp": "2026-02-05T01:00:56.734557+00:00"
+    },
+    {
+      "task_id": "complex_010",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "PUT",
+        "url": "https://api.example.com/user/1",
+        "body": "{\"name\": \"updated\"}"
+      },
+      "response": "I would use the http_request tool with method='PUT', url='https://api.example.com/user/1', and body='{\"name\": \"updated\"}' to send a PUT request to update the user resource with the new name value.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:00:58.065469+00:00"
+    },
+    {
+      "task_id": "complex_010",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "http_request",
+      "expected_args": {
+        "method": "PUT",
+        "url": "https://api.example.com/user/1",
+        "body": "{\"name\": \"updated\"}"
+      },
+      "response": "{\"tool\": \"http_request\", \"args\": {\"method\": \"PUT\", \"url\": \"https://api.example.com/user/1\", \"body\": \"{\\\"name\\\": \\\"updated\\\"}\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "http_request"
+      },
+      "timestamp": "2026-02-05T01:00:59.990932+00:00"
+    },
+    {
+      "task_id": "complex_011",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "create_files",
+      "expected_args": {
+        "files": [
+          {
+            "path": "/home/user/test/index.html",
+            "content": "<html></html>"
+          },
+          {
+            "path": "/home/user/test/style.css",
+            "content": "body {}"
+          }
+        ]
+      },
+      "response": "I would use the create_files tool to create both files at once. I'll pass an array with two file objects:\n\n1. First file with path='/home/user/test/index.html' and content='<html></html>'\n2. Second file with path='/home/user/test/style.css' and content='body {}'\n\nThis will create both the HTML and CSS files in the /home/user/test directory with their respective content in a single operation.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": false,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:01:01.507256+00:00"
+    },
+    {
+      "task_id": "complex_011",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "create_files",
+      "expected_args": {
+        "files": [
+          {
+            "path": "/home/user/test/index.html",
+            "content": "<html></html>"
+          },
+          {
+            "path": "/home/user/test/style.css",
+            "content": "body {}"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"create_files\", \"args\": {\"files\": [{\"path\": \"/home/user/test/index.html\", \"content\": \"<html></html>\"}, {\"path\": \"/home/user/test/style.css\", \"content\": \"body {}\"}]}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "create_files"
+      },
+      "timestamp": "2026-02-05T01:01:04.663494+00:00"
+    },
+    {
+      "task_id": "complex_012",
+      "category": "complex",
+      "condition": "nl_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/home/user/settings.py",
+        "edits": [
+          {
+            "old_string": "ALLOWED_HOSTS = []",
+            "new_string": "ALLOWED_HOSTS = [\"*\"]"
+          }
+        ]
+      },
+      "response": "I would use the read_file tool with path='/home/user/settings.py' to first examine the current contents of the file and understand its structure.\n\nAfter reading the file, I would use the edit_file tool with path='/home/user/settings.py' and edits containing one edit object that replaces the exact string 'ALLOWED_HOSTS = []' with 'ALLOWED_HOSTS = [\"*\"]'.\n\nLet me start by reading the file to see its current state.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:06.578800+00:00"
+    },
+    {
+      "task_id": "complex_012",
+      "category": "complex",
+      "condition": "json_only",
+      "expected_tool": "edit_file",
+      "expected_args": {
+        "path": "/home/user/settings.py",
+        "edits": [
+          {
+            "old_string": "ALLOWED_HOSTS = []",
+            "new_string": "ALLOWED_HOSTS = [\"*\"]"
+          }
+        ]
+      },
+      "response": "{\"tool\": \"read_file\", \"args\": {\"path\": \"/home/user/settings.py\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "read_file"
+      },
+      "timestamp": "2026-02-05T01:01:09.534616+00:00"
+    },
+    {
+      "task_id": "adv_json_001",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name \"test\" and value 123 to write the JSON data to the specified file.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:10.929727+00:00"
+    },
+    {
+      "task_id": "adv_json_001",
+      "category": "adv_json",
+      "condition": "json_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/config.json\", \"json_content\": {\"name\": \"test\", \"value\": 123}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:01:13.062801+00:00"
+    },
+    {
+      "task_id": "adv_json_002",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "response": "I would use the write_json_file tool with path='/data/users.json' and json_content={\"users\": [\"alice\", \"bob\"], \"active\": true} to save the JSON object to the specified file path.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:15.364362+00:00"
+    },
+    {
+      "task_id": "adv_json_002",
+      "category": "adv_json",
+      "condition": "json_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/data/users.json\", \"json_content\": {\"users\": [\"alice\", \"bob\"], \"active\": true}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:01:17.112017+00:00"
+    },
+    {
+      "task_id": "adv_json_003",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content={\"nested\": {\"deep\": {\"value\": \"found\"}}} to write the nested JSON structure to the specified file.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:18.837011+00:00"
+    },
+    {
+      "task_id": "adv_json_003",
+      "category": "adv_json",
+      "condition": "json_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/deep.json\", \"json_content\": {\"nested\": {\"deep\": {\"value\": \"found\"}}}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:01:20.569783+00:00"
+    },
+    {
+      "task_id": "adv_json_004",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/items.json",
+        "json_content": {
+          "items": [
+            1,
+            2,
+            3
+          ],
+          "count": 3
+        }
+      },
+      "response": "I would use the write_json_file tool with path='/data/items.json' and json_content containing an object with \"items\" key set to the array [1, 2, 3] and \"count\" key set to 3. This tool is specifically designed for writing valid JSON content to files.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:22.097420+00:00"
+    },
+    {
+      "task_id": "adv_json_004",
+      "category": "adv_json",
+      "condition": "json_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/items.json",
+        "json_content": {
+          "items": [
+            1,
+            2,
+            3
+          ],
+          "count": 3
+        }
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/data/items.json\", \"json_content\": {\"items\": [1, 2, 3], \"count\": 3}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:01:24.802567+00:00"
+    },
+    {
+      "task_id": "adv_json_005",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/settings.json",
+        "json_content": {
+          "enabled": false,
+          "timeout": null
+        }
+      },
+      "response": "I would use the write_json_file tool with path='/tmp/settings.json' and json_content containing an object with \"enabled\" set to false and \"timeout\" set to null to save the JSON configuration to the specified file.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:26.199334+00:00"
+    },
+    {
+      "task_id": "adv_json_005",
+      "category": "adv_json",
+      "condition": "json_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/settings.json",
+        "json_content": {
+          "enabled": false,
+          "timeout": null
+        }
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/settings.json\", \"json_content\": {\"enabled\": false, \"timeout\": null}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:01:28.265211+00:00"
+    },
+    {
+      "task_id": "adv_json_006",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/config/tags.json",
+        "json_content": {
+          "tags": [
+            "a",
+            "b",
+            "c"
+          ],
+          "meta": {
+            "version": 2
+          }
+        }
+      },
+      "response": "I would use the write_json_file tool with path='/config/tags.json' and json_content as an object containing a \"tags\" array with values [\"a\", \"b\", \"c\"] and a \"meta\" object with \"version\" set to 2. This tool is specifically designed for writing valid JSON content to files.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:29.837694+00:00"
+    },
+    {
+      "task_id": "adv_json_006",
+      "category": "adv_json",
+      "condition": "json_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/config/tags.json",
+        "json_content": {
+          "tags": [
+            "a",
+            "b",
+            "c"
+          ],
+          "meta": {
+            "version": 2
+          }
+        }
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/config/tags.json\", \"json_content\": {\"tags\": [\"a\", \"b\", \"c\"], \"meta\": {\"version\": 2}}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:01:32.323924+00:00"
+    },
+    {
+      "task_id": "adv_json_007",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/empty.json",
+        "json_content": {
+          "empty_array": [],
+          "empty_object": {}
+        }
+      },
+      "response": "I would use the write_json_file tool with path='/tmp/empty.json' and json_content containing an object with two properties: \"empty_array\" set to an empty array and \"empty_object\" set to an empty object. This will create a JSON file with the exact structure you specified.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:34.005673+00:00"
+    },
+    {
+      "task_id": "adv_json_007",
+      "category": "adv_json",
+      "condition": "json_only",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/empty.json",
+        "json_content": {
+          "empty_array": [],
+          "empty_object": {}
+        }
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/empty.json\", \"json_content\": {\"empty_array\": [], \"empty_object\": {}}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:01:36.914835+00:00"
+    },
+    {
+      "task_id": "adv_escape_001",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "response": "I would use the write_escaped_content tool with path='/tmp/quoted.txt' and content='Hello \"World\"' to write the text with the escaped quotes to the file.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:38.659430+00:00"
+    },
+    {
+      "task_id": "adv_escape_001",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_escaped_content"
+      },
+      "timestamp": "2026-02-05T01:01:40.785622+00:00"
+    },
+    {
+      "task_id": "adv_escape_002",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "response": "I would use the write_escaped_content tool with path='/tmp/apostrophe.txt' and content='It\\'s a test' to write the text containing an apostrophe to the file. This tool is specifically designed to handle content with special characters like escaped apostrophes that might need proper escaping.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:42.035945+00:00"
+    },
+    {
+      "task_id": "adv_escape_002",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_escaped_content"
+      },
+      "timestamp": "2026-02-05T01:01:44.846685+00:00"
+    },
+    {
+      "task_id": "adv_escape_003",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "response": "I would use the write_escaped_content tool with path='/tmp/path.txt' and content='C:\\\\Users\\\\name' to write the Windows path to the file. This tool is appropriate because the content contains backslashes that need to be handled properly as literal characters rather than escape sequences.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:46.235108+00:00"
+    },
+    {
+      "task_id": "adv_escape_003",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": true,
+        "is_correct": false,
+        "actual_tool": "write_file"
+      },
+      "timestamp": "2026-02-05T01:01:48.541453+00:00"
+    },
+    {
+      "task_id": "adv_escape_004",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n will be interpreted as an actual newline when written to the file.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:01:49.930796+00:00"
+    },
+    {
+      "task_id": "adv_escape_004",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/newline.txt\", \"content\": \"line1\\nline2\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": true,
+        "is_correct": false,
+        "actual_tool": "write_file"
+      },
+      "timestamp": "2026-02-05T01:01:52.676240+00:00"
+    },
+    {
+      "task_id": "adv_escape_005",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/tab.txt",
+        "content": "Tab\there"
+      },
+      "response": "I would use the write_file tool with path='/tmp/tab.txt' and content='Tab\\there' to write the text \"Tab\\there\" to the file. The \\t in the content will be interpreted as a literal tab character when written to the file.",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:01:54.033285+00:00"
+    },
+    {
+      "task_id": "adv_escape_005",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/tab.txt",
+        "content": "Tab\there"
+      },
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/tab.txt\", \"content\": \"Tab\\there\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_escaped_content"
+      },
+      "timestamp": "2026-02-05T01:01:56.285794+00:00"
+    },
+    {
+      "task_id": "adv_escape_006",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/multiquote.txt",
+        "content": "She said \"yes\" and \"no\""
+      },
+      "response": "I would use the write_escaped_content tool with path='/tmp/multiquote.txt' and content='She said \"yes\" and \"no\"' to write this text that contains multiple quote characters to the file.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:01:57.829811+00:00"
+    },
+    {
+      "task_id": "adv_escape_006",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/multiquote.txt",
+        "content": "She said \"yes\" and \"no\""
+      },
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/multiquote.txt\", \"content\": \"She said \\\"yes\\\" and \\\"no\\\"\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_escaped_content"
+      },
+      "timestamp": "2026-02-05T01:02:00.079424+00:00"
+    },
+    {
+      "task_id": "adv_escape_007",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/winpath.txt",
+        "content": "D:\\Documents\\file.txt"
+      },
+      "response": "I would use the write_file tool with path='/tmp/winpath.txt' and content='D:\\\\Documents\\\\file.txt' to write the Windows path string to the specified file.",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:02:01.595023+00:00"
+    },
+    {
+      "task_id": "adv_escape_007",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/winpath.txt",
+        "content": "D:\\Documents\\file.txt"
+      },
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/winpath.txt\", \"content\": \"D:\\\\Documents\\\\file.txt\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": true,
+        "is_correct": false,
+        "actual_tool": "write_file"
+      },
+      "timestamp": "2026-02-05T01:02:03.284765+00:00"
+    },
+    {
+      "task_id": "adv_unicode_001",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/emoji.txt' and content='Hello \ud83d\udc4b World \ud83c\udf0d' to write the text containing emoji characters to the file. This tool is specifically designed to handle unicode characters like emojis properly.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:02:04.798377+00:00"
+    },
+    {
+      "task_id": "adv_unicode_001",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:07.055188+00:00"
+    },
+    {
+      "task_id": "adv_unicode_002",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper handling.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:02:08.820597+00:00"
+    },
+    {
+      "task_id": "adv_unicode_002",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/japanese.txt\", \"content\": \"\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:11.070047+00:00"
+    },
+    {
+      "task_id": "adv_unicode_003",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains unicode characters that need proper handling.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:02:12.418861+00:00"
+    },
+    {
+      "task_id": "adv_unicode_003",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/greek.txt\", \"content\": \"\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:14.451850+00:00"
+    },
+    {
+      "task_id": "adv_unicode_004",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/symbols.txt' and content='\u2713 Check \u2717 Cross' to write the text with unicode checkmark and cross symbols to the file.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:02:15.884274+00:00"
+    },
+    {
+      "task_id": "adv_unicode_004",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:18.052338+00:00"
+    },
+    {
+      "task_id": "adv_unicode_005",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emojis.txt",
+        "content": "\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/emojis.txt' and content='\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea' to write the emoji text to the file, since this content contains unicode emoji characters that require proper unicode handling.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:02:19.521337+00:00"
+    },
+    {
+      "task_id": "adv_unicode_005",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emojis.txt",
+        "content": "\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"path\": \"/tmp/emojis.txt\", \"content\": \"\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea\"}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": false,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": null
+      },
+      "timestamp": "2026-02-05T01:02:21.929502+00:00"
+    },
+    {
+      "task_id": "adv_unicode_006",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/chinese.txt",
+        "content": "\u4e2d\u6587\u6d4b\u8bd5"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/chinese.txt' and content='\u4e2d\u6587\u6d4b\u8bd5' to write the Chinese text to the file, since this content contains unicode characters that require proper handling.",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:02:23.765842+00:00"
+    },
+    {
+      "task_id": "adv_unicode_006",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/chinese.txt",
+        "content": "\u4e2d\u6587\u6d4b\u8bd5"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/chinese.txt\", \"content\": \"\u4e2d\u6587\u6d4b\u8bd5\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:26.067568+00:00"
+    },
+    {
+      "task_id": "adv_unicode_007",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/arrows.txt",
+        "content": "\u2192 arrow \u2190 back \u2191 up \u2193 down"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/arrows.txt' and content='\u2192 arrow \u2190 back \u2191 up \u2193 down' to write the text containing unicode arrow symbols to the specified file.\n\n<write_unicode_content>\n<path>/tmp/arrows.txt</path>\n<content>\u2192 arrow \u2190 back \u2191 up \u2193 down</content>\n</write_unicode_content>",
+      "evaluation": {
+        "signal_tool": true,
+        "signal_args": true,
+        "is_correct": true
+      },
+      "timestamp": "2026-02-05T01:02:27.533540+00:00"
+    },
+    {
+      "task_id": "adv_unicode_007",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/arrows.txt",
+        "content": "\u2192 arrow \u2190 back \u2191 up \u2193 down"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/arrows.txt\", \"content\": \"\u2192 arrow \u2190 back \u2191 up \u2193 down\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "is_correct": true,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:30.573422+00:00"
+    },
+    {
+      "task_id": "adv_combined_001",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "response": "I would use the write_json_file tool with path='/tmp/complex.json' and json_content as an object containing the key \"emoji\" with value \"\ud83c\udf89\" and the key \"path\" with value \"C:\\\\test\" to write this JSON configuration file with unicode emoji and escaped backslashes.",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:02:32.384314+00:00"
+    },
+    {
+      "task_id": "adv_combined_001",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:02:35.275907+00:00"
+    },
+    {
+      "task_id": "adv_combined_002",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "response": "I would use the write_unicode_content tool with path='/tmp/config.yaml' and content='message: \"Say \\\"Hello\\\" \ud83d\udc4b\"\\n' to create a YAML configuration file that contains the message with both escaped quotes and a unicode emoji character.",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:02:37.739492+00:00"
+    },
+    {
+      "task_id": "adv_combined_002",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/config.yaml\", \"content\": \"message: \\\"Say \\\\\\\"Hello\\\\\\\" \ud83d\udc4b\\\"\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:40.118075+00:00"
+    },
+    {
+      "task_id": "adv_combined_003",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/full.json",
+        "config": {
+          "path": "C:\\Users\\test",
+          "emoji": "\ud83c\udf89",
+          "quote": "He said \"hi\""
+        },
+        "format": "json"
+      },
+      "response": "I would use the write_json_file tool with path='/tmp/full.json' and json_content containing an object with three properties: path set to \"C:\\\\Users\\\\test\", emoji set to \"\ud83c\udf89\", and quote set to \"He said \\\"hi\\\"\". This tool is designed to handle JSON content properly, including the backslashes in the Windows path, the unicode emoji character, and the escaped quotes within the string value.",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:02:41.800960+00:00"
+    },
+    {
+      "task_id": "adv_combined_003",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/full.json",
+        "config": {
+          "path": "C:\\Users\\test",
+          "emoji": "\ud83c\udf89",
+          "quote": "He said \"hi\""
+        },
+        "format": "json"
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/full.json\", \"json_content\": {\"path\": \"C:\\\\Users\\\\test\", \"emoji\": \"\ud83c\udf89\", \"quote\": \"He said \\\"hi\\\"\"}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:02:45.281239+00:00"
+    },
+    {
+      "task_id": "adv_combined_004",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/intl.yaml",
+        "config": {
+          "title": "\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5",
+          "path": "D:\\Data"
+        },
+        "format": "yaml"
+      },
+      "response": "I would use the write_file tool with path='/tmp/intl.yaml' and content containing the YAML representation of the JSON data. The content would be:\n\n```yaml\ntitle: \"\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5\"\npath: \"D:\\\\Data\"\n```\n\nThis will create a YAML file at /tmp/intl.yaml with the Japanese text, flag emoji, and Windows path properly formatted in YAML syntax.",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:02:47.142627+00:00"
+    },
+    {
+      "task_id": "adv_combined_004",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/intl.yaml",
+        "config": {
+          "title": "\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5",
+          "path": "D:\\Data"
+        },
+        "format": "yaml"
+      },
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/intl.yaml\", \"content\": \"title: \\\"\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5\\\"\\npath: \\\"D:\\\\\\\\Data\\\"\"}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "write_unicode_content"
+      },
+      "timestamp": "2026-02-05T01:02:50.432753+00:00"
+    },
+    {
+      "task_id": "adv_combined_005",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/mixed.json",
+        "config": {
+          "newline": "line1\nline2",
+          "tab": "col1\tcol2",
+          "emoji": "\u2705"
+        },
+        "format": "json"
+      },
+      "response": "I would use the write_json_file tool with path='/tmp/mixed.json' and json_content as an object containing three key-value pairs: \"newline\" mapped to \"line1\\nline2\", \"tab\" mapped to \"col1\\tcol2\", and \"emoji\" mapped to \"\u2705\". This tool is designed to handle JSON content and will properly escape the special characters like newlines and tabs while preserving the unicode emoji character.",
+      "evaluation": {
+        "signal_tool": false,
+        "signal_args": true,
+        "is_correct": false
+      },
+      "timestamp": "2026-02-05T01:02:52.126255+00:00"
+    },
+    {
+      "task_id": "adv_combined_005",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/mixed.json",
+        "config": {
+          "newline": "line1\nline2",
+          "tab": "col1\tcol2",
+          "emoji": "\u2705"
+        },
+        "format": "json"
+      },
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/mixed.json\", \"json_content\": {\"newline\": \"line1\\nline2\", \"tab\": \"col1\\tcol2\", \"emoji\": \"\u2705\"}}}",
+      "evaluation": {
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": false,
+        "args_present": false,
+        "is_correct": false,
+        "actual_tool": "write_json_file"
+      },
+      "timestamp": "2026-02-05T01:02:55.286235+00:00"
+    }
+  ],
+  "timestamp": "20260205_010256"
+}

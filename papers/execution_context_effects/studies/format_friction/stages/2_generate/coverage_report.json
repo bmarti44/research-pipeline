@@ -1,0 +1,19 @@
+{
+  "total_trials": 80,
+  "total_tasks": 8,
+  "conditions": [
+    "nl_only",
+    "json_only"
+  ],
+  "repetitions": 5,
+  "by_condition": {
+    "nl_only": 40,
+    "json_only": 40
+  },
+  "by_category": {
+    "read_operations": 20,
+    "create_operations": 20,
+    "edit_operations": 30,
+    "control": 10
+  }
+}

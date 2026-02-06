@@ -1,0 +1,16 @@
+{
+  "trial_id": "trial_0079",
+  "task_id": "edit_003",
+  "condition": "json_only",
+  "prompt": "Fix the typo in main.py: change 'pritn' to 'print'",
+  "system_prompt": "You are an assistant with access to the following tools:\n\n- read_file: Read the contents of a file\n- write_file: Write content to a file (creates or overwrites)\n- edit_file: Edit an existing file by replacing text\n\nTool schemas:\n[\n  {\n    \"name\": \"read_file\",\n    \"description\": \"Read the contents of a file\",\n    \"parameters\": {\n      \"path\": {\n        \"type\": \"string\",\n        \"description\": \"Path to the file\"\n      }\n    }\n  },\n  {\n    \"name\": \"write_file\",\n    \"description\": \"Write content to ...",
+  "response": "{\"tool\": \"read_file\", \"args\": {\"path\": \"main.py\"}}",
+  "success": true,
+  "error": null,
+  "model": "claude-sonnet-4-20250514",
+  "timestamp": "2026-02-05T03:39:57.044585+00:00",
+  "latency_ms": 1768,
+  "input_tokens": 443,
+  "output_tokens": 23,
+  "retry_count": 0
+}

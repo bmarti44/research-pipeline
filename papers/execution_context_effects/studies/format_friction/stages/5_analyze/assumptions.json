@@ -1,0 +1,8 @@
+{
+  "sample_sizes": {
+    "nl_only": 40,
+    "json_only": 40
+  },
+  "min_expected_count": 28,
+  "notes": "Two-proportion z-test assumes independence and sufficient sample size"
+}

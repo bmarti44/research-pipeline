@@ -1,0 +1,28 @@
+# LAHR Architecture - Requirements
+# For training on MacBook with Apple Silicon (M2/M3 Max)
+
+# Core ML framework
+torch>=2.1.0
+
+# Numerical computing
+numpy>=1.24.0
+
+# Data processing
+datasets>=2.14.0
+transformers>=4.35.0  # For tokenizer only
+tiktoken>=0.5.0  # GPT-2 tokenizer
+
+# Training utilities
+tqdm>=4.66.0
+pyyaml>=6.0
+
+# Evaluation
+sacrebleu>=2.3.0  # For perplexity baselines
+
+# Analysis and visualization
+matplotlib>=3.8.0
+pandas>=2.1.0
+scipy>=1.11.0
+
+# Optional but recommended
+einops>=0.7.0  # For tensor operations (used in baseline)

@@ -1,0 +1,3657 @@
+{
+  "run_id": "adversarial_pilot_20260205_002528",
+  "timestamp": "2026-02-05T00:25:28.881475+00:00",
+  "n_tasks": 26,
+  "n_trials": 52,
+  "trials": [
+    {
+      "task_id": "adv_json_001",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/tmp/config.json' and json_content as an object containing name set to \"test\" and value set to 123. This tool is specifically designed for writing valid JSON content to files.",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:35.167657+00:00",
+      "latency_ms": 3119,
+      "input_tokens": 1308,
+      "output_tokens": 56
+    },
+    {
+      "task_id": "adv_json_001",
+      "category": "adv_json",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/config.json\", \"json_content\": {\"name\": \"test\", \"value\": 123}}}",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/config.json",
+        "json_content": {
+          "name": "test",
+          "value": 123
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:38.287322+00:00",
+      "latency_ms": 1669,
+      "input_tokens": 1301,
+      "output_tokens": 44
+    },
+    {
+      "task_id": "adv_json_002",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/data/users.json' and json_content as the object with \"users\" key containing the array [\"alice\", \"bob\"] and \"active\" key set to true. This tool is specifically designed for writing valid JSON content to files.",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:39.957026+00:00",
+      "latency_ms": 2817,
+      "input_tokens": 1313,
+      "output_tokens": 65
+    },
+    {
+      "task_id": "adv_json_002",
+      "category": "adv_json",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/data/users.json\", \"json_content\": {\"users\": [\"alice\", \"bob\"], \"active\": true}}}",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/users.json",
+        "json_content": {
+          "users": [
+            "alice",
+            "bob"
+          ],
+          "active": true
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:42.774941+00:00",
+      "latency_ms": 1023,
+      "input_tokens": 1306,
+      "output_tokens": 46
+    },
+    {
+      "task_id": "adv_json_003",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/tmp/deep.json' and json_content set to an object with a \"nested\" key containing another object with a \"deep\" key containing another object with a \"value\" key set to the string \"found\". This will create a properly formatted JSON file with the nested structure you specified.",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:43.798154+00:00",
+      "latency_ms": 2525,
+      "input_tokens": 1309,
+      "output_tokens": 76
+    },
+    {
+      "task_id": "adv_json_003",
+      "category": "adv_json",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/deep.json\", \"json_content\": {\"nested\": {\"deep\": {\"value\": \"found\"}}}}}",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/deep.json",
+        "json_content": {
+          "nested": {
+            "deep": {
+              "value": "found"
+            }
+          }
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:46.324165+00:00",
+      "latency_ms": 1643,
+      "input_tokens": 1302,
+      "output_tokens": 45
+    },
+    {
+      "task_id": "adv_json_004",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/data/items.json' and json_content containing an object with \"items\" as an array [1, 2, 3] and \"count\" as the number 3 to write the JSON data to the specified file.",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/items.json",
+        "json_content": {
+          "items": [
+            1,
+            2,
+            3
+          ],
+          "count": 3
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:47.968206+00:00",
+      "latency_ms": 2457,
+      "input_tokens": 1314,
+      "output_tokens": 65
+    },
+    {
+      "task_id": "adv_json_004",
+      "category": "adv_json",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/data/items.json\", \"json_content\": {\"items\": [1, 2, 3], \"count\": 3}}}",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/data/items.json",
+        "json_content": {
+          "items": [
+            1,
+            2,
+            3
+          ],
+          "count": 3
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:50.425463+00:00",
+      "latency_ms": 1538,
+      "input_tokens": 1307,
+      "output_tokens": 50
+    },
+    {
+      "task_id": "adv_json_005",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/tmp/settings.json' and json_content as an object with \"enabled\" set to false and \"timeout\" set to null to save the JSON data to the specified file.",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/settings.json",
+        "json_content": {
+          "enabled": false,
+          "timeout": null
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:51.963788+00:00",
+      "latency_ms": 2023,
+      "input_tokens": 1306,
+      "output_tokens": 53
+    },
+    {
+      "task_id": "adv_json_005",
+      "category": "adv_json",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/settings.json\", \"json_content\": {\"enabled\": false, \"timeout\": null}}}",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/settings.json",
+        "json_content": {
+          "enabled": false,
+          "timeout": null
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:53.987603+00:00",
+      "latency_ms": 2184,
+      "input_tokens": 1299,
+      "output_tokens": 42
+    },
+    {
+      "task_id": "adv_json_006",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/config/tags.json' and json_content as an object containing a \"tags\" array with string elements \"a\", \"b\", \"c\" and a \"meta\" object with a \"version\" property set to the number 2. This tool is designed specifically for writing valid JSON content to files.",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/config/tags.json",
+        "json_content": {
+          "tags": [
+            "a",
+            "b",
+            "c"
+          ],
+          "meta": {
+            "version": 2
+          }
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:56.172163+00:00",
+      "latency_ms": 2876,
+      "input_tokens": 1317,
+      "output_tokens": 79
+    },
+    {
+      "task_id": "adv_json_006",
+      "category": "adv_json",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/config/tags.json\", \"json_content\": {\"tags\": [\"a\", \"b\", \"c\"], \"meta\": {\"version\": 2}}}}",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/config/tags.json",
+        "json_content": {
+          "tags": [
+            "a",
+            "b",
+            "c"
+          ],
+          "meta": {
+            "version": 2
+          }
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:23:59.049328+00:00",
+      "latency_ms": 1944,
+      "input_tokens": 1310,
+      "output_tokens": 53
+    },
+    {
+      "task_id": "adv_json_007",
+      "category": "adv_json",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/tmp/empty.json' and json_content as an object containing an empty_array key with an empty array value and an empty_object key with an empty object value to write the JSON data to the specified file.",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/empty.json",
+        "json_content": {
+          "empty_array": [],
+          "empty_object": {}
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:00.994301+00:00",
+      "latency_ms": 2404,
+      "input_tokens": 1309,
+      "output_tokens": 61
+    },
+    {
+      "task_id": "adv_json_007",
+      "category": "adv_json",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/empty.json\", \"json_content\": {\"empty_array\": [], \"empty_object\": {}}}}",
+      "expected_tool": "write_json_file",
+      "expected_args": {
+        "path": "/tmp/empty.json",
+        "json_content": {
+          "empty_array": [],
+          "empty_object": {}
+        }
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:03.399278+00:00",
+      "latency_ms": 2315,
+      "input_tokens": 1302,
+      "output_tokens": 45
+    },
+    {
+      "task_id": "adv_escape_001",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "response": "I would use the write_escaped_content tool with path='/tmp/quoted.txt' and content='Hello \"World\"' to write the text containing quotes to the file. This tool is specifically designed to handle content with special characters like quotes that need proper escaping.",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:05.714697+00:00",
+      "latency_ms": 2373,
+      "input_tokens": 1304,
+      "output_tokens": 59
+    },
+    {
+      "task_id": "adv_escape_001",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/quoted.txt\", \"content\": \"Hello \\\"World\\\"\"}}",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/quoted.txt",
+        "content": "Hello \"World\""
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:08.088107+00:00",
+      "latency_ms": 1722,
+      "input_tokens": 1297,
+      "output_tokens": 36
+    },
+    {
+      "task_id": "adv_escape_002",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "response": "I would use the write_escaped_content tool with path='/tmp/apostrophe.txt' and content='It\\'s a test' to write the text containing an apostrophe to the file. This tool is designed to handle special characters like the escaped apostrophe properly.",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:09.810515+00:00",
+      "latency_ms": 2879,
+      "input_tokens": 1306,
+      "output_tokens": 62
+    },
+    {
+      "task_id": "adv_escape_002",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/apostrophe.txt\", \"content\": \"It's a test\"}}",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/apostrophe.txt",
+        "content": "It's a test"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:12.690602+00:00",
+      "latency_ms": 1469,
+      "input_tokens": 1299,
+      "output_tokens": 38
+    },
+    {
+      "task_id": "adv_escape_003",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "response": "I would use the write_escaped_content tool with path='/tmp/path.txt' and content='C:\\\\Users\\\\name' to write the Windows path with proper escaping of the backslashes to the file.",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:14.160019+00:00",
+      "latency_ms": 2216,
+      "input_tokens": 1304,
+      "output_tokens": 49
+    },
+    {
+      "task_id": "adv_escape_003",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/path.txt\", \"content\": \"C:\\\\Users\\\\name\"}}",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/path.txt",
+        "content": "C:\\Users\\name"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:24:16.377052+00:00",
+      "latency_ms": 2597,
+      "input_tokens": 1297,
+      "output_tokens": 35
+    },
+    {
+      "task_id": "adv_escape_004",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "response": "I would use the write_file tool with path='/tmp/newline.txt' and content='line1\\nline2' to write the text with a newline character to the specified file. The \\n in the content will be interpreted as an actual newline character, so the file will contain \"line1\" on the first line and \"line2\" on the second line.\n\n<write_file>\n<path>/tmp/newline.txt</path>\n<content>line1\nline2</content>\n</write_file>",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:24:18.974726+00:00",
+      "latency_ms": 3461,
+      "input_tokens": 1310,
+      "output_tokens": 121
+    },
+    {
+      "task_id": "adv_escape_004",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/newline.txt\", \"content\": \"line1\\nline2\"}}",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/newline.txt",
+        "content": "line1\nline2"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:24:22.436583+00:00",
+      "latency_ms": 1565,
+      "input_tokens": 1303,
+      "output_tokens": 37
+    },
+    {
+      "task_id": "adv_escape_005",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "response": "I would use the write_file tool with path='/tmp/tab.txt' and content='Tab\\there' to write the text \"Tab\\there\" (which will display as \"Tab\" followed by a tab character and then \"here\") to the file /tmp/tab.txt.",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/tab.txt",
+        "content": "Tab\there"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:24:24.002447+00:00",
+      "latency_ms": 2368,
+      "input_tokens": 1301,
+      "output_tokens": 64
+    },
+    {
+      "task_id": "adv_escape_005",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/tab.txt\", \"content\": \"Tab\\there\"}}",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/tab.txt",
+        "content": "Tab\there"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:26.371423+00:00",
+      "latency_ms": 1816,
+      "input_tokens": 1294,
+      "output_tokens": 35
+    },
+    {
+      "task_id": "adv_escape_006",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "response": "I would use the write_escaped_content tool with path='/tmp/multiquote.txt' and content='She said \"yes\" and \"no\"' to write this text that contains multiple quote characters to the file.",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/multiquote.txt",
+        "content": "She said \"yes\" and \"no\""
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:28.188125+00:00",
+      "latency_ms": 2032,
+      "input_tokens": 1310,
+      "output_tokens": 50
+    },
+    {
+      "task_id": "adv_escape_006",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_escaped_content\", \"args\": {\"path\": \"/tmp/multiquote.txt\", \"content\": \"She said \\\"yes\\\" and \\\"no\\\"\"}}",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/multiquote.txt",
+        "content": "She said \"yes\" and \"no\""
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:30.221150+00:00",
+      "latency_ms": 1439,
+      "input_tokens": 1303,
+      "output_tokens": 43
+    },
+    {
+      "task_id": "adv_escape_007",
+      "category": "adv_escape",
+      "condition": "nl_only",
+      "response": "I would use the write_file tool with path='/tmp/winpath.txt' and content='D:\\\\Documents\\\\file.txt' to write the Windows path string to the specified file. Since this content contains backslashes that need to be preserved literally, the write_file tool will handle this properly.",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/winpath.txt",
+        "content": "D:\\Documents\\file.txt"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:24:31.660625+00:00",
+      "latency_ms": 2764,
+      "input_tokens": 1307,
+      "output_tokens": 67
+    },
+    {
+      "task_id": "adv_escape_007",
+      "category": "adv_escape",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_file\", \"args\": {\"path\": \"/tmp/winpath.txt\", \"content\": \"D:\\\\Documents\\\\file.txt\"}}",
+      "expected_tool": "write_escaped_content",
+      "expected_args": {
+        "path": "/tmp/winpath.txt",
+        "content": "D:\\Documents\\file.txt"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Used equivalent tool 'write_file' instead of 'write_escaped_content'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:24:34.425790+00:00",
+      "latency_ms": 1540,
+      "input_tokens": 1300,
+      "output_tokens": 38
+    },
+    {
+      "task_id": "adv_unicode_001",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "response": "I would use the write_unicode_content tool with path='/tmp/emoji.txt' and content='Hello \ud83d\udc4b World \ud83c\udf0d' to write the text containing emoji characters to the file. This tool is specifically designed to handle unicode characters like emojis properly.",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:35.966157+00:00",
+      "latency_ms": 2354,
+      "input_tokens": 1309,
+      "output_tokens": 62
+    },
+    {
+      "task_id": "adv_unicode_001",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emoji.txt\", \"content\": \"Hello \ud83d\udc4b World \ud83c\udf0d\"}}",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emoji.txt",
+        "content": "Hello \ud83d\udc4b World \ud83c\udf0d"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:38.320471+00:00",
+      "latency_ms": 1773,
+      "input_tokens": 1302,
+      "output_tokens": 42
+    },
+    {
+      "task_id": "adv_unicode_002",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "response": "I would use the write_unicode_content tool with path='/tmp/japanese.txt' and content='\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8' to write the Japanese text to the file, since this content contains unicode characters that require proper handling.",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:40.094215+00:00",
+      "latency_ms": 2301,
+      "input_tokens": 1304,
+      "output_tokens": 52
+    },
+    {
+      "task_id": "adv_unicode_002",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/japanese.txt\", \"content\": \"\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8\"}}",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/japanese.txt",
+        "content": "\u65e5\u672c\u8a9e\u30c6\u30b9\u30c8"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:42.395808+00:00",
+      "latency_ms": 1452,
+      "input_tokens": 1297,
+      "output_tokens": 38
+    },
+    {
+      "task_id": "adv_unicode_003",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "response": "I would use the write_unicode_content tool with path='/tmp/greek.txt' and content='\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac' to write the Greek text to the file, since this content contains unicode characters that require proper encoding.",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:43.848696+00:00",
+      "latency_ms": 2692,
+      "input_tokens": 1306,
+      "output_tokens": 53
+    },
+    {
+      "task_id": "adv_unicode_003",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/greek.txt\", \"content\": \"\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac\"}}",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/greek.txt",
+        "content": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:46.541920+00:00",
+      "latency_ms": 1303,
+      "input_tokens": 1299,
+      "output_tokens": 39
+    },
+    {
+      "task_id": "adv_unicode_004",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "response": "I would use the write_unicode_content tool with path='/tmp/symbols.txt' and content='\u2713 Check \u2717 Cross' to write the text containing unicode checkmark and cross symbols to the specified file.",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:47.846041+00:00",
+      "latency_ms": 2175,
+      "input_tokens": 1307,
+      "output_tokens": 51
+    },
+    {
+      "task_id": "adv_unicode_004",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/symbols.txt\", \"content\": \"\u2713 Check \u2717 Cross\"}}",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/symbols.txt",
+        "content": "\u2713 Check \u2717 Cross"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:50.021666+00:00",
+      "latency_ms": 1855,
+      "input_tokens": 1300,
+      "output_tokens": 41
+    },
+    {
+      "task_id": "adv_unicode_005",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "response": "I would use the write_unicode_content tool with path='/tmp/emojis.txt' and content='\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea' to write the emoji text to the file, since this content contains unicode emoji characters that require proper encoding support.",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emojis.txt",
+        "content": "\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:51.877488+00:00",
+      "latency_ms": 2793,
+      "input_tokens": 1317,
+      "output_tokens": 67
+    },
+    {
+      "task_id": "adv_unicode_005",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/emojis.txt\", \"content\": \"\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea\"}}",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/emojis.txt",
+        "content": "\ud83d\ude80 Launch \ud83c\udfaf Target \ud83d\udca1 Idea"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:54.670939+00:00",
+      "latency_ms": 1581,
+      "input_tokens": 1310,
+      "output_tokens": 51
+    },
+    {
+      "task_id": "adv_unicode_006",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "response": "I would use the write_unicode_content tool with path='/tmp/chinese.txt' and content='\u4e2d\u6587\u6d4b\u8bd5' to write the Chinese characters to the file, since this content contains unicode characters that require proper handling.",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/chinese.txt",
+        "content": "\u4e2d\u6587\u6d4b\u8bd5"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:56.252119+00:00",
+      "latency_ms": 2375,
+      "input_tokens": 1302,
+      "output_tokens": 50
+    },
+    {
+      "task_id": "adv_unicode_006",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/chinese.txt\", \"content\": \"\u4e2d\u6587\u6d4b\u8bd5\"}}",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/chinese.txt",
+        "content": "\u4e2d\u6587\u6d4b\u8bd5"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:24:58.628068+00:00",
+      "latency_ms": 2192,
+      "input_tokens": 1295,
+      "output_tokens": 36
+    },
+    {
+      "task_id": "adv_unicode_007",
+      "category": "adv_unicode",
+      "condition": "nl_only",
+      "response": "I would use the write_unicode_content tool with path='/tmp/arrows.txt' and content='\u2192 arrow \u2190 back \u2191 up \u2193 down' to write the text containing unicode arrow characters to the file.\n\n<write_unicode_content>\n<path>/tmp/arrows.txt</path>\n<content>\u2192 arrow \u2190 back \u2191 up \u2193 down</content>\n</write_unicode_content>",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/arrows.txt",
+        "content": "\u2192 arrow \u2190 back \u2191 up \u2193 down"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:25:00.820261+00:00",
+      "latency_ms": 2871,
+      "input_tokens": 1314,
+      "output_tokens": 105
+    },
+    {
+      "task_id": "adv_unicode_007",
+      "category": "adv_unicode",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/arrows.txt\", \"content\": \"\u2192 arrow \u2190 back \u2191 up \u2193 down\"}}",
+      "expected_tool": "write_unicode_content",
+      "expected_args": {
+        "path": "/tmp/arrows.txt",
+        "content": "\u2192 arrow \u2190 back \u2191 up \u2193 down"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": true,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:25:03.691775+00:00",
+      "latency_ms": 1780,
+      "input_tokens": 1307,
+      "output_tokens": 48
+    },
+    {
+      "task_id": "adv_combined_001",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/tmp/complex.json' and json_content={\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"} to write the JSON configuration file. This tool is designed to handle JSON content properly and will ensure the unicode emoji and backslashes in the Windows path are correctly encoded.",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:25:05.472279+00:00",
+      "latency_ms": 3151,
+      "input_tokens": 1317,
+      "output_tokens": 78
+    },
+    {
+      "task_id": "adv_combined_001",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/complex.json\", \"json_content\": {\"emoji\": \"\ud83c\udf89\", \"path\": \"C:\\\\test\"}}}",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/complex.json",
+        "config": {
+          "emoji": "\ud83c\udf89",
+          "path": "C:\\test"
+        },
+        "format": "json"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "functional": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'emoji': '\ud83c\udf89', 'path': 'C:\\\\test'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:25:08.624027+00:00",
+      "latency_ms": 2586,
+      "input_tokens": 1310,
+      "output_tokens": 48
+    },
+    {
+      "task_id": "adv_combined_002",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "response": "I would use the write_complex_config tool with path='/tmp/config.yaml', config={\"message\": \"Say \\\"Hello\\\" \ud83d\udc4b\"}, and format='yaml' to create a YAML configuration file that properly handles the JSON structure, escaped quotes, and unicode emoji character.",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:25:11.210665+00:00",
+      "latency_ms": 2625,
+      "input_tokens": 1313,
+      "output_tokens": 64
+    },
+    {
+      "task_id": "adv_combined_002",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/config.yaml\", \"content\": \"message: \\\"Say \\\\\\\"Hello\\\\\\\" \ud83d\udc4b\\\"\\n\"}}",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/config.yaml",
+        "config": {
+          "message": "Say \"Hello\" \ud83d\udc4b"
+        },
+        "format": "yaml"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": false,
+          "signal_tool_correct": false,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": false,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Wrong tool: expected 'write_complex_config', got 'write_unicode_content'",
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'message': 'Say \"Hello\" \ud83d\udc4b'}, got None",
+            "Arg 'format': expected 'yaml', got None"
+          ],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": false,
+          "signal_tool_correct": false,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": false,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Wrong tool: expected 'write_complex_config', got 'write_unicode_content'",
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'message': 'Say \"Hello\" \ud83d\udc4b'}, got None",
+            "Arg 'format': expected 'yaml', got None"
+          ],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": false,
+          "signal_detected": false,
+          "signal_tool_correct": false,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": false,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Wrong tool: expected 'write_complex_config', got 'write_unicode_content'",
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'message': 'Say \"Hello\" \ud83d\udc4b'}, got None",
+            "Arg 'format': expected 'yaml', got None"
+          ],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:25:13.835961+00:00",
+      "latency_ms": 1704,
+      "input_tokens": 1306,
+      "output_tokens": 48
+    },
+    {
+      "task_id": "adv_combined_003",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/tmp/full.json' and json_content containing the object with path \"C:\\\\Users\\\\test\", emoji \"\ud83c\udf89\", and quote \"He said \\\"hi\\\"\" to write this JSON configuration file.",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/full.json",
+        "config": {
+          "path": "C:\\Users\\test",
+          "emoji": "\ud83c\udf89",
+          "quote": "He said \"hi\""
+        },
+        "format": "json"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:25:15.540857+00:00",
+      "latency_ms": 2160,
+      "input_tokens": 1327,
+      "output_tokens": 60
+    },
+    {
+      "task_id": "adv_combined_003",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/full.json\", \"json_content\": {\"path\": \"C:\\\\Users\\\\test\", \"emoji\": \"\ud83c\udf89\", \"quote\": \"He said \\\"hi\\\"\"}}}",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/full.json",
+        "config": {
+          "path": "C:\\Users\\test",
+          "emoji": "\ud83c\udf89",
+          "quote": "He said \"hi\""
+        },
+        "format": "json"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'path': 'C:\\\\Users\\\\test', 'emoji': '\ud83c\udf89', 'quote': 'He said \"hi\"'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'path': 'C:\\\\Users\\\\test', 'emoji': '\ud83c\udf89', 'quote': 'He said \"hi\"'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "functional": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'path': 'C:\\\\Users\\\\test', 'emoji': '\ud83c\udf89', 'quote': 'He said \"hi\"'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:25:17.702077+00:00",
+      "latency_ms": 1649,
+      "input_tokens": 1320,
+      "output_tokens": 60
+    },
+    {
+      "task_id": "adv_combined_004",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "response": "I would use the write_complex_config tool with path='/tmp/intl.yaml', config={\"title\": \"\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5\", \"path\": \"D:\\\\Data\"}, and format='yaml' to create a YAML file containing the JSON object with Japanese text, emoji, and Windows path at the specified location.",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/intl.yaml",
+        "config": {
+          "title": "\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5",
+          "path": "D:\\Data"
+        },
+        "format": "yaml"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": true,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:25:19.351514+00:00",
+      "latency_ms": 3194,
+      "input_tokens": 1324,
+      "output_tokens": 78
+    },
+    {
+      "task_id": "adv_combined_004",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_unicode_content\", \"args\": {\"path\": \"/tmp/intl.yaml\", \"content\": \"title: \\\"\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5\\\"\\npath: \\\"D:\\\\\\\\Data\\\"\"}}",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/intl.yaml",
+        "config": {
+          "title": "\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5",
+          "path": "D:\\Data"
+        },
+        "format": "yaml"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": false,
+          "signal_tool_correct": false,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": false,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Wrong tool: expected 'write_complex_config', got 'write_unicode_content'",
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'title': '\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5', 'path': 'D:\\\\Data'}, got None",
+            "Arg 'format': expected 'yaml', got None"
+          ],
+          "notes": []
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": false,
+          "signal_tool_correct": false,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": false,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Wrong tool: expected 'write_complex_config', got 'write_unicode_content'",
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'title': '\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5', 'path': 'D:\\\\Data'}, got None",
+            "Arg 'format': expected 'yaml', got None"
+          ],
+          "notes": []
+        },
+        "functional": {
+          "is_correct": false,
+          "signal_detected": false,
+          "signal_tool_correct": false,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": false,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Wrong tool: expected 'write_complex_config', got 'write_unicode_content'",
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'title': '\u65e5\u672c\u8a9e \ud83c\uddef\ud83c\uddf5', 'path': 'D:\\\\Data'}, got None",
+            "Arg 'format': expected 'yaml', got None"
+          ],
+          "notes": []
+        }
+      },
+      "timestamp": "2026-02-05T00:25:22.546419+00:00",
+      "latency_ms": 1771,
+      "input_tokens": 1317,
+      "output_tokens": 57
+    },
+    {
+      "task_id": "adv_combined_005",
+      "category": "adv_combined",
+      "condition": "nl_only",
+      "response": "I would use the write_json_file tool with path='/tmp/mixed.json' and json_content as an object containing the key \"newline\" with value \"line1\\nline2\", the key \"tab\" with value \"col1\\tcol2\", and the key \"emoji\" with value \"\u2705\". This tool is designed to handle JSON content properly, including special characters like newlines, tabs, and unicode characters like the emoji.",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/mixed.json",
+        "config": {
+          "newline": "line1\nline2",
+          "tab": "col1\tcol2",
+          "emoji": "\u2705"
+        },
+        "format": "json"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        },
+        "functional": {
+          "is_correct": true,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": false,
+          "json_valid": false,
+          "json_schema_correct": false,
+          "format_friction": false,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": true,
+          "args_correct": true,
+          "errors": [],
+          "notes": [
+            "Mentioned equivalent tool 'write_json_file' instead of 'write_complex_config'"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:25:24.318165+00:00",
+      "latency_ms": 2683,
+      "input_tokens": 1329,
+      "output_tokens": 99
+    },
+    {
+      "task_id": "adv_combined_005",
+      "category": "adv_combined",
+      "condition": "json_only",
+      "response": "{\"tool\": \"write_json_file\", \"args\": {\"path\": \"/tmp/mixed.json\", \"json_content\": {\"newline\": \"line1\\nline2\", \"tab\": \"col1\\tcol2\", \"emoji\": \"\u2705\"}}}",
+      "expected_tool": "write_complex_config",
+      "expected_args": {
+        "path": "/tmp/mixed.json",
+        "config": {
+          "newline": "line1\nline2",
+          "tab": "col1\tcol2",
+          "emoji": "\u2705"
+        },
+        "format": "json"
+      },
+      "evaluation": {
+        "strict": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'newline': 'line1\\nline2', 'tab': 'col1\\tcol2', 'emoji': '\u2705'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "intent": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'newline': 'line1\\nline2', 'tab': 'col1\\tcol2', 'emoji': '\u2705'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        },
+        "functional": {
+          "is_correct": false,
+          "signal_detected": true,
+          "signal_tool_correct": true,
+          "signal_args_present": true,
+          "json_attempted": true,
+          "json_valid": true,
+          "json_schema_correct": false,
+          "format_friction": true,
+          "tool_correct": false,
+          "tool_equivalent": true,
+          "args_present": false,
+          "args_correct": false,
+          "errors": [
+            "Missing required args: ['config', 'format']",
+            "Arg 'config': expected {'newline': 'line1\\nline2', 'tab': 'col1\\tcol2', 'emoji': '\u2705'}, got None",
+            "Arg 'format': expected 'json', got None"
+          ],
+          "notes": [
+            "Used equivalent tool 'write_json_file' instead of 'write_complex_config'",
+            "FORMAT FRICTION: Model signaled correct intent but JSON schema incorrect"
+          ]
+        }
+      },
+      "timestamp": "2026-02-05T00:25:27.001642+00:00",
+      "latency_ms": 1879,
+      "input_tokens": 1322,
+      "output_tokens": 62
+    }
+  ]
+}

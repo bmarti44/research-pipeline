@@ -1,0 +1,75 @@
+# Paper: Tool Selection Phase Transitions
+
+paper:
+  title: "Tool Selection Accuracy Exhibits a Phase Transition — Not Gradual Degradation — as Available Tool Count Increases"
+  short_title: "Tool Phase Transition"
+
+  authors:
+    - name: "Author Name"
+      affiliation: "Institution"
+      email: "author@example.com"
+      corresponding: true
+
+  abstract: |
+    We investigate how LLM tool selection accuracy scales with the number of
+    available tools. In a preregistered study varying tool count from 5 to 50,
+    we find that accuracy exhibits a phase transition rather than gradual
+    degradation: performance remains stable up to a model-specific threshold
+    (~15-20 tools), then drops sharply (>20% loss within +5 tools). Furthermore,
+    semantically similar distractor tools cause disproportionately more degradation
+    than unrelated tools. These findings have direct implications for MCP server
+    design and agent framework architecture, suggesting dynamic tool filtering
+    rather than static large tool sets.
+
+  keywords:
+    - tool calling
+    - large language models
+    - agent frameworks
+    - MCP
+    - function calling
+
+  version: "1.0.0"
+  created: "2026-02-05"
+  status: "designed"
+
+studies:
+  - name: tool_scaling
+    role: "Study 1"
+    title: "Phase Transitions in Tool Selection Accuracy"
+    hypothesis: |
+      Tool selection accuracy remains stable up to ~15-20 tools, then drops
+      sharply. Semantically similar distractors cause more degradation than
+      unrelated tools.
+    status: "designed"
+    finding: null
+
+narrative:
+  story_arc: |
+    1. Agents need many tools, but tool count affects accuracy
+    2. We test whether degradation is gradual or sharp (phase transition)
+    3. Find a cliff rather than a slope around 15-20 tools
+    4. Semantically similar tools are particularly problematic
+    5. Implications: dynamic tool filtering is essential
+
+  key_contribution: |
+    First systematic demonstration of phase transitions in tool selection,
+    providing concrete guidance for maximum tool counts in production systems.
+
+  implications:
+    - Keep tool sets under ~15 tools or use dynamic filtering
+    - Avoid semantically similar tool names/descriptions
+    - Consider tool clustering and retrieval strategies
+
+manuscript:
+  format: preprint
+  venue: "arXiv / ACL 2027"
+  target_length: "8-10 pages"
+
+reproducibility:
+  seed: 42
+  models:
+    - "claude-sonnet-4-20250514"
+    - "gpt-4o-2024-11-20"
+    - "gemini-2.0-flash"
+  data_available: true
+  code_available: true

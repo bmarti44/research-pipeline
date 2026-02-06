@@ -1,0 +1,22 @@
+{
+  "study_name": "format_friction",
+  "version": "1.0.0",
+  "timestamp": "2026-02-05T03:57:11.808322+00:00",
+  "hash": "sha256:b2584100f1d4ca9bd066af8e7eb079f7ca1598d05b5318b75f676da0750e11ff",
+  "hypothesis": "LLMs exhibit higher error rates when producing structured JSON tool calls\ncompared to expressing the same intent in natural language.\n\nSTATUS: PILOT REFUTED THIS HYPOTHESIS\n- JSON syntax validity: 100%\n- JSON schema correctness: 98.5%\n- True serialization failures: 1.5%\n\nThe \"friction\" observed was actually behavioral adaptation, not serialization failure.\n",
+  "primary_dv": "",
+  "analysis_plan": [],
+  "exclusion_criteria": [],
+  "power_analysis": {
+    "effect_size": null,
+    "alpha": 0.05,
+    "power_target": 0.8,
+    "sample_size": null
+  },
+  "locked_files": {
+    "config.yaml": "sha256:b22689e57e941edd848c74bac244712265c123226319c5edf48505e352afa3c5",
+    "tasks.py": "sha256:bf5cb1366d6428b65d60b8a19a3aec9ececa676d85f99d4199435f1fb310ec78",
+    "evaluation.py": "sha256:84d17bee41df8e07456080fc027c3478da17e6b848aa06f326e476e576fd39f3",
+    "analysis.py": "sha256:de182000495db868067107dcfa40a84976a5e819be7cc774dfef6b9c385c3986"
+  }
+}

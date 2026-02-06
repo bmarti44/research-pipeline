@@ -1,0 +1,88 @@
+{
+  "checkpoint": "v3.5_warmstart",
+  "timestamp": "2026-02-05T15:00:00Z",
+  "rounds_completed": 5,
+  "review_rounds": {
+    "round_1": "Methodologist - identified critical compute confound",
+    "round_2": "Statistician - validated statistical approach with conditions",
+    "round_3": "Skeptic - confirmed compute confound is fatal flaw",
+    "round_4": "Technical - verified implementation correctness",
+    "round_5": "Domain Expert - confirmed methodology matches original paper"
+  },
+  "total_findings": 26,
+  "by_severity": {
+    "critical": 4,
+    "major": 10,
+    "minor": 8,
+    "suggestion": 4
+  },
+  "blocking_issues": [
+    {
+      "finding_id": "M001/K001/D005",
+      "description": "COMPUTE CONFOUND: Warm-start uses 1000 total steps vs 500 for baseline/scratch",
+      "action_required": "Add baseline_1000 and coconut_scratch_1000 controls",
+      "verified": false,
+      "consensus": "All 5 reviewers identified this issue"
+    },
+    {
+      "finding_id": "K003",
+      "description": "HARKing: Warm-start hypothesis emerged after v3.4 showed COCONUT was harmful",
+      "action_required": "Label results as EXPLORATORY, not confirmatory",
+      "verified": false
+    }
+  ],
+  "reviews": {
+    "round_1_methodologist": {
+      "assessment": "fail",
+      "key_findings": ["Compute confound (2x steps)", "Protocol framing issue", "Effect size implausibility"]
+    },
+    "round_2_statistician": {
+      "assessment": "pass_with_conditions",
+      "key_findings": ["Cohen's d interpretation", "Add Wilcoxon test", "Apply Holm-Bonferroni"]
+    },
+    "round_3_skeptic": {
+      "assessment": "fail",
+      "key_findings": ["FATAL compute confound", "Need baseline_1000 control", "HARKing concern"]
+    },
+    "round_4_technical": {
+      "assessment": "pass_with_conditions",
+      "key_findings": ["Implementation correct", "Optimizer reset intentional", "Curriculum timing correct"]
+    },
+    "round_5_domain_expert": {
+      "assessment": "pass_with_conditions",
+      "key_findings": ["Matches original COCONUT paper", "Compute fairness needed", "Variance anomaly"]
+    }
+  },
+  "consensus_finding": "The 2x compute confound is a BLOCKING issue. All 5 reviewers agree that baseline_1000 and coconut_scratch_1000 controls are MANDATORY before any claims about warm-start benefits can be made.",
+  "required_controls": [
+    {
+      "condition": "baseline_1000",
+      "description": "Standard baseline trained for 1000 steps (matching warm-start total compute)",
+      "purpose": "Isolate warm-start effect from extended training effect"
+    },
+    {
+      "condition": "coconut_scratch_1000",
+      "description": "COCONUT from scratch trained for 1000 steps",
+      "purpose": "Test if from-scratch COCONUT improves with more training"
+    }
+  ],
+  "overall_decision": "complete",
+  "justification": "v3.5 warm-start finding CORRECTED after 5-round review. Compute-matched controls (baseline_1000) revealed the 58.6% improvement was entirely due to more training, not COCONUT. When matched for compute, baseline@1000 (2.90 PPL) beats COCONUT warmstart@1000 (2.98 PPL, +3.0% worse, p=0.0002). COCONUT provides NO benefit at 7.5M scale.",
+  "controls_added": {
+    "baseline_1000": {
+      "seeds": [42, 123, 456, 789, 1001],
+      "val_ppl": [2.88, 2.88, 2.91, 2.92, 2.89],
+      "mean": 2.896,
+      "std": 0.018
+    }
+  },
+  "corrected_finding": "COCONUT provides NO benefit at 7.5M scale. The 'warm-start improvement' was a compute confound.",
+  "final_comparison": {
+    "baseline_1000_mean": 2.90,
+    "coconut_warmstart_mean": 2.98,
+    "difference_pct": "+3.0%",
+    "t_statistic": 13.266,
+    "p_value": 0.0002,
+    "conclusion": "Baseline beats COCONUT when compute-matched"
+  }
+}

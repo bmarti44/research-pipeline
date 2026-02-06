@@ -1,0 +1,273 @@
+# Paper: LAHR - Latent Adaptive Hierarchical Reasoning
+# A Novel Architecture Combining Three Key Innovations
+
+paper:
+  title: "LAHR: Combining Latent Reasoning, Adaptive Depth, and Hierarchical Memory in a Single Architecture"
+  short_title: "LAHR Architecture"
+
+  authors:
+    - name: "Author Name"
+      affiliation: "Independent Researcher"
+      email: "author@example.com"
+      corresponding: true
+
+  abstract: |
+    We propose LAHR (Latent Adaptive Hierarchical Reasoning), a language model architecture
+    that combines three recent innovations: (1) COCONUT-style latent reasoning, (2)
+    Mixture-of-Depths adaptive computation, and (3) kNN memory retrieval. This paper
+    presents a DESIGN STUDY with theoretical analysis and implementation, but NO EMPIRICAL
+    VALIDATION has been performed. We hypothesize that combining these approaches may yield
+    efficiency gains, but acknowledge significant uncertainty: COCONUT underperforms on
+    arithmetic tasks (GSM8K: 34% vs 42% for CoT), small-scale results may not transfer,
+    and component interactions are unknown. We release code for the architecture to enable
+    future empirical validation. This is NOT a validated result paper - it is a research
+    proposal requiring experimental verification.
+
+  keywords:
+    - latent reasoning
+    - adaptive computation
+    - hierarchical memory
+    - efficient architectures
+    - reasoning in language models
+    - consumer hardware training
+
+  version: "1.0.0"
+  created: "2026-02-05"
+  status: "designed"
+
+# =============================================================================
+# The Three Combined Innovations
+# =============================================================================
+
+architecture:
+  name: "LAHR"
+  full_name: "Latent Adaptive Hierarchical Reasoning"
+
+  components:
+    latent_reasoning:
+      description: |
+        Instead of generating tokens for chain-of-thought, LAHR reasons in continuous
+        latent space. A recurrent latent module iterates on hidden representations
+        without decoding to vocabulary, avoiding the token serialization bottleneck.
+
+      mechanism: |
+        1. Input tokens → Encoder → Latent representation z₀
+        2. Latent iteration: z_{t+1} = f(z_t) for t = 1..T iterations
+        3. Adaptive halting decides when to stop (inspired by ACT)
+        4. Final z_T → Decoder → Output tokens
+
+      key_insight: |
+        One latent iteration operates in the full embedding space (d=768+)
+        vs. a token which is a one-hot over vocabulary. The bandwidth for
+        "thinking" is orders of magnitude higher in latent space.
+
+      prior_work:
+        - "Goyal et al. 2023 - Think before you speak (pause tokens)"
+        - "Meta COCONUT - Chain of Continuous Thought (late 2024)"
+        - "Graves 2016 - Adaptive Computation Time"
+
+    adaptive_depth:
+      description: |
+        A shared transformer block applied iteratively with learned halting.
+        Different inputs get different numbers of processing passes, allowing
+        variable compute without variable token generation.
+
+      mechanism: |
+        1. Single transformer block with shared parameters
+        2. Halting score h_t = σ(W_h · hidden_t) computed after each pass
+        3. Stop when cumulative halting probability exceeds threshold
+        4. Easy inputs: few passes. Hard reasoning: many passes.
+
+      key_insight: |
+        Parameter efficiency: a 12-layer effective depth model with shared
+        params has 1/12th the parameters of a standard 12-layer transformer.
+        Compute adapts to input difficulty without architectural changes.
+
+      prior_work:
+        - "Dehghani et al. 2018 - Universal Transformer"
+        - "Raposo et al. 2024 - Mixture of Depths"
+        - "Banino et al. 2021 - PonderNet"
+
+    hierarchical_memory:
+      description: |
+        Three-tier memory inspired by computer architecture:
+        - Registers: KV cache (fast, volatile, small)
+        - RAM: Differentiable memory bank (medium, persistent, updatable)
+        - Disk: Retrieval from compressed embeddings (slow, massive)
+
+      mechanism: |
+        1. Memory bank M of shape (num_slots, memory_dim)
+        2. Read: attention over memory slots based on query
+        3. Write: learned gate decides what to write, where to write
+        4. Replacement: neural LRU policy for slot management
+
+      key_insight: |
+        The model can persist information across reasoning iterations,
+        store intermediate results, and manage its own knowledge without
+        retraining. Decouples working memory from context window.
+
+      prior_work:
+        - "Weston et al. 2014 - Memory Networks"
+        - "Graves et al. 2014 - Neural Turing Machines"
+        - "Wu et al. 2022 - Memorizing Transformers"
+
+# =============================================================================
+# Hypothesis and Predictions
+# =============================================================================
+
+hypothesis:
+  primary: |
+    Combining latent-space reasoning, adaptive depth, and hierarchical memory
+    in a single architecture achieves better reasoning performance per FLOP
+    than any individual innovation or standard transformers, and this advantage
+    is measurable at small scale (125M parameters) on consumer hardware.
+
+  mechanism: |
+    The three components address different bottlenecks:
+    - Latent reasoning: Avoids vocabulary serialization bottleneck
+    - Adaptive depth: Matches compute to problem difficulty
+    - Hierarchical memory: Provides working memory for multi-step reasoning
+
+    Combined, they enable efficient multi-step reasoning without:
+    - Generating wasteful CoT tokens
+    - Over-computing on easy inputs
+    - Losing intermediate results to context limitations
+
+  predictions:
+    - "HYPOTHESIS: LAHR may match baseline perplexity with fewer FLOPs (requires validation)"
+    - "HYPOTHESIS: Latent iterations may correlate with task difficulty (requires validation)"
+    - "HYPOTHESIS: Components may provide independent benefits (requires 2^3 factorial ablation)"
+    - "KNOWN LIMITATION: Latent reasoning fails on arithmetic (GSM8K)"
+    - "UNKNOWN: Whether benefits scale from tiny to large models"
+    - "UNKNOWN: Whether component interactions are positive or negative"
+
+  null_hypothesis: |
+    Standard transformer with chain-of-thought achieves equivalent or better
+    reasoning performance per FLOP than the combined LAHR architecture.
+
+# =============================================================================
+# Training Design
+# =============================================================================
+
+training:
+  hardware:
+    device: "MacBook Pro with Apple Silicon (M2/M3 Max)"
+    memory: "36GB unified memory"
+    framework: "PyTorch 2.x with MPS backend"
+
+  objectives:
+    - name: "next_token_prediction"
+      weight: 1.0
+      description: "Standard language modeling for base capabilities"
+
+    - name: "reasoning_verification"
+      weight: 0.5
+      description: "RLVR-style: reward correct answers on verifiable tasks"
+
+    - name: "memory_utilization"
+      weight: 0.1
+      description: "Penalize unused memory, reward effective read/write"
+
+    - name: "compute_efficiency"
+      weight: 0.1
+      description: "Penalize excessive depth/iterations on easy inputs"
+
+  data:
+    pretraining: "SlimPajama subset (10B tokens feasible)"
+    reasoning:
+      - "GSM8K-style arithmetic"
+      - "ARC-style logical reasoning"
+      - "Simple code generation"
+
+  hyperparameters:
+    batch_size: 4  # Limited by memory
+    gradient_accumulation: 8  # Effective batch = 32
+    learning_rate: 3e-4
+    warmup_steps: 1000
+    max_steps: 50000
+    sequence_length: 1024
+
+# =============================================================================
+# Evaluation
+# =============================================================================
+
+evaluation:
+  efficiency_metrics:
+    - name: "flops_per_token"
+      description: "Actual FLOPs used (accounting for adaptive computation)"
+    - name: "latent_iterations"
+      description: "Number of reasoning iterations per sequence"
+    - name: "effective_depth"
+      description: "Average transformer passes per token"
+    - name: "memory_utilization"
+      description: "Fraction of memory slots actively used"
+    - name: "throughput"
+      description: "Tokens per second at inference"
+
+  quality_metrics:
+    - name: "perplexity"
+      description: "Language modeling quality"
+      datasets: ["wikitext-103", "lambada"]
+    - name: "gsm8k_accuracy"
+      description: "Arithmetic reasoning accuracy"
+    - name: "arc_accuracy"
+      description: "Logical reasoning accuracy"
+    - name: "code_correctness"
+      description: "HumanEval-style functional correctness"
+
+  ablation_study:
+    conditions:
+      - "LAHR full (all three components)"
+      - "LAHR no-latent (adaptive depth + memory only)"
+      - "LAHR no-adaptive (latent reasoning + memory only)"
+      - "LAHR no-memory (latent reasoning + adaptive depth only)"
+      - "Baseline transformer (none of the three)"
+
+    analysis: |
+      Factorial design to isolate contribution of each component.
+      Key comparisons:
+      - Full vs each ablation: overall contribution
+      - Cross-comparisons: interaction effects
+
+# =============================================================================
+# Study Design
+# =============================================================================
+
+studies:
+  - name: small_scale_validation
+    role: "Study 1"
+    title: "Small-Scale Validation of LAHR Architecture"
+    description: |
+      Train 125M LAHR and compare against baselines on reasoning tasks.
+      Primary outcome: FLOPs-normalized reasoning accuracy.
+    status: "designed"
+
+reproducibility:
+  seed: 42
+  code_available: true
+  checkpoints_available: true
+  hardware_requirements: "Apple Silicon Mac with 16GB+ unified memory"
+  training_time: "24-48 hours for 125M model"
+
+narrative:
+  story_arc: |
+    1. Frontier models are compute-inefficient: CoT wastes tokens, fixed depth
+       over-computes, context windows limit working memory
+    2. Three promising directions exist: latent reasoning, adaptive depth,
+       hierarchical memory
+    3. Key insight: These address DIFFERENT bottlenecks and should COMBINE
+    4. We implement LAHR combining all three, validate on consumer hardware
+    5. Show: combined is greater than sum of parts
+    6. Democratize architectural research: you don't need a datacenter
+
+  key_contribution: |
+    A DESIGN STUDY proposing the combination of latent reasoning, adaptive depth,
+    and hierarchical memory in a single architecture. NO EMPIRICAL VALIDATION
+    has been performed. This is a research proposal requiring experimental
+    verification. Code provided enables future validation.
+
+  implications:
+    - "Combined innovations may be the path to efficient reasoning"
+    - "Consumer hardware is sufficient for meaningful architectural research"
+    - "Each component addresses a different bottleneck - combine them"
+    - "RLVR can train latent reasoning even without inspectable CoT"

@@ -1,0 +1,54 @@
+{
+  "trial_id": "trial_0039",
+  "modes": {
+    "strict": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "write_file",
+        "actual_args": {
+          "path": "hello.txt",
+          "content": "Hello, World!"
+        }
+      },
+      "format_friction": false
+    },
+    "intent": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "write_file",
+        "actual_args": {
+          "path": "hello.txt",
+          "content": "Hello, World!"
+        }
+      },
+      "format_friction": false
+    },
+    "functional": {
+      "correct": true,
+      "details": {
+        "correct": true,
+        "json_valid": true,
+        "json_structure": true,
+        "tool_correct": true,
+        "args_present": true,
+        "actual_tool": "write_file",
+        "actual_args": {
+          "path": "hello.txt",
+          "content": "Hello, World!"
+        }
+      },
+      "format_friction": false
+    }
+  },
+  "timestamp": "2026-02-05T03:45:36.288048+00:00"
+}

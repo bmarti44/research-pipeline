@@ -1,0 +1,135 @@
+# Basic Study Configuration Template
+# ===================================
+#
+# This template instantiates generic pipeline components via configuration.
+# All classes (Condition, Task, Scenario, etc.) are defined in pipeline/models.py
+# and are instantiated here with study-specific parameters.
+
+study:
+  name: "my_study"
+  version: "1.0.0"
+  hypothesis: |
+    [Describe your hypothesis here]
+
+# =============================================================================
+# CONDITIONS (instantiates pipeline.models.Condition)
+# =============================================================================
+# Conditions are the treatments/levels of your independent variable.
+# Each condition is an instance of the generic Condition class.
+
+conditions:
+  - name: control
+    description: "Control condition"
+    params: {}
+    # system_instructions: "Optional system prompt for this condition"
+
+  - name: treatment
+    description: "Treatment condition"
+    params: {}
+
+# =============================================================================
+# TASKS (instantiates pipeline.models.Task)
+# =============================================================================
+# Tasks can be defined inline or loaded from a separate file.
+# Each task is an instance of the generic Task class.
+
+tasks:
+  source: tasks.yaml  # Load tasks from separate file
+  # OR define inline:
+  # items:
+  #   - id: task_001
+  #     category: default
+  #     prompt: "Your task prompt"
+  #     expected:
+  #       answer: "Expected answer"
+
+# =============================================================================
+# SCENARIOS (optional, instantiates pipeline.models.Scenario)
+# =============================================================================
+# Scenarios group related tasks with shared context.
+
+scenarios: []
+# Example:
+#   - id: arithmetic
+#     description: "Math problems"
+#     shared_context: "Solve the following math problem."
+#     task_ids: [task_001, task_002]
+
+# =============================================================================
+# TRIAL GENERATION
+# =============================================================================
+# Controls how trials are generated from Task × Condition × Repetition
+
+trials:
+  repetitions: 1
+  seed: 42
+  randomize_order: true
+
+# =============================================================================
+# MODELS
+# =============================================================================
+
+models:
+  - alias: claude-sonnet
+    provider: anthropic
+    model_id: claude-sonnet-4-20250514
+    temperature: 0.0
+
+# =============================================================================
+# EVALUATION (selects from pipeline.evaluators registry)
+# =============================================================================
+# Choose an evaluator from the registry and configure evaluation modes.
+
+evaluation:
+  evaluator: exact_match  # See pipeline/evaluators.py for available evaluators
+  modes:
+    - strict
+    - intent
+    - functional
+
+# =============================================================================
+# ANALYSIS (selects from pipeline.stats registry)
+# =============================================================================
+# Choose statistical tests from the registry.
+
+analysis:
+  tests:
+    - name: two_proportion_z
+    - name: bootstrap_proportion_diff
+  alpha: 0.05
+
+# =============================================================================
+# EXECUTION (configures pipeline.executor)
+# =============================================================================
+# Configure batching, concurrency, and rate limiting.
+
+execution:
+  batch_size: 10
+  max_concurrent: 5
+  max_retries: 3
+  requests_per_minute: 60
+  tokens_per_minute: 100000
+  checkpoint_frequency: 10
+
+# =============================================================================
+# PILOT SETTINGS
+# =============================================================================
+
+pilot:
+  required: true
+  fraction: 0.2  # 20% of main study trials
+  criteria:
+    min_trials: 20
+    min_response_rate: 0.95
+    max_error_rate: 0.05
+
+# =============================================================================
+# ENVIRONMENT
+# =============================================================================
+
+environment:
+  python_version: "3.11"
+  required_packages:
+    - anthropic>=0.18.0
+    - scipy>=1.11.0
+    - numpy>=1.24.0

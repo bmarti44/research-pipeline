@@ -1,0 +1,97 @@
+# Paper: Execution Context Effects on LLM Tool Selection
+
+paper:
+  title: "Execution Context Effects on LLM Tool Selection: When 'Friction' is Actually Alignment"
+  short_title: "Execution Context Effects"
+
+  authors:
+    - name: "Author Name"
+      affiliation: "Institution"
+      email: "author@example.com"
+      corresponding: true
+
+  abstract: |
+    We investigated whether requiring structured JSON tool calls causes failures
+    that wouldn't occur with natural language output. In Study 1, we found that
+    JSON serialization failures are rare (<2%)—models produce syntactically valid
+    JSON 100% of the time. However, we observed systematic behavioral differences
+    between conditions. In Study 2, we investigated these differences and found
+    that execution context triggers operation-specific caution: when output will
+    actually execute (JSON mode), models adopt safer behaviors for destructive
+    operations, particularly "read before edit" patterns. This effect is
+    operation-specific (100% for edit operations, 0% for create operations) rather
+    than complexity-driven. We argue that observed "format friction" is better
+    understood as alignment activation—the model being appropriately cautious when
+    its output has real consequences.
+
+  keywords:
+    - large language models
+    - tool use
+    - structured output
+    - alignment
+    - agentic systems
+
+  version: "1.0.0"
+  created: "2026-02-05"
+  status: "complete"
+
+studies:
+  - name: format_friction
+    role: "Study 1"
+    title: "Format Friction: Testing JSON Serialization Failures"
+    hypothesis: |
+      LLMs exhibit higher error rates when producing structured JSON tool calls
+      compared to expressing the same intent in natural language.
+    status: "complete"
+    finding: "Hypothesis refuted - serialization is not the problem (JSON validity 100%, schema 98.5%)"
+    results:
+      nl_rate: 0.975
+      json_rate: 0.70
+      p_value: 0.0009
+
+  - name: execution_context
+    role: "Study 2"
+    title: "Execution Context and Operation-Specific Caution"
+    hypothesis: |
+      Execution context (whether output will run) triggers operation-specific
+      caution, particularly for destructive operations.
+    status: "complete"
+    finding: "Hypothesis supported - execution-aware alignment activation observed"
+    results:
+      nl_rate: 0.90
+      json_rate: 0.725
+      p_value: 0.045
+
+narrative:
+  story_arc: |
+    1. We set out to study "format friction" in LLM tool-calling
+    2. Study 1 found serialization failures are rare - hypothesis refuted
+    3. But we observed systematic behavioral differences
+    4. Study 2 investigated and found execution-aware caution
+    5. Conclusion: "Friction" is alignment activation, not capability limitation
+
+  key_contribution: |
+    Reframes the "format friction" problem: what looks like failure is actually
+    the model exhibiting appropriate caution for destructive operations in
+    execution contexts.
+
+  implications:
+    - Don't optimize for eliminating all "friction" - some is valuable
+    - NL benchmarks may overestimate capability (no execution-aware caution)
+    - Multi-step tool calls (read → edit) may be desired behavior
+
+manuscript:
+  format: preprint  # Options: apa, acl, neurips, preprint
+  venue: "arXiv"
+  target_length: "8-10 pages"
+
+supplementary:
+  include_data: true
+  include_code: true
+  include_additional_analyses: true
+
+reproducibility:
+  seed: 42
+  model: "claude-sonnet-4-20250514"
+  data_available: true
+  code_available: true

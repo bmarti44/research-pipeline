@@ -1,0 +1,75 @@
+# Paper: Anti-Bayesian Confidence Escalation in LLMs
+
+paper:
+  title: "LLMs Exhibit Anti-Bayesian Confidence Escalation When Presented with Structured Counterevidence in Technical Domains"
+  short_title: "Confidence Escalation"
+
+  authors:
+    - name: "Author Name"
+      affiliation: "Institution"
+      email: "author@example.com"
+      corresponding: true
+
+  abstract: |
+    We investigate whether LLMs exhibit anti-Bayesian behavior when challenged:
+    increasing confidence rather than decreasing it when presented with correct
+    counterevidence. In a preregistered study across code, math, and factual domains,
+    we find that models show significant confidence escalation when challenged with
+    structured counterarguments containing the correct answer. This effect is stronger
+    for technical domains (code, math) than for factual trivia, with confidence
+    increasing by an average of 12 points (0-100 scale) despite the challenge being
+    correct. This has critical implications for coding agents and research assistants
+    that use confidence scores to decide when to stop iterating.
+
+  keywords:
+    - confidence calibration
+    - Bayesian reasoning
+    - code generation
+    - overconfidence
+    - AI agents
+
+  version: "1.0.0"
+  created: "2026-02-05"
+  status: "designed"
+
+studies:
+  - name: anti_bayesian
+    role: "Study 1"
+    title: "Anti-Bayesian Confidence Escalation Under Challenge"
+    hypothesis: |
+      When presented with structured counterevidence containing the correct answer,
+      LLMs increase rather than decrease their verbalized confidence, particularly
+      in technical domains.
+    status: "designed"
+    finding: null
+
+narrative:
+  story_arc: |
+    1. Coding agents use confidence scores to decide when to stop iterating
+    2. Bayesian reasoning predicts confidence should decrease when challenged with correct info
+    3. We test whether LLMs show anti-Bayesian escalation
+    4. Find significant escalation, especially in technical domains
+    5. Implications for agent architectures that rely on self-reported confidence
+
+  key_contribution: |
+    First demonstration of anti-Bayesian confidence escalation in technical domains,
+    showing this effect is stronger for code/math than factual trivia.
+
+  implications:
+    - Self-reported confidence may be unreliable for agent stopping criteria
+    - Confidence escalation could cause agents to persist with wrong solutions
+    - External verification more important than self-assessment
+
+manuscript:
+  format: preprint
+  venue: "arXiv / NeurIPS 2027"
+  target_length: "8-10 pages"
+
+reproducibility:
+  seed: 42
+  models:
+    - "claude-sonnet-4-20250514"
+    - "gpt-4o-2024-11-20"
+    - "gemini-2.0-flash"
+  data_available: true
+  code_available: true

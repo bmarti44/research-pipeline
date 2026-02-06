@@ -1,0 +1,11 @@
+{
+  "dataset": "TinyStories",
+  "total_tokens": 5000000,
+  "train_tokens": 4750000,
+  "val_tokens": 250000,
+  "train_sequences": 9277,
+  "val_sequences": 488,
+  "seq_len": 512,
+  "train_path": "data/train.bin",
+  "val_path": "data/val.bin"
+}

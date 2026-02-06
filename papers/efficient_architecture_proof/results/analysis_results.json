@@ -1,0 +1,20 @@
+{
+  "summary": {
+    "full": {
+      "val_losses": [
+        Infinity
+      ],
+      "n_params": 20338433,
+      "mean_val_loss": Infinity,
+      "std_val_loss": 0,
+      "mean_perplexity": Infinity,
+      "n_runs": 1
+    }
+  },
+  "all_runs": [
+    "lahr_full_small_20260205_073622"
+  ],
+  "conditions": [
+    "full"
+  ]
+}

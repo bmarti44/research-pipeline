@@ -1,0 +1,124 @@
+# Study: Phase Transitions in Tool Selection
+
+study:
+  name: tool_scaling
+  title: "Phase Transitions in Tool Selection Accuracy"
+  version: "1.0.0"
+
+hypothesis:
+  text: |
+    LLM tool selection accuracy remains stable up to a model-specific threshold
+    (~15-20 tools), then drops sharply (>20% accuracy loss within +5 tools).
+    Semantically similar distractor tools cause more degradation than unrelated tools.
+  direction: "phase_transition"
+  alpha: 0.05
+
+conditions:
+  - name: tools_5
+    description: "5 available tools"
+    tool_count: 5
+
+  - name: tools_10
+    description: "10 available tools"
+    tool_count: 10
+
+  - name: tools_15
+    description: "15 available tools"
+    tool_count: 15
+
+  - name: tools_20
+    description: "20 available tools"
+    tool_count: 20
+
+  - name: tools_25
+    description: "25 available tools"
+    tool_count: 25
+
+  - name: tools_30
+    description: "30 available tools"
+    tool_count: 30
+
+  - name: tools_40
+    description: "40 available tools"
+    tool_count: 40
+
+  - name: tools_50
+    description: "50 available tools"
+    tool_count: 50
+
+factors:
+  - name: tool_count
+    type: ordinal
+    levels: [5, 10, 15, 20, 25, 30, 40, 50]
+
+  - name: distractor_type
+    type: categorical
+    levels:
+      - similar_tools      # Semantically similar to target
+      - unrelated_tools    # Completely different domain
+      - no_distractors     # Only the required tools
+
+design:
+  type: "factorial"
+  within_subjects: true
+  trials_per_cell: 10
+  total_expected: 240  # 8 counts × 3 distractor types × 10 tasks
+
+models:
+  - name: "claude-sonnet-4-20250514"
+    provider: anthropic
+    temperature: 0
+  - name: "gpt-4o-2024-11-20"
+    provider: openai
+    temperature: 0
+  - name: "gemini-2.0-flash"
+    provider: google
+    temperature: 0
+
+evaluation:
+  evaluator: "tool_call_match"
+  metrics:
+    - name: correct_tool
+      description: "Did model select the correct tool?"
+      type: binary
+    - name: correct_parameters
+      description: "Were parameters correct?"
+      type: binary
+    - name: hallucinated_tool
+      description: "Did model call a non-existent tool?"
+      type: binary
+    - name: response_latency
+      description: "Time to generate response (ms)"
+      type: continuous
+
+analysis:
+  primary_test: "trend_analysis"
+  secondary_tests:
+    - "changepoint_detection"
+    - "pairwise_chi_square"
+    - "logistic_regression"
+
+  comparisons:
+    - name: "cliff_detection"
+      description: "Find sharp degradation point"
+      method: "sequential_drop_test"
+    - name: "distractor_effect"
+      description: "Similar vs unrelated distractors"
+      contrast: "similar_tools vs unrelated_tools"
+    - name: "threshold_identification"
+      description: "Find optimal tool count threshold"
+      method: "breakpoint_regression"
+
+pilot:
+  enabled: true
+  fraction: 0.2
+  criteria:
+    min_trials: 48
+    response_rate: 0.95
+    tool_call_rate: 0.90
+
+execution:
+  batch_size: 10
+  rate_limit_rpm: 50
+  retry_attempts: 3
+  checkpoint_frequency: 10

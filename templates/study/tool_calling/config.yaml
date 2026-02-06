@@ -1,0 +1,157 @@
+# Tool-Calling Study Configuration Template
+# ==========================================
+#
+# Pre-configured for NL vs JSON tool-calling comparison studies.
+# Instantiates generic pipeline components with tool-calling specific settings.
+
+study:
+  name: "tool_calling_study"
+  version: "1.0.0"
+  hypothesis: |
+    Output format (JSON vs NL) affects tool-call accuracy.
+
+# =============================================================================
+# CONDITIONS (instantiates pipeline.models.Condition)
+# =============================================================================
+# Two conditions: natural language descriptions vs structured JSON.
+
+conditions:
+  - name: nl_only
+    description: "Natural language description of intended tool call"
+    system_instructions: |
+      When the user asks you to perform an action, describe what tool you would
+      call and with what arguments. Use plain English, not JSON or code.
+
+      Example: "I would use the read_file tool to read the contents of config.yaml"
+
+  - name: json_only
+    description: "Structured JSON tool call output"
+    system_instructions: |
+      When the user asks you to perform an action, respond with a JSON object
+      specifying the tool call. Use this exact format:
+
+      {"tool": "tool_name", "args": {"arg1": "value1", "arg2": "value2"}}
+
+# =============================================================================
+# TASKS (instantiates pipeline.models.Task)
+# =============================================================================
+
+tasks:
+  source: tasks.yaml
+
+# =============================================================================
+# SCENARIOS (instantiates pipeline.models.Scenario)
+# =============================================================================
+# Group tasks by operation type for analysis.
+
+scenarios:
+  - id: read_operations
+    description: "Tasks that read data without modification"
+    task_ids: []  # Populated from tasks.yaml categories
+
+  - id: create_operations
+    description: "Tasks that create new files/resources"
+    task_ids: []
+
+  - id: edit_operations
+    description: "Tasks that modify existing files (key test case)"
+    task_ids: []
+
+# =============================================================================
+# TRIAL GENERATION
+# =============================================================================
+
+trials:
+  repetitions: 5
+  seed: 42
+  randomize_order: true
+
+# =============================================================================
+# MODELS
+# =============================================================================
+
+models:
+  - alias: claude-sonnet
+    provider: anthropic
+    model_id: claude-sonnet-4-20250514
+    temperature: 0.0
+
+# =============================================================================
+# EVALUATION (selects from pipeline.evaluators registry)
+# =============================================================================
+# Use tool_call evaluator for JSON, tool_call_nl for NL.
+
+evaluation:
+  evaluator: tool_call  # For JSON condition
+  nl_evaluator: tool_call_nl  # For NL condition
+  modes:
+    - strict      # Exact tool + exact args
+    - intent      # Correct tool + values referenced
+    - functional  # Equivalent tool acceptable
+
+  # Define equivalent tools for functional evaluation
+  tool_equivalences:
+    write_file: [write_file, create_file]
+    edit_file: [edit_file, replace_in_file, sed]
+
+  # Synonyms for NL evaluation
+  tool_synonyms:
+    read_file: [read, open, view, cat, display]
+    write_file: [write, create, save, output]
+    edit_file: [edit, modify, change, update, replace]
+
+# =============================================================================
+# ANALYSIS (selects from pipeline.stats registry)
+# =============================================================================
+
+analysis:
+  tests:
+    # Primary: proportion comparison
+    - name: two_proportion_z
+    - name: mcnemar  # Paired comparison
+
+    # Bootstrap for CIs
+    - name: bootstrap_proportion_diff
+      params:
+        n_bootstrap: 10000
+
+    # By category
+    - name: chi_square  # Independence by operation type
+
+  alpha: 0.05
+
+# =============================================================================
+# EXECUTION (configures pipeline.executor)
+# =============================================================================
+
+execution:
+  batch_size: 20
+  max_concurrent: 5
+  max_retries: 3
+  requests_per_minute: 60
+  tokens_per_minute: 100000
+  checkpoint_frequency: 10
+
+# =============================================================================
+# PILOT SETTINGS
+# =============================================================================
+
+pilot:
+  required: true
+  fraction: 0.2
+  criteria:
+    min_trials: 20
+    min_response_rate: 0.95
+    max_error_rate: 0.05
+    evaluation_determinism: 1.0  # 100% reproducible
+
+# =============================================================================
+# ENVIRONMENT
+# =============================================================================
+
+environment:
+  python_version: "3.11"
+  required_packages:
+    - anthropic>=0.18.0
+    - scipy>=1.11.0
+    - numpy>=1.24.0
