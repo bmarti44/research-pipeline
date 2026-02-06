@@ -43,6 +43,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
+# CUDA optimization: use TensorFloat-32 for matmul
+if torch.cuda.is_available():
+    torch.set_float32_matmul_precision("high")
+
 
 # Add parent to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -61,15 +65,17 @@ def set_seed(seed: int):
     np.random.seed(seed)
     torch.manual_seed(seed)
     if torch.cuda.is_available():
+        # Enable cudnn.benchmark for faster training
+        torch.backends.cudnn.benchmark = True
         torch.cuda.manual_seed_all(seed)
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
 
 
 def get_device() -> torch.device:
-    """Get best available device with CUDA optimizations."""
+    """Get best available device."""
     if torch.cuda.is_available():
-        # Enable cudnn.benchmark for faster training (slightly non-deterministic)
+        # Enable cudnn.benchmark for faster training
         torch.backends.cudnn.benchmark = True
         return torch.device("cuda")
     elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
@@ -688,7 +694,9 @@ def evaluate(model: ABCModel, dataloader: DataLoader, device: torch.device, max_
             input_ids = batch["input_ids"].to(device)
             labels = batch["labels"].to(device)
 
-            outputs = model(input_ids, labels=labels)
+            # CUDA optimization: bfloat16 mixed precision
+            with torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=(device.type == "cuda")):
+                outputs = model(input_ids, labels=labels)
             loss = outputs["loss"]
 
             n_tokens = (labels != -100).sum().item()
@@ -711,7 +719,7 @@ def train_condition(
     output_dir: str,
     size: str = "tiny",
     max_steps: int = 500,
-    batch_size: int = 4,
+    batch_size: int = 16,
     seed: int = 42,
     learning_rate: float = 3e-4,
     n_stages: int = 4,  # v3: RESTORED to 4 stages
@@ -757,22 +765,19 @@ def train_condition(
         use_curriculum=use_curriculum,
     )
 
-    # CUDA optimization: pin_memory for faster host-to-device transfer
-    use_pin_memory = device.type == "cuda"
-
     train_loader = DataLoader(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
+        pin_memory=(device.type == "cuda"),
         num_workers=0,
-        pin_memory=use_pin_memory,
     )
     val_loader = DataLoader(
         val_dataset,
         batch_size=batch_size,
         shuffle=False,
+        pin_memory=(device.type == "cuda"),
         num_workers=0,
-        pin_memory=use_pin_memory,
     )
 
     # Model (v3.1: pass mod_capacity and mod_skip_compute overrides, v3.4: pass max_seq_len, v4.1: dropout)
@@ -872,7 +877,9 @@ def train_condition(
             input_ids = batch["input_ids"].to(device)
             labels = batch["labels"].to(device)
 
-            outputs = model(input_ids, labels=labels)
+            # CUDA optimization: bfloat16 mixed precision
+            with torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=(device.type == "cuda")):
+                outputs = model(input_ids, labels=labels)
             loss = outputs["loss"]
 
             optimizer.zero_grad()
