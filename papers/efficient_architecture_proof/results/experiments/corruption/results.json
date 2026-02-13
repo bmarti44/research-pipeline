@@ -1,0 +1,80 @@
+{
+  "m3": {
+    "clean_accuracy": 0.97,
+    "forward_corruption": [
+      0.968,
+      0.968,
+      0.968,
+      0.574,
+      0.156,
+      0.024
+    ],
+    "reverse_corruption": [
+      0.97,
+      0.968,
+      0.968,
+      0.574,
+      0.156,
+      0.024
+    ],
+    "single_position": [
+      0.968,
+      0.968,
+      0.968,
+      0.576,
+      0.156,
+      0.024
+    ],
+    "total_samples": 500,
+    "sensitivity": "high_uniform",
+    "cross_transplant_accuracy": 0.97,
+    "cross_transplant_pairs": 200,
+    "permutation_flip_rate": 0.0,
+    "mean_permutation_flip_rate": 0.0,
+    "permutation_total_samples": 500,
+    "partial_permutation_flip_rate": 0.0,
+    "partial_permutation_total_samples": 500
+  },
+  "m5": {
+    "clean_accuracy": 0.966,
+    "forward_corruption": [
+      0.964,
+      0.962,
+      0.958,
+      0.572,
+      0.156,
+      0.022
+    ],
+    "reverse_corruption": [
+      0.966,
+      0.96,
+      0.96,
+      0.572,
+      0.154,
+      0.022
+    ],
+    "single_position": [
+      0.964,
+      0.962,
+      0.962,
+      0.578,
+      0.158,
+      0.022
+    ],
+    "total_samples": 500,
+    "sensitivity": "high_uniform",
+    "cross_transplant_accuracy": 0.965,
+    "cross_transplant_pairs": 200,
+    "permutation_flip_rate": 0.0,
+    "mean_permutation_flip_rate": 0.0,
+    "permutation_total_samples": 500,
+    "partial_permutation_flip_rate": 0.0,
+    "partial_permutation_total_samples": 500
+  },
+  "verification": {
+    "replacement_l2_distance": 202.65,
+    "m3_test_id_accuracy": 0.97,
+    "m3_test_id_accuracy_delta": 0.0,
+    "position_check_passed": true
+  }
+}

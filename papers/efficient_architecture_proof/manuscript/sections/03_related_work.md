@@ -1,50 +1,17 @@
-# 2. Related Work
+## 2. Related Work
 
-## 2.1 Adaptive Computation
+### 2.1 Chain-of-Thought and Latent Reasoning
 
-The idea that different inputs require different amounts of computation dates back to
-Adaptive Computation Time [Graves, 2016]. Universal Transformer [Dehghani et al., 2018]
-applied this to transformers with shared-parameter blocks and learned halting.
+Wei et al. (2022) established that prompting large language models to produce intermediate reasoning steps substantially improves performance on arithmetic, commonsense, and symbolic tasks. This finding raised a natural question: is the verbalization itself necessary, or does the benefit come from the additional forward passes that intermediate tokens provide? Several architectures have since attempted to move reasoning into latent space, replacing human-readable traces with learned internal representations. COCONUT is the most prominent of these, but the question generalizes to any system that trades explicit reasoning for implicit computation.
 
-More recently, Mixture-of-Depths [Raposo et al., 2024] demonstrated that simple top-k
-routing can achieve significant efficiency gains. At the 1B parameter scale, MoD
-achieved ~50% FLOP reduction while maintaining language modeling quality. The key
-insight is that many tokens in a sequence can skip computation at certain layers
-without degrading output quality.
+### 2.2 COCONUT and Continuous Thought
 
-## 2.2 Latent Reasoning
+Hao et al. (2024) proposed COCONUT, which replaces chain-of-thought tokens with continuous thought tokens by recycling the transformer's last-hidden-state output back into the embedding stream. Trained with a multi-stage curriculum on ProsQA, COCONUT achieves 97% accuracy and the authors argue that the continuous space enables a breadth-first search strategy inaccessible to discrete tokens. Zhu et al. (2025) provided a theoretical foundation, proving that continuous thought tokens are strictly more expressive than discrete chain-of-thought under certain conditions. However, Zhang et al. (2025) challenged the empirical picture by applying causal interventions to COCONUT's latent tokens. They found that the continuous thoughts are largely causally inert: shuffling, zeroing, or replacing them with Gaussian noise produces minimal performance degradation. Our work complements Zhang et al. by constructing an explicit alternative — the pause baseline — that matches COCONUT's training regime while eliminating the recycling mechanism entirely.
 
-Chain-of-thought prompting [Wei et al., 2022] demonstrated that explicit reasoning
-improves performance on complex tasks but requires generating potentially redundant
-tokens. Several approaches have explored implicit reasoning:
+### 2.3 Pause Tokens and Compute Buffering
 
-- **Pause tokens** [Goyal et al., 2023]: Insert special tokens that allow additional
-  computation without semantic content.
+Goyal et al. (2024) introduced pause tokens as a method for providing transformers with additional computation without requiring meaningful intermediate output. Appending learned, non-informative tokens to the input gives the model extra forward-pass steps, improving performance on tasks that benefit from additional depth. The pause-token framework provides a natural control for COCONUT: if the gains come from extra computation rather than from the content of the latent representations, a model trained with pause tokens under the same curriculum should perform comparably. Our M5 baseline instantiates this control.
 
-- **COCONUT** [Hao et al., 2024]: Chain of Continuous Thought performs reasoning in
-  the model's continuous latent space. Hidden states are fed back through the model
-  without decoding to vocabulary. This achieves 97% on ProsQA (a logical search task)
-  vs. 77.5% for explicit CoT. However, COCONUT underperforms on arithmetic (GSM8K:
-  34% vs. 42% for CoT), suggesting latent reasoning has different strengths than
-  explicit reasoning.
+### 2.4 Probing and Causal Analysis
 
-## 2.3 Memory-Augmented Networks
-
-External memory in neural networks has a long history:
-
-- **Memory Networks** [Weston et al., 2014]: Introduced differentiable memory access.
-- **Neural Turing Machines** [Graves et al., 2014]: Content and location-based addressing.
-- **Memorizing Transformers** [Wu et al., 2022]: kNN retrieval from external memory
-  improved language modeling with up to 262K tokens of context.
-
-## 2.4 Hybrid Architectures
-
-Recent work has explored combining multiple efficiency techniques:
-
-- **Jamba** [AI21, 2024]: Combines attention and Mamba layers in a 1:7 ratio,
-  achieving efficient inference at 52B parameters.
-- **MoE + Adaptive Depth** [Various]: Several works combine mixture-of-experts
-  routing with adaptive computation.
-
-Our work differs in combining three distinct techniques (MoD, latent reasoning,
-memory) rather than two, and in focusing on the interaction effects between components.
+We use two standard methods to interrogate internal representations. Linear probing (Ravichander et al., 2021) trains a linear classifier on frozen hidden states to measure whether a target variable is linearly decodable. Ravichander et al. demonstrated that high probing accuracy alone does not establish that a representation is used by the model, motivating the use of selectivity controls — probing on random targets to establish a baseline — which we adopt. For causal analysis, we draw on the intervention methodology of Meng et al. (2022), who developed ROME to localize factual associations in GPT by corrupting and restoring activations at specific layers and positions. We adapt this approach to thought-token positions, measuring whether corrupting latent representations produces differential degradation between COCONUT and the pause baseline. Our corruption experiments extend Zhang et al. (2025) by comparing two matched models rather than analyzing a single model in isolation.

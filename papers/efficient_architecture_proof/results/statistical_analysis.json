@@ -1,0 +1,513 @@
+{
+  "metadata": {
+    "n_seeds": 1,
+    "results_dirs": [
+      "papers/efficient_architecture_proof/results/v9_meta_fork/experiments"
+    ],
+    "alpha": 0.05,
+    "bootstrap_n": 10000
+  },
+  "ood": {
+    "prosqa_test": {
+      "m1": {
+        "mean": 0.83,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m3": {
+        "mean": 0.97,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m5": {
+        "mean": 0.966,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      }
+    },
+    "ood_7hop": {
+      "m1": {
+        "mean": 0.107,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m3": {
+        "mean": 0.66,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m5": {
+        "mean": 0.754,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      }
+    },
+    "ood_8hop": {
+      "m1": {
+        "mean": 0.082,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m3": {
+        "mean": 0.675,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m5": {
+        "mean": 0.751,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      }
+    },
+    "ood_dag": {
+      "m1": {
+        "mean": 0.282,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m3": {
+        "mean": 0.592,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m5": {
+        "mean": 0.519,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      }
+    },
+    "ood_dense": {
+      "m1": {
+        "mean": 0.141,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m3": {
+        "mean": 0.612,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "m5": {
+        "mean": 0.684,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      }
+    }
+  },
+  "mcnemar": {
+    "prosqa_test": {
+      "m3_vs_m5": {
+        "chi2": 0.032279,
+        "p_value": 0.85741693,
+        "approximate": true,
+        "b01": 14.49,
+        "b10": 16.49,
+        "warning": "Approximate: computed from aggregate accuracy, not per-sample data"
+      }
+    },
+    "ood_7hop": {
+      "m3_vs_m5": {
+        "chi2": 10.106993,
+        "p_value": 0.00147708,
+        "approximate": true,
+        "b01": 128.18,
+        "b10": 81.18,
+        "warning": "Approximate: computed from aggregate accuracy, not per-sample data"
+      }
+    },
+    "ood_8hop": {
+      "m3_vs_m5": {
+        "chi2": 6.643212,
+        "p_value": 0.00995343,
+        "approximate": true,
+        "b01": 122.04,
+        "b10": 84.04,
+        "warning": "Approximate: computed from aggregate accuracy, not per-sample data"
+      }
+    },
+    "ood_dag": {
+      "m3_vs_m5": {
+        "chi2": 5.076495,
+        "p_value": 0.02425235,
+        "approximate": true,
+        "b01": 105.88,
+        "b10": 142.38,
+        "warning": "Approximate: computed from aggregate accuracy, not per-sample data"
+      }
+    },
+    "ood_dense": {
+      "m3_vs_m5": {
+        "chi2": 5.340204,
+        "p_value": 0.02083904,
+        "approximate": true,
+        "b01": 132.7,
+        "b10": 96.7,
+        "warning": "Approximate: computed from aggregate accuracy, not per-sample data"
+      }
+    }
+  },
+  "effect_sizes": {
+    "m3_vs_m5": {
+      "prosqa_test": {
+        "d": 0.004,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.97,
+        "mean_b": 0.966
+      },
+      "ood_7hop": {
+        "d": -0.094,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.66,
+        "mean_b": 0.754
+      },
+      "ood_8hop": {
+        "d": -0.076,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.675,
+        "mean_b": 0.751
+      },
+      "ood_dag": {
+        "d": 0.073,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.592,
+        "mean_b": 0.519
+      },
+      "ood_dense": {
+        "d": -0.072,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.612,
+        "mean_b": 0.684
+      }
+    },
+    "m3_vs_m1": {
+      "prosqa_test": {
+        "d": 0.14,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.97,
+        "mean_b": 0.83
+      },
+      "ood_7hop": {
+        "d": 0.553,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.66,
+        "mean_b": 0.107
+      },
+      "ood_8hop": {
+        "d": 0.593,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.675,
+        "mean_b": 0.082
+      },
+      "ood_dag": {
+        "d": 0.31,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.592,
+        "mean_b": 0.282
+      },
+      "ood_dense": {
+        "d": 0.471,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.612,
+        "mean_b": 0.141
+      }
+    },
+    "m5_vs_m1": {
+      "prosqa_test": {
+        "d": 0.136,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.966,
+        "mean_b": 0.83
+      },
+      "ood_7hop": {
+        "d": 0.647,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.754,
+        "mean_b": 0.107
+      },
+      "ood_8hop": {
+        "d": 0.669,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.751,
+        "mean_b": 0.082
+      },
+      "ood_dag": {
+        "d": 0.237,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.519,
+        "mean_b": 0.282
+      },
+      "ood_dense": {
+        "d": 0.543,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.684,
+        "mean_b": 0.141
+      }
+    }
+  },
+  "paired_tests": {
+    "note": "Paired tests require >= 2 seeds. Only 1 seed available."
+  },
+  "bonferroni": {
+    "mcnemar_prosqa_test": {
+      "p_raw": 0.85741693,
+      "p_corrected": 1.0,
+      "significant": false,
+      "n_tests": 5
+    },
+    "mcnemar_ood_7hop": {
+      "p_raw": 0.00147708,
+      "p_corrected": 0.0073854,
+      "significant": true,
+      "n_tests": 5
+    },
+    "mcnemar_ood_8hop": {
+      "p_raw": 0.00995343,
+      "p_corrected": 0.04976715,
+      "significant": true,
+      "n_tests": 5
+    },
+    "mcnemar_ood_dag": {
+      "p_raw": 0.02425235,
+      "p_corrected": 0.12126175,
+      "significant": false,
+      "n_tests": 5
+    },
+    "mcnemar_ood_dense": {
+      "p_raw": 0.02083904,
+      "p_corrected": 0.1041952,
+      "significant": false,
+      "n_tests": 5
+    }
+  },
+  "probing": {
+    "m3": {
+      "diagonal_strength": {
+        "mean": -0.316228,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "peak_accuracy": {
+        "mean": 0.5537,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "nonlinear_peak_accuracy": {
+        "mean": 0.0,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "nonlinear_advantage_cells": {
+        "mean": 0.0,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "n_significant_cells": {
+        "mean": 0.0,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "diagonal_pattern_present": true
+    },
+    "m5": {
+      "diagonal_strength": {
+        "mean": 0.948683,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "peak_accuracy": {
+        "mean": 0.5705,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "nonlinear_peak_accuracy": {
+        "mean": 0.0,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "nonlinear_advantage_cells": {
+        "mean": 0.0,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "n_significant_cells": {
+        "mean": 0.0,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "diagonal_pattern_present": true
+    },
+    "m3_vs_m5_diagonal": {
+      "effect_size": {
+        "d": -1.264911,
+        "interpretation": "single_seed_difference",
+        "mean_a": -0.316228,
+        "mean_b": 0.948683
+      },
+      "paired_test": null
+    }
+  },
+  "corruption": {
+    "m3": {
+      "clean_accuracy": {
+        "mean": 0.97,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "cascade_rate": {
+        "mean": -0.215714,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "cross_transplant_accuracy": {
+        "mean": 0.97,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "sensitivity_pattern": [
+        "high_uniform"
+      ]
+    },
+    "m5": {
+      "clean_accuracy": {
+        "mean": 0.966,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "cascade_rate": {
+        "mean": -0.214686,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "cross_transplant_accuracy": {
+        "mean": 0.965,
+        "std": null,
+        "ci_95": null,
+        "n": 1
+      },
+      "sensitivity_pattern": [
+        "high_uniform"
+      ]
+    },
+    "m3_vs_m5_cascade": {
+      "effect_size": {
+        "d": -0.001029,
+        "interpretation": "single_seed_difference",
+        "mean_a": -0.215714,
+        "mean_b": -0.214686
+      },
+      "paired_test": null
+    },
+    "m3_vs_m5_transplant": {
+      "effect_size": {
+        "d": 0.005,
+        "interpretation": "single_seed_difference",
+        "mean_a": 0.97,
+        "mean_b": 0.965
+      },
+      "paired_test": null
+    }
+  },
+  "causal": {
+    "m1": {
+      "peak_ce": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      },
+      "ce_above_03_fraction": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      },
+      "peak_layer": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      }
+    },
+    "m3": {
+      "peak_ce": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      },
+      "ce_above_03_fraction": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      },
+      "peak_layer": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      }
+    },
+    "m5": {
+      "peak_ce": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      },
+      "ce_above_03_fraction": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      },
+      "peak_layer": {
+        "mean": null,
+        "std": null,
+        "ci_95": null,
+        "n": 0
+      }
+    }
+  },
+  "decision_matrix_row": 3,
+  "decision_matrix_justification": "Row 3 (inconclusive): Mixed signals (1/3 reasoning indicators). Signals present: ['ood_m3_advantage', 'ood_m5_advantage', 'probing_both_diagonal']",
+  "summary": {
+    "n_seeds": 1,
+    "single_seed_mode": true,
+    "ood_prosqa_test_m3_minus_m5": 0.004,
+    "ood_ood_7hop_m3_minus_m5": -0.094,
+    "ood_ood_8hop_m3_minus_m5": -0.076,
+    "ood_ood_dag_m3_minus_m5": 0.073,
+    "ood_ood_dense_m3_minus_m5": -0.072
+  }
+}

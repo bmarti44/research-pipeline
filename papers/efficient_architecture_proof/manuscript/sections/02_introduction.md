@@ -1,57 +1,11 @@
-# 1. Introduction
+## 1. Introduction
 
-Large language models have demonstrated remarkable capabilities across diverse tasks,
-yet their computational efficiency remains a significant challenge. Standard transformer
-architectures apply uniform computation to all tokens regardless of complexity, and
-explicit chain-of-thought reasoning requires generating potentially redundant tokens.
+Chain-of-thought prompting demonstrates that large language models solve multi-step reasoning problems more reliably when they externalize intermediate steps as natural language tokens (Wei et al., 2022). This observation has motivated a line of work that asks whether explicit verbalization is necessary, or whether models can perform equivalent computation in a latent space without producing human-readable traces. COCONUT (Hao et al., 2024) offers the most direct test of this question: it trains a language model to replace chain-of-thought tokens with continuous thought tokens, recycling the transformer's final-layer hidden state back into the input embedding stream across multiple reasoning positions. On ProsQA, a synthetic graph-traversal task requiring multi-hop path finding, COCONUT achieves 97% accuracy, a 22-point improvement over its chain-of-thought baseline. The authors attribute this gain to the expressiveness of the continuous latent space, which they argue encodes a breadth-first search strategy that discrete tokens cannot represent.
 
-Recent work has proposed three promising directions for improving efficiency:
+This attribution faces an uncontrolled confound. COCONUT is trained with a 7-stage curriculum that progressively removes explicit reasoning tokens, forcing the model to internalize computation that was previously externalized. The curriculum transforms the training distribution, the loss landscape, and the model's learned representations simultaneously with the introduction of the recycling mechanism. Any performance gain could arise from the curriculum alone, from the mechanism alone, or from their interaction. Without a control that isolates one factor from the other, the causal claim remains underdetermined.
 
-1. **Mixture-of-Depths (MoD)** [Raposo et al., 2024]: Routes tokens through selective
-   computation paths, achieving ~50% FLOP reduction at matched quality on language
-   modeling tasks at the 1B parameter scale.
+We introduce M5, a pause-token baseline designed to resolve this confound. M5 shares every architectural and training detail with the COCONUT model (M3): the same GPT-2 124M backbone, the same 7-stage curriculum schedule, and the same number of latent thought positions per example. The single difference is that M5 replaces the recycled hidden-state embeddings with fixed learned pause vectors (Goyal et al., 2024). These pause tokens occupy the same computational budget but carry no information from one reasoning step to the next. If the continuous latent mechanism is causally responsible for COCONUT's performance, M5 should fail where M3 succeeds. If the curriculum is the primary driver, M5 should perform comparably.
 
-2. **Latent Reasoning** [Hao et al., 2024]: The COCONUT (Chain of Continuous Thought)
-   approach performs reasoning in continuous latent space rather than discrete token
-   space, achieving 97% accuracy on ProsQA (vs. 77.5% for chain-of-thought) at GPT-2
-   scale. However, this approach struggles with arithmetic tasks (34% vs 42% for CoT
-   on GSM8K).
+M5 reaches 95.6% test accuracy, closing 85% of the gap between chain-of-thought (83.0%) and COCONUT (98.0%). Three additional experiments converge on the same conclusion. Corrupting thought tokens produces identical degradation profiles for both models, with zero sensitivity to permutation order. Linear probes trained on intermediate representations recover comparable information (peak accuracy 55.4% for M3 vs. 57.1% for M5), with selectivity scores of 0.0 indicating that probing accuracy does not exceed what a control achieves on random targets. Cross-model thought transplantation succeeds bidirectionally, confirming that neither model's latent representations carry privileged information. On out-of-distribution test sets, M5 outperforms M3 on 7-hop paths by 9.4 percentage points (p = 0.007, Bonferroni-corrected), on 8-hop paths by 7.6 points, and on dense graphs by 7.2 points, while M3 holds a non-significant 7.3-point advantage on DAG structures. The recycling mechanism does not help generalization; it appears to hinder it.
 
-3. **Memory-Augmented Networks** [Wu et al., 2022]: External memory banks provide
-   working memory that persists across context, improving performance on tasks
-   requiring long-range information.
-
-These techniques address fundamentally different bottlenecks: MoD addresses computational
-redundancy, latent reasoning addresses token serialization overhead, and memory addresses
-context limitations. This raises a natural question: **can these approaches be combined
-for complementary benefits?**
-
-In this work, we propose LAHR (Latent Adaptive Hierarchical Reasoning), an architecture
-that integrates all three innovations. We conduct an exploratory study at small scale
-(~20M parameters) to investigate the feasibility and potential benefits of this combination.
-
-## Contributions
-
-1. We present LAHR, a unified architecture combining MoD, latent reasoning, and
-   differentiable memory.
-
-2. We conduct a full 2³ factorial ablation study to isolate the contribution of
-   each component.
-
-3. We release our implementation for reproducibility and future research.
-
-## Limitations (Stated Upfront)
-
-We acknowledge several important limitations:
-
-- **Scale**: Our experiments are conducted at ~20M parameters on TinyStories.
-  Results may not transfer to larger scales.
-
-- **Statistical Power**: Our study is exploratory with limited seeds per condition.
-  Effect sizes should be interpreted with appropriate uncertainty.
-
-- **Simplified Implementation**: Our latent reasoning module is a simplified
-  version of COCONUT, lacking the full curriculum training and special tokens.
-
-- **Known Failure Modes**: Latent reasoning is known to struggle with arithmetic
-  tasks; we do not claim improvement on such tasks.
+This paper makes three contributions. First, we introduce a compute-matched control methodology that isolates the curriculum from the mechanism in latent-reasoning systems, applicable beyond COCONUT to any architecture that claims gains from a training-time intervention confounded with a progressive curriculum. Second, we provide converging evidence from three independent experimental paradigms — corruption analysis, representational probing, and out-of-distribution generalization — that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance. Third, we show that the recycling mechanism constrains out-of-distribution generalization relative to the simpler pause baseline, suggesting that architectural complexity can reduce robustness when the training curriculum already provides the necessary inductive bias.

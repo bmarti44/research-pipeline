@@ -1,0 +1,32 @@
+{
+  "m1": {
+    "prosqa_test": 0.83,
+    "ood_7hop": 0.107,
+    "ood_8hop": 0.082,
+    "ood_dag": 0.282,
+    "ood_dense": 0.141
+  },
+  "m3": {
+    "prosqa_test": 0.97,
+    "ood_7hop": 0.66,
+    "ood_8hop": 0.675,
+    "ood_dag": 0.592,
+    "ood_dense": 0.612
+  },
+  "m5": {
+    "prosqa_test": 0.966,
+    "ood_7hop": 0.754,
+    "ood_8hop": 0.751,
+    "ood_dag": 0.519,
+    "ood_dense": 0.684
+  },
+  "verification": {
+    "m1_generates_cot": false,
+    "parser_accuracy": 0.98,
+    "thought_token_checks": {
+      "m3": true,
+      "m5": true
+    },
+    "thought_token_count_correct": true
+  }
+}

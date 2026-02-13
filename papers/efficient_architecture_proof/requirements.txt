@@ -1,28 +1,19 @@
-# LAHR Architecture - Requirements
-# For training on MacBook with Apple Silicon (M2/M3 Max)
+# COCONUT Reasoning Study - Requirements
+# Tested on Python 3.10, NVIDIA H100 80GB, CUDA 12.x
 
-# Core ML framework
-torch>=2.1.0
+# Core
+torch>=2.5.0
+transformers==4.46.2
+numpy>=1.26.0
 
-# Numerical computing
-numpy>=1.24.0
-
-# Data processing
-datasets>=2.14.0
-transformers>=4.35.0  # For tokenizer only
-tiktoken>=0.5.0  # GPT-2 tokenizer
-
-# Training utilities
+# Training
+wandb>=0.18.0
 tqdm>=4.66.0
 pyyaml>=6.0
 
-# Evaluation
-sacrebleu>=2.3.0  # For perplexity baselines
+# Experiments
+scikit-learn>=0.23.0
+scipy>=1.10.0
 
-# Analysis and visualization
+# Figures
 matplotlib>=3.8.0
-pandas>=2.1.0
-scipy>=1.11.0
-
-# Optional but recommended
-einops>=0.7.0  # For tensor operations (used in baseline)

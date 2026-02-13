@@ -1,0 +1,27 @@
+[submodule "reference_repos/coconut"]
+	path = papers/efficient_architecture_proof/reference_repos/coconut
+	url = https://github.com/facebookresearch/coconut.git
+[submodule "reference_repos/mixture-of-depths"]
+	path = papers/efficient_architecture_proof/reference_repos/mixture-of-depths
+	url = https://github.com/sramshetty/mixture-of-depths.git
+[submodule "reference_repos/memorizing-transformers-pytorch"]
+	path = papers/efficient_architecture_proof/reference_repos/memorizing-transformers-pytorch
+	url = https://github.com/lucidrains/memorizing-transformers-pytorch.git
+[submodule "papers/efficient_architecture_proof/vendor/mod-astramind"]
+	path = papers/efficient_architecture_proof/vendor/mod-astramind
+	url = https://github.com/astramind-ai/Mixture-of-depths.git
+[submodule "papers/efficient_architecture_proof/vendor/mod-router-tuning"]
+	path = papers/efficient_architecture_proof/vendor/mod-router-tuning
+	url = https://github.com/CASE-Lab-UMD/Router-Tuning.git
+[submodule "papers/efficient_architecture_proof/vendor/mod-sramshetty"]
+	path = papers/efficient_architecture_proof/vendor/mod-sramshetty
+	url = https://github.com/sramshetty/mixture-of-depths.git
+[submodule "papers/efficient_architecture_proof/vendor/mod-kyegomez"]
+	path = papers/efficient_architecture_proof/vendor/mod-kyegomez
+	url = https://github.com/kyegomez/Mixture-of-Depths.git
+[submodule "papers/efficient_architecture_proof/vendor/memory-lucidrains"]
+	path = papers/efficient_architecture_proof/vendor/memory-lucidrains
+	url = https://github.com/lucidrains/memorizing-transformers-pytorch.git
+[submodule "papers/efficient_architecture_proof/vendor/memory-extended-mind"]
+	path = papers/efficient_architecture_proof/vendor/memory-extended-mind
+	url = https://github.com/normal-computing/extended-mind-transformers.git

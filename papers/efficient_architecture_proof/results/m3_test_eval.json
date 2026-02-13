@@ -1,0 +1,1 @@
+{"model": "m3", "checkpoint": "checkpoint_best_epoch49", "dataset": "prosqa_test", "n_samples": 500, "correct": 490, "accuracy": 0.98, "time_s": 35.4}
