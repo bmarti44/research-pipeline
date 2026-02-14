@@ -1,0 +1,175 @@
+{
+  "verification_type": "independent_mcnemar_reconstruction",
+  "timestamp": "2026-02-14T00:53:56.307490+00:00",
+  "method": "Reconstructed contingency tables from per-sample prediction files, computed exact McNemar via scipy.stats.binomtest(min(b,c), b+c, 0.5, two-sided), applied Bonferroni (k=5)",
+  "bonferroni_k": 5,
+  "test_sets": [
+    {
+      "test_set": "ProsQA (ID)",
+      "test_key": "prosqa_test",
+      "expected_n": 500,
+      "verified_contingency": {
+        "a": 471,
+        "b": 14,
+        "c": 12,
+        "d": 3
+      },
+      "verified_n": 500,
+      "verified_p_exact": 0.8450189828872681,
+      "verified_p_bonferroni": 1.0,
+      "verified_m3_accuracy": 0.97,
+      "verified_m5_accuracy": 0.966,
+      "checks": {
+        "n_matches_expected": true,
+        "sum_equals_n": true,
+        "matches_saved_results": {
+          "contingency": true,
+          "p_exact": true,
+          "p_bonf": true
+        },
+        "matches_manuscript": {
+          "n": true,
+          "b": true,
+          "c": true,
+          "p_exact": true,
+          "p_bonf": true
+        }
+      },
+      "overall_pass": true
+    },
+    {
+      "test_set": "7-hop",
+      "test_key": "ood_7hop",
+      "expected_n": 1000,
+      "verified_contingency": {
+        "a": 540,
+        "b": 120,
+        "c": 214,
+        "d": 126
+      },
+      "verified_n": 1000,
+      "verified_p_exact": 3.034951007128359e-07,
+      "verified_p_bonferroni": 1.5174755035641795e-06,
+      "verified_m3_accuracy": 0.66,
+      "verified_m5_accuracy": 0.754,
+      "checks": {
+        "n_matches_expected": true,
+        "sum_equals_n": true,
+        "matches_saved_results": {
+          "contingency": true,
+          "p_exact": true,
+          "p_bonf": true
+        },
+        "matches_manuscript": {
+          "n": true,
+          "b": true,
+          "c": true,
+          "p_exact": true,
+          "p_bonf": true
+        }
+      },
+      "overall_pass": true
+    },
+    {
+      "test_set": "8-hop",
+      "test_key": "ood_8hop",
+      "expected_n": 1000,
+      "verified_contingency": {
+        "a": 553,
+        "b": 122,
+        "c": 198,
+        "d": 127
+      },
+      "verified_n": 1000,
+      "verified_p_exact": 2.5413330930959836e-05,
+      "verified_p_bonferroni": 0.00012706665465479918,
+      "verified_m3_accuracy": 0.675,
+      "verified_m5_accuracy": 0.751,
+      "checks": {
+        "n_matches_expected": true,
+        "sum_equals_n": true,
+        "matches_saved_results": {
+          "contingency": true,
+          "p_exact": true,
+          "p_bonf": true
+        },
+        "matches_manuscript": {
+          "n": true,
+          "b": true,
+          "c": true,
+          "p_exact": true,
+          "p_bonf": true
+        }
+      },
+      "overall_pass": true
+    },
+    {
+      "test_set": "DAG",
+      "test_key": "ood_dag",
+      "expected_n": 1000,
+      "verified_contingency": {
+        "a": 357,
+        "b": 235,
+        "c": 162,
+        "d": 246
+      },
+      "verified_n": 1000,
+      "verified_p_exact": 0.0002913944308495802,
+      "verified_p_bonferroni": 0.0014569721542479009,
+      "verified_m3_accuracy": 0.592,
+      "verified_m5_accuracy": 0.519,
+      "checks": {
+        "n_matches_expected": true,
+        "sum_equals_n": true,
+        "matches_saved_results": {
+          "contingency": true,
+          "p_exact": true,
+          "p_bonf": true
+        },
+        "matches_manuscript": {
+          "n": true,
+          "b": true,
+          "c": true,
+          "p_exact": true,
+          "p_bonf": true
+        }
+      },
+      "overall_pass": true
+    },
+    {
+      "test_set": "Dense",
+      "test_key": "ood_dense",
+      "expected_n": 1000,
+      "verified_contingency": {
+        "a": 473,
+        "b": 139,
+        "c": 211,
+        "d": 177
+      },
+      "verified_n": 1000,
+      "verified_p_exact": 0.0001404333384475264,
+      "verified_p_bonferroni": 0.0007021666922376321,
+      "verified_m3_accuracy": 0.612,
+      "verified_m5_accuracy": 0.684,
+      "checks": {
+        "n_matches_expected": true,
+        "sum_equals_n": true,
+        "matches_saved_results": {
+          "contingency": true,
+          "p_exact": true,
+          "p_bonf": true
+        },
+        "matches_manuscript": {
+          "n": true,
+          "b": true,
+          "c": true,
+          "p_exact": true,
+          "p_bonf": true
+        }
+      },
+      "overall_pass": true
+    }
+  ],
+  "overall_pass": true,
+  "notes": []
+}

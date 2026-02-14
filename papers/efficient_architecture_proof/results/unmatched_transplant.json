@@ -1,0 +1,62 @@
+{
+  "m3": {
+    "unmatched_accuracy": 0.975,
+    "unmatched_correct": 195,
+    "unmatched_total": 200,
+    "by_mismatch": {
+      "0": {
+        "correct": 74,
+        "total": 77,
+        "accuracy": 0.961
+      },
+      "1": {
+        "correct": 101,
+        "total": 102,
+        "accuracy": 0.9902
+      },
+      "2": {
+        "correct": 17,
+        "total": 18,
+        "accuracy": 0.9444
+      },
+      "3": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      }
+    }
+  },
+  "m5": {
+    "unmatched_accuracy": 0.965,
+    "unmatched_correct": 193,
+    "unmatched_total": 200,
+    "by_mismatch": {
+      "0": {
+        "correct": 69,
+        "total": 70,
+        "accuracy": 0.9857
+      },
+      "1": {
+        "correct": 92,
+        "total": 98,
+        "accuracy": 0.9388
+      },
+      "2": {
+        "correct": 28,
+        "total": 28,
+        "accuracy": 1.0
+      },
+      "3": {
+        "correct": 4,
+        "total": 4,
+        "accuracy": 1.0
+      }
+    }
+  },
+  "reference": {
+    "matched_m3_accuracy": 0.97,
+    "matched_m5_accuracy": 0.965,
+    "matched_pairs": 200,
+    "note": "From original exp_corruption.py (hop-count matched)"
+  }
+}

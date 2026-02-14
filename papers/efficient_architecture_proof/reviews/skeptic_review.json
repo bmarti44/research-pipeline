@@ -1,0 +1,212 @@
+{
+  "reviewer": "Skeptic / Devil's Advocate",
+  "timestamp": "2026-02-13T22:45:00Z",
+  "files_reviewed": [
+    "papers/efficient_architecture_proof/manuscript/output/manuscript.md",
+    "papers/efficient_architecture_proof/results/appendix_data.json",
+    "papers/efficient_architecture_proof/results/cross_corruption.json",
+    "papers/efficient_architecture_proof/results/experiments/corruption/results.json",
+    "papers/efficient_architecture_proof/results/experiments/mcnemar/results.json",
+    "papers/efficient_architecture_proof/results/experiments/ood/results.json",
+    "papers/efficient_architecture_proof/results/experiments/probing/results.json",
+    "papers/efficient_architecture_proof/results/m3_test_eval.json",
+    "papers/efficient_architecture_proof/results/m5_test_eval.json",
+    "papers/efficient_architecture_proof/results/mcnemar_verification.json",
+    "papers/efficient_architecture_proof/results/pause_embedding_architecture.txt",
+    "papers/efficient_architecture_proof/results/per_sample_correctness.json",
+    "papers/efficient_architecture_proof/results/permutation_power.json",
+    "papers/efficient_architecture_proof/results/selectivity_recomputed.json",
+    "papers/efficient_architecture_proof/results/statistical_analysis.json",
+    "papers/efficient_architecture_proof/results/unmatched_transplant.json"
+  ],
+  "findings": [
+    {
+      "id": "K001",
+      "severity": "critical",
+      "category": "data_integrity",
+      "description": "M3 test accuracy is inconsistently reported across the manuscript and backing data. The manuscript Table 2 reports M3 test accuracy as 98.0% (citing m3_test_eval.json which says 490/500 = 0.98, best epoch 49). However, all experimental results files report M3 prosqa_test accuracy as 97.0%: the corruption results (clean_accuracy: 0.97), the OOD results (m3 prosqa_test: 0.97), the McNemar verification (verified_m3_accuracy: 0.97), and the per_sample_correctness array (which has exactly 15 false values out of 500 = 485/500 = 0.97). The manuscript uses 98.0% in the abstract, Table 2, and throughout Section 4.1, but 97.0% in Table 3 (corruption clean baseline), Table 5 (OOD ID test), and the convergent evidence table. This means the experiments were run on a different checkpoint or evaluation than the one reported in Table 2. The '85% gap closure' calculation depends on which M3 accuracy is correct: with 98.0%, the gap closure is (95.6 - 83.0) / (98.0 - 83.0) = 84%; with 97.0%, it is (95.6 - 83.0) / (97.0 - 83.0) = 90%. The paper uses 85%, which approximately matches 98.0%, but all mechanistic experiments used the 97.0% model.",
+      "location": "Table 2 vs. Tables 3, 5; abstract; Section 4.1",
+      "evidence": "m3_test_eval.json: accuracy 0.98 (490/500). per_sample_correctness.json m3_prosqa_id: 15 false values (485/500 = 0.97). experiments/corruption/results.json: m3 clean_accuracy 0.97. experiments/ood/results.json: m3 prosqa_test 0.97. mcnemar_verification.json: verified_m3_accuracy 0.97.",
+      "recommendation": "Determine which M3 accuracy is correct and reconcile ALL numbers. If the experiments used a different checkpoint (epoch 49 for Table 2 vs. some other epoch for experiments), this must be disclosed. All gap-closure calculations and framing statements must be recomputed with the correct baseline."
+    },
+    {
+      "id": "K002",
+      "severity": "critical",
+      "category": "null_result_problem",
+      "description": "The paper's central thesis rests overwhelmingly on null results: zero permutation sensitivity, no corruption effect in early positions, no nonlinear probe advantage, identical selectivity profiles, successful cross-transplantation. The logical structure is: 'We predicted X if reasoning holds; we observed not-X; therefore not-reasoning.' But absence of evidence is not evidence of absence. Every null result has an alternative explanation: (1) The corruption noise may not have been targeted enough to disrupt reasoning (matched-statistics Gaussian noise destroys structure but might not perturb the model's robust representations). (2) Permutation insensitivity could reflect holographic/distributed encoding where each position stores the full chain redundantly, or set-based encoding. The paper dismisses redundant encoding by noting single-position corruption at position 3 collapses accuracy, but this only rules out COMPLETE redundancy -- partial redundancy with one critical 'index' position is consistent with the data. (3) Linear probes failing to find step-specific information could reflect the probe's inability to decode a nonlinear encoding, and the MLP probe null result is acknowledged to use default hyperparameters that may not have converged. No individual null result is conclusive, and chaining six inconclusive nulls does not produce a conclusive conclusion -- the probability of failing to detect a real effect compounds, it does not cancel.",
+      "location": "Section 5.1 Convergent Evidence; Table 6",
+      "evidence": "All six diagnostics in Table 6 produce null or near-null results for distinguishing M3 from M5. The MLP probe results (Appendix A.7) acknowledge convergence concerns. The permutation test has a sensitivity floor of 0.06%, which means it cannot detect subtle ordering effects.",
+      "recommendation": "The paper needs a formal power analysis for each null result to establish what effect sizes the tests had adequate power to detect. Without this, the reader cannot distinguish 'no effect' from 'undetectable effect'. Additionally, the paper should test targeted corruption (e.g., surgically replacing the final-layer hidden state at specific layers/heads) rather than only matched-statistics Gaussian noise, which is a blunt instrument."
+    },
+    {
+      "id": "K003",
+      "severity": "critical",
+      "category": "unfair_comparison",
+      "description": "M5 executes a single forward pass while M3 executes six sequential forward passes. The paper acknowledges this asymmetry (Section 3.2) and frames it as favoring the paper's argument ('M5 achieves comparable accuracy with substantially less computation'). But this framing conceals a deeper issue: the models are not processing the same information in the same way. M3 has 6x the forward-pass computation, meaning it has 6x the transformer depth (72 effective layers vs. 12). If depth is what matters for ProsQA (plausible given it requires multi-hop reasoning), then M3 may be massively over-provisioned -- it might achieve 97-98% with far fewer passes. The comparison between M3 (6 passes) and M5 (1 pass) is not a clean test of recycling vs. buffering; it is simultaneously a test of 72 effective layers vs. 12 effective layers. The 2.4pp gap (98% vs. 95.6%, or 1pp gap using the experimental 97% vs. 96.6%) could be entirely explained by the depth advantage rather than by the content of the recycled representations.",
+      "location": "Section 3.2; Section 4.1",
+      "evidence": "Section 3.2: 'M5 requires approximately one-sixth the inference-time FLOPs of M3.' The paper does not test M3 with fewer passes or M5 with multiple passes to disentangle depth from recycling content.",
+      "recommendation": "Critical ablation needed: (1) Test M3 with only 1-3 forward passes to see if the recycled content matters when depth is controlled. (2) Test M5 with multiple forward passes (passing the same pause embedding through multiple passes) to see if depth alone narrows the gap further. Without these controls, the comparison conflates two variables."
+    },
+    {
+      "id": "K004",
+      "severity": "major",
+      "category": "generalizability",
+      "description": "All experiments use a single model size (GPT-2 124M, 12 layers, 768-dim). The paper's conclusions are presented with broad framing -- 'COCONUT's performance on ProsQA is primarily attributable to its training curriculum' -- but the evidence base is a single scale point. The theoretical results of Zhu et al. (2025) prove that continuous thought tokens are more expressive than discrete tokens, and this expressiveness advantage may only manifest at sufficient scale. At 124M parameters with 12 layers, the model may simply lack the capacity to exploit the continuous thought space, making the recycled hidden states functionally identical to noise from the model's perspective. The paper's framing suggests the mechanism is fundamentally unnecessary, when the evidence only shows it is unnecessary at one scale.",
+      "location": "Section 6 Limitations; Section 7 Conclusion",
+      "evidence": "Conclusion states: 'These results indicate that COCONUT's performance on ProsQA is primarily attributable to its training curriculum, not to the continuous latent mechanism.' The Limitations section acknowledges scale as a limitation but the conclusion does not scope the claim accordingly.",
+      "recommendation": "Scope all conclusions explicitly to GPT-2 124M scale. Change framing from 'the mechanism is unnecessary' to 'the mechanism provides no detectable benefit at this scale on this task.' This is not merely a cosmetic change -- it fundamentally changes the paper's contribution from 'COCONUT's mechanism doesn't work' to 'COCONUT's mechanism doesn't help at 124M on ProsQA.'"
+    },
+    {
+      "id": "K005",
+      "severity": "major",
+      "category": "generalizability",
+      "description": "ProsQA is a synthetic graph-traversal task with deterministic answers, fixed vocabulary (38 species + 17 person names), and perfectly structured reasoning paths. This is precisely the type of task where a simple model can memorize or shortcut to the answer without genuine multi-hop reasoning. The training set has only 17,886 samples with a small vocabulary, meaning there are limited entity combinations. Both M3 and M5 could be solving ProsQA through pattern matching or memorization of common graph patterns rather than through any form of reasoning, latent or otherwise. If so, the entire framework of 'reasoning vs. buffering' is moot -- neither model reasons, and the comparison tells us nothing about whether COCONUT can reason on tasks that actually require it.",
+      "location": "Section 3.1; Section 6 Limitations",
+      "evidence": "The vocabulary comprises only 38 species and 17 person names. Training set is 17,886 samples. With path lengths 3-6 over such a small vocabulary, the number of unique graph structures is bounded. M1 (CoT) achieves 83% accuracy, suggesting ProsQA is not trivially solvable, but 97-98% for latent models could reflect better pattern exploitation of the synthetic distribution.",
+      "recommendation": "Test on at least one natural language reasoning benchmark (e.g., a subset of GSM8K, MATH, or a multi-hop QA task like HotpotQA) to establish whether the findings generalize beyond synthetic graph traversal. Alternatively, provide analysis showing that M3 and M5 genuinely reason (e.g., per-hop-count accuracy breakdowns, analysis of failure modes) rather than pattern-match."
+    },
+    {
+      "id": "K006",
+      "severity": "major",
+      "category": "alternative_explanation",
+      "description": "The paper's strongest alternative explanation -- and one it does not adequately address -- is that M3 and M5 solve ProsQA through completely different internal mechanisms that happen to produce similar accuracy on similar test distributions. The 32-40% disagreement rate on OOD samples (Section 4.4) directly evidences this: the two models disagree on a large fraction of samples, meaning they are NOT doing the same thing. The paper treats similar aggregate accuracy as evidence of similar mechanisms, but two models can achieve 95-97% accuracy through entirely different strategies, especially on a task with binary outputs. The corruption, probing, and transplantation experiments show that the representations are similar on aggregate measures, but these are coarse-grained diagnostics. Two fundamentally different computational strategies could produce similar aggregate statistics while differing on individual samples. The high disagreement rate on OOD data confirms this.",
+      "location": "Section 4.4; Section 5.1",
+      "evidence": "Table 5: OOD disagreement rates are 26/500 (5.2%) on ID, 334/1000 (33.4%) on 7-hop, 320/1000 (32%) on 8-hop, 397/1000 (39.7%) on DAG, 350/1000 (35%) on dense. The paper interprets similar accuracies as similar mechanisms, but 32-40% disagreement on OOD is substantial evidence of different internal strategies.",
+      "recommendation": "Analyze the disagreement patterns: What characterizes samples where M3 succeeds and M5 fails (and vice versa)? If M3's successes are concentrated on samples with specific graph properties (e.g., convergent paths, certain hop counts), this would directly test the sequential-bottleneck hypothesis. The current analysis treats all OOD samples as interchangeable."
+    },
+    {
+      "id": "K007",
+      "severity": "major",
+      "category": "overclaiming",
+      "description": "The selectivity values reported in Table 4 come from a corrected analysis that replaced an acknowledged computational bug (n=12 truncation). The corrected selectivity is described in the manuscript as '+52.0pp for M3 and +52.3pp for M5'. However, examining the raw selectivity data in selectivity_recomputed.json, M3's position 3 selectivity at layer 0 is 0.520 (52.0pp) and at layer 12 is 0.523 (52.3pp). For M5, position 3 selectivity at layer 12 is 0.523 (52.3pp). But the 'selectivity_aligned_grid' in the same file is STILL ALL ZEROS for both models, and the 'selectivity' field in the probing results.json is STILL ALL ZEROS. The original probing code's selectivity computation was never actually fixed in the pipeline -- it was recomputed separately in the selectivity_recomputed.json file, using a different methodology ('pairwise alignment using min(n_t, n_s) per position pair' per appendix_data.json). This is concerning: the corrected analysis uses a DIFFERENT selectivity computation than the one described in Section 3.4 (which defines selectivity as matched accuracy minus max cross-position accuracy). The selectivity_recomputed.json computes 'selectivity_raw' using pairwise alignment, but the 'selectivity_aligned' grid is still all zeros. Which computation produces the +52pp numbers? This needs clarification.",
+      "location": "Section 4.3; Table 4; Appendix A.1",
+      "evidence": "selectivity_recomputed.json: selectivity_aligned_grid is all zeros for both M3 and M5. selectivity_raw_grid shows non-zero values. probing/results.json: selectivity field is all zeros. The manuscript reports corrected selectivity of +52pp but the backing data shows two different selectivity computations, one of which (aligned) remains zero.",
+      "recommendation": "Clarify exactly which selectivity computation produces the +52pp values. If it is the 'raw' computation (pairwise alignment), explain why the 'aligned' computation remains zero and which is the correct measure. Provide the code used for the corrected computation so reviewers can verify. The existence of two selectivity computations in the data -- one all-zero, one non-zero -- undermines confidence in the corrected result."
+    },
+    {
+      "id": "K008",
+      "severity": "major",
+      "category": "alternative_explanation",
+      "description": "The paper argues that zero permutation sensitivity proves thought tokens do not encode sequential information. But consider this alternative: the model learned a position-independent representation where each token stores a SET of relevant entities rather than a single entity at a specific reasoning step. In a graph traversal of A -> B -> C -> D, each thought token might store {A, B, C, D} as a superposition or mixture, and the model uses the attention mechanism over the final position to extract the answer. This is consistent with: (1) zero permutation sensitivity (the set is order-invariant), (2) the corruption cliff at position 3 (you need a minimum number of copies of the set to extract the answer reliably), (3) successful cross-transplantation (if most problems share common entities, the sets overlap), and (4) anti-selectivity at positions 0-1 (the set at early positions contains later-step entities, which probes decode as 'anti-selective' because the later-step entity is more salient in the set). This set-encoding explanation is neither 'sequential reasoning' nor 'buffering' -- it is a third option the paper does not consider.",
+      "location": "Section 4.2; Section 5.1",
+      "evidence": "The probing results show positions 0-1 are anti-selective (they better decode later steps), position 3 has strong selectivity. This is consistent with set-based encoding where the complete answer path is represented at every position, and position 3 happens to have the clearest encoding of the final hop due to curriculum effects.",
+      "recommendation": "The paper should acknowledge set-based encoding as an alternative explanation and design a test to distinguish it from pure buffering. For example, if thought tokens encode a set of all relevant entities, a probe trained to decode ANY entity in the reasoning path (not just the matched step) should show high accuracy across all positions. If they are pure buffers, such a probe should show chance accuracy."
+    },
+    {
+      "id": "K009",
+      "severity": "major",
+      "category": "logical_gap",
+      "description": "The paper's DAG result (M3 outperforms M5 by 7.3pp, p=0.001) directly contradicts the buffering thesis. If COCONUT's thought tokens are merely computational buffers functionally equivalent to pause tokens, there should be no systematic advantage on ANY task type -- buffers are generic by definition. The paper explains this away by invoking 'sequential state accumulation may provide a useful inductive bias for tracking path convergence,' but this explanation concedes that the recycling mechanism does something functionally different from buffering on at least one task type. The paper frames this as a 'task-dependent tradeoff' rather than as falsifying evidence, but it is precisely the kind of evidence that would distinguish reasoning from buffering: if the mechanism provides task-specific advantages, it is encoding task-relevant information, which is more than a buffer does.",
+      "location": "Section 4.4; Section 5.3",
+      "evidence": "Table 5: DAG results show M3 59.2% vs M5 51.9%, p=0.001. The paper's own framing: 'The recycling mechanism's sequential state accumulation may provide a useful inductive bias for tracking convergent paths.'",
+      "recommendation": "The paper should either (1) acknowledge that the DAG result is inconsistent with a pure buffering interpretation and moderate the thesis accordingly, or (2) provide a mechanism-level explanation for how buffers could produce a task-specific advantage on DAGs. As written, the paper wants to claim 'thought tokens are buffers' while simultaneously explaining a task-specific advantage by invoking the very mechanism (sequential state accumulation) that defines non-buffer behavior."
+    },
+    {
+      "id": "K010",
+      "severity": "major",
+      "category": "unstated_assumption",
+      "description": "All results are from a single training seed (seed 0). The paper acknowledges this in the Limitations section but does not quantify the implications. At GPT-2 124M scale with a 17K-sample training set, training variance is non-trivial. The 2.4pp gap between M3 (98.0%) and M5 (95.6%) on the test set -- or the 0.4pp gap using experimental accuracy (97.0% vs 96.6%) -- could easily reverse with a different seed. More critically, the OOD advantages that form the paper's nuanced contribution (M5 wins 3/4 datasets) could be seed-dependent artifacts. The statistical_analysis.json file explicitly notes 'single_seed_mode: true' and all confidence intervals are null. The paper performs McNemar tests on the per-sample predictions, which is appropriate for the single-seed comparison, but the results cannot generalize to 'M5 as a class of models' vs 'M3 as a class of models' -- only to these specific trained instances.",
+      "location": "Section 6 Limitations; all results",
+      "evidence": "statistical_analysis.json: 'n_seeds': 1, all ci_95: null, 'single_seed_mode: true'. The decision_matrix_justification even notes 'Row 3 (inconclusive)' -- the paper's own analysis framework rates the evidence as inconclusive.",
+      "recommendation": "Train at least 3-5 seeds for each model. Report mean and standard deviation of all metrics. Use paired tests across seeds. Without multi-seed results, the paper's conclusions are anecdotal reports about specific model instances, not generalizable claims about architectures."
+    },
+    {
+      "id": "K011",
+      "severity": "major",
+      "category": "unfair_comparison",
+      "description": "The corruption analysis uses matched-statistics Gaussian noise that is calibrated per-model: L2=202.65 for M3 and L2=4.09 for M5, a 50-fold difference. The paper performs a cross-scale check (applying M3-scale noise to M5) and observes the same cliff, concluding the cliff is structural. But this cross-check is asymmetric -- the paper does NOT apply M5-scale noise (L2~4) to M3. If M3-scale noise (L2~203) applied to M5 produces the same cliff, what does M5-scale noise applied to M3 produce? If M3's representations are richer (as the probing shows -- 10.5% vs 4.0% thought-vs-input advantage), small perturbations (L2~4) might not disrupt M3 at all, while the cliff under M3-scale noise is explained by the perturbation being large enough to overwhelm any representation. The missing cross-check could reveal that M3 is more robust to small perturbations than M5, which would be evidence FOR the reasoning hypothesis.",
+      "location": "Section 4.2; Table A1; Appendix A.2",
+      "evidence": "Table A1 shows three conditions: M3+M3-noise, M5+M5-noise, M5+M3-noise. The missing condition is M3+M5-noise (small perturbation to M3). This asymmetry means the cross-scale validation is incomplete.",
+      "recommendation": "Run M3+M5-noise (L2~4 perturbation applied to M3 thought tokens). If M3 shows greater robustness to small perturbations than M5, this would indicate M3's representations carry more redundant/robust information -- consistent with sequential reasoning that builds error-correcting representations."
+    },
+    {
+      "id": "K012",
+      "severity": "major",
+      "category": "overclaiming",
+      "description": "The probing results at the corrected selectivity of +52pp at position 3 are presented as evidence that BOTH models encode the same information the same way. But examine the raw probe accuracies: M3 peaks at layer 0 (55.4% at position 3) while M5 peaks at layer 12 (57.0% at position 3). The paper explains this by noting M3 injects recycled states at layer 0 while M5 builds representations through the transformer stack. But this is a fundamental difference in HOW information is encoded -- M3 has the answer-relevant entity accessible from the first layer, while M5 must compute it through 12 layers. The paper treats these as 'where information is injected, not differences in what information is encoded,' but this distinction is precisely what the reasoning vs. buffering debate is about: reasoning implies that thought positions carry the output of previous computation (which would appear at layer 0 in M3), while buffering implies they provide space for computation (which would only appear at layer 12 after processing). The layer-0 peak in M3 is actually evidence FOR the reasoning interpretation -- the recycled state carries pre-computed information.",
+      "location": "Section 4.3; Table A5 vs A6",
+      "evidence": "M3 layer 0, pos 3: 55.4%. M5 layer 0, pos 3: 4.4%. This is a 51-point difference at the layer where recycled states are injected. By layer 12, they converge (55.0% vs 57.0%). The 51-point difference at layer 0 is direct evidence that recycling DOES inject task-relevant information that pause tokens do not.",
+      "recommendation": "Acknowledge that the layer-0 probe results show the recycling mechanism actively injects task-relevant information, and that this is evidence the mechanism is 'doing something.' The current framing ('this information does not produce a different selectivity pattern or a behavioral advantage') downplays a 51-point accuracy difference at the injection layer."
+    },
+    {
+      "id": "K013",
+      "severity": "minor",
+      "category": "overclaiming",
+      "description": "The abstract claims M5 'closes 85% of the gap to COCONUT (98.0%).' But the statistical_analysis.json file reports the decision_matrix_justification as 'Row 3 (inconclusive).' The paper's own analytical framework rates the evidence as inconclusive, yet the abstract and conclusion present the findings with considerably more confidence than this assessment warrants.",
+      "location": "Abstract; Conclusion",
+      "evidence": "statistical_analysis.json: decision_matrix_row: 3, decision_matrix_justification: 'Row 3 (inconclusive): Mixed signals (1/3 reasoning indicators). Signals present: [ood_m3_advantage, ood_m5_advantage, probing_both_diagonal]'",
+      "recommendation": "Either revise the statistical analysis framework's categorization (and explain why 'inconclusive' is wrong) or temper the abstract and conclusion to match the framework's own assessment."
+    },
+    {
+      "id": "K014",
+      "severity": "minor",
+      "category": "logical_gap",
+      "description": "The cross-transplantation experiment transplants thought representations from problem A into problem B and measures accuracy on problem B. The paper reports M3 achieves 97.0% and M5 96.5% under matched transplantation, matching clean performance. But this experiment has a critical confound for M3: the recycled hidden state at thought position k is derived from a forward pass over the FULL input sequence (problem text + previous thought positions). The information about the problem is already in the transformer's hidden states at the input positions. Even with transplanted thought tokens, M3 can attend to its own input tokens to solve the problem. The transplanted thoughts are additional -- potentially irrelevant -- context, but the model's ability to solve the problem from its input alone would produce high accuracy regardless. For M5, this is even more obvious: the pause embeddings carry no information, so transplanting them is transplanting nothing into nothing.",
+      "location": "Section 4.2; Appendix A.3",
+      "evidence": "M3 unmatched transplant: 97.5%. M5 unmatched transplant: 96.5%. These match clean accuracy, but this is expected if the model can solve the problem from input tokens alone.",
+      "recommendation": "The transplantation experiment needs a stronger control: transplant thought tokens AND mask/corrupt the input tokens. If the model can still answer correctly from transplanted thoughts alone (no input context), that would show thoughts carry problem-specific information. As designed, the experiment cannot distinguish 'thoughts carry no information' from 'thoughts carry information but the model can also solve the problem from input alone.'"
+    },
+    {
+      "id": "K015",
+      "severity": "minor",
+      "category": "logical_gap",
+      "description": "The paper reports that the 'selectivity_aligned_grid' in the data files is all zeros, and attributes this to the n=12 truncation bug. But the selectivity_recomputed.json file shows that even after recomputation with proper sample sizes, the 'selectivity_aligned_grid' is STILL all zeros. This means the corrected +52pp selectivity values come from the 'selectivity_raw_grid,' which uses a different computation (pairwise alignment). The manuscript Appendix A.1 states the correction used 'each position's full sample count' but the data files suggest two different correction methods were applied, one of which still produces zeros.",
+      "location": "Appendix A.1; selectivity_recomputed.json",
+      "evidence": "selectivity_recomputed.json: Both M3 and M5 selectivity_aligned_grid are all zeros. selectivity_raw_grid shows non-zero values. The manuscript does not explain why there are two grids or which one is authoritative.",
+      "recommendation": "Clarify the selectivity computation. If the 'aligned' computation (which matches the original methodology) remains zero, this should be reported alongside the 'raw' computation, with a clear explanation of why they differ and which is the appropriate measure."
+    },
+    {
+      "id": "K016",
+      "severity": "minor",
+      "category": "unstated_assumption",
+      "description": "The paper assumes that the curriculum is the 'active ingredient' because M3 and M5 share the curriculum and both outperform M1 (CoT). But M1 does NOT share the curriculum -- M1 is trained with standard supervised learning on explicit CoT tokens, while M3 and M5 undergo the 7-stage progressive removal schedule. The performance gap (83% vs 95-98%) could be attributable to the curriculum, to the thought tokens providing additional attention positions, to the longer effective context length, or to the 50 epochs of training vs. the point at which M1 plateaus. The paper acknowledges (Section 6) that it cannot distinguish curriculum-alone from curriculum-plus-positions, but the main text repeatedly credits the curriculum without this qualification.",
+      "location": "Section 5.2; Section 7 Conclusion",
+      "evidence": "Section 7: 'The curriculum -- which progressively removes explicit chain-of-thought tokens and forces the model to internalize multi-step computation -- is the shared factor between M3 and M5, and it is the factor that separates both from the chain-of-thought baseline.' But the paper never tests curriculum WITHOUT thought positions.",
+      "recommendation": "Add a curriculum-only control (M6): remove CoT tokens at each stage WITHOUT replacing them with thought/pause tokens (i.e., shorter sequences). This would determine whether the curriculum requires additional attention positions or works by itself."
+    },
+    {
+      "id": "K017",
+      "severity": "minor",
+      "category": "logical_gap",
+      "description": "The nonlinear probe results (Appendix A.7) report that MLP probes 'failed to exceed linear probe accuracy at any cell,' with accuracy <= 0 across all 78 cells for both models. An accuracy of EXACTLY 0 across all 156 cells (78 per model) is itself suspicious -- it suggests the MLP probes completely failed to learn, not that the information is linearly encoded. With 2-layer MLPs and default scikit-learn hyperparameters on a multi-class classification problem with dozens of classes and varying sample sizes (12 to 500), convergence failure is the most likely explanation. The paper acknowledges this possibility but still draws the conclusion that 'no nonlinearly encoded step information exists,' which is not justified if the probe itself did not train.",
+      "location": "Appendix A.7; Section 4.3",
+      "evidence": "probing/results.json: nonlinear_probe_accuracy is 0.0 for all 156 cells (78 per model x 2 models). This is categorically different from 'slightly below linear' -- it means the MLP probes learned nothing at all.",
+      "recommendation": "Either (1) retrain MLP probes with proper hyperparameter tuning (grid search over learning rate, hidden size, training epochs, regularization) and report the tuned results, or (2) remove the nonlinear probe claim entirely and note it as inconclusive. A probe that achieves 0% accuracy everywhere has not provided information about the representation -- it has failed as a measurement instrument."
+    },
+    {
+      "id": "K018",
+      "severity": "minor",
+      "category": "overclaiming",
+      "description": "The M5 test accuracy of 95.6% (m5_test_eval.json) vs the experimental accuracy of 96.6% (per_sample_correctness: 17 false out of 500 = 483/500 = 0.966, wait, let me recount). Actually examining per_sample_correctness.json: m5_prosqa_id has false values at positions 30, 47, 61, 96, 178, 205, 209, 252, 275, 284, 293, 303, 386, 389, 394, 468, 491 -- that's 17 false values = 483/500 = 96.6%. But m5_test_eval.json reports 478/500 = 95.6%. This is ANOTHER data inconsistency -- the per-sample correctness data (used for McNemar tests) shows M5 at 96.6%, but the test evaluation file shows 95.6%. This means either the per-sample data or the test evaluation was conducted on different checkpoints or with different evaluation procedures.",
+      "location": "Table 2; per_sample_correctness.json; m5_test_eval.json",
+      "evidence": "m5_test_eval.json: 478 correct / 500 = 95.6%, best epoch 43. per_sample_correctness.json m5_prosqa_id: 17 false values = 483/500 = 96.6%. McNemar verification: verified_m5_accuracy = 0.966.",
+      "recommendation": "Reconcile M5 accuracy across all data sources. Determine which checkpoint was used for which experiment and report consistently."
+    },
+    {
+      "id": "K019",
+      "severity": "suggestion",
+      "category": "alternative_explanation",
+      "description": "The paper focuses exclusively on whether thought tokens encode sequential reasoning steps, but never considers the possibility that they encode attention routing patterns. In a transformer, the content of a token position matters less than its role in routing attention. Thought tokens (whether recycled or pause) could serve primarily as attention sinks or routing nodes, directing information flow from input tokens to the answer position. This is neither 'reasoning' (sequential computation) nor 'buffering' (generic compute) -- it is structural attention routing, and it would be consistent with all the observed results: permutation insensitivity (routing is position-independent if mediated by content), corruption cliff (you need enough routing nodes), and successful transplantation (routing patterns are generic).",
+      "location": "General",
+      "evidence": "The attention pattern analysis is notably absent from the paper's experiments. No attention head analysis, no attention weight visualization, no investigation of how information flows from input to answer through thought positions.",
+      "recommendation": "Add attention pattern analysis: visualize attention weights from the answer-generating position backward through thought tokens to input tokens. Compare attention routing patterns between M3 and M5. If both models show similar attention routing through thought positions, this would support the buffering thesis more directly than any of the current experiments."
+    },
+    {
+      "id": "K020",
+      "severity": "suggestion",
+      "category": "logical_gap",
+      "description": "The paper does not analyze or report per-hop-count accuracy breakdowns for any of its experiments. ProsQA problems range from 3 to 6 hops in the training distribution. If the recycling mechanism provides an advantage specifically on longer chains (5-6 hops), this advantage could be masked in aggregate accuracy by the preponderance of shorter chains. The OOD experiments (7-hop, 8-hop) test chain-length extrapolation, but no in-distribution hop-count breakdown is provided to establish whether M3 and M5 have differential performance on harder vs. easier problems.",
+      "location": "Section 4.1; Section 4.4",
+      "evidence": "Test set statistics (Appendix A.8) show path lengths 3-6 in training, but no per-hop-count accuracy is reported for the ID test set.",
+      "recommendation": "Report per-hop-count accuracy for M3 and M5 on the in-distribution test set. If M3 outperforms M5 on 6-hop problems (the longest in-distribution chains), this would suggest the recycling mechanism provides a benefit for harder problems even in-distribution, consistent with the DAG OOD advantage."
+    }
+  ],
+  "strongest_alternative_explanation": "Both M3 and M5 solve ProsQA primarily through attention-mediated pattern matching over the input tokens, with thought positions serving as attention routing nodes that allow the model to perform additional computation steps through self-attention. The curriculum teaches both models to consolidate the answer-relevant entity at a specific thought position (position 3), from which the answer head can directly read it. In M3, the recycled hidden states carry this entity as injected content at layer 0, but the model solves the problem from its input tokens regardless (explaining transplantation success). In M5, the same curriculum forces the same routing pattern through positional encodings alone. The models achieve similar in-distribution accuracy because ProsQA's small vocabulary and synthetic structure make pattern matching sufficient -- no genuine multi-hop reasoning is required by either model at 124M scale. The 32-40% OOD disagreement rate reflects different learned shortcuts, not different reasoning strategies. The DAG advantage for M3 arises because the recycled hidden state pipeline provides a useful structural prior for DAG-specific patterns, not because it performs genuine sequential reasoning. In short: neither model reasons; both shortcut; the curriculum teaches the same shortcut; and the remaining differences are architectural artifacts of how each model implements the shortcut, not evidence about reasoning vs. buffering.",
+  "fatal_flaws": [
+    "K001: Data integrity issue -- M3 accuracy reported as 98.0% in Table 2 but all experimental data shows 97.0%. M5 accuracy reported as 95.6% in Table 2 but per-sample data shows 96.6%. The paper's central quantitative claims (85% gap closure, 2.4pp test gap) depend on which numbers are correct, and the backing data contradicts the manuscript.",
+    "K002: The paper's thesis is built entirely on null results without formal power analysis. Without knowing what effect sizes each test could detect, the null results are uninterpretable.",
+    "K003: The 6x forward-pass asymmetry between M3 and M5 is an uncontrolled confound. Without ablating the number of forward passes independently of the recycling content, the paper cannot distinguish 'recycling is unnecessary' from 'M3 has too much depth for this task.'"
+  ],
+  "overall_assessment": "revise",
+  "summary": "This paper attempts an ambitious and well-structured investigation into whether COCONUT's continuous thought tokens perform latent reasoning or serve as computational buffers. The experimental design is creative, the writing is clear, and the convergent-evidence approach is methodologically sound in principle. The statistical analysis of the OOD results (McNemar tests with Bonferroni correction, independently verified) is properly executed. The paper also demonstrates commendable honesty in its Limitations section, acknowledging single-seed, single-scale, and single-task constraints.\n\nHowever, the paper has three issues I consider fatal in their current form. First, there are data integrity problems: the M3 test accuracy is reported as 98.0% in Table 2 but all experimental backing data shows 97.0%, and M5 shows a similar discrepancy (95.6% vs 96.6%). This undermines the manuscript's quantitative claims and suggests different model checkpoints were used for different experiments without disclosure. Second, the thesis rests entirely on null results (zero permutation flips, identical corruption profiles, identical selectivity) without power analysis to establish what effect sizes these tests could detect. Third, the 6x forward-pass asymmetry between M3 and M5 is a fundamental uncontrolled confound: the comparison simultaneously tests recycling content, computational depth, and inference-time FLOPs, making causal attribution impossible.\n\nBeyond these, the DAG result (M3 significantly outperforms M5, p=0.001) directly contradicts the buffering thesis but is reframed as a 'tradeoff' rather than acknowledged as disconfirming evidence. The paper's own statistical analysis framework rates the evidence as 'inconclusive' (decision_matrix_row: 3), yet the abstract and conclusion present the findings with substantially more confidence. The single-seed limitation means none of the accuracy comparisons or OOD advantages can be attributed to architectural differences rather than initialization-specific training dynamics. With revisions addressing the data integrity issues, the addition of multi-seed results, and a forward-pass-count ablation, this could become a strong contribution. In its current form, the evidence does not support the strength of the claims."
+}

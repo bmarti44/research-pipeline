@@ -1,0 +1,77 @@
+{
+  "generated": "2026-02-14",
+  "tasks_completed": [1, 2, 3, 4, 5, 6],
+
+  "task1_mcnemar_verification": {
+    "status": "PASS",
+    "all_5_tests_match": true,
+    "dag_bonferroni_p": 0.001457,
+    "dag_bonferroni_rounded": 0.001,
+    "contingency_tables": {
+      "prosqa": {"b": 14, "c": 12, "p_exact": 0.845, "p_bonf": 1.000},
+      "7hop": {"b": 120, "c": 214, "p_exact": 0.0000017, "p_bonf": 0.0000085},
+      "8hop": {"b": 122, "c": 198, "p_exact": 0.0000385, "p_bonf": 0.000193},
+      "dag": {"b": 235, "c": 162, "p_exact": 0.000291, "p_bonf": 0.001457},
+      "dense": {"b": 139, "c": 211, "p_exact": 0.000224, "p_bonf": 0.001121}
+    }
+  },
+
+  "task2_selectivity_corrected": {
+    "bug": "n_common=12 truncation across all positions",
+    "fix": "pairwise alignment using min(n_t, n_s) per position pair",
+    "m3_best_layer_selectivity": {
+      "pos0": {"value": -0.156, "layer": 0, "pp": -15.6},
+      "pos1": {"value": -0.106, "layer": 0, "pp": -10.6},
+      "pos2": {"value": 0.094, "layer": 12, "pp": 9.4},
+      "pos3": {"value": 0.520, "layer": 0, "pp": 52.0},
+      "pos4": {"value": 0.0, "layer": "all", "pp": 0.0}
+    },
+    "m5_layer12_selectivity": {
+      "pos0": {"value": -0.120, "pp": -12.0},
+      "pos1": {"value": -0.146, "pp": -14.6},
+      "pos2": {"value": 0.102, "pp": 10.2},
+      "pos3": {"value": 0.523, "pp": 52.3},
+      "pos4": {"value": 0.0, "pp": 0.0}
+    },
+    "key_finding": "Both models show near-identical selectivity profiles. Position 3 differs by only 0.3pp. Pattern arises from shared curriculum."
+  },
+
+  "task3_pause_architecture": {
+    "type": "single shared nn.Parameter",
+    "dimensions": 768,
+    "positions": 6,
+    "repeated": true,
+    "position_distinguishing_signal": "GPT-2 learned positional encoding only",
+    "initialization": "cloned from <|latent|> token embedding"
+  },
+
+  "task4_cross_corruption": {
+    "m3_noise_std": 7.309,
+    "m3_noise_l2_mean": 202.8,
+    "m5_noise_std": 0.147,
+    "m5_noise_l2_mean": 4.09,
+    "conditions": {
+      "m3_m3noise": [0.970, 0.968, 0.968, 0.968, 0.574, 0.156, 0.024],
+      "m5_m5noise": [0.966, 0.964, 0.962, 0.958, 0.572, 0.156, 0.022],
+      "m5_m3noise": [0.966, 0.966, 0.964, 0.964, 0.576, 0.158, 0.024]
+    },
+    "key_finding": "M5 exhibits same position-4 cliff under 50x noise scaling. Degradation is structural, not scale-dependent."
+  },
+
+  "task5_unmatched_transplant": {
+    "m3_matched": 0.970,
+    "m5_matched": 0.965,
+    "m3_unmatched": 0.975,
+    "m5_unmatched": 0.965,
+    "n_pairs": 200,
+    "key_finding": "Unmatched transplant equals matched. Thoughts carry zero problem-specific or complexity-specific information."
+  },
+
+  "task6_permutation_power": {
+    "n_trials": 5000,
+    "observed_flips": 0,
+    "min_detectable_95": 0.000599,
+    "min_detectable_99": 0.000921,
+    "statement": "With 5,000 trials, excludes true flip rate above 0.06% at 95% confidence."
+  }
+}

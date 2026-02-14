@@ -1,0 +1,39 @@
+{
+  "n_trials": 5000,
+  "observed_flips": 0,
+  "power_table": [
+    {
+      "true_flip_rate": 0.001,
+      "prob_zero_flips": 0.006721111959865588,
+      "power": 0.9932788880401344,
+      "detectable_at_95pct": true
+    },
+    {
+      "true_flip_rate": 0.005,
+      "prob_zero_flips": 1.3043787909937147e-11,
+      "power": 0.9999999999869562,
+      "detectable_at_95pct": true
+    },
+    {
+      "true_flip_rate": 0.01,
+      "prob_zero_flips": 1.499591560997954e-22,
+      "power": 1.0,
+      "detectable_at_95pct": true
+    },
+    {
+      "true_flip_rate": 0.02,
+      "prob_zero_flips": 1.350138937931004e-44,
+      "power": 1.0,
+      "detectable_at_95pct": true
+    },
+    {
+      "true_flip_rate": 0.05,
+      "prob_zero_flips": 4.149793100008791e-112,
+      "power": 1.0,
+      "detectable_at_95pct": true
+    }
+  ],
+  "min_detectable_95": 0.0005989670023148763,
+  "min_detectable_99": 0.0009206100155382257,
+  "interpretation": "With 5000 trials and 0 observed flips, we can rule out true flip rates >= 0.000599 (0.0599%) at 95% confidence, and >= 0.000921 (0.0921%) at 99% confidence. Even a true flip rate as low as 0.1% would produce zero flips only 6.7211e-03 of the time, giving us 99.33% power to detect it. The observation of 0 flips in 5000 trials provides strong evidence that permutation does not meaningfully alter model outputs."
+}

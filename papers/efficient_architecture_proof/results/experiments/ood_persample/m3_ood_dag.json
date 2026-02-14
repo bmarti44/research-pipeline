@@ -1,0 +1,6008 @@
+{
+  "model": "m3",
+  "test_set": "ood_dag",
+  "n_samples": 1000,
+  "predictions": [
+    {
+      "sample_idx": 0,
+      "predicted": "Stella is a vumpus.",
+      "ground_truth": "Stella is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 1,
+      "predicted": "Sam is a yimpus.",
+      "ground_truth": "Sam is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 2,
+      "predicted": "Wren is a sterpus.",
+      "ground_truth": "Wren is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 3,
+      "predicted": "Sam is a zhorpus.",
+      "ground_truth": "Sam is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 4,
+      "predicted": "Tom is a lempus.",
+      "ground_truth": "Tom is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 5,
+      "predicted": "Sally is a wumpus.",
+      "ground_truth": "Sally is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 6,
+      "predicted": "Sam is a chorpus.",
+      "ground_truth": "Sam is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 7,
+      "predicted": "Rex is a numpus.",
+      "ground_truth": "Rex is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 8,
+      "predicted": "Gabriel is a gerpus.",
+      "ground_truth": "Gabriel is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 9,
+      "predicted": "Jack is a fompus.",
+      "ground_truth": "Jack is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 10,
+      "predicted": "Wren is a tumpus.",
+      "ground_truth": "Wren is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 11,
+      "predicted": "Gabriel is a jompus.",
+      "ground_truth": "Gabriel is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 12,
+      "predicted": "Carol is a worpus a yerpus.",
+      "ground_truth": "Carol is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 13,
+      "predicted": "Polly is a zumpus.",
+      "ground_truth": "Polly is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 14,
+      "predicted": "Sam is a hilpus.",
+      "ground_truth": "Sam is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 15,
+      "predicted": "Alex is a lorpus.",
+      "ground_truth": "Alex is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 16,
+      "predicted": "Fae is a vumpus.",
+      "ground_truth": "Fae is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 17,
+      "predicted": "Tom is a shumpus.",
+      "ground_truth": "Tom is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 18,
+      "predicted": "Eva is a worpus.",
+      "ground_truth": "Eva is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 19,
+      "predicted": "Eva is a lorpus.",
+      "ground_truth": "Eva is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 20,
+      "predicted": "Sam is a dumpus.",
+      "ground_truth": "Sam is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 21,
+      "predicted": "Sam is a gwompus.",
+      "ground_truth": "Sam is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 22,
+      "predicted": "Gabriel is a chorpus.",
+      "ground_truth": "Gabriel is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 23,
+      "predicted": "Jack is a storpus.",
+      "ground_truth": "Jack is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 24,
+      "predicted": "Fae is a grimpus.",
+      "ground_truth": "Fae is a fompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 25,
+      "predicted": "Wren is a numpus.",
+      "ground_truth": "Wren is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 26,
+      "predicted": "Oliver is a shumpus.",
+      "ground_truth": "Oliver is a bompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 27,
+      "predicted": "Bob is a storpus.",
+      "ground_truth": "Bob is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 28,
+      "predicted": "Rex is a yimpus.",
+      "ground_truth": "Rex is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 29,
+      "predicted": "Polly is a scrompus.",
+      "ground_truth": "Polly is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 30,
+      "predicted": "Max is a lorpus.",
+      "ground_truth": "Max is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 31,
+      "predicted": "Bob is a gerpus.",
+      "ground_truth": "Bob is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 32,
+      "predicted": "Bob is a sterpus.",
+      "ground_truth": "Bob is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 33,
+      "predicted": "Max is a gerpus.",
+      "ground_truth": "Max is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 34,
+      "predicted": "Fae is a gerpus.",
+      "ground_truth": "Fae is a bompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 35,
+      "predicted": "Rex is a vumpus.",
+      "ground_truth": "Rex is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 36,
+      "predicted": "Carol is a storpus.",
+      "ground_truth": "Carol is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 37,
+      "predicted": "Davis is a jompus.",
+      "ground_truth": "Davis is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 38,
+      "predicted": "Tom is a tumpus.",
+      "ground_truth": "Tom is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 39,
+      "predicted": "Bob is a vumpus.",
+      "ground_truth": "Bob is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 40,
+      "predicted": "Carol is a chorpus.",
+      "ground_truth": "Carol is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 41,
+      "predicted": "Polly is a yumpus.",
+      "ground_truth": "Polly is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 42,
+      "predicted": "Gabriel is a dumpus.",
+      "ground_truth": "Gabriel is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 43,
+      "predicted": "Stella is a impus.",
+      "ground_truth": "Stella is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 44,
+      "predicted": "Rex is a zhorpus.",
+      "ground_truth": "Rex is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 45,
+      "predicted": "Tom is a gorpus.",
+      "ground_truth": "Tom is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 46,
+      "predicted": "Eva is a quimpus.",
+      "ground_truth": "Eva is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 47,
+      "predicted": "Davis is a yerpus.",
+      "ground_truth": "Davis is a timpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 48,
+      "predicted": "Fae is a felpus.",
+      "ground_truth": "Fae is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 49,
+      "predicted": "Fae is a hilpus.",
+      "ground_truth": "Fae is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 50,
+      "predicted": "Stella is a scrompus.",
+      "ground_truth": "Stella is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 51,
+      "predicted": "Gabriel is a zhorpus.",
+      "ground_truth": "Gabriel is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 52,
+      "predicted": "Alex is a timpus.",
+      "ground_truth": "Alex is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 53,
+      "predicted": "Alex is a terpus.",
+      "ground_truth": "Alex is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 54,
+      "predicted": "Sam is a fompus.",
+      "ground_truth": "Sam is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 55,
+      "predicted": "Wren is a jompus.",
+      "ground_truth": "Wren is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 56,
+      "predicted": "Jack is a wumpus.",
+      "ground_truth": "Jack is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 57,
+      "predicted": "Fae is a impus.",
+      "ground_truth": "Fae is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 58,
+      "predicted": "Alex is a chorpus.",
+      "ground_truth": "Alex is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 59,
+      "predicted": "Max is a impus.",
+      "ground_truth": "Max is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 60,
+      "predicted": "Davis is a fompus.",
+      "ground_truth": "Davis is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 61,
+      "predicted": "Eva is a rompus.",
+      "ground_truth": "Eva is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 62,
+      "predicted": "Sally is a rorpus.",
+      "ground_truth": "Sally is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 63,
+      "predicted": "Jack is a impus.",
+      "ground_truth": "Jack is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 64,
+      "predicted": "Tom is a boompus.",
+      "ground_truth": "Tom is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 65,
+      "predicted": "Bob is a wumpus.",
+      "ground_truth": "Bob is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 66,
+      "predicted": "Jack is a storpus.",
+      "ground_truth": "Jack is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 67,
+      "predicted": "Fae is a yumpus.",
+      "ground_truth": "Fae is a yimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 68,
+      "predicted": "Davis is a worpus.",
+      "ground_truth": "Davis is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 69,
+      "predicted": "Fae is a yimpus.",
+      "ground_truth": "Fae is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 70,
+      "predicted": "Tom is a sterpus.",
+      "ground_truth": "Tom is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 71,
+      "predicted": "Polly is a rorpus.",
+      "ground_truth": "Polly is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 72,
+      "predicted": "Sally is a vumpus.",
+      "ground_truth": "Sally is a bompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 73,
+      "predicted": "Gabriel is a wumpus.",
+      "ground_truth": "Gabriel is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 74,
+      "predicted": "Polly is a yumpus.",
+      "ground_truth": "Polly is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 75,
+      "predicted": "Oliver is a timpus.",
+      "ground_truth": "Oliver is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 76,
+      "predicted": "Jack is a grimpus.",
+      "ground_truth": "Jack is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 77,
+      "predicted": "Bob is a worpus.",
+      "ground_truth": "Bob is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 78,
+      "predicted": "Fae is a sterpus.",
+      "ground_truth": "Fae is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 79,
+      "predicted": "Sam is a timpus.",
+      "ground_truth": "Sam is a lorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 80,
+      "predicted": "Fae is a rempus.",
+      "ground_truth": "Fae is a rempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 81,
+      "predicted": "Stella is a gwompus.",
+      "ground_truth": "Stella is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 82,
+      "predicted": "Wren is a chorpus.",
+      "ground_truth": "Wren is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 83,
+      "predicted": "Eva is a brimpus.",
+      "ground_truth": "Eva is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 84,
+      "predicted": "Eva is a vumpus.",
+      "ground_truth": "Eva is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 85,
+      "predicted": "Tom is a fompus.",
+      "ground_truth": "Tom is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 86,
+      "predicted": "Tom is a boompus.",
+      "ground_truth": "Tom is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 87,
+      "predicted": "Fae is a gwompus.",
+      "ground_truth": "Fae is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 88,
+      "predicted": "Wren is a gwompus.",
+      "ground_truth": "Wren is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 89,
+      "predicted": "Jack is a worpus.",
+      "ground_truth": "Jack is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 90,
+      "predicted": "Wren is a kerpus.",
+      "ground_truth": "Wren is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 91,
+      "predicted": "Stella is a jompus.",
+      "ground_truth": "Stella is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 92,
+      "predicted": "Bob is a gwompus.",
+      "ground_truth": "Bob is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 93,
+      "predicted": "Jack is a yimpus.",
+      "ground_truth": "Jack is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 94,
+      "predicted": "Polly is a kerpus.",
+      "ground_truth": "Polly is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 95,
+      "predicted": "Alex is a storpus.",
+      "ground_truth": "Alex is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 96,
+      "predicted": "Fae is a jompus.",
+      "ground_truth": "Fae is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 97,
+      "predicted": "Davis is a worpus.",
+      "ground_truth": "Davis is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 98,
+      "predicted": "Rex is a yerpus.",
+      "ground_truth": "Rex is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 99,
+      "predicted": "Gabriel is a hilpus.",
+      "ground_truth": "Gabriel is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 100,
+      "predicted": "Tom is a boompus.",
+      "ground_truth": "Tom is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 101,
+      "predicted": "Eva is a lorpus.",
+      "ground_truth": "Eva is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 102,
+      "predicted": "Wren is a bompus.",
+      "ground_truth": "Wren is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 103,
+      "predicted": "Max is a rorpus.",
+      "ground_truth": "Max is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 104,
+      "predicted": "Bob is a gorpus.",
+      "ground_truth": "Bob is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 105,
+      "predicted": "Jack is a dumpus.",
+      "ground_truth": "Jack is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 106,
+      "predicted": "Alex is a yumpus.",
+      "ground_truth": "Alex is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 107,
+      "predicted": "Wren is a vumpus.",
+      "ground_truth": "Wren is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 108,
+      "predicted": "Fae is a fompus.",
+      "ground_truth": "Fae is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 109,
+      "predicted": "Rex is a storpus.",
+      "ground_truth": "Rex is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 110,
+      "predicted": "Polly is a gorpus.",
+      "ground_truth": "Polly is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 111,
+      "predicted": "Eva is a grimpus.",
+      "ground_truth": "Eva is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 112,
+      "predicted": "Tom is a terpus.",
+      "ground_truth": "Tom is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 113,
+      "predicted": "Jack is a gorpus.",
+      "ground_truth": "Jack is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 114,
+      "predicted": "Alex is a hilpus.",
+      "ground_truth": "Alex is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 115,
+      "predicted": "Polly is a felpus.",
+      "ground_truth": "Polly is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 116,
+      "predicted": "Rex is a bompus.",
+      "ground_truth": "Rex is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 117,
+      "predicted": "Bob is a shumpus.",
+      "ground_truth": "Bob is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 118,
+      "predicted": "Stella is a quimpus.",
+      "ground_truth": "Stella is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 119,
+      "predicted": "Gabriel is a chorpus.",
+      "ground_truth": "Gabriel is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 120,
+      "predicted": "Bob is a grimpus.",
+      "ground_truth": "Bob is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 121,
+      "predicted": "Alex is a storpus.",
+      "ground_truth": "Alex is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 122,
+      "predicted": "Tom is a hilpus.",
+      "ground_truth": "Tom is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 123,
+      "predicted": "Jack is a quimpus.",
+      "ground_truth": "Jack is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 124,
+      "predicted": "Bob is a chorpus.",
+      "ground_truth": "Bob is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 125,
+      "predicted": "Fae is a yerpus.",
+      "ground_truth": "Fae is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 126,
+      "predicted": "Tom is a gorpus.",
+      "ground_truth": "Tom is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 127,
+      "predicted": "Jack is a yimpus.",
+      "ground_truth": "Jack is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 128,
+      "predicted": "Sally is a scrompus.",
+      "ground_truth": "Sally is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 129,
+      "predicted": "Carol is a chorpus.",
+      "ground_truth": "Carol is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 130,
+      "predicted": "Carol is a wumpus.",
+      "ground_truth": "Carol is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 131,
+      "predicted": "Gabriel is a shumpus.",
+      "ground_truth": "Gabriel is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 132,
+      "predicted": "Gabriel is a gerpus.",
+      "ground_truth": "Gabriel is a lorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 133,
+      "predicted": "Tom is a terpus.",
+      "ground_truth": "Tom is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 134,
+      "predicted": "Tom is a wumpus.",
+      "ground_truth": "Tom is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 135,
+      "predicted": "Eva is a scrompus.",
+      "ground_truth": "Eva is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 136,
+      "predicted": "Davis is a zumpus.",
+      "ground_truth": "Davis is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 137,
+      "predicted": "Fae is a boompus.",
+      "ground_truth": "Fae is a yimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 138,
+      "predicted": "Stella is a lorpus.",
+      "ground_truth": "Stella is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 139,
+      "predicted": "Rex is a rompus.",
+      "ground_truth": "Rex is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 140,
+      "predicted": "Rex is a yimpus.",
+      "ground_truth": "Rex is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 141,
+      "predicted": "Gabriel is a jompus.",
+      "ground_truth": "Gabriel is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 142,
+      "predicted": "Eva is a zhorpus.",
+      "ground_truth": "Eva is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 143,
+      "predicted": "Bob is a impus.",
+      "ground_truth": "Bob is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 144,
+      "predicted": "Alex is a yerpus.",
+      "ground_truth": "Alex is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 145,
+      "predicted": "Bob is a tumpus.",
+      "ground_truth": "Bob is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 146,
+      "predicted": "Max is a wumpus.",
+      "ground_truth": "Max is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 147,
+      "predicted": "Sally is a sterpus.",
+      "ground_truth": "Sally is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 148,
+      "predicted": "Gabriel is a chorpus.",
+      "ground_truth": "Gabriel is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 149,
+      "predicted": "Wren is a felpus.",
+      "ground_truth": "Wren is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 150,
+      "predicted": "Oliver is a storpus.",
+      "ground_truth": "Oliver is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 151,
+      "predicted": "Oliver is a tumpus.",
+      "ground_truth": "Oliver is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 152,
+      "predicted": "Davis is a tumpus.",
+      "ground_truth": "Davis is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 153,
+      "predicted": "Max is a impus.",
+      "ground_truth": "Max is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 154,
+      "predicted": "Wren is a worpus.",
+      "ground_truth": "Wren is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 155,
+      "predicted": "Oliver is a kerpus.",
+      "ground_truth": "Oliver is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 156,
+      "predicted": "Bob is a yumpus.",
+      "ground_truth": "Bob is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 157,
+      "predicted": "Max is a hilpus.",
+      "ground_truth": "Max is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 158,
+      "predicted": "Gabriel is a rorpus.",
+      "ground_truth": "Gabriel is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 159,
+      "predicted": "Jack is a yerpus.",
+      "ground_truth": "Jack is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 160,
+      "predicted": "Alex is a lorpus.",
+      "ground_truth": "Alex is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 161,
+      "predicted": "Stella is a storpus.",
+      "ground_truth": "Stella is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 162,
+      "predicted": "Sally is a jompus.",
+      "ground_truth": "Sally is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 163,
+      "predicted": "Jack is a worpus.",
+      "ground_truth": "Jack is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 164,
+      "predicted": "Gabriel is a quimpus.",
+      "ground_truth": "Gabriel is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 165,
+      "predicted": "Oliver is a brimpus.",
+      "ground_truth": "Oliver is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 166,
+      "predicted": "Rex is a chorpus.",
+      "ground_truth": "Rex is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 167,
+      "predicted": "Rex is a yumpus.",
+      "ground_truth": "Rex is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 168,
+      "predicted": "Eva is a quimpus.",
+      "ground_truth": "Eva is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 169,
+      "predicted": "Fae is a timpus.",
+      "ground_truth": "Fae is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 170,
+      "predicted": "Rex is a impus.",
+      "ground_truth": "Rex is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 171,
+      "predicted": "Eva is a jompus.",
+      "ground_truth": "Eva is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 172,
+      "predicted": "Fae is a yumpus.",
+      "ground_truth": "Fae is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 173,
+      "predicted": "Oliver is a lorpus.",
+      "ground_truth": "Oliver is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 174,
+      "predicted": "Oliver is a zumpus.",
+      "ground_truth": "Oliver is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 175,
+      "predicted": "Oliver is a bompus.",
+      "ground_truth": "Oliver is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 176,
+      "predicted": "Wren is a jompus.",
+      "ground_truth": "Wren is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 177,
+      "predicted": "Davis is a lorpus.",
+      "ground_truth": "Davis is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 178,
+      "predicted": "Alex is a bompus.",
+      "ground_truth": "Alex is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 179,
+      "predicted": "Jack is a lorpus.",
+      "ground_truth": "Jack is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 180,
+      "predicted": "Alex is a gwompus.",
+      "ground_truth": "Alex is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 181,
+      "predicted": "Sally is a gerpus.",
+      "ground_truth": "Sally is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 182,
+      "predicted": "Fae is a boompus.",
+      "ground_truth": "Fae is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 183,
+      "predicted": "Rex is a hilpus.",
+      "ground_truth": "Rex is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 184,
+      "predicted": "Davis is a zumpus.",
+      "ground_truth": "Davis is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 185,
+      "predicted": "Wren is a terpus.",
+      "ground_truth": "Wren is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 186,
+      "predicted": "Stella is a chorpus.",
+      "ground_truth": "Stella is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 187,
+      "predicted": "Wren is a yimpus.",
+      "ground_truth": "Wren is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 188,
+      "predicted": "Carol is a vumpus.",
+      "ground_truth": "Carol is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 189,
+      "predicted": "Gabriel is a rempus.",
+      "ground_truth": "Gabriel is a rempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 190,
+      "predicted": "Sally is a sterpus.",
+      "ground_truth": "Sally is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 191,
+      "predicted": "Eva is a timpus.",
+      "ground_truth": "Eva is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 192,
+      "predicted": "Max is a hilpus.",
+      "ground_truth": "Max is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 193,
+      "predicted": "Polly is a bompus.",
+      "ground_truth": "Polly is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 194,
+      "predicted": "Oliver is a impus.",
+      "ground_truth": "Oliver is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 195,
+      "predicted": "Gabriel is a yumpus.",
+      "ground_truth": "Gabriel is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 196,
+      "predicted": "Polly is a zumpus.",
+      "ground_truth": "Polly is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 197,
+      "predicted": "Oliver is a lorpus.",
+      "ground_truth": "Oliver is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 198,
+      "predicted": "Eva is a vumpus.",
+      "ground_truth": "Eva is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 199,
+      "predicted": "Fae is a yumpus.",
+      "ground_truth": "Fae is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 200,
+      "predicted": "Tom is a worpus.",
+      "ground_truth": "Tom is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 201,
+      "predicted": "Fae is a numpus.",
+      "ground_truth": "Fae is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 202,
+      "predicted": "Wren is a terpus.",
+      "ground_truth": "Wren is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 203,
+      "predicted": "Oliver is a wumpus.",
+      "ground_truth": "Oliver is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 204,
+      "predicted": "Tom is a jompus.",
+      "ground_truth": "Tom is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 205,
+      "predicted": "Polly is a fompus.",
+      "ground_truth": "Polly is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 206,
+      "predicted": "Wren is a zumpus.",
+      "ground_truth": "Wren is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 207,
+      "predicted": "Bob is a worpus.",
+      "ground_truth": "Bob is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 208,
+      "predicted": "Polly is a scrompus.",
+      "ground_truth": "Polly is a fompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 209,
+      "predicted": "Bob is a yimpus.",
+      "ground_truth": "Bob is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 210,
+      "predicted": "Alex is a rorpus.",
+      "ground_truth": "Alex is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 211,
+      "predicted": "Max is a rompus.",
+      "ground_truth": "Max is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 212,
+      "predicted": "Sam is a boompus.",
+      "ground_truth": "Sam is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 213,
+      "predicted": "Fae is a bompus.",
+      "ground_truth": "Fae is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 214,
+      "predicted": "Sam is a lempus.",
+      "ground_truth": "Sam is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 215,
+      "predicted": "Max is a jompus.",
+      "ground_truth": "Max is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 216,
+      "predicted": "Max is a felpus.",
+      "ground_truth": "Max is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 217,
+      "predicted": "Gabriel is a storpus.",
+      "ground_truth": "Gabriel is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 218,
+      "predicted": "Alex is a chorpus.",
+      "ground_truth": "Alex is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 219,
+      "predicted": "Alex is a terpus.",
+      "ground_truth": "Alex is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 220,
+      "predicted": "Alex is a jelpus.",
+      "ground_truth": "Alex is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 221,
+      "predicted": "Oliver is a chorpus.",
+      "ground_truth": "Oliver is a terpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 222,
+      "predicted": "Rex is a worpus.",
+      "ground_truth": "Rex is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 223,
+      "predicted": "Sam is a hilpus.",
+      "ground_truth": "Sam is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 224,
+      "predicted": "Polly is a timpus.",
+      "ground_truth": "Polly is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 225,
+      "predicted": "Stella is a boompus.",
+      "ground_truth": "Stella is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 226,
+      "predicted": "Max is a impus.",
+      "ground_truth": "Max is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 227,
+      "predicted": "Oliver is a numpus.",
+      "ground_truth": "Oliver is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 228,
+      "predicted": "Wren is a bompus.",
+      "ground_truth": "Wren is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 229,
+      "predicted": "Bob is a yimpus.",
+      "ground_truth": "Bob is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 230,
+      "predicted": "Max is a worpus.",
+      "ground_truth": "Max is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 231,
+      "predicted": "Eva is a vumpus.",
+      "ground_truth": "Eva is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 232,
+      "predicted": "Davis is a gwompus.",
+      "ground_truth": "Davis is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 233,
+      "predicted": "Rex is a yimpus.",
+      "ground_truth": "Rex is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 234,
+      "predicted": "Max is a rompus.",
+      "ground_truth": "Max is a numpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 235,
+      "predicted": "Oliver is a dumpus.",
+      "ground_truth": "Oliver is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 236,
+      "predicted": "Tom is a quimpus.",
+      "ground_truth": "Tom is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 237,
+      "predicted": "Oliver is a zumpus.",
+      "ground_truth": "Oliver is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 238,
+      "predicted": "Rex is a grimpus.",
+      "ground_truth": "Rex is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 239,
+      "predicted": "Polly is a lorpus.",
+      "ground_truth": "Polly is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 240,
+      "predicted": "Sam is a lempus.",
+      "ground_truth": "Sam is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 241,
+      "predicted": "Fae is a bompus.",
+      "ground_truth": "Fae is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 242,
+      "predicted": "Eva is a bompus.",
+      "ground_truth": "Eva is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 243,
+      "predicted": "Oliver is a terpus.",
+      "ground_truth": "Oliver is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 244,
+      "predicted": "Wren is a hilpus.",
+      "ground_truth": "Wren is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 245,
+      "predicted": "Carol is a jelpus.",
+      "ground_truth": "Carol is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 246,
+      "predicted": "Jack is a jelpus.",
+      "ground_truth": "Jack is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 247,
+      "predicted": "Fae is a impus.",
+      "ground_truth": "Fae is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 248,
+      "predicted": "Carol is a vumpus.",
+      "ground_truth": "Carol is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 249,
+      "predicted": "Sally is a quimpus.",
+      "ground_truth": "Sally is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 250,
+      "predicted": "Wren is a tumpus.",
+      "ground_truth": "Wren is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 251,
+      "predicted": "Sally is a dumpus.",
+      "ground_truth": "Sally is a timpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 252,
+      "predicted": "Davis is a terpus.",
+      "ground_truth": "Davis is a numpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 253,
+      "predicted": "Fae is a lorpus.",
+      "ground_truth": "Fae is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 254,
+      "predicted": "Rex is a bompus.",
+      "ground_truth": "Rex is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 255,
+      "predicted": "Max is a gerpus.",
+      "ground_truth": "Max is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 256,
+      "predicted": "Oliver is a tumpus.",
+      "ground_truth": "Oliver is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 257,
+      "predicted": "Jack is a yimpus.",
+      "ground_truth": "Jack is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 258,
+      "predicted": "Sam is a scrompus.",
+      "ground_truth": "Sam is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 259,
+      "predicted": "Oliver is a gwompus.",
+      "ground_truth": "Oliver is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 260,
+      "predicted": "Oliver is a zumpus.",
+      "ground_truth": "Oliver is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 261,
+      "predicted": "Sally is a lorpus.",
+      "ground_truth": "Sally is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 262,
+      "predicted": "Sally is a kerpus.",
+      "ground_truth": "Sally is a sterpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 263,
+      "predicted": "Sally is a lempus.",
+      "ground_truth": "Sally is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 264,
+      "predicted": "Oliver is a yimpus.",
+      "ground_truth": "Oliver is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 265,
+      "predicted": "Oliver is a gerpus.",
+      "ground_truth": "Oliver is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 266,
+      "predicted": "Max is a jompus.",
+      "ground_truth": "Max is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 267,
+      "predicted": "Carol is a yimpus.",
+      "ground_truth": "Carol is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 268,
+      "predicted": "Sally is a rempus.",
+      "ground_truth": "Sally is a rempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 269,
+      "predicted": "Polly is a gerpus.",
+      "ground_truth": "Polly is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 270,
+      "predicted": "Carol is a chorpus.",
+      "ground_truth": "Carol is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 271,
+      "predicted": "Fae is a jelpus.",
+      "ground_truth": "Fae is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 272,
+      "predicted": "Fae is a wumpus.",
+      "ground_truth": "Fae is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 273,
+      "predicted": "Tom is a impus.",
+      "ground_truth": "Tom is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 274,
+      "predicted": "Jack is a fompus.",
+      "ground_truth": "Jack is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 275,
+      "predicted": "Eva is a kerpus.",
+      "ground_truth": "Eva is a kerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 276,
+      "predicted": "Jack is a fompus.",
+      "ground_truth": "Jack is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 277,
+      "predicted": "Oliver is a numpus.",
+      "ground_truth": "Oliver is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 278,
+      "predicted": "Sally is a zhorpus.",
+      "ground_truth": "Sally is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 279,
+      "predicted": "Bob is a dumpus.",
+      "ground_truth": "Bob is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 280,
+      "predicted": "Bob is a storpus.",
+      "ground_truth": "Bob is a terpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 281,
+      "predicted": "Max is a rorpus.",
+      "ground_truth": "Max is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 282,
+      "predicted": "Alex is a chorpus.",
+      "ground_truth": "Alex is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 283,
+      "predicted": "Stella is a timpus.",
+      "ground_truth": "Stella is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 284,
+      "predicted": "Jack is a dumpus.",
+      "ground_truth": "Jack is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 285,
+      "predicted": "Jack is a jelpus.",
+      "ground_truth": "Jack is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 286,
+      "predicted": "Gabriel is a yerpus.",
+      "ground_truth": "Gabriel is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 287,
+      "predicted": "Bob is a storpus.",
+      "ground_truth": "Bob is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 288,
+      "predicted": "Wren is a yimpus.",
+      "ground_truth": "Wren is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 289,
+      "predicted": "Gabriel is a zumpus.",
+      "ground_truth": "Gabriel is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 290,
+      "predicted": "Stella is a impus.",
+      "ground_truth": "Stella is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 291,
+      "predicted": "Max is a felpus.",
+      "ground_truth": "Max is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 292,
+      "predicted": "Max is a worpus.",
+      "ground_truth": "Max is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 293,
+      "predicted": "Fae is a lorpus.",
+      "ground_truth": "Fae is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 294,
+      "predicted": "Sally is a rorpus.",
+      "ground_truth": "Sally is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 295,
+      "predicted": "Alex is a rompus.",
+      "ground_truth": "Alex is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 296,
+      "predicted": "Sally is a scrompus.",
+      "ground_truth": "Sally is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 297,
+      "predicted": "Eva is a vumpus.",
+      "ground_truth": "Eva is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 298,
+      "predicted": "Tom is a numpus.",
+      "ground_truth": "Tom is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 299,
+      "predicted": "Sally is a grimpus.",
+      "ground_truth": "Sally is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 300,
+      "predicted": "Eva is a yerpus.",
+      "ground_truth": "Eva is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 301,
+      "predicted": "Eva is a storpus.",
+      "ground_truth": "Eva is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 302,
+      "predicted": "Polly is a bompus.",
+      "ground_truth": "Polly is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 303,
+      "predicted": "Max is a jelpus.",
+      "ground_truth": "Max is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 304,
+      "predicted": "Wren is a bompus.",
+      "ground_truth": "Wren is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 305,
+      "predicted": "Davis is a storpus.",
+      "ground_truth": "Davis is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 306,
+      "predicted": "Davis is a grimpus.",
+      "ground_truth": "Davis is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 307,
+      "predicted": "Rex is a shumpus.",
+      "ground_truth": "Rex is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 308,
+      "predicted": "Bob is a bompus.",
+      "ground_truth": "Bob is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 309,
+      "predicted": "Sam is a chorpus.",
+      "ground_truth": "Sam is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 310,
+      "predicted": "Carol is a zumpus.",
+      "ground_truth": "Carol is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 311,
+      "predicted": "Sally is a lempus.",
+      "ground_truth": "Sally is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 312,
+      "predicted": "Stella is a fompus.",
+      "ground_truth": "Stella is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 313,
+      "predicted": "Jack is a wumpus.",
+      "ground_truth": "Jack is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 314,
+      "predicted": "Sam is a storpus.",
+      "ground_truth": "Sam is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 315,
+      "predicted": "Gabriel is a hilpus.",
+      "ground_truth": "Gabriel is a numpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 316,
+      "predicted": "Bob is a chorpus.",
+      "ground_truth": "Bob is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 317,
+      "predicted": "Sam is a fompus.",
+      "ground_truth": "Sam is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 318,
+      "predicted": "Stella is a hilpus.",
+      "ground_truth": "Stella is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 319,
+      "predicted": "Rex is a rorpus.",
+      "ground_truth": "Rex is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 320,
+      "predicted": "Polly is a shumpus.",
+      "ground_truth": "Polly is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 321,
+      "predicted": "Oliver is a tumpus.",
+      "ground_truth": "Oliver is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 322,
+      "predicted": "Davis is a felpus.",
+      "ground_truth": "Davis is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 323,
+      "predicted": "Polly is a storpus.",
+      "ground_truth": "Polly is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 324,
+      "predicted": "Fae is a yimpus.",
+      "ground_truth": "Fae is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 325,
+      "predicted": "Carol is a shumpus.",
+      "ground_truth": "Carol is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 326,
+      "predicted": "Eva is a worpus.",
+      "ground_truth": "Eva is a timpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 327,
+      "predicted": "Max is a lorpus.",
+      "ground_truth": "Max is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 328,
+      "predicted": "Sally is a rempus.",
+      "ground_truth": "Sally is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 329,
+      "predicted": "Sam is a fompus.",
+      "ground_truth": "Sam is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 330,
+      "predicted": "Wren is a zhorpus.",
+      "ground_truth": "Wren is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 331,
+      "predicted": "Oliver is a felpus.",
+      "ground_truth": "Oliver is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 332,
+      "predicted": "Tom is a yimpus.",
+      "ground_truth": "Tom is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 333,
+      "predicted": "Stella is a worpus.",
+      "ground_truth": "Stella is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 334,
+      "predicted": "Gabriel is a jelpus.",
+      "ground_truth": "Gabriel is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 335,
+      "predicted": "Oliver is a zumpus.",
+      "ground_truth": "Oliver is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 336,
+      "predicted": "Polly is a impus.",
+      "ground_truth": "Polly is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 337,
+      "predicted": "Rex is a terpus.",
+      "ground_truth": "Rex is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 338,
+      "predicted": "Tom is a sterpus.",
+      "ground_truth": "Tom is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 339,
+      "predicted": "Bob is a rorpus.",
+      "ground_truth": "Bob is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 340,
+      "predicted": "Alex is a shumpus.",
+      "ground_truth": "Alex is a fompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 341,
+      "predicted": "Max is a felpus.",
+      "ground_truth": "Max is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 342,
+      "predicted": "Wren is a timpus.",
+      "ground_truth": "Wren is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 343,
+      "predicted": "Carol is a timpus.",
+      "ground_truth": "Carol is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 344,
+      "predicted": "Sam is a gerpus.",
+      "ground_truth": "Sam is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 345,
+      "predicted": "Eva is a tumpus.",
+      "ground_truth": "Eva is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 346,
+      "predicted": "Carol is a bompus.",
+      "ground_truth": "Carol is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 347,
+      "predicted": "Gabriel is a worpus.",
+      "ground_truth": "Gabriel is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 348,
+      "predicted": "Oliver is a hilpus.",
+      "ground_truth": "Oliver is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 349,
+      "predicted": "Alex is a wumpus.",
+      "ground_truth": "Alex is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 350,
+      "predicted": "Oliver is a yumpus.",
+      "ground_truth": "Oliver is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 351,
+      "predicted": "Oliver is a worpus.",
+      "ground_truth": "Oliver is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 352,
+      "predicted": "Davis is a jelpus.",
+      "ground_truth": "Davis is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 353,
+      "predicted": "Carol is a jompus.",
+      "ground_truth": "Carol is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 354,
+      "predicted": "Rex is a quimpus.",
+      "ground_truth": "Rex is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 355,
+      "predicted": "Alex is a lempus.",
+      "ground_truth": "Alex is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 356,
+      "predicted": "Jack is a zhorpus.",
+      "ground_truth": "Jack is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 357,
+      "predicted": "Fae is a vumpus.",
+      "ground_truth": "Fae is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 358,
+      "predicted": "Wren is a jompus.",
+      "ground_truth": "Wren is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 359,
+      "predicted": "Sam is a scrompus.",
+      "ground_truth": "Sam is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 360,
+      "predicted": "Polly is a lempus.",
+      "ground_truth": "Polly is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 361,
+      "predicted": "Alex is a timpus.",
+      "ground_truth": "Alex is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 362,
+      "predicted": "Rex is a shumpus.",
+      "ground_truth": "Rex is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 363,
+      "predicted": "Oliver is a sterpus.",
+      "ground_truth": "Oliver is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 364,
+      "predicted": "Polly is a yumpus.",
+      "ground_truth": "Polly is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 365,
+      "predicted": "Eva is a hilpus.",
+      "ground_truth": "Eva is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 366,
+      "predicted": "Sam is a yimpus.",
+      "ground_truth": "Sam is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 367,
+      "predicted": "Sally is a hilpus.",
+      "ground_truth": "Sally is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 368,
+      "predicted": "Jack is a zhorpus.",
+      "ground_truth": "Jack is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 369,
+      "predicted": "Rex is a dumpus.",
+      "ground_truth": "Rex is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 370,
+      "predicted": "Fae is a yimpus.",
+      "ground_truth": "Fae is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 371,
+      "predicted": "Wren is a wumpus.",
+      "ground_truth": "Wren is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 372,
+      "predicted": "Gabriel is a sterpus.",
+      "ground_truth": "Gabriel is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 373,
+      "predicted": "Carol is a scrompus.",
+      "ground_truth": "Carol is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 374,
+      "predicted": "Gabriel is a zumpus.",
+      "ground_truth": "Gabriel is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 375,
+      "predicted": "Eva is a gorpus.",
+      "ground_truth": "Eva is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 376,
+      "predicted": "Carol is a terpus.",
+      "ground_truth": "Carol is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 377,
+      "predicted": "Wren is a dumpus.",
+      "ground_truth": "Wren is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 378,
+      "predicted": "Alex is a rorpus.",
+      "ground_truth": "Alex is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 379,
+      "predicted": "Bob is a gorpus.",
+      "ground_truth": "Bob is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 380,
+      "predicted": "Sally is a gorpus.",
+      "ground_truth": "Sally is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 381,
+      "predicted": "Sally is a sterpus.",
+      "ground_truth": "Sally is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 382,
+      "predicted": "Alex is a sterpus.",
+      "ground_truth": "Alex is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 383,
+      "predicted": "Fae is a yumpus.",
+      "ground_truth": "Fae is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 384,
+      "predicted": "Gabriel is a timpus.",
+      "ground_truth": "Gabriel is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 385,
+      "predicted": "Eva is a sterpus.",
+      "ground_truth": "Eva is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 386,
+      "predicted": "Alex is a storpus.",
+      "ground_truth": "Alex is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 387,
+      "predicted": "Oliver is a gerpus.",
+      "ground_truth": "Oliver is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 388,
+      "predicted": "Alex is a shumpus.",
+      "ground_truth": "Alex is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 389,
+      "predicted": "Jack is a wumpus.",
+      "ground_truth": "Jack is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 390,
+      "predicted": "Oliver is a lempus.",
+      "ground_truth": "Oliver is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 391,
+      "predicted": "Alex is a timpus.",
+      "ground_truth": "Alex is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 392,
+      "predicted": "Davis is a gerpus.",
+      "ground_truth": "Davis is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 393,
+      "predicted": "Eva is a storpus.",
+      "ground_truth": "Eva is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 394,
+      "predicted": "Rex is a sterpus.",
+      "ground_truth": "Rex is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 395,
+      "predicted": "Rex is a tumpus.",
+      "ground_truth": "Rex is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 396,
+      "predicted": "Polly is a kerpus.",
+      "ground_truth": "Polly is a kerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 397,
+      "predicted": "Polly is a wumpus.",
+      "ground_truth": "Polly is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 398,
+      "predicted": "Wren is a chorpus.",
+      "ground_truth": "Wren is a scrompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 399,
+      "predicted": "Carol is a rorpus.",
+      "ground_truth": "Carol is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 400,
+      "predicted": "Oliver is a felpus.",
+      "ground_truth": "Oliver is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 401,
+      "predicted": "Sam is a sterpus.",
+      "ground_truth": "Sam is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 402,
+      "predicted": "Wren is a yimpus.",
+      "ground_truth": "Wren is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 403,
+      "predicted": "Bob is a jompus.",
+      "ground_truth": "Bob is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 404,
+      "predicted": "Oliver is a gwompus.",
+      "ground_truth": "Oliver is a timpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 405,
+      "predicted": "Tom is a terpus.",
+      "ground_truth": "Tom is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 406,
+      "predicted": "Sam is a impus.",
+      "ground_truth": "Sam is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 407,
+      "predicted": "Carol is a lempus.",
+      "ground_truth": "Carol is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 408,
+      "predicted": "Max is a jompus.",
+      "ground_truth": "Max is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 409,
+      "predicted": "Max is a yimpus.",
+      "ground_truth": "Max is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 410,
+      "predicted": "Tom is a lempus.",
+      "ground_truth": "Tom is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 411,
+      "predicted": "Alex is a yerpus.",
+      "ground_truth": "Alex is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 412,
+      "predicted": "Jack is a tumpus.",
+      "ground_truth": "Jack is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 413,
+      "predicted": "Sally is a boompus.",
+      "ground_truth": "Sally is a terpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 414,
+      "predicted": "Wren is a numpus.",
+      "ground_truth": "Wren is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 415,
+      "predicted": "Carol is a hilpus.",
+      "ground_truth": "Carol is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 416,
+      "predicted": "Davis is a worpus.",
+      "ground_truth": "Davis is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 417,
+      "predicted": "Davis is a zumpus.",
+      "ground_truth": "Davis is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 418,
+      "predicted": "Fae is a impus.",
+      "ground_truth": "Fae is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 419,
+      "predicted": "Sally is a chorpus.",
+      "ground_truth": "Sally is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 420,
+      "predicted": "Max is a chorpus.",
+      "ground_truth": "Max is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 421,
+      "predicted": "Eva is a scrompus.",
+      "ground_truth": "Eva is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 422,
+      "predicted": "Alex is a gorpus.",
+      "ground_truth": "Alex is a terpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 423,
+      "predicted": "Davis is a numpus.",
+      "ground_truth": "Davis is a chorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 424,
+      "predicted": "Gabriel is a dumpus.",
+      "ground_truth": "Gabriel is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 425,
+      "predicted": "Fae is a lempus.",
+      "ground_truth": "Fae is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 426,
+      "predicted": "Stella is a lorpus.",
+      "ground_truth": "Stella is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 427,
+      "predicted": "Stella is a wumpus.",
+      "ground_truth": "Stella is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 428,
+      "predicted": "Oliver is a gerpus.",
+      "ground_truth": "Oliver is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 429,
+      "predicted": "Jack is a jompus.",
+      "ground_truth": "Jack is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 430,
+      "predicted": "Rex is a yimpus.",
+      "ground_truth": "Rex is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 431,
+      "predicted": "Wren is a hilpus.",
+      "ground_truth": "Wren is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 432,
+      "predicted": "Rex is a gorpus.",
+      "ground_truth": "Rex is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 433,
+      "predicted": "Oliver is a lorpus.",
+      "ground_truth": "Oliver is a scrompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 434,
+      "predicted": "Polly is a yerpus.",
+      "ground_truth": "Polly is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 435,
+      "predicted": "Carol is a kerpus.",
+      "ground_truth": "Carol is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 436,
+      "predicted": "Stella is a shumpus.",
+      "ground_truth": "Stella is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 437,
+      "predicted": "Carol is a gorpus.",
+      "ground_truth": "Carol is a timpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 438,
+      "predicted": "Fae is a fompus.",
+      "ground_truth": "Fae is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 439,
+      "predicted": "Sam is a kerpus.",
+      "ground_truth": "Sam is a kerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 440,
+      "predicted": "Davis is a timpus.",
+      "ground_truth": "Davis is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 441,
+      "predicted": "Alex is a fompus.",
+      "ground_truth": "Alex is a numpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 442,
+      "predicted": "Bob is a timpus.",
+      "ground_truth": "Bob is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 443,
+      "predicted": "Jack is a yumpus.",
+      "ground_truth": "Jack is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 444,
+      "predicted": "Alex is a brimpus.",
+      "ground_truth": "Alex is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 445,
+      "predicted": "Davis is a sterpus.",
+      "ground_truth": "Davis is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 446,
+      "predicted": "Davis is a vumpus.",
+      "ground_truth": "Davis is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 447,
+      "predicted": "Alex is a lempus.",
+      "ground_truth": "Alex is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 448,
+      "predicted": "Bob is a tumpus.",
+      "ground_truth": "Bob is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 449,
+      "predicted": "Sam is a sterpus.",
+      "ground_truth": "Sam is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 450,
+      "predicted": "Carol is a grimpus.",
+      "ground_truth": "Carol is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 451,
+      "predicted": "Gabriel is a yumpus.",
+      "ground_truth": "Gabriel is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 452,
+      "predicted": "Wren is a timpus.",
+      "ground_truth": "Wren is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 453,
+      "predicted": "Oliver is a hilpus.",
+      "ground_truth": "Oliver is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 454,
+      "predicted": "Tom is a terpus.",
+      "ground_truth": "Tom is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 455,
+      "predicted": "Carol is a dumpus.",
+      "ground_truth": "Carol is a chorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 456,
+      "predicted": "Max is a timpus.",
+      "ground_truth": "Max is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 457,
+      "predicted": "Oliver is a yerpus.",
+      "ground_truth": "Oliver is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 458,
+      "predicted": "Alex is a yumpus.",
+      "ground_truth": "Alex is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 459,
+      "predicted": "Alex is a terpus.",
+      "ground_truth": "Alex is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 460,
+      "predicted": "Alex is a timpus.",
+      "ground_truth": "Alex is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 461,
+      "predicted": "Eva is a felpus.",
+      "ground_truth": "Eva is a chorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 462,
+      "predicted": "Rex is a rorpus.",
+      "ground_truth": "Rex is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 463,
+      "predicted": "Polly is a vumpus.",
+      "ground_truth": "Polly is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 464,
+      "predicted": "Stella is a numpus.",
+      "ground_truth": "Stella is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 465,
+      "predicted": "Alex is a rorpus.",
+      "ground_truth": "Alex is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 466,
+      "predicted": "Wren is a bompus.",
+      "ground_truth": "Wren is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 467,
+      "predicted": "Stella is a yumpus.",
+      "ground_truth": "Stella is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 468,
+      "predicted": "Bob is a lorpus.",
+      "ground_truth": "Bob is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 469,
+      "predicted": "Davis is a yimpus.",
+      "ground_truth": "Davis is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 470,
+      "predicted": "Jack is a scrompus.",
+      "ground_truth": "Jack is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 471,
+      "predicted": "Bob is a quimpus.",
+      "ground_truth": "Bob is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 472,
+      "predicted": "Max is a dumpus.",
+      "ground_truth": "Max is a scrompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 473,
+      "predicted": "Fae is a shumpus.",
+      "ground_truth": "Fae is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 474,
+      "predicted": "Tom is a vumpus.",
+      "ground_truth": "Tom is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 475,
+      "predicted": "Stella is a chorpus.",
+      "ground_truth": "Stella is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 476,
+      "predicted": "Carol is a zumpus.",
+      "ground_truth": "Carol is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 477,
+      "predicted": "Jack is a terpus.",
+      "ground_truth": "Jack is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 478,
+      "predicted": "Wren is a lorpus.",
+      "ground_truth": "Wren is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 479,
+      "predicted": "Eva is a zhorpus.",
+      "ground_truth": "Eva is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 480,
+      "predicted": "Oliver is a hilpus.",
+      "ground_truth": "Oliver is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 481,
+      "predicted": "Fae is a tumpus.",
+      "ground_truth": "Fae is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 482,
+      "predicted": "Gabriel is a wumpus.",
+      "ground_truth": "Gabriel is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 483,
+      "predicted": "Sally is a yerpus.",
+      "ground_truth": "Sally is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 484,
+      "predicted": "Stella is a impus.",
+      "ground_truth": "Stella is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 485,
+      "predicted": "Wren is a yerpus.",
+      "ground_truth": "Wren is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 486,
+      "predicted": "Sam is a yimpus.",
+      "ground_truth": "Sam is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 487,
+      "predicted": "Rex is a vumpus.",
+      "ground_truth": "Rex is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 488,
+      "predicted": "Gabriel is a dumpus.",
+      "ground_truth": "Gabriel is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 489,
+      "predicted": "Alex is a yerpus.",
+      "ground_truth": "Alex is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 490,
+      "predicted": "Sally is a tumpus.",
+      "ground_truth": "Sally is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 491,
+      "predicted": "Max is a worpus.",
+      "ground_truth": "Max is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 492,
+      "predicted": "Wren is a boompus.",
+      "ground_truth": "Wren is a bompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 493,
+      "predicted": "Max is a hilpus.",
+      "ground_truth": "Max is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 494,
+      "predicted": "Max is a felpus.",
+      "ground_truth": "Max is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 495,
+      "predicted": "Stella is a storpus.",
+      "ground_truth": "Stella is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 496,
+      "predicted": "Wren is a quimpus.",
+      "ground_truth": "Wren is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 497,
+      "predicted": "Alex is a shumpus.",
+      "ground_truth": "Alex is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 498,
+      "predicted": "Max is a scrompus.",
+      "ground_truth": "Max is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 499,
+      "predicted": "Rex is a zumpus.",
+      "ground_truth": "Rex is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 500,
+      "predicted": "Davis is a rompus.",
+      "ground_truth": "Davis is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 501,
+      "predicted": "Stella is a vumpus.",
+      "ground_truth": "Stella is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 502,
+      "predicted": "Max is a grimpus.",
+      "ground_truth": "Max is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 503,
+      "predicted": "Davis is a numpus.",
+      "ground_truth": "Davis is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 504,
+      "predicted": "Wren is a wumpus.",
+      "ground_truth": "Wren is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 505,
+      "predicted": "Rex is a hilpus.",
+      "ground_truth": "Rex is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 506,
+      "predicted": "Tom is a gerpus.",
+      "ground_truth": "Tom is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 507,
+      "predicted": "Carol is a yimpus.",
+      "ground_truth": "Carol is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 508,
+      "predicted": "Sally is a yumpus.",
+      "ground_truth": "Sally is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 509,
+      "predicted": "Max is a numpus.",
+      "ground_truth": "Max is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 510,
+      "predicted": "Sam is a numpus.",
+      "ground_truth": "Sam is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 511,
+      "predicted": "Bob is a numpus.",
+      "ground_truth": "Bob is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 512,
+      "predicted": "Wren is a zhorpus.",
+      "ground_truth": "Wren is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 513,
+      "predicted": "Gabriel is a lorpus.",
+      "ground_truth": "Gabriel is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 514,
+      "predicted": "Jack is a zhorpus.",
+      "ground_truth": "Jack is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 515,
+      "predicted": "Sally is a dumpus.",
+      "ground_truth": "Sally is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 516,
+      "predicted": "Rex is a quimpus.",
+      "ground_truth": "Rex is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 517,
+      "predicted": "Bob is a bompus.",
+      "ground_truth": "Bob is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 518,
+      "predicted": "Gabriel is a fompus.",
+      "ground_truth": "Gabriel is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 519,
+      "predicted": "Polly is a vumpus.",
+      "ground_truth": "Polly is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 520,
+      "predicted": "Sally is a jompus.",
+      "ground_truth": "Sally is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 521,
+      "predicted": "Polly is a yimpus.",
+      "ground_truth": "Polly is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 522,
+      "predicted": "Max is a worpus.",
+      "ground_truth": "Max is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 523,
+      "predicted": "Stella is a boompus.",
+      "ground_truth": "Stella is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 524,
+      "predicted": "Carol is a kerpus.",
+      "ground_truth": "Carol is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 525,
+      "predicted": "Bob is a yerpus.",
+      "ground_truth": "Bob is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 526,
+      "predicted": "Davis is a fompus.",
+      "ground_truth": "Davis is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 527,
+      "predicted": "Sam is a gerpus.",
+      "ground_truth": "Sam is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 528,
+      "predicted": "Sam is a gorpus.",
+      "ground_truth": "Sam is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 529,
+      "predicted": "Tom is a quimpus.",
+      "ground_truth": "Tom is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 530,
+      "predicted": "Alex is a brimpus.",
+      "ground_truth": "Alex is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 531,
+      "predicted": "Rex is a yimpus.",
+      "ground_truth": "Rex is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 532,
+      "predicted": "Polly is a hilpus.",
+      "ground_truth": "Polly is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 533,
+      "predicted": "Carol is a jelpus.",
+      "ground_truth": "Carol is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 534,
+      "predicted": "Eva is a tumpus.",
+      "ground_truth": "Eva is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 535,
+      "predicted": "Sally is a storpus.",
+      "ground_truth": "Sally is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 536,
+      "predicted": "Fae is a impus.",
+      "ground_truth": "Fae is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 537,
+      "predicted": "Sam is a bompus.",
+      "ground_truth": "Sam is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 538,
+      "predicted": "Alex is a bompus.",
+      "ground_truth": "Alex is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 539,
+      "predicted": "Fae is a tumpus.",
+      "ground_truth": "Fae is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 540,
+      "predicted": "Max is a brimpus.",
+      "ground_truth": "Max is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 541,
+      "predicted": "Bob is a jelpus.",
+      "ground_truth": "Bob is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 542,
+      "predicted": "Gabriel is a yerpus.",
+      "ground_truth": "Gabriel is a scrompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 543,
+      "predicted": "Jack is a rompus.",
+      "ground_truth": "Jack is a terpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 544,
+      "predicted": "Max is a boompus.",
+      "ground_truth": "Max is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 545,
+      "predicted": "Gabriel is a quimpus.",
+      "ground_truth": "Gabriel is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 546,
+      "predicted": "Eva is a hilpus.",
+      "ground_truth": "Eva is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 547,
+      "predicted": "Rex is a quimpus.",
+      "ground_truth": "Rex is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 548,
+      "predicted": "Tom is a yimpus.",
+      "ground_truth": "Tom is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 549,
+      "predicted": "Stella is a brimpus.",
+      "ground_truth": "Stella is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 550,
+      "predicted": "Fae is a numpus.",
+      "ground_truth": "Fae is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 551,
+      "predicted": "Stella is a jompus.",
+      "ground_truth": "Stella is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 552,
+      "predicted": "Oliver is a numpus.",
+      "ground_truth": "Oliver is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 553,
+      "predicted": "Rex is a sterpus.",
+      "ground_truth": "Rex is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 554,
+      "predicted": "Sally is a sterpus.",
+      "ground_truth": "Sally is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 555,
+      "predicted": "Fae is a dumpus.",
+      "ground_truth": "Fae is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 556,
+      "predicted": "Alex is a vumpus.",
+      "ground_truth": "Alex is a chorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 557,
+      "predicted": "Rex is a terpus.",
+      "ground_truth": "Rex is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 558,
+      "predicted": "Tom is a timpus.",
+      "ground_truth": "Tom is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 559,
+      "predicted": "Wren is a timpus.",
+      "ground_truth": "Wren is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 560,
+      "predicted": "Sally is a grimpus.",
+      "ground_truth": "Sally is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 561,
+      "predicted": "Davis is a chorpus.",
+      "ground_truth": "Davis is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 562,
+      "predicted": "Gabriel is a yumpus.",
+      "ground_truth": "Gabriel is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 563,
+      "predicted": "Eva is a lempus.",
+      "ground_truth": "Eva is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 564,
+      "predicted": "Bob is a gwompus.",
+      "ground_truth": "Bob is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 565,
+      "predicted": "Stella is a gwompus.",
+      "ground_truth": "Stella is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 566,
+      "predicted": "Polly is a fompus.",
+      "ground_truth": "Polly is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 567,
+      "predicted": "Bob is a kerpus.",
+      "ground_truth": "Bob is a lorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 568,
+      "predicted": "Polly is a chorpus.",
+      "ground_truth": "Polly is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 569,
+      "predicted": "Tom is a sterpus.",
+      "ground_truth": "Tom is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 570,
+      "predicted": "Sam is a yimpus.",
+      "ground_truth": "Sam is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 571,
+      "predicted": "Bob is a yumpus.",
+      "ground_truth": "Bob is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 572,
+      "predicted": "Wren is a impus.",
+      "ground_truth": "Wren is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 573,
+      "predicted": "Carol is a shumpus.",
+      "ground_truth": "Carol is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 574,
+      "predicted": "Wren is a storpus.",
+      "ground_truth": "Wren is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 575,
+      "predicted": "Gabriel is a bompus.",
+      "ground_truth": "Gabriel is a chorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 576,
+      "predicted": "Davis is a jelpus.",
+      "ground_truth": "Davis is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 577,
+      "predicted": "Sam is a brimpus.",
+      "ground_truth": "Sam is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 578,
+      "predicted": "Sam is a gwompus.",
+      "ground_truth": "Sam is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 579,
+      "predicted": "Oliver is a bompus.",
+      "ground_truth": "Oliver is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 580,
+      "predicted": "Sally is a chorpus.",
+      "ground_truth": "Sally is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 581,
+      "predicted": "Tom is a zumpus.",
+      "ground_truth": "Tom is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 582,
+      "predicted": "Sally is a zumpus.",
+      "ground_truth": "Sally is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 583,
+      "predicted": "Alex is a rompus.",
+      "ground_truth": "Alex is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 584,
+      "predicted": "Jack is a impus.",
+      "ground_truth": "Jack is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 585,
+      "predicted": "Davis is a yumpus.",
+      "ground_truth": "Davis is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 586,
+      "predicted": "Sally is a fompus.",
+      "ground_truth": "Sally is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 587,
+      "predicted": "Rex is a impus.",
+      "ground_truth": "Rex is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 588,
+      "predicted": "Bob is a brimpus.",
+      "ground_truth": "Bob is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 589,
+      "predicted": "Oliver is a lempus.",
+      "ground_truth": "Oliver is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 590,
+      "predicted": "Rex is a chorpus.",
+      "ground_truth": "Rex is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 591,
+      "predicted": "Davis is a yimpus.",
+      "ground_truth": "Davis is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 592,
+      "predicted": "Fae is a rompus.",
+      "ground_truth": "Fae is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 593,
+      "predicted": "Bob is a scrompus.",
+      "ground_truth": "Bob is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 594,
+      "predicted": "Jack is a storpus.",
+      "ground_truth": "Jack is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 595,
+      "predicted": "Bob is a worpus.",
+      "ground_truth": "Bob is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 596,
+      "predicted": "Gabriel is a scrompus.",
+      "ground_truth": "Gabriel is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 597,
+      "predicted": "Max is a fompus.",
+      "ground_truth": "Max is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 598,
+      "predicted": "Wren is a kerpus.",
+      "ground_truth": "Wren is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 599,
+      "predicted": "Rex is a kerpus is a lorpus.",
+      "ground_truth": "Rex is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 600,
+      "predicted": "Rex is a yumpus.",
+      "ground_truth": "Rex is a chorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 601,
+      "predicted": "Oliver is a yimpus.",
+      "ground_truth": "Oliver is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 602,
+      "predicted": "Alex is a rorpus.",
+      "ground_truth": "Alex is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 603,
+      "predicted": "Sally is a dumpus.",
+      "ground_truth": "Sally is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 604,
+      "predicted": "Bob is a numpus.",
+      "ground_truth": "Bob is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 605,
+      "predicted": "Oliver is a boompus.",
+      "ground_truth": "Oliver is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 606,
+      "predicted": "Oliver is a yumpus.",
+      "ground_truth": "Oliver is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 607,
+      "predicted": "Oliver is a rorpus.",
+      "ground_truth": "Oliver is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 608,
+      "predicted": "Tom is a bompus.",
+      "ground_truth": "Tom is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 609,
+      "predicted": "Oliver is a yimpus.",
+      "ground_truth": "Oliver is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 610,
+      "predicted": "Stella is a impus.",
+      "ground_truth": "Stella is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 611,
+      "predicted": "Bob is a kerpus.",
+      "ground_truth": "Bob is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 612,
+      "predicted": "Sally is a jompus.",
+      "ground_truth": "Sally is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 613,
+      "predicted": "Jack is a hilpus.",
+      "ground_truth": "Jack is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 614,
+      "predicted": "Bob is a bompus.",
+      "ground_truth": "Bob is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 615,
+      "predicted": "Eva is a worpus.",
+      "ground_truth": "Eva is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 616,
+      "predicted": "Eva is a yerpus.",
+      "ground_truth": "Eva is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 617,
+      "predicted": "Stella is a hilpus.",
+      "ground_truth": "Stella is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 618,
+      "predicted": "Stella is a wumpus.",
+      "ground_truth": "Stella is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 619,
+      "predicted": "Fae is a worpus.",
+      "ground_truth": "Fae is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 620,
+      "predicted": "Gabriel is a jompus.",
+      "ground_truth": "Gabriel is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 621,
+      "predicted": "Eva is a jompus.",
+      "ground_truth": "Eva is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 622,
+      "predicted": "Eva is a numpus.",
+      "ground_truth": "Eva is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 623,
+      "predicted": "Gabriel is a hilpus.",
+      "ground_truth": "Gabriel is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 624,
+      "predicted": "Tom is a zumpus.",
+      "ground_truth": "Tom is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 625,
+      "predicted": "Jack is a numpus.",
+      "ground_truth": "Jack is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 626,
+      "predicted": "Sally is a hilpus.",
+      "ground_truth": "Sally is a terpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 627,
+      "predicted": "Max is a gwompus.",
+      "ground_truth": "Max is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 628,
+      "predicted": "Wren is a rempus.",
+      "ground_truth": "Wren is a rempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 629,
+      "predicted": "Oliver is a brimpus.",
+      "ground_truth": "Oliver is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 630,
+      "predicted": "Stella is a rorpus.",
+      "ground_truth": "Stella is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 631,
+      "predicted": "Sam is a gorpus.",
+      "ground_truth": "Sam is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 632,
+      "predicted": "Alex is a worpus.",
+      "ground_truth": "Alex is a bompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 633,
+      "predicted": "Bob is a rompus.",
+      "ground_truth": "Bob is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 634,
+      "predicted": "Bob is a yumpus.",
+      "ground_truth": "Bob is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 635,
+      "predicted": "Davis is a lorpus.",
+      "ground_truth": "Davis is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 636,
+      "predicted": "Sally is a vumpus.",
+      "ground_truth": "Sally is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 637,
+      "predicted": "Jack is a grimpus.",
+      "ground_truth": "Jack is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 638,
+      "predicted": "Davis is a chorpus.",
+      "ground_truth": "Davis is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 639,
+      "predicted": "Davis is a yumpus.",
+      "ground_truth": "Davis is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 640,
+      "predicted": "Jack is a chorpus.",
+      "ground_truth": "Jack is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 641,
+      "predicted": "Sally is a yerpus.",
+      "ground_truth": "Sally is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 642,
+      "predicted": "Sally is a quimpus.",
+      "ground_truth": "Sally is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 643,
+      "predicted": "Oliver is a numpus.",
+      "ground_truth": "Oliver is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 644,
+      "predicted": "Eva is a gwompus.",
+      "ground_truth": "Eva is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 645,
+      "predicted": "Max is a gerpus.",
+      "ground_truth": "Max is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 646,
+      "predicted": "Stella is a gerpus.",
+      "ground_truth": "Stella is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 647,
+      "predicted": "Sam is a sterpus.",
+      "ground_truth": "Sam is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 648,
+      "predicted": "Jack is a zumpus.",
+      "ground_truth": "Jack is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 649,
+      "predicted": "Polly is a lempus.",
+      "ground_truth": "Polly is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 650,
+      "predicted": "Gabriel is a lempus.",
+      "ground_truth": "Gabriel is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 651,
+      "predicted": "Oliver is a tumpus.",
+      "ground_truth": "Oliver is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 652,
+      "predicted": "Gabriel is a rompus.",
+      "ground_truth": "Gabriel is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 653,
+      "predicted": "Bob is a lorpus.",
+      "ground_truth": "Bob is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 654,
+      "predicted": "Sam is a lempus.",
+      "ground_truth": "Sam is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 655,
+      "predicted": "Tom is a lorpus.",
+      "ground_truth": "Tom is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 656,
+      "predicted": "Jack is a numpus.",
+      "ground_truth": "Jack is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 657,
+      "predicted": "Fae is a quimpus.",
+      "ground_truth": "Fae is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 658,
+      "predicted": "Davis is a lorpus.",
+      "ground_truth": "Davis is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 659,
+      "predicted": "Jack is a rorpus.",
+      "ground_truth": "Jack is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 660,
+      "predicted": "Stella is a gwompus.",
+      "ground_truth": "Stella is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 661,
+      "predicted": "Sam is a quimpus.",
+      "ground_truth": "Sam is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 662,
+      "predicted": "Fae is a storpus.",
+      "ground_truth": "Fae is a terpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 663,
+      "predicted": "Stella is a timpus.",
+      "ground_truth": "Stella is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 664,
+      "predicted": "Rex is a sterpus.",
+      "ground_truth": "Rex is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 665,
+      "predicted": "Carol is a chorpus.",
+      "ground_truth": "Carol is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 666,
+      "predicted": "Alex is a gorpus.",
+      "ground_truth": "Alex is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 667,
+      "predicted": "Polly is a brimpus.",
+      "ground_truth": "Polly is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 668,
+      "predicted": "Tom is a zumpus.",
+      "ground_truth": "Tom is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 669,
+      "predicted": "Carol is a quimpus.",
+      "ground_truth": "Carol is a lorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 670,
+      "predicted": "Carol is a rompus.",
+      "ground_truth": "Carol is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 671,
+      "predicted": "Bob is a lorpus.",
+      "ground_truth": "Bob is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 672,
+      "predicted": "Eva is a lorpus.",
+      "ground_truth": "Eva is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 673,
+      "predicted": "Carol is a tumpus.",
+      "ground_truth": "Carol is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 674,
+      "predicted": "Davis is a quimpus.",
+      "ground_truth": "Davis is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 675,
+      "predicted": "Wren is a tumpus.",
+      "ground_truth": "Wren is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 676,
+      "predicted": "Polly is a vumpus.",
+      "ground_truth": "Polly is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 677,
+      "predicted": "Tom is a yumpus.",
+      "ground_truth": "Tom is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 678,
+      "predicted": "Gabriel is a jelpus.",
+      "ground_truth": "Gabriel is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 679,
+      "predicted": "Sally is a dumpus.",
+      "ground_truth": "Sally is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 680,
+      "predicted": "Jack is a boompus.",
+      "ground_truth": "Jack is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 681,
+      "predicted": "Rex is a chorpus.",
+      "ground_truth": "Rex is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 682,
+      "predicted": "Alex is a bompus.",
+      "ground_truth": "Alex is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 683,
+      "predicted": "Polly is a vumpus.",
+      "ground_truth": "Polly is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 684,
+      "predicted": "Eva is a bompus.",
+      "ground_truth": "Eva is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 685,
+      "predicted": "Alex is a bompus.",
+      "ground_truth": "Alex is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 686,
+      "predicted": "Jack is a numpus.",
+      "ground_truth": "Jack is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 687,
+      "predicted": "Bob is a yerpus.",
+      "ground_truth": "Bob is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 688,
+      "predicted": "Wren is a terpus.",
+      "ground_truth": "Wren is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 689,
+      "predicted": "Carol is a impus.",
+      "ground_truth": "Carol is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 690,
+      "predicted": "Bob is a dumpus.",
+      "ground_truth": "Bob is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 691,
+      "predicted": "Jack is a rempus.",
+      "ground_truth": "Jack is a rempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 692,
+      "predicted": "Bob is a yumpus.",
+      "ground_truth": "Bob is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 693,
+      "predicted": "Jack is a chorpus.",
+      "ground_truth": "Jack is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 694,
+      "predicted": "Tom is a yerpus.",
+      "ground_truth": "Tom is a chorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 695,
+      "predicted": "Oliver is a chorpus.",
+      "ground_truth": "Oliver is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 696,
+      "predicted": "Carol is a yerpus.",
+      "ground_truth": "Carol is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 697,
+      "predicted": "Sally is a scrompus.",
+      "ground_truth": "Sally is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 698,
+      "predicted": "Wren is a storpus.",
+      "ground_truth": "Wren is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 699,
+      "predicted": "Davis is a yimpus.",
+      "ground_truth": "Davis is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 700,
+      "predicted": "Sam is a terpus.",
+      "ground_truth": "Sam is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 701,
+      "predicted": "Alex is a dumpus.",
+      "ground_truth": "Alex is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 702,
+      "predicted": "Rex is a fompus.",
+      "ground_truth": "Rex is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 703,
+      "predicted": "Jack is a tumpus.",
+      "ground_truth": "Jack is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 704,
+      "predicted": "Davis is a timpus.",
+      "ground_truth": "Davis is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 705,
+      "predicted": "Wren is a hilpus.",
+      "ground_truth": "Wren is a sterpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 706,
+      "predicted": "Fae is a worpus.",
+      "ground_truth": "Fae is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 707,
+      "predicted": "Polly is a quimpus.",
+      "ground_truth": "Polly is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 708,
+      "predicted": "Davis is a jelpus.",
+      "ground_truth": "Davis is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 709,
+      "predicted": "Rex is a yimpus.",
+      "ground_truth": "Rex is a timpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 710,
+      "predicted": "Jack is a zumpus.",
+      "ground_truth": "Jack is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 711,
+      "predicted": "Wren is a hilpus.",
+      "ground_truth": "Wren is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 712,
+      "predicted": "Max is a chorpus.",
+      "ground_truth": "Max is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 713,
+      "predicted": "Oliver is a grimpus.",
+      "ground_truth": "Oliver is a lorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 714,
+      "predicted": "Polly is a yerpus.",
+      "ground_truth": "Polly is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 715,
+      "predicted": "Gabriel is a fompus.",
+      "ground_truth": "Gabriel is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 716,
+      "predicted": "Rex is a sterpus.",
+      "ground_truth": "Rex is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 717,
+      "predicted": "Fae is a boompus.",
+      "ground_truth": "Fae is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 718,
+      "predicted": "Oliver is a wumpus.",
+      "ground_truth": "Oliver is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 719,
+      "predicted": "Eva is a felpus.",
+      "ground_truth": "Eva is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 720,
+      "predicted": "Davis is a numpus.",
+      "ground_truth": "Davis is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 721,
+      "predicted": "Gabriel is a numpus.",
+      "ground_truth": "Gabriel is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 722,
+      "predicted": "Sally is a grimpus.",
+      "ground_truth": "Sally is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 723,
+      "predicted": "Polly is a shumpus.",
+      "ground_truth": "Polly is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 724,
+      "predicted": "Tom is a lempus.",
+      "ground_truth": "Tom is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 725,
+      "predicted": "Sally is a storpus.",
+      "ground_truth": "Sally is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 726,
+      "predicted": "Tom is a yumpus.",
+      "ground_truth": "Tom is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 727,
+      "predicted": "Davis is a yimpus.",
+      "ground_truth": "Davis is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 728,
+      "predicted": "Sally is a zumpus.",
+      "ground_truth": "Sally is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 729,
+      "predicted": "Alex is a impus.",
+      "ground_truth": "Alex is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 730,
+      "predicted": "Jack is a impus.",
+      "ground_truth": "Jack is a gwompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 731,
+      "predicted": "Max is a storpus.",
+      "ground_truth": "Max is a fompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 732,
+      "predicted": "Davis is a boompus.",
+      "ground_truth": "Davis is a boompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 733,
+      "predicted": "Sally is a sterpus.",
+      "ground_truth": "Sally is a lorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 734,
+      "predicted": "Carol is a wumpus.",
+      "ground_truth": "Carol is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 735,
+      "predicted": "Max is a gerpus.",
+      "ground_truth": "Max is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 736,
+      "predicted": "Sally is a fompus.",
+      "ground_truth": "Sally is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 737,
+      "predicted": "Rex is a yumpus.",
+      "ground_truth": "Rex is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 738,
+      "predicted": "Carol is a lempus.",
+      "ground_truth": "Carol is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 739,
+      "predicted": "Sally is a yumpus.",
+      "ground_truth": "Sally is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 740,
+      "predicted": "Rex is a terpus.",
+      "ground_truth": "Rex is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 741,
+      "predicted": "Oliver is a storpus.",
+      "ground_truth": "Oliver is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 742,
+      "predicted": "Alex is a yerpus.",
+      "ground_truth": "Alex is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 743,
+      "predicted": "Davis is a jelpus.",
+      "ground_truth": "Davis is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 744,
+      "predicted": "Sam is a gwompus.",
+      "ground_truth": "Sam is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 745,
+      "predicted": "Tom is a sterpus.",
+      "ground_truth": "Tom is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 746,
+      "predicted": "Sam is a sterpus.",
+      "ground_truth": "Sam is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 747,
+      "predicted": "Gabriel is a rompus.",
+      "ground_truth": "Gabriel is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 748,
+      "predicted": "Davis is a grimpus.",
+      "ground_truth": "Davis is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 749,
+      "predicted": "Oliver is a hilpus.",
+      "ground_truth": "Oliver is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 750,
+      "predicted": "Eva is a rorpus.",
+      "ground_truth": "Eva is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 751,
+      "predicted": "Sally is a jelpus.",
+      "ground_truth": "Sally is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 752,
+      "predicted": "Polly is a hilpus.",
+      "ground_truth": "Polly is a numpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 753,
+      "predicted": "Alex is a rempus.",
+      "ground_truth": "Alex is a rempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 754,
+      "predicted": "Eva is a yumpus.",
+      "ground_truth": "Eva is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 755,
+      "predicted": "Gabriel is a vumpus.",
+      "ground_truth": "Gabriel is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 756,
+      "predicted": "Eva is a tumpus.",
+      "ground_truth": "Eva is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 757,
+      "predicted": "Sam is a yimpus.",
+      "ground_truth": "Sam is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 758,
+      "predicted": "Carol is a bompus.",
+      "ground_truth": "Carol is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 759,
+      "predicted": "Jack is a brimpus.",
+      "ground_truth": "Jack is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 760,
+      "predicted": "Max is a brimpus.",
+      "ground_truth": "Max is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 761,
+      "predicted": "Stella is a lorpus.",
+      "ground_truth": "Stella is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 762,
+      "predicted": "Tom is a storpus.",
+      "ground_truth": "Tom is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 763,
+      "predicted": "Tom is a zhorpus.",
+      "ground_truth": "Tom is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 764,
+      "predicted": "Gabriel is a boompus.",
+      "ground_truth": "Gabriel is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 765,
+      "predicted": "Davis is a grimpus.",
+      "ground_truth": "Davis is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 766,
+      "predicted": "Davis is a gerpus.",
+      "ground_truth": "Davis is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 767,
+      "predicted": "Wren is a rorpus.",
+      "ground_truth": "Wren is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 768,
+      "predicted": "Sally is a lempus.",
+      "ground_truth": "Sally is a sterpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 769,
+      "predicted": "Carol is a hilpus.",
+      "ground_truth": "Carol is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 770,
+      "predicted": "Sally is a impus.",
+      "ground_truth": "Sally is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 771,
+      "predicted": "Rex is a terpus.",
+      "ground_truth": "Rex is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 772,
+      "predicted": "Tom is a lorpus.",
+      "ground_truth": "Tom is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 773,
+      "predicted": "Alex is a grimpus.",
+      "ground_truth": "Alex is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 774,
+      "predicted": "Gabriel is a fompus.",
+      "ground_truth": "Gabriel is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 775,
+      "predicted": "Oliver is a timpus.",
+      "ground_truth": "Oliver is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 776,
+      "predicted": "Eva is a sterpus.",
+      "ground_truth": "Eva is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 777,
+      "predicted": "Max is a scrompus.",
+      "ground_truth": "Max is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 778,
+      "predicted": "Sally is a timpus.",
+      "ground_truth": "Sally is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 779,
+      "predicted": "Gabriel is a hilpus.",
+      "ground_truth": "Gabriel is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 780,
+      "predicted": "Bob is a gerpus.",
+      "ground_truth": "Bob is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 781,
+      "predicted": "Bob is a dumpus.",
+      "ground_truth": "Bob is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 782,
+      "predicted": "Wren is a zhorpus.",
+      "ground_truth": "Wren is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 783,
+      "predicted": "Davis is a gwompus.",
+      "ground_truth": "Davis is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 784,
+      "predicted": "Jack is a chorpus.",
+      "ground_truth": "Jack is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 785,
+      "predicted": "Jack is a impus.",
+      "ground_truth": "Jack is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 786,
+      "predicted": "Polly is a gorpus.",
+      "ground_truth": "Polly is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 787,
+      "predicted": "Tom is a shumpus.",
+      "ground_truth": "Tom is a shumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 788,
+      "predicted": "Stella is a numpus.",
+      "ground_truth": "Stella is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 789,
+      "predicted": "Bob is a jelpus.",
+      "ground_truth": "Bob is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 790,
+      "predicted": "Carol is a felpus.",
+      "ground_truth": "Carol is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 791,
+      "predicted": "Davis is a gerpus.",
+      "ground_truth": "Davis is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 792,
+      "predicted": "Tom is a chorpus.",
+      "ground_truth": "Tom is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 793,
+      "predicted": "Carol is a storpus.",
+      "ground_truth": "Carol is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 794,
+      "predicted": "Oliver is a yerpus.",
+      "ground_truth": "Oliver is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 795,
+      "predicted": "Max is a hilpus.",
+      "ground_truth": "Max is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 796,
+      "predicted": "Davis is a scrompus.",
+      "ground_truth": "Davis is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 797,
+      "predicted": "Sam is a felpus.",
+      "ground_truth": "Sam is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 798,
+      "predicted": "Davis is a hilpus.",
+      "ground_truth": "Davis is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 799,
+      "predicted": "Oliver is a bompus.",
+      "ground_truth": "Oliver is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 800,
+      "predicted": "Oliver is a lempus.",
+      "ground_truth": "Oliver is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 801,
+      "predicted": "Sally is a rompus.",
+      "ground_truth": "Sally is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 802,
+      "predicted": "Eva is a worpus.",
+      "ground_truth": "Eva is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 803,
+      "predicted": "Tom is a vumpus.",
+      "ground_truth": "Tom is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 804,
+      "predicted": "Oliver is a timpus.",
+      "ground_truth": "Oliver is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 805,
+      "predicted": "Davis is a grimpus.",
+      "ground_truth": "Davis is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 806,
+      "predicted": "Max is a yimpus.",
+      "ground_truth": "Max is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 807,
+      "predicted": "Jack is a felpus.",
+      "ground_truth": "Jack is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 808,
+      "predicted": "Max is a rorpus.",
+      "ground_truth": "Max is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 809,
+      "predicted": "Alex is a yimpus.",
+      "ground_truth": "Alex is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 810,
+      "predicted": "Gabriel is a jompus.",
+      "ground_truth": "Gabriel is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 811,
+      "predicted": "Alex is a fompus.",
+      "ground_truth": "Alex is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 812,
+      "predicted": "Sam is a zumpus.",
+      "ground_truth": "Sam is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 813,
+      "predicted": "Tom is a quimpus.",
+      "ground_truth": "Tom is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 814,
+      "predicted": "Wren is a chorpus.",
+      "ground_truth": "Wren is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 815,
+      "predicted": "Sam is a yumpus.",
+      "ground_truth": "Sam is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 816,
+      "predicted": "Fae is a jelpus.",
+      "ground_truth": "Fae is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 817,
+      "predicted": "Jack is a felpus.",
+      "ground_truth": "Jack is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 818,
+      "predicted": "Carol is a vumpus.",
+      "ground_truth": "Carol is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 819,
+      "predicted": "Gabriel is a chorpus.",
+      "ground_truth": "Gabriel is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 820,
+      "predicted": "Fae is a kerpus.",
+      "ground_truth": "Fae is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 821,
+      "predicted": "Max is a numpus.",
+      "ground_truth": "Max is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 822,
+      "predicted": "Sam is a worpus.",
+      "ground_truth": "Sam is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 823,
+      "predicted": "Gabriel is a jompus.",
+      "ground_truth": "Gabriel is a jompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 824,
+      "predicted": "Tom is a tumpus.",
+      "ground_truth": "Tom is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 825,
+      "predicted": "Sally is a yimpus.",
+      "ground_truth": "Sally is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 826,
+      "predicted": "Max is a impus.",
+      "ground_truth": "Max is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 827,
+      "predicted": "Tom is a yimpus.",
+      "ground_truth": "Tom is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 828,
+      "predicted": "Wren is a grimpus.",
+      "ground_truth": "Wren is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 829,
+      "predicted": "Wren is a rorpus.",
+      "ground_truth": "Wren is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 830,
+      "predicted": "Eva is a vumpus.",
+      "ground_truth": "Eva is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 831,
+      "predicted": "Jack is a rorpus.",
+      "ground_truth": "Jack is a rorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 832,
+      "predicted": "Tom is a gwompus.",
+      "ground_truth": "Tom is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 833,
+      "predicted": "Fae is a timpus.",
+      "ground_truth": "Fae is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 834,
+      "predicted": "Fae is a timpus.",
+      "ground_truth": "Fae is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 835,
+      "predicted": "Fae is a terpus.",
+      "ground_truth": "Fae is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 836,
+      "predicted": "Bob is a worpus.",
+      "ground_truth": "Bob is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 837,
+      "predicted": "Eva is a grimpus.",
+      "ground_truth": "Eva is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 838,
+      "predicted": "Jack is a dumpus.",
+      "ground_truth": "Jack is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 839,
+      "predicted": "Bob is a felpus.",
+      "ground_truth": "Bob is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 840,
+      "predicted": "Polly is a bompus.",
+      "ground_truth": "Polly is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 841,
+      "predicted": "Bob is a storpus.",
+      "ground_truth": "Bob is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 842,
+      "predicted": "Stella is a worpus.",
+      "ground_truth": "Stella is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 843,
+      "predicted": "Stella is a bompus.",
+      "ground_truth": "Stella is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 844,
+      "predicted": "Bob is a yerpus.",
+      "ground_truth": "Bob is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 845,
+      "predicted": "Bob is a worpus.",
+      "ground_truth": "Bob is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 846,
+      "predicted": "Davis is a boompus.",
+      "ground_truth": "Davis is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 847,
+      "predicted": "Wren is a tumpus.",
+      "ground_truth": "Wren is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 848,
+      "predicted": "Gabriel is a impus.",
+      "ground_truth": "Gabriel is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 849,
+      "predicted": "Eva is a quimpus.",
+      "ground_truth": "Eva is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 850,
+      "predicted": "Polly is a shumpus.",
+      "ground_truth": "Polly is a kerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 851,
+      "predicted": "Sam is a kerpus.",
+      "ground_truth": "Sam is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 852,
+      "predicted": "Polly is a scrompus.",
+      "ground_truth": "Polly is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 853,
+      "predicted": "Sam is a zhorpus.",
+      "ground_truth": "Sam is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 854,
+      "predicted": "Sally is a brimpus.",
+      "ground_truth": "Sally is a brimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 855,
+      "predicted": "Tom is a gorpus.",
+      "ground_truth": "Tom is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 856,
+      "predicted": "Max is a bompus.",
+      "ground_truth": "Max is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 857,
+      "predicted": "Fae is a hilpus.",
+      "ground_truth": "Fae is a hilpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 858,
+      "predicted": "Davis is a timpus.",
+      "ground_truth": "Davis is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 859,
+      "predicted": "Sally is a wumpus.",
+      "ground_truth": "Sally is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 860,
+      "predicted": "Gabriel is a grimpus.",
+      "ground_truth": "Gabriel is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 861,
+      "predicted": "Sam is a kerpus.",
+      "ground_truth": "Sam is a kerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 862,
+      "predicted": "Bob is a yerpus.",
+      "ground_truth": "Bob is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 863,
+      "predicted": "Max is a scrompus.",
+      "ground_truth": "Max is a yimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 864,
+      "predicted": "Oliver is a storpus.",
+      "ground_truth": "Oliver is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 865,
+      "predicted": "Fae is a hilpus.",
+      "ground_truth": "Fae is a sterpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 866,
+      "predicted": "Tom is a rorpus.",
+      "ground_truth": "Tom is a tumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 867,
+      "predicted": "Alex is a worpus.",
+      "ground_truth": "Alex is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 868,
+      "predicted": "Jack is a quimpus.",
+      "ground_truth": "Jack is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 869,
+      "predicted": "Rex is a quimpus.",
+      "ground_truth": "Rex is a brimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 870,
+      "predicted": "Stella is a jelpus.",
+      "ground_truth": "Stella is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 871,
+      "predicted": "Oliver is a worpus.",
+      "ground_truth": "Oliver is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 872,
+      "predicted": "Sally is a bompus.",
+      "ground_truth": "Sally is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 873,
+      "predicted": "Tom is a wumpus.",
+      "ground_truth": "Tom is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 874,
+      "predicted": "Bob is a scrompus.",
+      "ground_truth": "Bob is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 875,
+      "predicted": "Davis is a impus.",
+      "ground_truth": "Davis is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 876,
+      "predicted": "Bob is a yerpus.",
+      "ground_truth": "Bob is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 877,
+      "predicted": "Davis is a bompus.",
+      "ground_truth": "Davis is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 878,
+      "predicted": "Tom is a terpus.",
+      "ground_truth": "Tom is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 879,
+      "predicted": "Stella is a gerpus.",
+      "ground_truth": "Stella is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 880,
+      "predicted": "Davis is a impus.",
+      "ground_truth": "Davis is a zumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 881,
+      "predicted": "Gabriel is a tumpus.",
+      "ground_truth": "Gabriel is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 882,
+      "predicted": "Carol is a felpus.",
+      "ground_truth": "Carol is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 883,
+      "predicted": "Polly is a terpus.",
+      "ground_truth": "Polly is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 884,
+      "predicted": "Eva is a numpus.",
+      "ground_truth": "Eva is a rorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 885,
+      "predicted": "Fae is a scrompus.",
+      "ground_truth": "Fae is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 886,
+      "predicted": "Davis is a zumpus.",
+      "ground_truth": "Davis is a lempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 887,
+      "predicted": "Polly is a jompus.",
+      "ground_truth": "Polly is a yumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 888,
+      "predicted": "Stella is a grimpus.",
+      "ground_truth": "Stella is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 889,
+      "predicted": "Bob is a numpus.",
+      "ground_truth": "Bob is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 890,
+      "predicted": "Gabriel is a storpus.",
+      "ground_truth": "Gabriel is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 891,
+      "predicted": "Alex is a yumpus.",
+      "ground_truth": "Alex is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 892,
+      "predicted": "Jack is a yerpus.",
+      "ground_truth": "Jack is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 893,
+      "predicted": "Wren is a hilpus.",
+      "ground_truth": "Wren is a scrompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 894,
+      "predicted": "Fae is a quimpus.",
+      "ground_truth": "Fae is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 895,
+      "predicted": "Tom is a fompus.",
+      "ground_truth": "Tom is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 896,
+      "predicted": "Wren is a boompus.",
+      "ground_truth": "Wren is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 897,
+      "predicted": "Gabriel is a lorpus.",
+      "ground_truth": "Gabriel is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 898,
+      "predicted": "Tom is a rompus.",
+      "ground_truth": "Tom is a rompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 899,
+      "predicted": "Rex is a fompus.",
+      "ground_truth": "Rex is a fompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 900,
+      "predicted": "Wren is a hilpus.",
+      "ground_truth": "Wren is a quimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 901,
+      "predicted": "Sam is a lempus.",
+      "ground_truth": "Sam is a numpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 902,
+      "predicted": "Max is a quimpus.",
+      "ground_truth": "Max is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 903,
+      "predicted": "Rex is a gwompus.",
+      "ground_truth": "Rex is a gwompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 904,
+      "predicted": "Fae is a worpus.",
+      "ground_truth": "Fae is a worpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 905,
+      "predicted": "Max is a lempus.",
+      "ground_truth": "Max is a lempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 906,
+      "predicted": "Bob is a rempus.",
+      "ground_truth": "Bob is a rempus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 907,
+      "predicted": "Gabriel is a vumpus.",
+      "ground_truth": "Gabriel is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 908,
+      "predicted": "Carol is a tumpus.",
+      "ground_truth": "Carol is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 909,
+      "predicted": "Bob is a yerpus.",
+      "ground_truth": "Bob is a lorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 910,
+      "predicted": "Eva is a wumpus.",
+      "ground_truth": "Eva is a wumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 911,
+      "predicted": "Oliver is a scrompus.",
+      "ground_truth": "Oliver is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 912,
+      "predicted": "Max is a timpus.",
+      "ground_truth": "Max is a jompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 913,
+      "predicted": "Max is a terpus.",
+      "ground_truth": "Max is a gorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 914,
+      "predicted": "Oliver is a tumpus.",
+      "ground_truth": "Oliver is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 915,
+      "predicted": "Rex is a gerpus.",
+      "ground_truth": "Rex is a yimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 916,
+      "predicted": "Fae is a sterpus.",
+      "ground_truth": "Fae is a vumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 917,
+      "predicted": "Sally is a sterpus.",
+      "ground_truth": "Sally is a scrompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 918,
+      "predicted": "Rex is a vumpus.",
+      "ground_truth": "Rex is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 919,
+      "predicted": "Wren is a yumpus.",
+      "ground_truth": "Wren is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 920,
+      "predicted": "Max is a zumpus.",
+      "ground_truth": "Max is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 921,
+      "predicted": "Rex is a rompus.",
+      "ground_truth": "Rex is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 922,
+      "predicted": "Carol is a timpus.",
+      "ground_truth": "Carol is a scrompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 923,
+      "predicted": "Sam is a sterpus.",
+      "ground_truth": "Sam is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 924,
+      "predicted": "Sam is a lorpus.",
+      "ground_truth": "Sam is a lorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 925,
+      "predicted": "Jack is a timpus.",
+      "ground_truth": "Jack is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 926,
+      "predicted": "Bob is a dumpus.",
+      "ground_truth": "Bob is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 927,
+      "predicted": "Rex is a gerpus.",
+      "ground_truth": "Rex is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 928,
+      "predicted": "Gabriel is a timpus.",
+      "ground_truth": "Gabriel is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 929,
+      "predicted": "Oliver is a chorpus.",
+      "ground_truth": "Oliver is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 930,
+      "predicted": "Oliver is a quimpus.",
+      "ground_truth": "Oliver is a quimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 931,
+      "predicted": "Gabriel is a zumpus.",
+      "ground_truth": "Gabriel is a zumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 932,
+      "predicted": "Jack is a numpus.",
+      "ground_truth": "Jack is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 933,
+      "predicted": "Wren is a timpus.",
+      "ground_truth": "Wren is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 934,
+      "predicted": "Fae is a gerpus.",
+      "ground_truth": "Fae is a wumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 935,
+      "predicted": "Oliver is a grimpus.",
+      "ground_truth": "Oliver is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 936,
+      "predicted": "Sally is a yumpus.",
+      "ground_truth": "Sally is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 937,
+      "predicted": "Wren is a scrompus.",
+      "ground_truth": "Wren is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 938,
+      "predicted": "Sam is a jelpus.",
+      "ground_truth": "Sam is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 939,
+      "predicted": "Gabriel is a zumpus.",
+      "ground_truth": "Gabriel is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 940,
+      "predicted": "Sam is a impus.",
+      "ground_truth": "Sam is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 941,
+      "predicted": "Wren is a zumpus.",
+      "ground_truth": "Wren is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 942,
+      "predicted": "Rex is a impus.",
+      "ground_truth": "Rex is a shumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 943,
+      "predicted": "Max is a chorpus.",
+      "ground_truth": "Max is a chorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 944,
+      "predicted": "Rex is a gerpus.",
+      "ground_truth": "Rex is a gerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 945,
+      "predicted": "Oliver is a yumpus.",
+      "ground_truth": "Oliver is a yumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 946,
+      "predicted": "Fae is a bompus.",
+      "ground_truth": "Fae is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 947,
+      "predicted": "Max is a yimpus.",
+      "ground_truth": "Max is a storpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 948,
+      "predicted": "Wren is a dumpus.",
+      "ground_truth": "Wren is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 949,
+      "predicted": "Sally is a jelpus.",
+      "ground_truth": "Sally is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 950,
+      "predicted": "Oliver is a zhorpus.",
+      "ground_truth": "Oliver is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 951,
+      "predicted": "Rex is a yimpus.",
+      "ground_truth": "Rex is a yimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 952,
+      "predicted": "Polly is a dumpus.",
+      "ground_truth": "Polly is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 953,
+      "predicted": "Rex is a terpus.",
+      "ground_truth": "Rex is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 954,
+      "predicted": "Alex is a grimpus.",
+      "ground_truth": "Alex is a dumpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 955,
+      "predicted": "Jack is a impus.",
+      "ground_truth": "Jack is a impus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 956,
+      "predicted": "Polly is a gerpus.",
+      "ground_truth": "Polly is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 957,
+      "predicted": "Rex is a jelpus.",
+      "ground_truth": "Rex is a grimpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 958,
+      "predicted": "Rex is a yerpus.",
+      "ground_truth": "Rex is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 959,
+      "predicted": "Oliver is a gerpus.",
+      "ground_truth": "Oliver is a fompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 960,
+      "predicted": "Bob is a yimpus.",
+      "ground_truth": "Bob is a worpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 961,
+      "predicted": "Eva is a scrompus.",
+      "ground_truth": "Eva is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 962,
+      "predicted": "Rex is a grimpus.",
+      "ground_truth": "Rex is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 963,
+      "predicted": "Oliver is a jelpus.",
+      "ground_truth": "Oliver is a jelpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 964,
+      "predicted": "Davis is a terpus.",
+      "ground_truth": "Davis is a terpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 965,
+      "predicted": "Gabriel is a gorpus.",
+      "ground_truth": "Gabriel is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 966,
+      "predicted": "Fae is a yerpus.",
+      "ground_truth": "Fae is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 967,
+      "predicted": "Oliver is a sterpus.",
+      "ground_truth": "Oliver is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 968,
+      "predicted": "Oliver is a chorpus.",
+      "ground_truth": "Oliver is a yerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 969,
+      "predicted": "Sally is a felpus.",
+      "ground_truth": "Sally is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 970,
+      "predicted": "Fae is a tumpus.",
+      "ground_truth": "Fae is a tumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 971,
+      "predicted": "Rex is a timpus.",
+      "ground_truth": "Rex is a timpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 972,
+      "predicted": "Carol is a lorpus.",
+      "ground_truth": "Carol is a boompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 973,
+      "predicted": "Oliver is a shumpus.",
+      "ground_truth": "Oliver is a impus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 974,
+      "predicted": "Bob is a felpus.",
+      "ground_truth": "Bob is a felpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 975,
+      "predicted": "Wren is a scrompus.",
+      "ground_truth": "Wren is a scrompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 976,
+      "predicted": "Eva is a rompus.",
+      "ground_truth": "Eva is a rempus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 977,
+      "predicted": "Wren is a scrompus.",
+      "ground_truth": "Wren is a jelpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 978,
+      "predicted": "Eva is a vumpus.",
+      "ground_truth": "Eva is a vumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 979,
+      "predicted": "Bob is a rompus.",
+      "ground_truth": "Bob is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 980,
+      "predicted": "Oliver is a quimpus.",
+      "ground_truth": "Oliver is a rompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 981,
+      "predicted": "Jack is a gorpus.",
+      "ground_truth": "Jack is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 982,
+      "predicted": "Fae is a sterpus.",
+      "ground_truth": "Fae is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 983,
+      "predicted": "Sally is a worpus.",
+      "ground_truth": "Sally is a gerpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 984,
+      "predicted": "Stella is a numpus.",
+      "ground_truth": "Stella is a numpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 985,
+      "predicted": "Alex is a dumpus.",
+      "ground_truth": "Alex is a dumpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 986,
+      "predicted": "Stella is a lorpus.",
+      "ground_truth": "Stella is a bompus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 987,
+      "predicted": "Oliver is a wumpus.",
+      "ground_truth": "Oliver is a hilpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 988,
+      "predicted": "Sally is a lorpus.",
+      "ground_truth": "Sally is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 989,
+      "predicted": "Sam is a bompus.",
+      "ground_truth": "Sam is a bompus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 990,
+      "predicted": "Gabriel is a sterpus.",
+      "ground_truth": "Gabriel is a sterpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 991,
+      "predicted": "Rex is a sterpus.",
+      "ground_truth": "Rex is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 992,
+      "predicted": "Tom is a wumpus.",
+      "ground_truth": "Tom is a zhorpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 993,
+      "predicted": "Polly is a zhorpus.",
+      "ground_truth": "Polly is a zhorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 994,
+      "predicted": "Eva is a gorpus.",
+      "ground_truth": "Eva is a gorpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 995,
+      "predicted": "Max is a yerpus.",
+      "ground_truth": "Max is a yerpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 996,
+      "predicted": "Alex is a grimpus.",
+      "ground_truth": "Alex is a grimpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 997,
+      "predicted": "Alex is a storpus.",
+      "ground_truth": "Alex is a storpus.",
+      "correct": true
+    },
+    {
+      "sample_idx": 998,
+      "predicted": "Jack is a wumpus.",
+      "ground_truth": "Jack is a felpus.",
+      "correct": false
+    },
+    {
+      "sample_idx": 999,
+      "predicted": "Davis is a jelpus.",
+      "ground_truth": "Davis is a jelpus.",
+      "correct": true
+    }
+  ],
+  "accuracy": 0.592
+}

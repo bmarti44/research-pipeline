@@ -1,0 +1,184 @@
+{
+  "reviewer": "Skeptic / Devil's Advocate",
+  "checkpoint": "manuscript_review_round2",
+  "round": 4,
+  "timestamp": "2026-02-14T19:30:00Z",
+  "files_reviewed": [
+    "papers/efficient_architecture_proof/manuscript/manuscript.md",
+    "papers/efficient_architecture_proof/results/appendix_data.json",
+    "papers/efficient_architecture_proof/results/cross_corruption.json",
+    "papers/efficient_architecture_proof/results/mcnemar_verification.json",
+    "papers/efficient_architecture_proof/results/selectivity_recomputed.json",
+    "papers/efficient_architecture_proof/results/unmatched_transplant.json",
+    "papers/efficient_architecture_proof/results/permutation_power.json",
+    "papers/efficient_architecture_proof/results/per_sample_correctness.json",
+    "papers/efficient_architecture_proof/results/m3_linear_perm.json",
+    "papers/efficient_architecture_proof/reviews/skeptic_review.json"
+  ],
+  "findings": [
+    {
+      "id": "F001",
+      "severity": "critical",
+      "category": "design",
+      "description": "The forward-pass asymmetry remains the paper's most serious uncontrolled confound. M3 executes 6 sequential forward passes through 12 transformer layers (72 effective layers of computation), while M5 executes a single forward pass (12 effective layers). The manuscript now acknowledges this in Section 3.2 and Section 6, and even notes the missing control ('a third control that executes six forward passes without recycling... which we leave to future work'). However, acknowledging a confound is not the same as resolving it. Every central claim in the paper -- that M5 'matches' M3 on in-distribution accuracy, that corruption profiles are 'identical', that probing selectivity is 'equivalent' -- is confounded by this 6x compute asymmetry. M5 matching M3 with 1/6 of the forward passes is at least as consistent with 'M3 is massively over-provisioned in compute for ProsQA' as it is with 'the recycling mechanism is unnecessary.' The paper cannot distinguish between these interpretations. More critically, M3's advantage on DAGs (the one case where M3 wins) could be entirely attributable to extra compute depth rather than to the information content of recycled hidden states. Without a control that executes 6 forward passes while injecting fixed embeddings (not recycled states) at each pass, the paper's causal attribution is logically incomplete. The paper's argument that the asymmetry is 'directionally favorable' (Section 3.2) assumes the conclusion it is trying to prove.",
+      "location": "Section 3.2 (paragraph beginning 'M5 requires approximately one-sixth'), Section 6 (Forward-pass asymmetry limitation), Section 5.3 (Sequential Bottleneck discussion)",
+      "recommendation": "Either (a) implement the missing control (6-pass with fixed embedding re-injection, no recycling) to disentangle depth from recycling content, or (b) substantially weaken all causal claims to acknowledge that the recycling mechanism and the computational depth it provides are confounded and cannot be separated by this experimental design. Option (b) would require revising the title, abstract, and conclusion to avoid the phrase 'not the continuous latent mechanism' and instead say something like 'not uniquely attributable to the continuous latent mechanism versus additional computational depth.'",
+      "resolution_required": true
+    },
+    {
+      "id": "F002",
+      "severity": "critical",
+      "category": "logic",
+      "description": "The paper's thesis rests on a chain of null results: zero permutation flips, identical corruption profiles, identical selectivity, successful transplantation. The convergent evidence table (Table 6) is compelling in structure, but every row produces a null or near-null result for distinguishing M3 from M5, and no formal power analysis is provided for ANY of these null comparisons. The permutation test has a documented sensitivity floor (0.06% at 95% confidence from the power analysis in Appendix A.4), but this is the only null test with quantified sensitivity. For the remaining diagnostics -- corruption profile similarity, selectivity similarity (0.3pp difference at position 3), transplantation success, thought-vs-input advantage similarity -- no equivalence testing is performed. The paper treats 'not statistically different' as 'the same,' which is the canonical null-result fallacy. With n=500 samples and binary outcomes, McNemar's test may have adequate power for large effects (which the paper does provide for the OOD comparisons), but the corruption, probing, and transplantation comparisons are assessed informally ('identical profiles,' 'near-identical selectivity') without equivalence bounds. What magnitude of difference in corruption profiles would the paper consider evidence AGAINST the curriculum hypothesis? This is never specified, meaning the hypothesis is unfalsifiable by the paper's own experimental design -- any observed similarity confirms it, and any observed difference (e.g., the DAG result) is explained away as a 'tradeoff.'",
+      "location": "Section 4.2 (corruption), Section 4.3 (probing), Section 5.1 (convergent evidence table)",
+      "recommendation": "Define a priori equivalence bounds for each null comparison and perform formal equivalence tests (e.g., TOST -- Two One-Sided Tests -- for continuous measures like selectivity and probe accuracy differences). Alternatively, frame all null results using confidence intervals rather than point estimates, so readers can assess how large the true difference might plausibly be. As currently presented, 'identical' is an unsupported characterization -- the appropriate claim is 'not detectably different at n=500 with these measurement instruments.'",
+      "resolution_required": true
+    },
+    {
+      "id": "F003",
+      "severity": "major",
+      "category": "logic",
+      "description": "The DAG result (M3 outperforms M5 by 7.3pp, p=0.0015 after Bonferroni) is the single strongest piece of evidence against the paper's main thesis, and the paper's handling of it is asymmetric. When M5 outperforms M3 on 3 of 4 OOD datasets, this is interpreted as evidence that the recycling mechanism is a 'sequential bottleneck' that 'constrains generalization.' When M3 outperforms M5 on DAGs, this is interpreted as a 'task-dependent tradeoff' where 'sequential state accumulation may provide a useful inductive bias.' The paper never seriously engages with the possibility that the DAG result indicates genuine reasoning-like computation in M3. If the recycling mechanism merely buffers, why does it provide a statistically significant advantage on a specific graph topology? The paper's explanation ('tracking path convergence') implicitly concedes that the recycled states carry structurally meaningful information -- which is precisely the claim the paper attempts to refute. The framing of M3's DAG advantage as a 'modest benefit' (7.3pp is neither modest nor trivial -- it is the same order of magnitude as M5's advantages on other datasets) reveals a systematic bias in interpretation: M5 advantages are 'substantial' evidence for the thesis while M3 advantages are 'modest tradeoffs.'",
+      "location": "Section 4.4 (Table 5, DAG row), Section 5.1 (Table 6 last row), Section 5.3 (last paragraph), Section 7 (Conclusion)",
+      "recommendation": "Provide a symmetric treatment of the DAG result. Either (a) investigate what specific properties of DAG problems M3 solves better than M5 (analyze the 73 samples where only M3 is correct vs. the 162 where only M5 is correct), or (b) explicitly acknowledge that the DAG result is inconsistent with a pure 'curriculum drives everything' interpretation and the paper's thesis should be stated as 'curriculum is necessary but the mechanism may contribute to specific task structures.' As written, the paper cherry-picks its interpretation: results favoring the thesis get full explanatory weight, while results contradicting the thesis are reframed as secondary 'tradeoffs.'",
+      "resolution_required": true
+    },
+    {
+      "id": "F004",
+      "severity": "major",
+      "category": "design",
+      "description": "All results are from a single training seed (seed 0). The manuscript acknowledges this in Section 6 and notes that 'the 0.4-percentage-point test-set gap... could widen or reverse under different random initializations.' This is correct but understates the severity. At GPT-2 124M scale with 17K training samples and a 7-stage curriculum, training dynamics are highly sensitive to initialization. The entire paper's contribution hinges on one pair of trained models. Every finding -- the 96.6% vs 97.0% comparison, the corruption profiles, the probing results, the OOD advantages -- describes the behavior of these two specific instances, not the behavior of 'COCONUT-class models' versus 'pause-class models.' The McNemar tests are internally valid (they correctly assess within-instance differences) but do not generalize. A reviewer reading this paper might reasonably ask: if you trained 10 seeds of each model, what fraction would show M5 outperforming M3 on 7-hop? What fraction would show the DAG reversal? What is the between-seed variance of the corruption cliff position? None of these questions can be answered. The paper's previous skeptic review (round 1) flagged this as K010 and recommended 3-5 seeds. The issue remains unresolved.",
+      "location": "Section 6 (Single seed limitation), all experimental results",
+      "recommendation": "Train a minimum of 3 seeds per model (5 preferred). Report mean and 95% CI for all metrics. Use paired permutation tests across seeds for architecture comparisons. If multi-seed training is computationally prohibitive, explicitly bound the paper's claims to 'these specific trained instances' rather than 'the COCONUT architecture' and 'the pause architecture.'",
+      "resolution_required": false
+    },
+    {
+      "id": "F005",
+      "severity": "major",
+      "category": "analysis",
+      "description": "The selectivity computation has a confusing data provenance trail that was flagged in the round 1 skeptic review (K007) and partially addressed in the revised manuscript (Appendix A.1). However, examining selectivity_recomputed.json reveals that the 'selectivity_aligned_grid' is still ALL ZEROS for both M3 and M5, while the 'selectivity_raw_grid' contains the non-zero values reported in the manuscript (e.g., M3 layer 0, position 3 = 0.520, M5 layer 12, position 3 = 0.523). The manuscript reports Table 4 values derived from the 'raw' grid but does not explain what the 'aligned' grid represents or why it is zero. Furthermore, the 'raw' selectivity values at position 3 vary substantially across layers for M3 (ranging from 0.221 at layer 8 to 0.523 at layer 12), and the manuscript cherry-picks the peak values for comparison. The 'corrected' selectivity reported in Table 4 for M3 uses layer 0, position 3 = 52.0pp, but examining the raw grid, layer 0 position 3 = 0.520 while layer 12 position 3 = 0.523. The manuscript states M3's 'peak probe accuracy' is at layer 0, position 3 (55.4%), but then reports selectivity also at layer 0 -- yet the peak selectivity is actually at layer 12 (0.523pp vs 0.520pp). This is a minor discrepancy, but the overall data provenance remains opaque: two different selectivity grids exist, one is all zeros, and the manuscript selectively reports from the non-zero one.",
+      "location": "Section 4.3 (Table 4), Appendix A.1, selectivity_recomputed.json",
+      "recommendation": "Clarify in the manuscript what 'selectivity_aligned' vs 'selectivity_raw' means computationally. Report the full range of position 3 selectivity across layers (not just the peak) to show how stable the +52pp finding is. Provide the exact formula used for the corrected selectivity computation and explain why the two grids produce different results.",
+      "resolution_required": false
+    },
+    {
+      "id": "F006",
+      "severity": "major",
+      "category": "logic",
+      "description": "The paper's probing analysis reveals that M3 has 29/78 significant cells versus M5's 11/78 -- nearly 3x more. M3 also has a higher thought-vs-input advantage (10.5% vs 4.0%). The manuscript acknowledges these differences but dismisses them with: 'this richer encoding does not translate to a behavioral advantage.' However, this dismissal relies on in-distribution accuracy (where both are at ceiling ~97%) as the sole behavioral measure. At ceiling, behavioral differences are undetectable by design -- both models are too accurate for differences to manifest. On OOD data (where behavioral differences ARE detectable), M3 does outperform M5 on DAGs. The paper thus uses ceiling-limited in-distribution accuracy to dismiss a significant representational difference, while the one OOD condition where performance diverges in M3's favor is attributed to a 'tradeoff.' This is a selective application of the 'presence vs. use' distinction: the paper invokes Ravichander et al.'s (2021) argument that decodable information may not be used, but only when it serves the paper's thesis. A more honest framing would be: M3's representations are richer and more broadly distributed, and while this does not help on in-distribution data (both at ceiling), it may contribute to M3's DAG advantage, and we cannot rule out benefits at other scales or tasks.",
+      "location": "Section 4.3 (last two paragraphs), Section 5.2 (paragraph 2)",
+      "recommendation": "Remove or qualify the claim that the representational difference has 'no behavioral consequence.' Instead, state that behavioral consequences cannot be detected at in-distribution ceiling accuracy, that DAG OOD performance may reflect a consequence of the richer representation, and that the functional significance of M3's broader encoding remains an open question.",
+      "resolution_required": false
+    },
+    {
+      "id": "F007",
+      "severity": "major",
+      "category": "framing",
+      "description": "The title 'Does COCONUT Reason or Buffer?' frames the paper as adjudicating a binary question, but the evidence actually supports a more nuanced answer that the paper itself arrives at: 'the recycling mechanism introduces a task-dependent generalization tradeoff rather than a uniform benefit.' The binary framing biases the reader toward expecting a clean answer, and the paper delivers one ('Buffer, mostly') when the evidence supports something more like 'The curriculum is the dominant factor for in-distribution performance, but the mechanism has task-specific effects on OOD generalization that are neither pure reasoning nor pure buffering.' The abstract's opening contrast ('Does COCONUT Reason or Buffer?') and the conclusion's summary sentence ('COCONUT's performance on ProsQA is primarily attributable to its training curriculum, not to the continuous latent mechanism') flatten a genuinely nuanced finding into a headline. This framing bias manifests throughout: whenever evidence supports the 'buffer' interpretation, it is presented as a main finding; whenever evidence supports the 'reasoning' interpretation (DAG advantage, richer representations, layer-0 probing signal), it is relegated to caveats, limitations, or 'tradeoffs.'",
+      "location": "Title, Abstract, Section 7 (Conclusion)",
+      "recommendation": "Consider a title that reflects the actual finding, e.g., 'Curriculum Drives COCONUT's In-Distribution Performance: Evidence from a Pause-Token Control.' Revise the abstract to present the DAG result as a co-equal finding rather than a caveat. Revise the conclusion to state that the mechanism has measurable effects (richer representations, DAG advantage) even if the curriculum is the dominant factor for in-distribution accuracy.",
+      "resolution_required": false
+    },
+    {
+      "id": "F008",
+      "severity": "major",
+      "category": "logic",
+      "description": "The cross-problem transplantation experiment (Section 4.2) is presented as evidence that thought tokens carry 'no problem-specific content.' However, this experiment has a fundamental design flaw: even after transplanting foreign thought tokens, the model retains access to its original input tokens through self-attention. For M3, the answer-relevant information is already present in the input token hidden states (the graph facts are in the input). The model can simply attend to input positions to solve the problem, treating transplanted thought tokens as noise. For M5, transplanting pause embeddings into a model that already uses pause embeddings is literally replacing nothing with nothing -- the pause embeddings carry no content by design, so transplanting them is vacuous. The fact that transplantation 'succeeds' (accuracy matches clean) is entirely predicted by both the reasoning hypothesis and the buffering hypothesis, making the experiment non-diagnostic. A genuinely informative transplant experiment would (a) transplant thought tokens while masking/corrupting input tokens, testing whether thoughts alone suffice, or (b) transplant thought tokens from a DIFFERENT model architecture (e.g., M3 thoughts into M5 or vice versa), testing cross-architecture compatibility.",
+      "location": "Section 4.2 (Cross-problem transplantation), Appendix A.3",
+      "recommendation": "Either (a) run the stronger version of the transplant experiment (mask input tokens, test if thoughts alone can drive correct answers -- if M3's thoughts can but M5's cannot, this strongly supports reasoning), or (b) clearly acknowledge in the manuscript that the current transplant experiment cannot distinguish reasoning from buffering because the model retains access to input tokens. The current text claims transplant success as evidence FOR buffering, but it is non-diagnostic.",
+      "resolution_required": false
+    },
+    {
+      "id": "F009",
+      "severity": "major",
+      "category": "analysis",
+      "description": "The MLP probe results (Appendix A.7) report 0/78 cells where nonlinear probes exceed linear probes, with MLP accuracy <= 0 across ALL cells. The manuscript acknowledges potential convergence failure with default scikit-learn hyperparameters. However, the manuscript still draws the conclusion: 'We found no evidence of nonlinearly encoded step information that linear probes miss.' A probe that returns 0% accuracy everywhere has failed as a measurement instrument -- it provides zero evidence about the underlying representation. Drawing ANY conclusion from a failed measurement is invalid. The previous skeptic review (K017) recommended either retraining with proper hyperparameter tuning or removing the claim. The manuscript added caveats but retained the conclusion. If the MLP probes uniformly failed to learn, the correct statement is: 'The nonlinear probing analysis was inconclusive due to apparent convergence failure of the MLP classifiers.'",
+      "location": "Appendix A.7, Section 4.3 (Table 4 row 'Cells where MLP > linear')",
+      "recommendation": "Change 'We found no evidence of nonlinearly encoded step information' to 'The nonlinear probing analysis was inconclusive; MLP probes achieved 0% accuracy across all cells, suggesting convergence failure rather than absence of nonlinear encoding.' Alternatively, retrain with tuned hyperparameters.",
+      "resolution_required": false
+    },
+    {
+      "id": "F010",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The corruption experiment applies Gaussian noise matched to each model's thought-token statistics. For M3, this produces perturbations with L2 distance ~203. For M5, L2 distance ~4. The cross-scale check applies M3-magnitude noise to M5 (Table A1), confirming the cliff persists. But the REVERSE cross-scale check (M5-magnitude noise, L2~4, applied to M3) is never reported. If M3's recycled hidden states genuinely carry sequential reasoning information, they might be MORE robust to small perturbations (L2~4) than to matched-statistics perturbations (L2~203), because small perturbations would be within the model's error-correction capacity. The missing check was flagged in the round 1 review (K011) and has not been addressed.",
+      "location": "Section 4.2, Table A1",
+      "recommendation": "Run M3 + M5-scale noise (L2~4) corruption. Report whether M3 is more robust to small perturbations than M5 is. If so, this suggests M3's representations carry error-correcting structure consistent with information-rich encoding.",
+      "resolution_required": false
+    },
+    {
+      "id": "F011",
+      "severity": "minor",
+      "category": "logic",
+      "description": "The paper does not report per-hop-count accuracy breakdowns for the in-distribution test set. ProsQA training paths range from 3 to 6 hops. If M3 and M5 differ on the hardest in-distribution problems (6-hop), this difference would be masked by the aggregate 97.0% vs 96.6% comparison (only 26 discordant samples out of 500). The aggregate McNemar test has low power to detect condition-specific differences. The probing analysis reveals that position 3 is critical and n=298 for position 3 -- these are the 3-hop and 4-hop problems. The ~40% of problems that are 5- or 6-hop may show different patterns. This analysis was recommended in the round 1 review (K020) and has not been provided.",
+      "location": "Section 4.1 (Table 2)",
+      "recommendation": "Report per-hop-count accuracy for M1, M3, and M5 on the in-distribution test set. If M3 outperforms M5 on 6-hop problems, this narrows the gap between the 'curriculum drives everything' interpretation and the 'recycling helps on harder problems' interpretation.",
+      "resolution_required": false
+    },
+    {
+      "id": "F012",
+      "severity": "minor",
+      "category": "framing",
+      "description": "The paper's opening paragraph states that Hao et al. (2024) attribute COCONUT's gain to 'the expressiveness of the continuous latent space, which they argue encodes a breadth-first search strategy.' However, Section 5.4 acknowledges that the paper's probing methodology tests for step-sequential encoding rather than for BFS superposition states: 'A probe designed to decode multiple frontier nodes simultaneously would provide a more targeted test of the BFS hypothesis and could reveal representational differences between M3 and M5 that our current analysis does not capture.' This is a significant self-acknowledged limitation: the paper sets up the BFS hypothesis as the target, acknowledges its probes cannot test it, and then concludes the mechanism is unnecessary. If the theoretical advantage of continuous thought is BFS-like superposition encoding (Zhu et al., 2025), and the probes are designed to test sequential step encoding, the probing results are simply measuring the wrong thing to adjudicate the BFS claim.",
+      "location": "Section 1 (Introduction, paragraph 1), Section 5.4 (paragraph 2)",
+      "recommendation": "Either (a) design and run a BFS-targeted probe (decode whether multiple frontier nodes are simultaneously represented at each thought position) or (b) explicitly scope the probing conclusions to sequential step encoding and avoid claiming they address the BFS hypothesis. The current structure -- raising BFS in the intro, acknowledging the probes don't test it in the discussion, but still concluding the mechanism is unnecessary -- is logically inconsistent.",
+      "resolution_required": false
+    },
+    {
+      "id": "F013",
+      "severity": "minor",
+      "category": "design",
+      "description": "The paper does not include any attention pattern analysis. Given that the core question is whether thought positions carry meaningful computation (reasoning) or provide structural compute resources (buffering), the information routing through attention heads is directly relevant. Visualizing how the answer-generating position attends to thought positions vs. input positions -- and whether this differs between M3 and M5 -- would provide mechanistic evidence beyond what probing and corruption offer. Probing shows what is DECODABLE from representations; attention analysis shows what is actually USED by the model. This distinction is precisely the one the paper invokes (Ravichander et al., 2021) but never operationalizes.",
+      "location": "General absence in experimental design",
+      "recommendation": "Add an attention pattern analysis comparing M3 and M5: (1) attention weights from the answer position to thought positions vs. input positions, (2) whether specific attention heads specialize in thought-position routing, (3) whether M3 and M5 show different information flow patterns. This would directly test the 'presence vs. use' question that probing cannot resolve.",
+      "resolution_required": false
+    },
+    {
+      "id": "F014",
+      "severity": "minor",
+      "category": "logic",
+      "description": "The paper presents the set-based/broadcast encoding pattern (anti-selectivity at positions 0-1, strong selectivity at position 3) as evidence AGAINST sequential reasoning. However, this pattern is also consistent with an efficient sequential reasoning strategy where intermediate results are propagated backward through self-attention. In a causal transformer, position 3 can attend to positions 0-2, but not vice versa. The curriculum could train the model to place the final answer at position 3 (the latest reliable position before answer generation), with the appearance of 'anti-selectivity' at positions 0-1 arising because the probes decode entity identity from input-token information that is accessible at all positions via self-attention, not because early positions actively 'broadcast' later-step information. The anti-selectivity observation is ambiguous: it could mean positions 0-1 encode later steps (broadcasting), or it could mean probes trained on positions 0-1 pick up on input-token information that happens to correlate with later steps.",
+      "location": "Section 4.3 (paragraph on anti-selectivity), Section 5.2",
+      "recommendation": "Acknowledge the ambiguity of anti-selectivity. Test whether the anti-selectivity at positions 0-1 disappears when probes are trained on thought-position hidden states AFTER subtracting the mean input-position hidden state (controlling for shared input information). If anti-selectivity persists after this control, it is more likely genuine broadcasting; if it disappears, it reflects probe leakage from input information.",
+      "resolution_required": false
+    },
+    {
+      "id": "F015",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "The paper reports that M3's peak probe accuracy at position 3 occurs at layer 0 (55.4%), while M5's peak is at layer 12 (57.0%). This is a striking difference: M3 has high decodability from the very first layer because recycled hidden states are injected at the embedding level, while M5 must build its representation through 12 layers of computation. However, the paper does not investigate the trajectory of probe accuracy across layers. For M3, does accuracy at position 3 DECREASE from layer 0 to middle layers and then increase again at layer 12 (suggesting the transformer processes and then reconstructs the recycled information)? Or does it monotonically decrease (suggesting the recycled information is gradually overwritten)? For M5, does accuracy monotonically increase (suggesting progressive construction)? The layer-by-layer trajectory would reveal whether the two models process thought-position information differently, providing a richer picture than the peak values alone.",
+      "location": "Section 4.3, Tables A5-A6",
+      "recommendation": "Plot and discuss the layer-by-layer probe accuracy trajectory for position 3 in both models. This is already available in Tables A5-A6 but is not analyzed or visualized. For M3, the trajectory is: 55.4, 54.7, 49.0, 46.6, 46.0, 43.0, 39.6, 37.9, 25.8, 27.9, 32.9, 52.7, 55.0 -- this U-shaped curve (information injected at layer 0, partially lost through middle layers, reconstructed at final layers) is highly informative and suggests the transformer partially overwrites and then reconstructs the recycled signal. For M5: 4.4, 6.4, 5.0, 7.4, 8.4, 11.4, 8.4, 4.7, 2.7, 3.0, 4.7, 53.0, 57.0 -- accuracy is near zero until layers 11-12, then spikes. This dramatic qualitative difference in layer trajectories is underreported.",
+      "resolution_required": false
+    },
+    {
+      "id": "F016",
+      "severity": "suggestion",
+      "category": "framing",
+      "description": "The conclusion states: 'For researchers developing latent reasoning architectures, this work suggests that curriculum design is the higher-leverage investment.' This practical advice is stated with a confidence that far exceeds the evidence base: a single task (ProsQA), a single scale (124M), a single seed, and without resolving the forward-pass confound. If a researcher followed this advice and abandoned hidden-state recycling in favor of curriculum design alone, they would be making a decision based on a single data point with acknowledged limitations. The practical implication section should be explicitly scoped to the experimental conditions rather than offered as general guidance.",
+      "location": "Section 5.5 (Practical Implications), Section 7 (Conclusion, last sentence)",
+      "recommendation": "Scope the practical recommendation: 'On ProsQA at GPT-2 124M scale, curriculum design appears to be the dominant factor. Whether this extends to larger scales, more complex tasks, or different reasoning demands remains to be established. Researchers should consider replicating these controls when evaluating latent reasoning claims.'",
+      "resolution_required": false
+    },
+    {
+      "id": "F017",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "The paper does not analyze or report the OVERLAP between M3 and M5 errors on OOD data. Table 5 provides disagreement counts (b and c), but does not analyze whether the 'd' cells (both wrong) correspond to the same problems. On 7-hop data, 126 problems are missed by both models. Are these the 'hardest' problems (longest distractor paths, most confusing entity names)? If both models fail on the same problems, this suggests shared limitations from the curriculum rather than architecture-specific weaknesses. If they fail on DIFFERENT problems (low 'd' overlap with respect to problem features), this suggests the architectures impose different bottlenecks. This analysis is straightforward with the per-sample data already collected.",
+      "location": "Section 4.4, per_sample_correctness.json",
+      "recommendation": "Analyze the properties of problems in each cell of the contingency table (both correct, M3-only correct, M5-only correct, both wrong). Report whether problem features (hop count, graph connectivity, distractor count) predict which cell a problem falls into. This would provide mechanistic insight beyond aggregate accuracy comparisons.",
+      "resolution_required": false
+    },
+    {
+      "id": "F018",
+      "severity": "suggestion",
+      "category": "logic",
+      "description": "The paper's previous version had inconsistent accuracy reporting (M3 at 98.0% in Table 2 vs 97.0% in experimental results; M5 at 95.6% in evaluation vs 96.6% in per-sample data). The revised manuscript now consistently uses 97.0% and 96.6%, and Table 2 includes a note explaining the discrepancy ('Training-time evaluation at best epoch yielded slightly higher estimates for M3 (98.0%) and M5 (95.6%), a discrepancy of 5 samples per model attributable to differences in the inference code path'). This is an improvement, but 'differences in the inference code path' is a vague explanation. Five samples per model (1% of the test set) changing outcomes between two evaluation implementations raises the question of whether the models' predictions are stable at the decision boundary. If 10 samples (2% of the test set) are evaluation-code-dependent, the stated 96.6% vs 97.0% comparison itself may not be robust to implementation choices.",
+      "location": "Table 2 footnote, Section 4.1",
+      "recommendation": "Explain specifically what differs between the training-time evaluation code path and the experiment-pipeline evaluation code path. If the difference is in tokenization, batching, or temperature, this should be documented. If 1% of predictions are implementation-sensitive, report this as a source of measurement uncertainty.",
+      "resolution_required": false
+    }
+  ],
+  "overall_assessment": "pass_with_conditions",
+  "summary": "The manuscript has improved substantially since the round 1 skeptic review. The data integrity issues (previously K001, K018) have been resolved with consistent accuracy reporting and transparent disclosure of inference-pipeline discrepancies. The forward-pass asymmetry is now explicitly acknowledged with a clear description of the missing control. The limitations section is honest and substantive. The convergent evidence approach remains the paper's core methodological strength. However, two critical issues persist: (1) the forward-pass confound cannot be resolved without the missing 6-pass fixed-embedding control, and all causal claims about the recycling mechanism's role must be weakened accordingly; (2) the chain of null results requires formal equivalence testing rather than informal characterization as 'identical.' The DAG result remains underweighted in the paper's framing -- it is the strongest evidence that the recycling mechanism has functional consequences, yet it is treated as a caveat rather than a co-equal finding. The single-seed limitation prevents generalization from these specific model instances to architectural claims. With the critical findings addressed (weakened causal language in F001, formal equivalence testing or confidence intervals for null comparisons in F002, and symmetric treatment of the DAG result in F003), the paper would make a solid contribution to understanding latent reasoning architectures."
+}

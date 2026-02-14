@@ -1,0 +1,125 @@
+2026-02-14 05:42:42.150015: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-02-14 05:42:42.162593: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1771047762.177315   19789 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1771047762.181971   19789 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1771047762.193587   19789 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1771047762.193607   19789 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1771047762.193609   19789 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1771047762.193610   19789 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-02-14 05:42:42.196787: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Loaded 500 samples
+Bonferroni threshold: 0.000641
+
+============================================================
+Model: m3
+============================================================
+  Loading cached hidden states...
+  Running linear probes + permutation tests...
+    Position 0: n=500, 38 classes
+      L0: acc=0.0860, p=0.001499 (44.0s)
+      L1: acc=0.0880, p=0.001999 (43.6s)
+      L2: acc=0.0880, p=0.001999 (45.1s)
+      L3: acc=0.0800, p=0.006997 (45.1s)
+      L4: acc=0.0900, p=0.001499 (46.3s)
+      L5: acc=0.0760, p=0.006997 (44.8s)
+      L6: acc=0.0980, p=0.001499 (45.0s)
+      L7: acc=0.0720, p=0.003498 (43.1s)
+      L8: acc=0.1300, p=0.000500 (47.8s) ***
+      L9: acc=0.0900, p=0.000500 (47.0s) ***
+      L10: acc=0.0580, p=0.057471 (46.4s)
+      L11: acc=0.0760, p=0.007496 (46.7s)
+      L12: acc=0.0540, p=0.054973 (45.3s)
+    -> Peak: layer 8, acc=0.1300, p=0.000500, sig=2/13
+    Position 1: n=500, 38 classes
+      L0: acc=0.0860, p=0.001000 (46.0s)
+      L1: acc=0.0880, p=0.002499 (45.6s)
+      L2: acc=0.0800, p=0.005497 (43.1s)
+      L3: acc=0.0720, p=0.002499 (43.7s)
+      L4: acc=0.0600, p=0.017491 (44.8s)
+      L5: acc=0.0740, p=0.003998 (45.6s)
+      L6: acc=0.0580, p=0.046977 (47.7s)
+      L7: acc=0.0640, p=0.013493 (47.8s)
+      L8: acc=0.0660, p=0.016992 (48.1s)
+      L9: acc=0.0760, p=0.006997 (45.7s)
+      L10: acc=0.0940, p=0.001000 (45.6s)
+      L11: acc=0.0940, p=0.000500 (46.3s) ***
+      L12: acc=0.1000, p=0.001000 (46.8s)
+    -> Peak: layer 12, acc=0.1000, p=0.001000, sig=1/13
+    Position 2: n=500, 38 classes
+      L0: acc=0.1860, p=0.000500 (45.8s) ***
+      L1: acc=0.1600, p=0.000500 (46.2s) ***
+      L2: acc=0.1840, p=0.000500 (46.1s) ***
+      L3: acc=0.1460, p=0.000500 (46.7s) ***
+      L4: acc=0.1440, p=0.000500 (47.0s) ***
+      L5: acc=0.1400, p=0.000500 (46.6s) ***
+      L6: acc=0.1380, p=0.000500 (44.9s) ***
+      L7: acc=0.1220, p=0.000500 (39.7s) ***
+      L8: acc=0.1300, p=0.000500 (39.8s) ***
+      L9: acc=0.1180, p=0.000500 (43.0s) ***
+      L10: acc=0.1400, p=0.000500 (47.3s) ***
+      L11: acc=0.1740, p=0.000500 (44.6s) ***
+      L12: acc=0.1900, p=0.000500 (44.4s) ***
+    -> Peak: layer 12, acc=0.1900, p=0.000500, sig=13/13
+    Position 3: n=298, 38 classes
+      L0: acc=0.5537, p=0.000500 (44.9s) ***
+      L1: acc=0.5470, p=0.000500 (45.7s) ***
+      L2: acc=0.4899, p=0.000500 (44.0s) ***
+      L3: acc=0.4664, p=0.000500 (39.8s) ***
+      L4: acc=0.4597, p=0.000500 (43.8s) ***
+      L5: acc=0.4295, p=0.000500 (42.8s) ***
+      L6: acc=0.3960, p=0.000500 (43.2s) ***
+      L7: acc=0.3792, p=0.000500 (43.6s) ***
+      L8: acc=0.2584, p=0.000500 (41.0s) ***
+      L9: acc=0.2785, p=0.000500 (44.2s) ***
+      L10: acc=0.3289, p=0.000500 (43.1s) ***
+      L11: acc=0.5268, p=0.000500 (45.0s) ***
+      L12: acc=0.5503, p=0.000500 (46.0s) ***
+    -> Peak: layer 0, acc=0.5537, p=0.000500, sig=13/13
+    Position 4: n=81, 32 classes
+      L0: acc=0.0000, p=1.000000 (0.0s)
+      L1: acc=0.0000, p=1.000000 (0.0s)
+      L2: acc=0.0000, p=1.000000 (0.0s)
+      L3: acc=0.0000, p=1.000000 (0.0s)
+      L4: acc=0.0000, p=1.000000 (0.0s)
+      L5: acc=0.0000, p=1.000000 (0.0s)
+      L6: acc=0.0000, p=1.000000 (0.0s)
+      L7: acc=0.0000, p=1.000000 (0.0s)
+      L8: acc=0.0000, p=1.000000 (0.0s)
+      L9: acc=0.0000, p=1.000000 (0.0s)
+      L10: acc=0.0000, p=1.000000 (0.0s)
+      L11: acc=0.0000, p=1.000000 (0.0s)
+      L12: acc=0.0000, p=1.000000 (0.0s)
+    -> Peak: layer 0, acc=0.0000, p=1.000000, sig=0/13
+    Position 5: n=12, 12 classes
+      L0: acc=0.0000, p=1.000000 (0.0s)
+      L1: acc=0.0000, p=1.000000 (0.0s)
+      L2: acc=0.0000, p=1.000000 (0.0s)
+      L3: acc=0.0000, p=1.000000 (0.0s)
+      L4: acc=0.0000, p=1.000000 (0.0s)
+      L5: acc=0.0000, p=1.000000 (0.0s)
+      L6: acc=0.0000, p=1.000000 (0.0s)
+      L7: acc=0.0000, p=1.000000 (0.0s)
+      L8: acc=0.0000, p=1.000000 (0.0s)
+      L9: acc=0.0000, p=1.000000 (0.0s)
+      L10: acc=0.0000, p=1.000000 (0.0s)
+      L11: acc=0.0000, p=1.000000 (0.0s)
+      L12: acc=0.0000, p=1.000000 (0.0s)
+    -> Peak: layer 0, acc=0.0000, p=1.000000, sig=0/13
+  All probes done in 2336.3s (38.9 min)
+  Saved m3 results to /lambda/nfs/experiment/results/v9_meta_fork/experiments/probing_corrected/m3_linear_perm.json
+
+============================================================
+Model: m5
+============================================================
+  Extracting hidden states (GPU)...
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+[load_model] Resized embeddings: 50260 -> 50260
+[load_model] Coconut (pause_curriculum) loaded from /lambda/nfs/experiment/results/v9_meta_fork/prosqa-m5-pause/checkpoint_50
+  Missing keys: []
+  Unexpected keys: []
+Traceback (most recent call last):
+  File "/tmp/rerun_probes_fast.py", line 169, in <module>
+    with torch.no_grad():
+NameError: name 'torch' is not defined

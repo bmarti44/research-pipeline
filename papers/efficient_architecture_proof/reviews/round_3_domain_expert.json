@@ -1,0 +1,189 @@
+{
+  "reviewer": "Domain Expert (LLM Specialist)",
+  "checkpoint": "manuscript_review_round2",
+  "round": 3,
+  "timestamp": "2026-02-14T17:45:00Z",
+  "files_reviewed": [
+    "papers/efficient_architecture_proof/manuscript/manuscript.md",
+    "papers/efficient_architecture_proof/code/coconut.py",
+    "papers/efficient_architecture_proof/results/experiments/corruption/results.json",
+    "papers/efficient_architecture_proof/results/experiments/probing/results.json",
+    "papers/efficient_architecture_proof/results/experiments/ood/results.json",
+    "papers/efficient_architecture_proof/results/selectivity_recomputed.json",
+    "papers/efficient_architecture_proof/results/mcnemar_verification.json",
+    "papers/efficient_architecture_proof/results/cross_corruption.json",
+    "papers/efficient_architecture_proof/results/unmatched_transplant.json",
+    "papers/efficient_architecture_proof/results/appendix_data.json",
+    "papers/efficient_architecture_proof/results/permutation_power.json",
+    "papers/efficient_architecture_proof/results/per_sample_correctness.json",
+    "papers/efficient_architecture_proof/results/pause_embedding_architecture.txt",
+    "papers/efficient_architecture_proof/results/m3_linear_perm.json",
+    "papers/efficient_architecture_proof/reviews/domain_expert_review.json"
+  ],
+  "findings": [
+    {
+      "id": "F001",
+      "severity": "critical",
+      "category": "domain",
+      "description": "The manuscript mischaracterizes M3's forward-pass architecture. Section 3.1 states 'The model executes six sequential forward passes, with each pass reading the previous pass's output as input.' and Section 3.2 states 'M3's six sequential passes through 12 transformer layers produce 72 effective layers of computation.' Examination of the actual code (coconut.py lines 114-257) reveals that M3 uses a KV-cache-based incremental computation strategy, NOT six full forward passes. The first iteration processes all tokens from position 0 up to the first latent token. Each subsequent iteration processes only a SINGLE token position (the next latent token) while reusing KV cache from prior positions. The 'hidden state recycling' replaces the embedding of the next thought token with the last-layer hidden state from the previous token position (line 209-211), but each subsequent loop iteration is a single-token forward pass, not a full-sequence forward pass. The total computation is NOT 6x12=72 effective layers for the thought-token region. It is 12 layers for the initial prefix, plus 12 layers per thought token (6 single-token passes), plus 12 layers for the final post-thought region -- but the KV cache means the total FLOPs are proportional to sequence_length * 12 layers * (max_n_latents + 1), not to sequence_length * 72 layers. The '72 effective layers' framing substantially overstates the computational asymmetry between M3 and M5. The actual asymmetry is that M3 processes thought tokens SEQUENTIALLY (each depends on the prior's output) while M5 processes them in PARALLEL within a single forward pass. This is still a meaningful difference, but it is a sequential-vs-parallel computation difference, not a 6x depth difference. The '72 effective layers' claim is repeated in the Limitations section and underpins the paper's 'sequential bottleneck' interpretation.",
+      "location": "Section 3.1 (paragraph describing M3), Section 3.2 (final paragraph), Section 5.3, Section 6 (Forward-pass asymmetry)",
+      "recommendation": "Correct the architectural description. M3 does not execute six full forward passes through 12 layers each. It executes one initial forward pass (prefix up to first thought token), then 5-6 incremental single-token forward passes (one per thought token, using KV cache), plus a final pass for the post-thought tokens. Each thought token sees 12 layers of computation, but the KV cache ensures that prior tokens are not reprocessed. The correct characterization is: each thought position's representation is computed by a 12-layer forward pass conditioned on the KV cache of all preceding positions, with its embedding replaced by the previous position's final hidden state. The sequential dependency is real -- thought token k cannot be computed until thought token k-1 finishes -- but the total effective depth per thought position is 12 layers, not 72. The FLOP difference between M3 and M5 arises from the sequential nature of M3 (preventing parallelism of thought tokens) rather than from multiplicative depth increase.",
+      "resolution_required": true
+    },
+    {
+      "id": "F002",
+      "severity": "major",
+      "category": "domain",
+      "description": "The hidden-state recycling description contains a subtle inaccuracy that affects interpretive claims. Section 3.1 states that M3's thought tokens contain 'the recycled final-layer hidden state from the previous forward pass.' The code (line 209-211) shows the actual operation: tensor_list[batch_idx][token_idx] = hidden_states[batch_idx, token_idx - 1 - hidden_states_offset, :]. This takes the hidden state from the PREVIOUS POSITION (token_idx - 1), not from 'the previous forward pass' in general. The distinction matters: in the first loop iteration, the hidden state at token_idx-1 is the hidden state of the last input token before the first thought position, NOT a thought token's hidden state. So the first thought token receives the input context's final hidden state, the second receives the first thought token's hidden state, etc. This creates a chain where the first thought position is architecturally different from subsequent ones -- it bridges from input space to thought space. The paper's probing analysis may reflect this: M3's peak accuracy at layer 0 for position 3 makes sense because the recycled hidden state at position 3 has already been through the full model at the prior position, so it arrives pre-processed at layer 0. But positions 0-2 have different computational histories: position 0 receives the last input token's hidden state (which has seen no thought tokens), while position 2 receives position 1's hidden state (which has seen two thought tokens). This asymmetry is not discussed.",
+      "location": "Section 3.1, Section 3.2",
+      "recommendation": "Clarify that hidden-state recycling feeds back the hidden state from position k-1 to position k (not from 'the previous forward pass' generically). Note that the first thought position receives the input prefix's final hidden state, creating an asymmetry in the information available at different thought positions. Discuss whether this asymmetry could explain the probing patterns (e.g., why position 3 shows much higher selectivity than positions 0-2 in M3).",
+      "resolution_required": true
+    },
+    {
+      "id": "F003",
+      "severity": "major",
+      "category": "domain",
+      "description": "The paper's framing of 'reasoning vs. buffering' is a false dichotomy that the paper's own evidence refutes, yet the title and much of the narrative maintain it. The probing results show +52pp step-specific selectivity at position 3 for BOTH models. This is structured, step-specific computation -- not 'buffering' in any standard sense. A buffer carries no task-relevant structure; these positions clearly do. The paper partially acknowledges this in Section 5.1 ('the evidence does not support pure buffering in the sense of unstructured generic computation') but this important nuance is buried rather than foregrounded. The convergent evidence table (Table 6) lists the buffering prediction for probing as 'Shared curriculum-driven pattern' rather than 'general broadcast' (an improvement from an earlier version), but the selectivity profiles are neither 'sequential reasoning' nor 'buffering' -- they are curriculum-driven structured computation. The round 1 domain expert review (D001, D014) raised this framing issue as a major concern. The current manuscript partially addresses it (the Table 6 labels were improved, and the buffering caveat was added to Section 5.1) but the title still frames the binary. The 'Does COCONUT Reason or Buffer?' title promises a binary answer the evidence does not support.",
+      "location": "Title, Abstract, Section 5.1 (Table 6), Section 7 (Conclusion)",
+      "recommendation": "The title and framing should be revised to reflect the actual finding: curriculum-driven structured computation that does not require the recycling mechanism. The subtitle 'Dissecting Latent Thought Tokens on ProsQA' is better than the main title. Consider: 'Curriculum, Not Mechanism: Dissecting Latent Thought Tokens in COCONUT' or similar. At minimum, the abstract should lead with the nuanced conclusion rather than the binary frame.",
+      "resolution_required": false
+    },
+    {
+      "id": "F004",
+      "severity": "major",
+      "category": "domain",
+      "description": "The paper does not adequately engage with the attention-routing implications of M3 vs. M5. In M3, because of KV-cache-based sequential processing, thought token k can attend to all input tokens AND all prior thought tokens 0 through k-1 (via KV cache from prior passes). In M5, because of standard causal self-attention in a single forward pass, thought token k can ALSO attend to all input tokens and all prior thought tokens 0 through k-1. The attention connectivity is actually IDENTICAL between M3 and M5 for the thought-token region. The key difference is only in WHAT occupies the embedding at each thought position: M3 has the previous position's final-layer hidden state (pre-processed information), while M5 has a fixed learned embedding (no pre-processed information). This means the comparison is more precisely about whether pre-processing the embedding via recycling provides value beyond what standard attention-based information routing achieves. The paper's narrative of M5 having 'more flexible' attention (Section 4.4, 5.3) is incorrect: both models have identical causal attention masks over the same positions. The flexibility difference lies in the embedding content, not in the attention structure.",
+      "location": "Section 3.2, Section 4.4, Section 5.3",
+      "recommendation": "Clarify that M3 and M5 have identical attention connectivity for the thought-token region (both use causal attention over input + thought positions). The difference is in what is injected at the embedding level of each thought position, not in attention routing or connectivity. Remove or revise claims about M5 having 'more flexible' attention -- both have standard causal attention. The correct characterization is that M3 pre-processes the embedding with information from prior positions (via hidden-state recycling), while M5 relies entirely on attention to gather information from context.",
+      "resolution_required": true
+    },
+    {
+      "id": "F005",
+      "severity": "major",
+      "category": "domain",
+      "description": "The paper's treatment of the BFS (breadth-first search) hypothesis from Hao et al. is fair but incomplete. The paper correctly notes that their probing methodology tests for step-sequential encoding rather than BFS superposition (Section 5.4), and correctly acknowledges that a multi-label probe would be needed to test the BFS hypothesis. However, the paper then proceeds to draw strong conclusions ('the theoretical expressiveness is not realized in practice') based on probes that, by the authors' own admission, cannot detect the phenomenon the theory predicts. The correct conclusion is more limited: the probing analysis shows no evidence of step-sequential encoding (which would be one possible manifestation of latent reasoning), but does not test for BFS-style superposition (which is the specific mechanism Hao et al. and Zhu et al. propose). Drawing a negative conclusion about the realization of BFS expressiveness based on probes that cannot detect BFS is a logical gap.",
+      "location": "Section 5.4 (paragraph on Zhu et al.)",
+      "recommendation": "Weaken the claim about expressiveness not being realized. State instead: 'Our probing analysis tests for step-sequential encoding and finds no evidence that the recycling mechanism produces different sequential patterns than the pause baseline. However, our probes are not designed to detect the BFS superposition states that Zhu et al. prove are expressible; a targeted test of the BFS hypothesis remains for future work. The other convergent evidence (permutation insensitivity, cross-transplant tolerance, identical corruption profiles) is consistent with the absence of BFS encoding but does not directly test for it.'",
+      "resolution_required": true
+    },
+    {
+      "id": "F006",
+      "severity": "major",
+      "category": "domain",
+      "description": "The probing results for M3 at layer 0 require more careful interpretation given the recycling architecture. The paper reports M3's peak probe accuracy at (layer 0, position 3) = 55.4%. Because M3 recycles the final-layer hidden state from position 2 into the embedding of position 3, this layer-0 activation at position 3 is actually the output of the full 12-layer transformer applied to position 2's input. So 'layer 0' for M3 at recycled positions is not comparable to 'layer 0' for M5 (which is the raw embedding layer). The paper notes this briefly ('M3's peak probe accuracy occurs at layer 0, position 3. Because COCONUT recycles the final-layer hidden state back into the input embedding stream, the recycled representation arrives pre-processed at layer 0'), but does not fully address the comparability issue. When the paper compares 'M3 has 29/78 significant cells' vs 'M5 has 11/78', the counts are inflated for M3 because layer 0 at recycled positions already contains 12 layers of processing. A fairer comparison might exclude layer 0 from M3's count at recycled positions, or compare M3's layer-0 probes with M5's layer-12 probes.",
+      "location": "Section 4.3, Table 4",
+      "recommendation": "Add an explicit discussion of the layer-comparability issue. When counting significant probing cells for M3, note that cells at layer 0 for recycled positions (positions where hidden states are injected) have already been processed by 12 transformer layers and are therefore not comparable to M5's layer 0. Consider reporting adjusted cell counts that account for this asymmetry. The narrative claim '29/78 vs 11/78' should be qualified by this architectural difference.",
+      "resolution_required": false
+    },
+    {
+      "id": "F007",
+      "severity": "minor",
+      "category": "domain",
+      "description": "The paper reports M3's test accuracy differently in different locations. Table 2 reports test accuracy as 97.0%, with a note that 'training-time evaluation at best epoch yielded slightly higher estimates for M3 (98.0%).' However, the Table 2 header column says 'Test Accuracy' and the M3 row shows 97.0%. The discrepancy between 97.0% (experiment pipeline) and 98.0% (training-time eval) is 5 samples out of 500. The paper handles this correctly by choosing the experiment-pipeline value for consistency. However, the abstract and introduction claim 'M3 achieves 97.0%' while Section 4.1 mentions the 98.0% figure. This is handled transparently but could confuse readers.",
+      "location": "Table 2 footnote, Section 4.1",
+      "recommendation": "The handling is adequate. Consider moving the discrepancy explanation to the methods section (where the inference pipeline is described) rather than burying it in the Table 2 caption, to avoid confusion.",
+      "resolution_required": false
+    },
+    {
+      "id": "F008",
+      "severity": "minor",
+      "category": "domain",
+      "description": "The paper's claim about M5 requiring 'approximately one-sixth the inference-time FLOPs of M3' (Section 3.2) needs qualification given the KV-cache architecture. M3's inference FLOPs are NOT 6x M5's. With KV cache, M3 processes the input prefix once (same as M5), then processes each thought token individually in sequence (6 single-token forward passes of 12 layers each), then processes the final answer. The overhead for thought tokens in M3 is 6 sequential single-token forward passes. M5 processes all thought tokens in one forward pass (but the attention computation scales quadratically with position). The actual FLOP ratio depends on the sequence length and is likely closer to 2-3x than 6x for typical ProsQA sequence lengths. The '6x' claim conflates the number of sequential operations with total computation.",
+      "location": "Section 3.2 (final paragraph)",
+      "recommendation": "Replace 'approximately one-sixth the inference-time FLOPs' with a more precise characterization. The correct distinction is that M3 requires 6 sequential thought-token passes (each processing one position with KV cache) while M5 processes all thought tokens in a single pass. The latency is indeed roughly proportional to the number of sequential passes, but the total FLOPs difference is smaller because each sequential pass in M3 processes only a single token position. State the difference in terms of latency/wallclock time (sequential vs parallel) rather than FLOPs.",
+      "resolution_required": false
+    },
+    {
+      "id": "F009",
+      "severity": "minor",
+      "category": "domain",
+      "description": "The nonlinear probe results (Appendix A.7) report 0/78 cells where MLP exceeds linear probe accuracy. The round 1 review (D009) flagged this as likely an implementation failure rather than a genuine null result. The current manuscript adds a caveat acknowledging potential convergence failure, but still presents the result in Table 4 as 'Cells where MLP > linear: 0 / 78'. A genuine finding of no nonlinear advantage would be meaningful, but 0% accuracy across all 156 MLP probing configurations (78 per model) is implausible even with poor hyperparameters -- an MLP should at minimum achieve chance-level accuracy on most cells. This remains a broken experiment presented as a finding.",
+      "location": "Appendix A.7, Table 4 row 'Cells where MLP > linear'",
+      "recommendation": "Either fix the MLP probing (adjusting hyperparameters: larger learning rate, more epochs, proper warm-up) or remove the nonlinear probe claims entirely. The current framing misleads readers into thinking nonlinear probes were properly tested and found unnecessary, when the evidence suggests they failed to converge. At minimum, change Table 4 to note 'MLP probes: inconclusive (convergence failure suspected)' rather than presenting '0/78' as a clean result.",
+      "resolution_required": false
+    },
+    {
+      "id": "F010",
+      "severity": "minor",
+      "category": "domain",
+      "description": "The related work section omits several relevant references that would strengthen the paper's scholarly context. (1) Quiet-STaR (Zelikman et al., 2024) provides an alternative approach to implicit reasoning via thinking tokens inserted at every position, which is a different architectural philosophy from COCONUT's dedicated thought positions. (2) Deng et al. (2024) 'Explicit CoT Training for Implicit CoT Reasoning' directly addresses curriculum-based transfer from explicit to implicit reasoning, supporting the paper's thesis. (3) The internal-thought literature from the concurrent-computation perspective (e.g., Adaptive Computation Time by Graves, 2016) provides theoretical context for why extra computation positions help. (4) Olsson et al. (2022) on induction heads is relevant to understanding attention-based information routing in the thought positions.",
+      "location": "Section 2",
+      "recommendation": "Add brief mentions of: (a) Quiet-STaR as an alternative latent reasoning architecture; (b) Deng et al. on explicit-to-implicit CoT distillation (directly supporting the curriculum hypothesis); (c) Graves (2016) on adaptive computation time for theoretical context on why extra positions help. These strengthen the related work without substantially lengthening the paper.",
+      "resolution_required": false
+    },
+    {
+      "id": "F011",
+      "severity": "minor",
+      "category": "domain",
+      "description": "The paper's characterization of the permutation insensitivity result and its interaction with single-position corruption creates an interpretive puzzle that is insufficiently explored. Zero permutation flips means the model's predictions are invariant to the ordering of thought tokens -- yet corrupting position 3 alone causes catastrophic failure. This means position 3 is critical BY CONTENT but not BY POSITION. The most parsimonious explanation is that the model attends to thought positions based on activation content rather than positional encoding, so moving a critical activation from position 3 to position 0 (via permutation) does not disrupt the computation because causal attention can still find and attend to it. The paper's 'broadcast-then-attend' narrative captures part of this but does not explicitly address the content-vs-position tension. This is an important mechanistic insight about how these models use thought positions.",
+      "location": "Section 4.2 (Permutation sensitivity), Section 5.1",
+      "recommendation": "Add a paragraph explicitly addressing the puzzle: position 3 is critical to CORRUPT but irrelevant to MOVE. Explain that this implies content-based rather than position-based information routing. Note that GPT-2's positional encoding provides position information, but the model apparently routes attention based on activation similarity/content rather than positional index. This insight is independently interesting and supports the 'curriculum-driven structured computation' framing.",
+      "resolution_required": false
+    },
+    {
+      "id": "F012",
+      "severity": "minor",
+      "category": "domain",
+      "description": "The paper's treatment of the DAG advantage for M3 (+7.3pp) speculates about 'path convergence' benefiting from 'sequential state accumulation.' Given the corrected understanding of M3's architecture (KV-cache-based sequential processing, not 6 full forward passes), an alternative explanation should be considered: DAGs introduce convergent paths where multiple branches lead to the same node. In M3, because each thought token's embedding contains the previous position's final hidden state, there is an explicit recurrence that could allow the model to accumulate information across thought tokens. In M5, all thought tokens start with the same fixed embedding, so any accumulation must happen entirely through attention. DAG problems may require a kind of path-tracking that benefits from the explicit recurrence in M3. However, the simpler explanation -- that M3's sequential processing naturally handles the sequential nature of convergent path evaluation, while M5 must discover this routing through attention alone -- is equally plausible. Both explanations are speculative.",
+      "location": "Section 4.4, Section 5.3",
+      "recommendation": "Present both explanations for the DAG advantage and mark them as speculative. Note that targeted ablations (e.g., varying the number of thought tokens for DAG problems, or analyzing attention patterns on DAG vs. tree problems) would be needed to adjudicate between them.",
+      "resolution_required": false
+    },
+    {
+      "id": "F013",
+      "severity": "minor",
+      "category": "domain",
+      "description": "The paper states the ProsQA vocabulary comprises '38 species names and 17 person names' (Section 3.1) and uses this vocabulary for OOD test generation. The number of probe target classes is therefore approximately 38 (for species decoding). With 38 classes, chance accuracy is approximately 2.6%. M3 achieves 55.4% at its peak and M5 achieves 57.0% -- both far above chance. However, the paper does not report chance-level accuracy or a significance threshold relative to chance for the probing results. While the permutation tests provide significance assessment, a simple comparison to chance would help readers quickly assess the magnitude of the probing signal.",
+      "location": "Section 4.3",
+      "recommendation": "Report the chance-level accuracy for the probing task (approximately 1/38 = 2.6% for species classification) alongside the probe accuracies. This provides immediate context for interpreting the 55-57% peak accuracy.",
+      "resolution_required": false
+    },
+    {
+      "id": "F014",
+      "severity": "suggestion",
+      "category": "domain",
+      "description": "The paper would benefit from a per-hop-count accuracy breakdown for the in-distribution test set. The aggregate 97.0% vs. 96.6% difference masks potential structure: M3 might outperform M5 on 5-6 hop problems (where sequential processing has more room to contribute) while M5 might outperform on 3-4 hop problems. This would connect naturally to the OOD results showing M5's advantage on 7-8 hop problems and provide a more complete picture of the chain-length tradeoff.",
+      "location": "Section 4.1",
+      "recommendation": "Add a per-hop-count accuracy table for the in-distribution test set. If the data exist in the per_sample_correctness.json file, this analysis is straightforward. It would strengthen the 'sequential bottleneck' interpretation by showing whether the bottleneck begins to emerge even within the training distribution's hop-count range.",
+      "resolution_required": false
+    },
+    {
+      "id": "F015",
+      "severity": "suggestion",
+      "category": "domain",
+      "description": "The paper correctly identifies the missing 'multi-pass without recycling' control (Section 6, 'Forward-pass asymmetry'). A model that executes 6 sequential forward passes but re-injects the SAME fixed embedding at each pass (rather than the previous pass's hidden state) would isolate the contribution of the recycling content from the contribution of sequential processing. Given the corrected understanding of M3's architecture (KV-cache-based incremental processing), such a control could be implemented as a variant where each thought token's embedding is set to the fixed pause embedding regardless of prior hidden states, but the KV-cache-based sequential processing is preserved. This would reveal whether the sequential dependency itself (processing thought tokens one at a time) provides value beyond what parallel processing achieves.",
+      "location": "Section 6 (Forward-pass asymmetry limitation)",
+      "recommendation": "Note this control in the future work section. It is the most informative ablation for disentangling sequential processing from recycling content, and given the existing codebase, it could be implemented by creating a feedback_mode variant that uses pause_embedding in the multi-pass loop (essentially the existing M4b mode, per the code comments on line 213).",
+      "resolution_required": false
+    },
+    {
+      "id": "F016",
+      "severity": "suggestion",
+      "category": "domain",
+      "description": "The paper does not discuss what happens during M5's TRAINING. While inference is clearly described as a single forward pass, the training code (coconut.py lines 91-112) shows that M5's training is also a single forward pass with pause embeddings replacing latent token positions. However, an important question arises: during curriculum stages 0-5 (where some CoT tokens remain), does M5 process the remaining CoT tokens normally? The curriculum progressively replaces CoT tokens with thought tokens, so during intermediate stages, the sequence contains a mix of real CoT tokens and thought-token positions. The paper does not clarify whether M5 replaces ONLY the latent-marked positions with pause embeddings (leaving real CoT tokens untouched) or whether it applies some other transformation. This matters for understanding what the curriculum teaches M5.",
+      "location": "Section 3.3",
+      "recommendation": "Add a brief clarification of M5's behavior during intermediate curriculum stages. Specifically: which positions receive pause embeddings at each stage, and how does the mix of real CoT tokens and pause tokens evolve through the 7-stage curriculum? A reader who wants to replicate this work needs this information.",
+      "resolution_required": false
+    },
+    {
+      "id": "F017",
+      "severity": "suggestion",
+      "category": "domain",
+      "description": "The paper's novel contributions could be articulated more crisply in relation to Zhang et al. (2025). The three contributions listed in Section 1 are: (1) curriculum-matched control methodology, (2) converging evidence from three paradigms, (3) the recycling mechanism constrains OOD generalization. Of these, (1) is clearly novel -- Zhang et al. performed ablations on a single model (interventions) rather than constructing a matched alternative model. (2) partially overlaps with Zhang et al.'s causal inertness finding but extends it to ProsQA with new methods (probing, OOD). (3) is entirely novel. The paper should be more explicit about which findings are confirmatory and which are genuinely new.",
+      "location": "Section 1 (final paragraph), Section 5.4",
+      "recommendation": "Restructure the contributions to explicitly label: (a) the M5 control methodology as the primary novel contribution (a constructive alternative, not just ablation); (b) the extension to ProsQA as confirmatory of Zhang et al. but on COCONUT's strongest task; (c) the OOD generalization tradeoff as a genuinely novel finding that Zhang et al. did not investigate.",
+      "resolution_required": false
+    },
+    {
+      "id": "F018",
+      "severity": "suggestion",
+      "category": "domain",
+      "description": "The paper could connect more explicitly to the theoretical framework of Pfau et al. (2024). Pfau et al. proved that filler tokens expand the computational class of problems a transformer can solve. The M5 result -- that fixed pause embeddings under a progressive curriculum match COCONUT's performance -- is a strong empirical confirmation of this theoretical result applied to a specific task. Specifically, M5 shows that 6 filler-like tokens (identical learned embeddings) are sufficient to bridge the gap from CoT performance (~80%) to near-ceiling (~97%) when combined with the right curriculum. This is notable: Pfau et al.'s result is about worst-case expressiveness, while the M5 result shows the benefit in practice. The paper cites Pfau et al. but does not make this connection explicit.",
+      "location": "Section 2.3, Section 5.4",
+      "recommendation": "Add a sentence connecting M5's empirical success to Pfau et al.'s theoretical prediction: the pause tokens provide the additional computation positions that the theory predicts should help, and the curriculum teaches the model to use them effectively. This positions the paper's contribution within the broader theoretical landscape.",
+      "resolution_required": false
+    }
+  ],
+  "overall_assessment": "pass_with_conditions",
+  "summary": "This is a well-executed study with a genuinely valuable contribution: the curriculum-matched M5 control is methodologically sound and the converging evidence from multiple experimental paradigms is compelling. The statistical analysis is rigorous and independently verified. However, the paper contains a critical architectural mischaracterization (F001: the '72 effective layers' claim, which misunderstands M3's KV-cache-based incremental processing) that undermines key interpretive claims including the 'sequential bottleneck' narrative and the FLOP comparison. Several major issues require attention: the hidden-state recycling mechanism description needs correction (F002), the attention connectivity between M3 and M5 is incorrectly characterized as different when it is actually identical (F004), and the BFS hypothesis treatment draws overly strong negative conclusions from probes not designed to detect BFS (F005). The 'reasoning vs. buffering' framing (F003) remains a concern but is more of a scientific communication choice than a factual error. With the critical and major issues resolved -- particularly the architectural description in F001 -- the paper would make a solid contribution to understanding latent reasoning architectures. The core finding that the curriculum drives performance is well-supported by the data, even though several of the mechanistic interpretations built on top of this finding need recalibration once the architecture is correctly understood."
+}

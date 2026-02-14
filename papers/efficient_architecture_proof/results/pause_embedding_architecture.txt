@@ -1,0 +1,90 @@
+Pause Embedding Architecture Analysis
+======================================
+Source file: papers/efficient_architecture_proof/code/coconut.py
+
+1. PARAMETER DEFINITION (lines 47-52)
+--------------------------------------
+
+The pause embedding for feedback_mode="pause_curriculum" (M5) is defined in the
+Coconut.__init__ method:
+
+    elif feedback_mode in ("learned_shared", "pause_curriculum"):
+        # M4b/M5: single learnable embedding, same for all positions/problems
+        # M4b uses it in multi-pass loop; M5 uses it in single-pass
+        self.pause_embedding = nn.Parameter(
+            self.embedding.weight.data[latent_token_id].clone()
+        )
+
+2. SHARED vs. INDEPENDENT
+--------------------------
+
+It is a SINGLE nn.Parameter vector shared across ALL thought positions. There is
+one parameter tensor of shape (768,) -- not 6 independent vectors. The same
+self.pause_embedding is injected at every latent token position in the sequence.
+
+Evidence: In _fill_pause_embeddings (line 65) and in the generate method (line 293),
+the code iterates over all latent positions and assigns the identical
+self.pause_embedding to each one:
+
+    for token_idx in mask_list:
+        tensor_list[instance_idx][token_idx] = self.pause_embedding   # same param at every position
+
+3. INITIALIZATION
+-----------------
+
+The pause embedding is initialized by cloning the existing embedding vector of the
+<|latent|> token from the base model's embedding table:
+
+    self.embedding.weight.data[latent_token_id].clone()
+
+Prior to this, in run.py (lines 146-157), the <|latent|> token's embedding was itself
+initialized by copying the embedding of the "<<" token:
+
+    target_id = tokenizer.convert_tokens_to_ids("<<")
+    for token_id in [latent_id, start_id, end_id]:
+        target_embedding = embeddings.weight.data[target_id]
+        embeddings.weight.data[token_id] = target_embedding
+
+So the full initialization chain is:
+  "<<" token embedding  -->  <|latent|> token embedding  -->  pause_embedding nn.Parameter
+
+4. INFERENCE USAGE (lines 282-327)
+-----------------------------------
+
+During inference (generate method), M5 performs a single forward pass (no multi-pass
+recurrence). All positions in the input that contain the <|latent|> token ID are
+replaced with the learned pause_embedding before the forward pass:
+
+    inputs_embeds = self.embedding(input_ids)
+    latent_positions = [i for i, t in enumerate(tokens) if t == self.latent_token_id]
+    if latent_positions:
+        tensor_list = [inputs_embeds[0, pos, :] for pos in range(inputs_embeds.shape[1])]
+        for pos in latent_positions:
+            tensor_list[pos] = self.pause_embedding
+        inputs_embeds = torch.stack(tensor_list).unsqueeze(0)
+    outputs = self.base_causallm(inputs_embeds=inputs_embeds)
+
+The model then autoregressively generates answer tokens from the output logits. Unlike
+M3 (continuous) which feeds back hidden states through multiple forward passes, M5
+performs exactly one forward pass with the static learned pause embeddings, then
+generates tokens normally.
+
+5. SHAPE
+--------
+
+Shape: (768,)
+  - GPT-2 base (openai-community/gpt2) has hidden_size = 768
+  - The parameter is a 1-D vector, not a 2-D matrix
+
+Total learnable parameters added by M5: 768 (a single vector).
+
+6. TWO-SENTENCE DESCRIPTION FOR THE PAPER
+-------------------------------------------
+
+The M5 (pause curriculum) model uses a single learned pause embedding -- an
+nn.Parameter of shape (768,) initialized from the base model's embedding of the
+<|latent|> token -- that is shared identically across all thought-token positions in
+the input sequence. Unlike COCONUT's continuous feedback (M3), which recurrently
+feeds back hidden-state representations through multiple forward passes, M5 replaces
+all latent positions with this single static embedding and processes the entire
+sequence in one forward pass.

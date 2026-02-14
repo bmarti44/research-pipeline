@@ -1,0 +1,189 @@
+{
+  "reviewer": "Statistician",
+  "checkpoint": "manuscript_review_round2",
+  "round": 1,
+  "timestamp": "2026-02-14T18:30:00Z",
+  "files_reviewed": [
+    "papers/efficient_architecture_proof/manuscript/manuscript.md",
+    "papers/efficient_architecture_proof/results/m3_linear_perm.json",
+    "papers/efficient_architecture_proof/results/m5_linear_perm.json",
+    "papers/efficient_architecture_proof/results/probing_m3_log.txt",
+    "papers/efficient_architecture_proof/results/probing_m5_log.txt",
+    "papers/efficient_architecture_proof/results/statistical_analysis.json",
+    "papers/efficient_architecture_proof/results/mcnemar_verification.json",
+    "papers/efficient_architecture_proof/results/selectivity_recomputed.json",
+    "papers/efficient_architecture_proof/results/experiments/mcnemar/results.json",
+    "papers/efficient_architecture_proof/results/permutation_power.json",
+    "papers/efficient_architecture_proof/results/cross_corruption.json",
+    "papers/efficient_architecture_proof/results/unmatched_transplant.json",
+    "papers/efficient_architecture_proof/results/appendix_data.json",
+    "papers/efficient_architecture_proof/results/experiments/ood/results.json",
+    "papers/efficient_architecture_proof/results/experiments/corruption/results.json"
+  ],
+  "findings": [
+    {
+      "id": "F001",
+      "severity": "major",
+      "category": "analysis",
+      "description": "The manuscript claims M5 is 'statistically indistinguishable' from M3 on in-distribution ProsQA based on a non-significant McNemar test (p = 0.845). However, a non-significant p-value does not establish equivalence -- it only fails to reject the null of difference. The appropriate framework for claiming equivalence is a Two One-Sided Tests (TOST) procedure or an equivalence confidence interval approach. Computing the 95% CI for the accuracy difference from the discordant pairs (b=14, c=12, n=500) yields approximately [-1.5pp, +2.2pp]. If the authors define a clinically meaningful equivalence margin of +/- 3 percentage points, the CI falls within those bounds, supporting equivalence. But this analysis is never presented. Without it, the repeated claims of 'indistinguishable' and 'matches' are logically unsupported by the statistical evidence provided.",
+      "location": "manuscript.md: Section 4.1 (line 120), Abstract (line 6), Section 7 (line 291)",
+      "recommendation": "Either (a) conduct a formal equivalence test (TOST or CI-based) with a pre-specified equivalence margin and report the result, or (b) soften the language from 'statistically indistinguishable' to 'not significantly different (McNemar p = 0.845; 95% CI for accuracy difference: [-1.5pp, +2.2pp])'. The CI approach is straightforward and would actually strengthen the paper by demonstrating the difference is bounded within a practically meaningless range.",
+      "resolution_required": true
+    },
+    {
+      "id": "F002",
+      "severity": "major",
+      "category": "analysis",
+      "description": "No effect sizes with confidence intervals are reported for the primary McNemar comparisons. The manuscript reports percentage-point differences (e.g., '+9.4pp') but these are raw accuracy differences, not proper effect sizes. For McNemar's test, the standard effect size is the odds ratio of discordant pairs (OR = b/c). Computing these from the data: ProsQA OR=1.17 [0.54, 2.52]; 7-hop OR=0.56 [0.45, 0.70]; 8-hop OR=0.62 [0.49, 0.77]; DAG OR=1.45 [1.19, 1.77]; Dense OR=0.66 [0.53, 0.82]. These odds ratios with CIs provide effect magnitude information that is absent from the manuscript. The 'effect_sizes' in statistical_analysis.json reports 'd' values that are simply accuracy differences, not Cohen's d or any standard metric.",
+      "location": "manuscript.md: Table 5 (line 203-209), Section 4.4 (line 199-211)",
+      "recommendation": "Add a column to Table 5 reporting the odds ratio with 95% CI for each McNemar comparison, or report these in the text. For binary outcomes with paired data, the odds ratio of discordant pairs is the natural effect size metric. The percentage-point differences can be retained as interpretable summaries, but the odds ratios formalize the effect magnitude.",
+      "resolution_required": true
+    },
+    {
+      "id": "F003",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "Inconsistent p-value reporting for DAG Bonferroni-corrected result across sections. Table 5 (Section 4.4) correctly reports p (Bonf.) = 0.0015 for the DAG test. However, Section 5.3 (line 257) states 'M3 outperforms M5 by 7.3 percentage points (p = 0.001, Bonferroni-corrected)'. The Bonferroni-corrected p is 0.001457, which rounds to 0.0015 at 4 decimal places, not 0.001. This is a rounding inconsistency that could confuse readers comparing values across sections.",
+      "location": "manuscript.md: Section 5.3 (line 257) vs Table 5 (line 208)",
+      "recommendation": "Change 'p = 0.001' in Section 5.3 to 'p = 0.0015' to match Table 5, or use 'p < 0.002' if rounding is intended. Consistency in p-value reporting across sections is essential.",
+      "resolution_required": false
+    },
+    {
+      "id": "F004",
+      "severity": "major",
+      "category": "analysis",
+      "description": "The corruption analysis (Experiment 1) and transplantation results lack any formal statistical test comparing M3 and M5 degradation profiles. The manuscript claims 'identical degradation profiles' (line 150) and that corruption 'produces identical degradation' (Abstract, line 6), but this is asserted from visual inspection of parallel curves, not from a statistical comparison. At 3 positions corrupted, M3 retains 96.8% while M5 drops to 95.8% (1.0pp difference). With n=500 per condition, even small differences could be detectable. Similarly, transplant accuracy is reported without CIs (n=200 pairs only). No test of interaction (model x corruption level) is presented to formally evaluate whether degradation patterns differ.",
+      "location": "manuscript.md: Section 4.2 (lines 136-160), Table 3 (lines 140-148)",
+      "recommendation": "Either (a) conduct a formal test of the Model x Corruption Level interaction (e.g., generalized McNemar or logistic regression with model and corruption level as predictors), or (b) qualify the 'identical' language to 'qualitatively similar' and note that no formal equivalence test was conducted on the corruption profiles. For transplantation, report 95% CIs around the accuracy estimates (exact binomial CIs for proportions with n=200).",
+      "resolution_required": true
+    },
+    {
+      "id": "F005",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The permutation sensitivity analysis (0% flip rate in 5,000 trials) is well-powered for detecting even very small flip rates (excludes >0.06% at 95% confidence). However, the claim that 'both models treat thought positions as an unordered bag of compute' (line 158) goes beyond what this analysis demonstrates. The permutation test shows that the final answer token is insensitive to thought-token ordering, but this does not prove the intermediate representations are order-invariant. Internal representations could be order-sensitive in ways that happen to not affect the final prediction for in-distribution inputs. The conclusion should be scoped to 'order-invariant with respect to output predictions on the test set'.",
+      "location": "manuscript.md: Section 4.2 (line 158)",
+      "recommendation": "Qualify the claim: 'With respect to final predictions, both models treat thought positions as order-invariant on the in-distribution test set.' The current language implies a stronger mechanistic claim than the evidence supports.",
+      "resolution_required": false
+    },
+    {
+      "id": "F006",
+      "severity": "major",
+      "category": "analysis",
+      "description": "No power analysis is reported for the in-distribution McNemar comparison. With only 26 discordant pairs out of 500 samples (5.2% discordance rate), the McNemar test has limited power. Computing post-hoc power: to detect a 70/30 split in discordant pairs (a moderate effect), the test achieves only 62.7% power with 26 discordant pairs. This means the non-significant result at ProsQA could reflect insufficient power rather than true equivalence. The paper correctly notes the non-significance but interprets it as evidence of equivalence without quantifying the power limitations. This is especially relevant because the single-seed design provides no variance estimates.",
+      "location": "manuscript.md: Section 4.1 (line 120-121), Section 6 (line 279)",
+      "recommendation": "Report the number of discordant pairs (26/500 = 5.2%) and discuss the implications for test power. A statement such as 'The low discordance rate (5.2%) limits the power of the McNemar test; with 26 discordant pairs, the test has approximately 63% power to detect a 70/30 discordant split' would provide appropriate context. This strengthens the argument for formal equivalence testing (F001).",
+      "resolution_required": true
+    },
+    {
+      "id": "F007",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The probing permutation tests use a single 80/20 stratified split rather than the 5-fold CV used for accuracy estimation. The manuscript documents this in Appendix A.1 ('optimized ridge classifier with precomputed Cholesky decomposition on a single 80/20 stratified split'). While this is a reasonable speed optimization given 2,000 permutations x 78 cells, the single split introduces more variance than 5-fold CV. Cells near the Bonferroni boundary (e.g., M3 layer 0 position 0 with p=0.001499 vs threshold 0.000641) might flip between significant and non-significant depending on the particular split. The effect on the total count (29 vs 11) is likely small, but the exact boundary cells could shift.",
+      "location": "manuscript.md: Appendix A.1 (lines 297-311)",
+      "recommendation": "Note this as a methodological limitation: 'Permutation p-values from a single split may vary slightly across random splits; cells near the Bonferroni boundary should be interpreted with caution.' Alternatively, for the handful of borderline cells, report a sensitivity analysis with multiple random splits.",
+      "resolution_required": false
+    },
+    {
+      "id": "F008",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The Bonferroni correction for probing (0.05/78 = 0.000641) is conservative given that the 78 tests are not independent -- probing cells share the same underlying hidden states across layers and positions. An FDR-based correction (Benjamini-Hochberg) would be more appropriate and would likely identify additional significant cells, particularly for M3 at positions 0-1 where many cells have uncorrected p-values between 0.001-0.007. With Bonferroni, M3 shows 29/78 significant cells; FDR might yield substantially more, changing the quantitative comparison with M5 (11/78). The choice of correction method affects the '3x' ratio cited throughout.",
+      "location": "manuscript.md: Section 4.3 (line 185), Appendix A.1 (line 303)",
+      "recommendation": "Report both Bonferroni and Benjamini-Hochberg FDR-corrected results. Since the 78 cells are not independent (positive dependence structure across layers), Bonferroni is overly conservative. The Benjamini-Yekutieli procedure (which controls FDR under arbitrary dependence) would also be acceptable. Note that the qualitative conclusion (M3 has more significant cells) is unlikely to change, but the quantitative ratio may shift.",
+      "resolution_required": false
+    },
+    {
+      "id": "F009",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "The manuscript correctly acknowledges the single-seed limitation (Section 6, line 279) but does not quantify the uncertainty this introduces. For the OOD results, where M5 advantages of 7-9pp are observed, single-seed estimates could be sensitive to initialization. The McNemar tests provide within-seed statistical significance (paired comparisons control for problem-level variance), but they cannot address between-seed variability. A simple bootstrap of per-sample predictions could provide within-seed confidence intervals on the accuracy difference, partially addressing this gap without requiring additional training runs.",
+      "location": "manuscript.md: Section 6 (lines 279-280)",
+      "recommendation": "Consider reporting bootstrap 95% CIs on accuracy for each model-test-set combination. These would be derived from the existing per-sample predictions (no new experiments needed) and would quantify the within-seed sampling uncertainty even though between-seed uncertainty remains unaddressed.",
+      "resolution_required": false
+    },
+    {
+      "id": "F010",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The probing analysis at position 3 involves 38 target classes with approximately 6.3 training samples per class (n_train ~ 238, 38 classes) and 768 features, giving a feature-to-sample ratio of 3.2:1. While RidgeClassifier handles this via regularization, the probe accuracy of 55.4% (M3) and 57.0% (M5) should be contextualized against chance performance. With 38 classes, chance is 2.6%. The ~55% accuracy represents a 21x improvement over chance, which is substantial. However, the selectivity metric -- comparing matched vs. cross-position accuracy -- is more robust than raw accuracy for this reason, and the paper appropriately emphasizes selectivity over raw accuracy.",
+      "location": "manuscript.md: Section 4.3 (lines 162-185)",
+      "recommendation": "Consider briefly noting the chance baseline (2.6% for 38 classes) when reporting peak probe accuracy, to help readers calibrate the meaning of 55-57% accuracy.",
+      "resolution_required": false
+    },
+    {
+      "id": "F011",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "The manuscript does not report per-fold variance for the 5-fold CV probe accuracy estimates. Without this, the selectivity difference of 0.3pp between M3 (52.0pp) and M5 (52.3pp) at position 3 cannot be formally tested. The text notes 'the typical standard deviation of 5-fold cross-validation estimates at this sample size (n=298)' but does not report the actual value. Even a rough standard error estimate (e.g., from the formula SE ~ sqrt(p(1-p)/n) or from actual fold-level variance) would allow a meaningful comparison.",
+      "location": "manuscript.md: Section 4.3 (line 179)",
+      "recommendation": "Report per-fold variance or standard deviation for the key probe accuracy estimates at position 3 (at minimum). This would enable a formal test of whether the 0.3pp selectivity difference is meaningful. Even an approximate SE would be informative.",
+      "resolution_required": false
+    },
+    {
+      "id": "F012",
+      "severity": "major",
+      "category": "analysis",
+      "description": "The manuscript's Table 2 explicitly acknowledges an inference-pipeline discrepancy: 'Training-time evaluation at best epoch yielded slightly higher estimates for M3 (98.0%) and lower for M5 (95.6%), a discrepancy of 5 samples per model attributable to differences in the inference code path.' This 2.4pp swing for M5 (95.6% to 96.6%) is non-trivial. The previous statistical review (S001) flagged this as critical. While the current manuscript addresses it transparently, the fact that two evaluation pipelines disagree by up to 5 samples on a 500-sample test set raises questions about determinism. If the models are deterministic (temperature=0), both pipelines should produce identical results. The discrepancy suggests either (a) numerical non-determinism (floating-point differences across code paths), (b) different pre-processing or tokenization, or (c) different model checkpoints. Any of these could affect reproducibility claims.",
+      "location": "manuscript.md: Table 2 note (lines 122-123)",
+      "recommendation": "Investigate and report the root cause of the 5-sample discrepancy between evaluation pipelines. If it is floating-point non-determinism, report this as a methodological note. If it reflects different checkpoints or code paths, clarify which is authoritative and why. The transparency is appreciated, but the cause should be identified to assure readers that the consistent-pipeline numbers (97.0%/96.6%) are reliable.",
+      "resolution_required": true
+    },
+    {
+      "id": "F013",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The Bonferroni correction for the 5 McNemar tests uses adjusted alpha = 0.01 (0.05/5). While Bonferroni is appropriate for k=5 tests (it is not excessively conservative at this scale), Holm-Bonferroni would be uniformly more powerful with no additional assumptions. Computing Holm-adjusted p-values yields the same qualitative conclusions for all 5 tests in this case, so this is a minor point. However, best practice favors Holm-Bonferroni as the default step-down procedure.",
+      "location": "manuscript.md: Section 3.4 (line 114), Table 5 (line 201)",
+      "recommendation": "Either switch to Holm-Bonferroni (marginally more powerful, same conclusions here) or note that Bonferroni and Holm-Bonferroni yield identical conclusions for these data.",
+      "resolution_required": false
+    },
+    {
+      "id": "F014",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "A Bayesian perspective would strengthen the in-distribution equivalence claim. The Bayes factor for the ProsQA McNemar test can be computed from the binomial likelihood: with b=14, c=12 out of 26 discordant pairs, the data strongly favor H0 (equal discordant rates) over H1 (unequal rates). The Bayes factor BF01 (in favor of the null) under a default Beta(1,1) prior would be approximately BF01 ~ 3.5-4.0, providing 'moderate' evidence for equivalence under Jeffreys' scale. This complements the frequentist non-significance and is more directly interpretable for equivalence claims.",
+      "location": "manuscript.md: Section 4.1 (line 120)",
+      "recommendation": "Consider reporting a Bayes factor for the ProsQA McNemar comparison. BF01 > 3 provides positive evidence for the null hypothesis of equal accuracy, directly supporting the equivalence interpretation in a way that a non-significant p-value alone cannot.",
+      "resolution_required": false
+    },
+    {
+      "id": "F015",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The statistical_analysis.json file contains APPROXIMATE McNemar values computed from aggregate accuracy (not per-sample data) that yield dramatically different results from the exact per-sample McNemar tests used in the manuscript. For example, DAG approximate p = 0.024 versus exact p = 0.000291. With Bonferroni correction, the approximate values would render DAG and Dense as non-significant. The manuscript correctly uses the exact values from mcnemar/results.json and mcnemar_verification.json, but the stale approximate values in statistical_analysis.json create a potential source of confusion for anyone attempting to reproduce or audit the results.",
+      "location": "papers/efficient_architecture_proof/results/statistical_analysis.json (lines 113-163)",
+      "recommendation": "Either update statistical_analysis.json to use the exact McNemar values, or add a prominent deprecation note. The 'approximate: true' warning exists but may be missed by auditors.",
+      "resolution_required": false
+    },
+    {
+      "id": "F016",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "The probing analysis reports 0/78 cells where MLP probes exceed linear probe accuracy, which the manuscript interprets as absence of nonlinear encoding. However, Appendix A.7 (line 407) correctly notes that the default MLPClassifier hyperparameters may produce underfitting. With 38+ classes, 768 features, and sample sizes as low as 298, a 2-layer MLP with 256 hidden units under default early stopping (10% validation holdout) is plausible to underfit. The clean 0/78 result is suspicious -- even random fluctuation should occasionally produce a cell where MLP slightly exceeds linear. The uniform 0/78 suggests the MLP is systematically underpowered rather than that nonlinear information is truly absent.",
+      "location": "manuscript.md: Appendix A.7 (lines 405-407)",
+      "recommendation": "The appendix caveat is appropriate but could be stronger. Consider stating: 'The uniform 0/78 result may reflect MLP underfitting rather than a true absence of nonlinear encoding; we do not draw strong conclusions from this null result.' A systematic hyperparameter search would be needed for a definitive claim.",
+      "resolution_required": false
+    },
+    {
+      "id": "F017",
+      "severity": "minor",
+      "category": "analysis",
+      "description": "The manuscript reports probe sample sizes varying by position (500 for positions 0-2, 298 for position 3, 81 for position 4, 12 for position 5) but does not report positions 4 and 5 showing 0.0% accuracy due to class count exceeding minimum fold size (position 4: n=81 with 32 classes; position 5: n=12 with 12 classes). This is explained in Appendix A.1 but the main text (Section 4.3) simply states the varying sample sizes without noting that positions 4-5 produced uninformative results. Some readers may interpret 0.0% accuracy in Tables A5-A6 as 'the model encodes nothing at those positions' rather than 'the probe failed due to insufficient samples per class'.",
+      "location": "manuscript.md: Section 4.3 (line 164), Tables A5-A6 (lines 369-403)",
+      "recommendation": "In the main text, clarify that positions 4-5 return 0.0% accuracy due to sample size limitations (fewer samples than classes), not due to absence of encoding. This prevents misinterpretation of the probe accuracy grids.",
+      "resolution_required": false
+    },
+    {
+      "id": "F018",
+      "severity": "suggestion",
+      "category": "analysis",
+      "description": "The manuscript mentions that McNemar's test is chosen over Wilcoxon signed-rank because the architectures produce 'structurally different logit distributions' (line 114). This is a reasonable justification, but it means the paper cannot analyze confidence or calibration differences between models. Some readers may want to know whether M3 and M5 differ in prediction confidence even when they agree on the answer. A brief analysis of agreement rates (which model is more confident when both are correct, or when they disagree) would add depth without requiring distributional assumptions.",
+      "location": "manuscript.md: Section 3.4 (line 114)",
+      "recommendation": "Consider adding a brief calibration or confidence analysis as supplementary material, with appropriate caveats about architectural confounds on logit scale.",
+      "resolution_required": false
+    }
+  ],
+  "overall_assessment": "pass_with_conditions",
+  "summary": "The manuscript demonstrates generally sound statistical methodology. The McNemar tests are correctly applied to paired binary data with exact computation from per-sample predictions, and the Bonferroni correction is appropriate for the family of 5 comparisons. The corrected probing analysis with permutation-based significance testing is methodologically rigorous, and the data files are internally consistent with the manuscript's claims -- all accuracy figures, contingency tables, and p-values match the underlying data. Five issues require attention before the statistical analysis meets publication standards: (1) the equivalence claim for in-distribution performance needs formal equivalence testing or qualified language, as a non-significant McNemar test does not establish equivalence; (2) effect sizes with confidence intervals should be reported for the primary McNemar comparisons; (3) the corruption analysis claims 'identical' profiles without any formal test of equivalence between degradation curves; (4) power analysis for the in-distribution comparison should be reported given only 26 discordant pairs; and (5) the evaluation pipeline discrepancy producing different accuracy estimates should be investigated and explained. The remaining findings are minor or suggestions for methodological refinement."
+}

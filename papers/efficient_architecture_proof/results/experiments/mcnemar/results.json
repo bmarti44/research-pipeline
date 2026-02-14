@@ -1,0 +1,132 @@
+[
+  {
+    "test_set": "prosqa_test",
+    "n_samples": 500,
+    "m3_accuracy": 0.97,
+    "m5_accuracy": 0.966,
+    "contingency_table": {
+      "a": 471,
+      "b": 14,
+      "c": 12,
+      "d": 3
+    },
+    "total_disagreements": 26,
+    "chi_sq_valid": true,
+    "exact_mcnemar": {
+      "statistic": 12,
+      "p_value": 0.84501898,
+      "p_bonferroni": 1.0
+    },
+    "chisq_mcnemar": {
+      "statistic": 0.038462,
+      "p_value": 0.84451927,
+      "p_bonferroni": 1.0
+    },
+    "significant_exact": false,
+    "significant_chisq": false
+  },
+  {
+    "test_set": "ood_7hop",
+    "n_samples": 1000,
+    "m3_accuracy": 0.66,
+    "m5_accuracy": 0.754,
+    "contingency_table": {
+      "a": 540,
+      "b": 120,
+      "c": 214,
+      "d": 126
+    },
+    "total_disagreements": 334,
+    "chi_sq_valid": true,
+    "exact_mcnemar": {
+      "statistic": 120,
+      "p_value": 3e-07,
+      "p_bonferroni": 1.52e-06
+    },
+    "chisq_mcnemar": {
+      "statistic": 25.89521,
+      "p_value": 3.6e-07,
+      "p_bonferroni": 1.8e-06
+    },
+    "significant_exact": true,
+    "significant_chisq": true
+  },
+  {
+    "test_set": "ood_8hop",
+    "n_samples": 1000,
+    "m3_accuracy": 0.675,
+    "m5_accuracy": 0.751,
+    "contingency_table": {
+      "a": 553,
+      "b": 122,
+      "c": 198,
+      "d": 127
+    },
+    "total_disagreements": 320,
+    "chi_sq_valid": true,
+    "exact_mcnemar": {
+      "statistic": 122,
+      "p_value": 2.541e-05,
+      "p_bonferroni": 0.00012707
+    },
+    "chisq_mcnemar": {
+      "statistic": 17.578125,
+      "p_value": 2.757e-05,
+      "p_bonferroni": 0.00013787
+    },
+    "significant_exact": true,
+    "significant_chisq": true
+  },
+  {
+    "test_set": "ood_dag",
+    "n_samples": 1000,
+    "m3_accuracy": 0.592,
+    "m5_accuracy": 0.519,
+    "contingency_table": {
+      "a": 357,
+      "b": 235,
+      "c": 162,
+      "d": 246
+    },
+    "total_disagreements": 397,
+    "chi_sq_valid": true,
+    "exact_mcnemar": {
+      "statistic": 162,
+      "p_value": 0.00029139,
+      "p_bonferroni": 0.00145697
+    },
+    "chisq_mcnemar": {
+      "statistic": 13.057935,
+      "p_value": 0.000302,
+      "p_bonferroni": 0.00151001
+    },
+    "significant_exact": true,
+    "significant_chisq": true
+  },
+  {
+    "test_set": "ood_dense",
+    "n_samples": 1000,
+    "m3_accuracy": 0.612,
+    "m5_accuracy": 0.684,
+    "contingency_table": {
+      "a": 473,
+      "b": 139,
+      "c": 211,
+      "d": 177
+    },
+    "total_disagreements": 350,
+    "chi_sq_valid": true,
+    "exact_mcnemar": {
+      "statistic": 139,
+      "p_value": 0.00014043,
+      "p_bonferroni": 0.00070217
+    },
+    "chisq_mcnemar": {
+      "statistic": 14.402857,
+      "p_value": 0.00014758,
+      "p_bonferroni": 0.00073789
+    },
+    "significant_exact": true,
+    "significant_chisq": true
+  }
+]

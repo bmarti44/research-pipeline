@@ -1,0 +1,260 @@
+{
+  "reviewer": "Methodologist",
+  "checkpoint": "manuscript_review_round3",
+  "round": 3,
+  "timestamp": "2026-02-14T22:15:00Z",
+  "files_reviewed": [
+    "papers/efficient_architecture_proof/manuscript/manuscript.md",
+    "papers/efficient_architecture_proof/results/selectivity_recomputed.json",
+    "papers/efficient_architecture_proof/results/experiments/corruption/results.json",
+    "papers/efficient_architecture_proof/results/experiments/ood/results.json",
+    "papers/efficient_architecture_proof/results/mcnemar_verification.json",
+    "papers/efficient_architecture_proof/results/cross_corruption.json",
+    "papers/efficient_architecture_proof/results/unmatched_transplant.json",
+    "papers/efficient_architecture_proof/results/permutation_power.json",
+    "papers/efficient_architecture_proof/results/appendix_data.json",
+    "papers/efficient_architecture_proof/results/per_sample_correctness.json",
+    "papers/efficient_architecture_proof/reviews/round_2_methodologist.json"
+  ],
+  "findings": [
+    {
+      "id": "R3_F001",
+      "severity": "minor",
+      "category": "design",
+      "description": "Forward-pass asymmetry framing in Section 5.3 has been substantially improved since round 2. The manuscript now explicitly names both confounded factors ('sequential dependency and additional computation') in Section 5.3 (line 253), acknowledges that the OOD comparison 'cannot isolate the cause' (line 251), presents both the sequential-bottleneck and the capacity-regularization interpretations as equally valid alternatives (line 255), and proposes the necessary third control in Section 6 (line 279). The language is appropriately hedged: 'One interpretation' and 'An alternative interpretation' rather than causal claims. However, the phrase 'sequential-bottleneck account' (Section 5.3, line 255) still implicitly foregrounds the content-related interpretation by naming it first and giving it a concrete mechanism ('computation pattern optimized for training-distribution chain lengths'), while the capacity alternative is described more generically ('a general capacity advantage'). This is a subtle framing asymmetry but not a serious issue. The abstract and conclusion now consistently include the caveat 'confounded by differences in sequential processing structure' when discussing OOD results. This represents adequate resolution of R2_F001.",
+      "location": "Section 5.3 (lines 249-255), Abstract (line 6), Conclusion (line 291)",
+      "recommendation": "Consider giving the capacity-regularization alternative the same level of mechanistic specificity as the sequential-bottleneck account. For example: 'An alternative interpretation is that M3's 72 effective layers of computation (12 layers per pass times 6 passes) overfit to training-distribution patterns, while M5's 12 effective layers provide implicit regularization that aids extrapolation to novel chain lengths.' This would make the two alternatives more symmetrically specified.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F002",
+      "severity": "minor",
+      "category": "design",
+      "description": "The central claim framing has been partially adjusted but remains subtly inconsistent across sections. The abstract (line 6) states 'the curriculum, not the continuous latent mechanism, drives COCONUT's in-distribution performance.' The conclusion (line 291) states 'COCONUT's in-distribution performance on ProsQA is primarily attributable to its training curriculum, not to the content of the recycled hidden states.' These two framings differ: the abstract attributes performance to 'the curriculum' (positive attribution), while the conclusion attributes it to 'not the content' (negative attribution). The conclusion's framing is more defensible given that the curriculum-only ablation is absent (R2_F004). The paper cannot positively attribute performance to the curriculum alone because the curriculum has not been tested without thought tokens. What the paper CAN claim is that the specific mechanism (recycling vs. pause) does not matter when curriculum is held constant. Section 5.1 (line 223) uses the weakest and most appropriate framing: 'the data favor curriculum-driven computation.' The introduction's contribution statement (line 18) correctly says the mechanism 'is not the causal source.' These framings range from strong (abstract) to appropriate (Section 5.1, Introduction).",
+      "location": "Abstract (line 6) vs. Conclusion (line 291) vs. Section 5.1 (line 223) vs. Introduction (line 18)",
+      "recommendation": "Harmonize the abstract framing with the conclusion. Replace 'the curriculum, not the continuous latent mechanism, drives COCONUT's in-distribution performance' with 'the continuous latent mechanism is not the primary driver of COCONUT's in-distribution performance; the shared curriculum is the common factor.' This avoids a positive attribution to curriculum alone (which requires the untested curriculum-only ablation) while still conveying the paper's core finding.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F003",
+      "severity": "minor",
+      "category": "design",
+      "description": "The MLP probe finding (0/78) is now appropriately marked as 'inconclusive*' in Table 4 (line 176) with an asterisk note explaining likely convergence failure, and Appendix A.7 (lines 429-431) provides a detailed explanation of why default hyperparameters were inadequate. This represents adequate resolution of R2_F010. The finding remains in the main text but is clearly flagged as unreliable. The sentence in Section 4.3 (line 193) 'We therefore treat the MLP probe results as inconclusive' correctly downgrades the status. The only remaining concern is that the paper still includes '0 / 78 (inconclusive*)' as a row in Table 4, which visually presents a null result that could be cited out of context. Removing the row entirely would be cleaner, but the asterisk notation is an acceptable compromise.",
+      "location": "Table 4 (line 176), Section 4.3 (line 193), Appendix A.7 (lines 429-431)",
+      "recommendation": "No further action strictly required. If a revision is made for other reasons, consider replacing the Table 4 row with 'Cells where MLP > linear | N/A (see A.7)* | N/A (see A.7)*' to avoid the visually misleading '0 / 78'.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F004",
+      "severity": "major",
+      "category": "design",
+      "description": "The single-seed limitation (R2_F003) remains unresolved in the text as requested by the round 2 review. The OOD results in Section 4.4 are presented without the per-result caveat that the round 2 review recommended. The current text states 'M5 outperforms M3 on three test sets' (line 211) without qualification. The limitations section (Section 6, line 277) discusses single-seed thoroughly, but the results section does not echo this caveat. Readers who focus on the results section without reading the limitations may overinterpret the OOD differences. The round 2 review specifically recommended 'add a sentence to the OOD results section (not just Limitations) acknowledging that the OOD advantages are preliminary single-seed observations.' This has not been done. The conclusion (line 289) says 'the pause baseline outperforms COCONUT on 3 of 4 test sets' without qualification. However, the abstract (line 6) does include 'all statistically significant' which is an incomplete caveat -- statistical significance within a single seed does not address between-seed variance.",
+      "location": "Section 4.4 (lines 211-215), Section 7 Conclusion (line 289)",
+      "recommendation": "Add a parenthetical to the first sentence of the OOD results discussion (after line 211, before the odds ratios): '(all from a single training seed; see Section 6 for replication considerations).' Similarly, qualify the conclusion's OOD statement (line 289) with 'in a single-seed comparison.' This small addition directs readers to the appropriate caveats without burying them in the limitations section.",
+      "resolution_required": true
+    },
+    {
+      "id": "R3_F005",
+      "severity": "major",
+      "category": "design",
+      "description": "The selectivity metric reported in Table 4 and the text uses inconsistent reference layers across the two models, which undermines the direct comparability of the '+52.0pp vs. +52.3pp' comparison. For M3, Table 4 states 'selectivity is reported at layer 0 for positions 0, 1, and 3 (where recycled hidden states are injected) and layer 12 for position 2' (line 166). For M5, 'selectivity is reported at layer 12 (peak accuracy layer) for all positions' (line 166). This means the selectivity values being compared between M3 and M5 come from different layers: M3's position 3 selectivity (+52.0pp) is measured at layer 0, while M5's position 3 selectivity (+52.3pp) is measured at layer 12. Verifying against selectivity_recomputed.json: M3 at (layer 0, position 3) has selectivity 0.5202 (+52.0pp), confirmed. M5 at (layer 12, position 3) has selectivity 0.5234 (+52.3pp), confirmed. The values are indeed nearly identical, which supports the paper's conclusion. However, for a rigorous comparison, the paper should either: (a) report selectivity at the same layer for both models, or (b) acknowledge that comparing different layers is comparing different representations and explain why this is still meaningful. The paper does acknowledge the architectural reason (M3 injects at layer 0, M5 builds through the stack), but the selectivity comparison is still presented as though the numbers are directly comparable. M3 at layer 12, position 3 has selectivity 0.5234 (from the raw grid), essentially identical to M5 at layer 12 -- so the claim holds regardless of layer choice, but this should be verified and noted.",
+      "location": "Table 4 (line 166), Section 4.3 (line 179)",
+      "recommendation": "Add a brief note to Table 4 or its caption stating: 'For cross-model comparison, both models show approximately +52pp selectivity at position 3 regardless of layer choice (M3 layer 12: +52.3pp, M5 layer 12: +52.3pp).' This confirms the comparison holds at matching layers and preempts the concern about cross-layer comparisons.",
+      "resolution_required": true
+    },
+    {
+      "id": "R3_F006",
+      "severity": "minor",
+      "category": "design",
+      "description": "The DAG Bonferroni p-value inconsistency flagged in R2_F014 has been resolved. The manuscript now reports p = 0.0015 consistently in Table 5 (line 208) and in the introduction (line 16). However, the mcnemar_verification.json shows the exact Bonferroni p-value is 0.001456972, and the appendix_data.json shows 'dag_bonferroni_rounded': 0.001 (which is incorrect rounding -- 0.001457 rounds to 0.001 at 3 decimal places but to 0.0015 at 4 significant figures). The rounding to 0.0015 in the manuscript is more accurate than 0.001 and is acceptable, though the exact value should ideally be reported as p = .00146 for maximum precision. This is a minor issue.",
+      "location": "Table 5 (line 208), appendix_data.json",
+      "recommendation": "No action required. The 0.0015 rounding is acceptable. If the appendix_data.json is used by other scripts, correct the 'dag_bonferroni_rounded' field from 0.001 to 0.0015 for internal consistency.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F007",
+      "severity": "minor",
+      "category": "design",
+      "description": "The manuscript states that M5 reverse corruption at 3 positions corrupted (positions 3-5) yields 96.0% (Table A3, line 375). The actual data in experiments/corruption/results.json shows M5 reverse corruption at 3 positions (pos 3-5) = 0.960. Table A3 reports this correctly. However, the forward corruption data (Table 3, line 146) reports M5 at 3 positions corrupted (positions 0-2) = 95.8%, and the results.json forward_corruption array (0-indexed, position 2 is the third element) = 0.958. This is consistent. But Table A3 reverse corruption at 2 positions (pos 4-5) shows 96.0% for M5, while results.json reverse_corruption[1] = 0.960. All values match. No inconsistency found in the corruption data -- all manuscript values match the source files. This was a verification check rather than a finding.",
+      "location": "Tables 3, A3, experiments/corruption/results.json",
+      "recommendation": "No action required. Data verified as consistent.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F008",
+      "severity": "major",
+      "category": "design",
+      "description": "The probing experiment's claim of 'identical selectivity profiles' (Section 4.3, line 183; Section 5.2, line 241; abstract line 6) may overstate the similarity at positions 0 and 1. The selectivity values at positions 0-1 reported in Table 4 are M3: -15.6pp, -10.6pp and M5: -12.0pp, -14.6pp. These show the same qualitative pattern (anti-selectivity at both positions) but the specific values differ: position 0 has a 3.6pp difference (M3 more anti-selective) and position 1 has a 4.0pp difference (M5 more anti-selective). The paper describes these as 'near-identical' without providing any statistical test of whether the difference in selectivity between models is significant. At position 3, the 0.3pp difference is convincingly negligible, but the 3.6-4.0pp differences at positions 0-1 may be meaningful given the sample size of n=500. Without confidence intervals or a formal comparison test on selectivity values, calling the profiles 'identical' is an informal judgment. The selectivity_recomputed.json data shows that M3 at layer 0, position 0 has raw selectivity -0.156 and M5 at layer 12, position 0 has raw selectivity -0.120; at layer 0, position 1 M3 has -0.106 and M5 layer 12 position 1 has -0.146. These absolute differences of 3-4pp in opposite directions at positions 0 and 1 could reflect genuinely different representational strategies at early positions that happen to produce the same net effect.",
+      "location": "Table 4 (line 174), Section 4.3 (line 183), Section 5.1 (line 232), Abstract (line 6)",
+      "recommendation": "Replace 'identical selectivity profiles' with 'qualitatively similar selectivity profiles' or 'the same selectivity pattern.' The key claim -- both models concentrate step-specific information at position 3 with anti-selectivity at early positions -- holds regardless of whether the exact selectivity magnitudes match. The 0.3pp difference at position 3 can still be highlighted as negligible. Adding standard errors from the 5-fold CV for each selectivity value would allow readers to assess whether the cross-model differences at positions 0-1 are within noise.",
+      "resolution_required": true
+    },
+    {
+      "id": "R3_F009",
+      "severity": "minor",
+      "category": "design",
+      "description": "The cross-problem transplant experiment uses 200 pairs for both matched and unmatched conditions, but the manuscript does not report whether donor-recipient pairs overlap between the matched and unmatched experiments. If the same 200 recipient problems are used in both conditions (with different donors), the comparison is partially paired and more informative. If different recipient sets are used, the comparison is between-subjects and less powerful. The unmatched_transplant.json shows M3 unmatched: 195/200 correct (97.5%), M5 unmatched: 193/200 correct (96.5%). The reference matched M3: 97.0%, M5: 96.5%. The transplant finding is convincing regardless (all conditions match clean accuracy), but reporting whether pairs overlap would increase methodological transparency.",
+      "location": "Section 4.2 (line 160), unmatched_transplant.json",
+      "recommendation": "Add a brief note clarifying whether the 200 pairs in each transplant condition used the same or different recipient problems. If the same recipients, note the paired design. If different, note this as a between-condition comparison.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F010",
+      "severity": "minor",
+      "category": "design",
+      "description": "The manuscript describes the cross-corruption analysis as confirming 'that the degradation cliff is structural rather than an artifact of perturbation scale' (line 152). The cross_corruption.json data supports this: M5 + M3-noise shows accuracies [0.966, 0.966, 0.964, 0.964, 0.576, 0.158, 0.024], with the cliff at position 4 (57.6%) matching M3 + M3-noise (57.4%) and M5 + M5-noise (57.2%). However, an interesting and unremarked detail is that M5 under M3-scale noise shows LESS pre-cliff degradation than M5 under M5-scale noise: at 3 positions corrupted, M5+M5noise = 95.8% vs. M5+M3noise = 96.4%. This is counterintuitive -- larger noise produces less degradation above the cliff. One explanation is that M3-scale random vectors are so far from M5's pause embedding manifold that the model effectively ignores them via attention mechanisms (treating them as out-of-distribution tokens), while M5-scale noise is close enough to the pause embedding to partially interfere with the model's learned processing. This is a minor analytical point but suggests the corruption experiments are not strictly monotonic with perturbation magnitude above the cliff, which could be noted.",
+      "location": "Section 4.2 (line 152), Appendix A.2 (Table A1, lines 339-349), cross_corruption.json",
+      "recommendation": "Consider adding a brief note to Appendix A.2 acknowledging the counterintuitive finding that M5 shows slightly less pre-cliff degradation under 50x noise than under 1x noise, and noting that this may reflect the model's ability to route attention away from maximally out-of-distribution inputs.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F011",
+      "severity": "minor",
+      "category": "design",
+      "description": "The paper states 'The number of valid probe targets varies by position: all 500 samples contribute labels for positions 0-2, 298 for position 3, 81 for position 4, and 12 for position 5' (Section 3.4, line 103). This is confirmed in selectivity_recomputed.json (n_per_position: {0: 500, 1: 500, 2: 500, 3: 298, 4: 81, 5: 12}). However, the paper does not explain why the sample count drops so sharply between positions 2 and 3. Since ProsQA has path lengths of 3-6 hops, and there are 6 thought positions (0-5), position 3 corresponds to step 3 of the reasoning path. Only samples with path length >= 4 have a step 3 entity to decode, and 298/500 samples have path length >= 4. This is implicit but could confuse readers who expect all 500 samples at all positions. More importantly, this means the selectivity comparison between position 2 (n=500) and position 3 (n=298) uses different subsets of the data, potentially introducing a selection bias: position-3 probes are trained only on longer problems, which might systematically differ from shorter problems in ways that affect probe accuracy.",
+      "location": "Section 3.4 (line 103), Section 4.3",
+      "recommendation": "Add a brief clarification: 'The sample size drops from 500 to 298 at position 3 because only problems with path length >= 4 (298/500 in the test set) have a ground-truth entity at reasoning step 3. Probes at positions 3-5 are therefore trained on a subset of longer problems, which may systematically differ from the full test set.'",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F012",
+      "severity": "major",
+      "category": "design",
+      "description": "The paper claims that the convergent evidence framework (Table 6, Section 5.1) demonstrates that 'six independent diagnostics consistently fail to find evidence that COCONUT's recycled hidden states carry reasoning content that differs functionally from M5's learned pause vectors' (line 237). However, the six diagnostics are not fully independent. The corruption and permutation experiments operate on the same model outputs (thought-token activations from the same inference run). The probing experiment uses hidden states from the same inference pass. The transplant experiment also uses activations from the same inference. All three experiment types draw from the same 500 test samples. While the METHODS are independent (corruption, probing, and transplant test different properties), the DATA are not independent -- they all derive from the same single-seed training run, the same 500-sample test set, and the same model checkpoints. If there is a seed-specific artifact that causes both models to converge to similar representations, all six diagnostics would show convergence without this reflecting a general pattern. The paper's use of 'independent' to describe the experimental paradigms is methodologically correct (the paradigms test different hypotheses), but could mislead readers into thinking the evidence base is larger than it is. In essence, all six diagnostics are conditioned on the same N=1 training outcome.",
+      "location": "Section 5.1 (lines 222-237), Table 6 (lines 226-235)",
+      "recommendation": "Qualify the independence claim: 'Three independent experimental PARADIGMS -- corruption analysis, representational probing, and out-of-distribution generalization -- produce a consistent picture, though all are conditioned on the same single-seed training run (Section 6).' This distinguishes methodological independence (which the paper has) from statistical independence (which requires multi-seed replication).",
+      "resolution_required": true
+    },
+    {
+      "id": "R3_F013",
+      "severity": "minor",
+      "category": "design",
+      "description": "The OOD evaluation for M1 (CoT) reports near-chance performance (8.2-28.2%) across all four OOD test sets (Table 5). However, the ood/results.json shows M1 accuracy on DAG = 28.2%, which is substantially above the 7-hop (10.7%), 8-hop (8.2%), and dense (14.1%) results. For a 2-choice task, chance is 50%, so all M1 OOD results are below chance, not 'near chance.' The manuscript states M1 'performs near chance on all OOD test sets (8.2%-28.2%)' (line 217). But 8.2% and 10.7% are significantly BELOW 50% chance, suggesting M1 is actively wrong -- perhaps the CoT model's explicit reasoning chain leads it to systematically select the distractor option on OOD problems. The manuscript does not note that below-chance performance is qualitatively different from at-chance performance. Below-chance performance indicates systematic error (the model has a predictable bias), while at-chance indicates random guessing. This distinction could be methodologically informative.",
+      "location": "Section 4.4 (line 217), Table 5 (lines 203-209)",
+      "recommendation": "Replace 'near chance' with 'below chance' and add a brief note: 'M1's below-chance performance on 7-hop (10.7%) and 8-hop (8.2%) suggests the model's explicit chain-of-thought reasoning leads to systematic errors on longer paths, rather than random guessing (50% chance for the 2-choice format).' This distinction between systematic error and random guessing is methodologically relevant and provides additional evidence that the CoT approach fails qualitatively differently from the curriculum-trained models.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F014",
+      "severity": "minor",
+      "category": "design",
+      "description": "Table 2 (line 122) notes a discrepancy between training-time evaluation and experiment-pipeline evaluation: 'Training-time evaluation at best epoch yielded slightly higher estimates for M3 (98.0%) and lower for M5 (95.6%), a discrepancy of 5 samples per model attributable to differences in the inference code path.' The specific cause of this discrepancy is described as 'differences in the inference code path' without elaborating. For a paper whose central claim depends on the M3-M5 accuracy difference being non-significant, understanding what causes a 2.4pp shift in M5's measured accuracy (from 95.6% to 96.6%) is important. If the inference code path difference affects the two models asymmetrically (3 samples for M3 vs. 5 samples for M5 in opposite directions), this could indicate that one evaluation pipeline subtly favors one architecture. The paper correctly uses the experiment-pipeline numbers consistently, but the unexplained discrepancy should be attributed to a specific cause (e.g., different tokenization, different temperature, different answer extraction logic) rather than the vague 'inference code path.'",
+      "location": "Table 2 caption (line 122)",
+      "recommendation": "Identify and briefly describe the specific difference in the inference code path that causes the discrepancy (e.g., 'The training-time evaluation uses greedy decoding from the model's generation loop, while the experiment pipeline extracts logits at the final position and selects the highest-probability answer token from the candidate set; 5 samples per model have different outcomes under these two extraction methods'). This specificity would preempt concerns about evaluation pipeline bias.",
+      "resolution_required": false
+    },
+    {
+      "id": "R3_F015",
+      "severity": "suggestion",
+      "category": "design",
+      "description": "The manuscript's convergent evidence framework would be strengthened by reporting a Bayesian analysis alongside the frequentist McNemar test for the primary M3-M5 comparison. The McNemar p = 0.845 establishes that the difference is not statistically significant, but a Bayes factor would quantify the evidence FOR the null hypothesis (equivalence) rather than merely failing to reject it. With b=14 and c=12 discordant pairs out of 500 total, the data strongly favor the null. A Bayes factor would make the strength of evidence for equivalence explicit and address the common critique that non-significant p-values do not demonstrate equivalence. Alternatively, an equivalence test (TOST procedure adapted for McNemar) with a clinically meaningful equivalence margin (e.g., 3pp) would formally demonstrate that the accuracy difference is smaller than any practically meaningful threshold.",
+      "location": "Section 4.1 (line 120)",
+      "recommendation": "Add a supplementary Bayes factor analysis or equivalence test for the primary M3-M5 in-distribution comparison. Report: 'Bayesian analysis with a uniform prior on the discordant probability yields BF01 = X, indicating [strong/decisive] evidence for the null hypothesis of equal accuracy.' Alternatively, conduct a TOST equivalence test with delta = 0.03 (3pp) to formally demonstrate equivalence within a pre-specified margin.",
+      "resolution_required": false
+    }
+  ],
+  "prior_findings_status": [
+    {
+      "original_id": "R2_F001",
+      "status": "resolved",
+      "assessment": "The forward-pass asymmetry is now extensively acknowledged in Sections 3.2, 5.3, and 6. The manuscript names both confounded factors (content and sequential structure), presents two alternative interpretations as equally valid, and proposes the necessary third control as future work. The abstract and conclusion include consistent caveats. Language is appropriately hedged. Remaining concern (asymmetric specificity of the two alternative interpretations) is minor and addressed in R3_F001."
+    },
+    {
+      "original_id": "R2_F002",
+      "status": "resolved",
+      "assessment": "Table 2 now uses the experiment-pipeline numbers (M3=97.0%, M5=96.6%) as primary, with the training-time numbers footnoted. The '85% gap closure' framing has been removed. This is fully resolved."
+    },
+    {
+      "original_id": "R2_F003",
+      "status": "partially_resolved",
+      "assessment": "The single-seed limitation is thoroughly discussed in Section 6 (lines 277-278) with appropriate caveats. However, the round 2 recommendation to add a single-seed caveat within the OOD results section (not just Limitations) has not been implemented. The OOD results and conclusion still present the M5 advantages without in-line qualification. Addressed in R3_F004."
+    },
+    {
+      "original_id": "R2_F004",
+      "status": "partially_resolved",
+      "assessment": "The curriculum-only ablation absence is acknowledged in Section 6 (line 281). The conclusion uses 'primarily attributable to its training curriculum' which is a softer claim than 'curriculum drives performance.' However, the abstract still uses the stronger framing 'the curriculum, not the continuous latent mechanism, drives COCONUT's in-distribution performance.' Addressed in R3_F002."
+    },
+    {
+      "original_id": "R2_F005",
+      "status": "resolved",
+      "assessment": "The corruption noise calibration asymmetry is acknowledged in Section 3.4 (line 101), Section 4.2 (line 152), and Section 6 (line 285-286). The cross-scale analysis is reported and correctly interpreted. The paper appropriately notes that per-model calibrated curves are not directly comparable. Adequate."
+    },
+    {
+      "original_id": "R2_F006",
+      "status": "resolved",
+      "assessment": "The permutation sensitivity section (line 158) now includes the caveat: 'This does not rule out order-sensitive internal representations that are ultimately redundant for the final prediction.' The power analysis in Appendix A.4 is appropriate. The logit-level analysis suggested in round 2 was not conducted but is explicitly framed as a limitation rather than a missing critical analysis. Adequate resolution."
+    },
+    {
+      "original_id": "R2_F007",
+      "status": "resolved",
+      "assessment": "The transplant experiment is now supplemented by the unmatched transplant results (Section 4.2, line 160; Appendix A.3), which show that even random donor-recipient pairing produces accuracy matching clean performance. The paper does not explicitly acknowledge the redundancy interpretation (thoughts could be ignored because input suffices), but the unmatched result substantially strengthens the 'no information' interpretation: if thoughts from a completely different problem work equally well, the model cannot be relying on thought content at all."
+    },
+    {
+      "original_id": "R2_F008",
+      "status": "resolved",
+      "assessment": "The probing-as-presence distinction is now explicitly discussed in Section 5.2 (line 247) with the Ravichander et al. caveat and the specific example of M3's richer encoding not translating to behavioral advantage. The paper correctly separates decodability from functional use."
+    },
+    {
+      "original_id": "R2_F009",
+      "status": "resolved",
+      "assessment": "The selectivity metric using max cross-position control is retained but the paper now characterizes it as 'a stricter test than the random-label baseline' (line 105). The round 2 recommendation to also report mean-control and random-label baselines was not implemented, but the paper's choice of the max baseline is defensible as conservative (harder to achieve positive selectivity). The existing metric is adequate for the paper's claims."
+    },
+    {
+      "original_id": "R2_F010",
+      "status": "resolved",
+      "assessment": "The MLP probe result is now marked 'inconclusive*' in Table 4 with asterisk notation, and Appendix A.7 provides a detailed explanation of likely convergence failure. Section 4.3 explicitly states 'We therefore treat the MLP probe results as inconclusive.' This adequately resolves the concern about presenting a training failure as a null finding."
+    },
+    {
+      "original_id": "R2_F011",
+      "status": "resolved",
+      "assessment": "The limitation of single-factor OOD variation is implicitly acknowledged through the discussion in Section 5.3 that presents multiple possible interpretations. Crossed OOD conditions are not suggested explicitly as future work, but the paper's OOD discussion is appropriately cautious. Minor issue; resolved through cautious interpretation."
+    },
+    {
+      "original_id": "R2_F012",
+      "status": "resolved",
+      "assessment": "Position 4-5 zeros are retained in the full probe grids (Tables A5-A6) and the paper now notes 'Positions 4-5 show 0.0% due to insufficient samples (n = 81 and n = 12)' in the table captions. The paper explicitly excludes position 5 from quantitative claims (line 103) and notes position 4-5 limitations (line 335-336). Adequate."
+    },
+    {
+      "original_id": "R2_F013",
+      "status": "resolved",
+      "assessment": "M1 positive control for corruption/probing experiments was not added, but this was a minor recommendation. The paper's methodology is validated through internal consistency (M3 and M5 agree on every diagnostic) and external consistency with Zhang et al. (2025). Adding M1 would strengthen the paper but is not required."
+    },
+    {
+      "original_id": "R2_F014",
+      "status": "resolved",
+      "assessment": "The DAG p-value is now consistently reported as p = 0.0015 in Table 5 (line 208) and in the introduction (line 16). The Section 5.3 inconsistency (previously p = 0.001) appears to have been corrected. Verified against mcnemar_verification.json: exact Bonferroni p = 0.001457, which rounds appropriately to 0.0015."
+    },
+    {
+      "original_id": "R2_F015",
+      "status": "resolved",
+      "assessment": "The pause embedding description in Section 3.2 is clear about the nn.Parameter architecture and its initialization from the <latent> token embedding. The L2 distance between initial and final embeddings was not reported as suggested, but this is a minor addition that does not affect the paper's claims."
+    },
+    {
+      "original_id": "R2_F016",
+      "status": "resolved",
+      "assessment": "The shared vocabulary between training and OOD sets is acknowledged in Section 3.4 (line 107) which states 'generated using ProsQA's exact vocabulary (38 species names, 17 person names).' Appendix A.8 confirms the same vocabulary. The paper's OOD claims are appropriately scoped to structural generalization."
+    },
+    {
+      "original_id": "R2_F017",
+      "status": "resolved",
+      "assessment": "The suggestion to test M5 with uniform positional encoding was not implemented but was labeled as a suggestion. The paper's hypothesis about positional encoding mediating M5's selectivity (Section 5.2, line 245) is clearly marked as a hypothesis rather than a tested claim."
+    },
+    {
+      "original_id": "R2_F018",
+      "status": "resolved",
+      "assessment": "The suggestion for structured corruption methods was not implemented. The existing Gaussian corruption, supplemented by the cross-scale analysis, provides adequate evidence for the paper's claims."
+    },
+    {
+      "original_id": "R2_F019",
+      "status": "resolved",
+      "assessment": "The hidden-state convergence analysis was not conducted but was labeled as a suggestion. The paper's interpretive framework does not require this analysis."
+    },
+    {
+      "original_id": "R2_F020",
+      "status": "resolved",
+      "assessment": "The gradient dynamics difference between M3 and M5 is not explicitly acknowledged in the manuscript, but the paper does not claim that the training experience is identical -- only that the curriculum schedule is matched. This is sufficient for the paper's scope."
+    }
+  ],
+  "overall_assessment": "pass_with_conditions",
+  "summary": "The manuscript has improved substantially since round 2, resolving 16 of 20 prior findings fully and 4 partially. The core experimental design -- a curriculum-matched pause-token baseline compared against COCONUT across three experimental paradigms -- is sound, creative, and important. Four issues require attention before proceeding: (1) the OOD results section and conclusion need in-line single-seed caveats (R3_F004); (2) the cross-layer selectivity comparison should be verified at matching layers and noted (R3_F005); (3) 'identical selectivity profiles' should be softened to 'qualitatively similar' given 3-4pp differences at positions 0-1 (R3_F008); and (4) the 'independent' in the convergent evidence claim should be qualified to distinguish methodological independence from statistical independence given single-seed conditioning (R3_F012). None of these are fatal -- they are precision improvements to an already strong manuscript. The paper's central contribution (M5 matches M3 under matched curriculum, p = 0.845) is robust and well-supported."
+}
