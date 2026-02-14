@@ -12,14 +12,13 @@ Method:
   4. Permutation test: 10000 shuffles, Bonferroni correction
 
 Usage:
+    cd code
     python exp_probing.py \
-        --checkpoint_dir /path/to/results/v9_meta_fork \
+        --checkpoint_dir ../results \
         --data data/prosqa_test.json \
         --num_samples 500 \
-        --output_dir /path/to/experiments/probing/ \
+        --output_dir ../results/experiments/probing/ \
         --seed 0
-
-Deployed to: /lambda/nfs/experiment/code/v9_meta_fork/
 """
 
 import argparse

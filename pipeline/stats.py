@@ -966,6 +966,125 @@ def intraclass_correlation(
 
 
 # =============================================================================
+# Power Analysis
+# =============================================================================
+
+def compute_power(
+    test_name: str,
+    effect_size: float,
+    n: int,
+    alpha: float = 0.05,
+    ratio: float = 1.0,
+    alternative: str = "two-sided",
+) -> dict[str, Any]:
+    """
+    Compute statistical power for a given test, effect size, and sample size.
+
+    Also computes the required sample size for 80% and 90% power targets.
+
+    Args:
+        test_name: Type of test. One of:
+            "two_proportion_z", "chi_square" — uses Cohen's h
+            "independent_t", "paired_t" — uses Cohen's d
+            "one_way_anova" — uses Cohen's f
+        effect_size: Expected effect size (Cohen's h, d, or f depending on test)
+        n: Sample size per group
+        alpha: Significance level
+        ratio: Ratio of group sizes (n2/n1). Only used for two-sample tests.
+        alternative: "two-sided" or "one-sided"
+
+    Returns:
+        Dictionary with keys: power, n_for_80, n_for_90, test_name, effect_size, n, alpha
+    """
+    tail_factor = 1 if alternative == "one-sided" else 2
+    z_alpha = stats.norm.ppf(1 - alpha / tail_factor)
+
+    if test_name in ("two_proportion_z", "chi_square"):
+        # Power for two-proportion z-test using Cohen's h
+        # SE under H1 ≈ sqrt((1/n1 + 1/n2)) for arcsine-transformed proportions
+        n1 = n
+        n2 = int(n * ratio)
+        se = np.sqrt(1.0 / n1 + 1.0 / n2)
+        noncentrality = abs(effect_size) / se
+        power = 1 - stats.norm.cdf(z_alpha - noncentrality)
+
+        def _required_n(target_power: float) -> int:
+            z_beta = stats.norm.ppf(target_power)
+            # n per group: ((z_alpha + z_beta) / effect_size)^2 * (1 + 1/ratio)
+            n_per = ((z_alpha + z_beta) / abs(effect_size)) ** 2 * (1 + 1.0 / ratio)
+            return max(int(np.ceil(n_per)), 2)
+
+    elif test_name in ("independent_t",):
+        n1 = n
+        n2 = int(n * ratio)
+        se = np.sqrt(1.0 / n1 + 1.0 / n2)
+        noncentrality = abs(effect_size) / se
+        df = n1 + n2 - 2
+        if df < 1:
+            return {"power": 0.0, "n_for_80": None, "n_for_90": None,
+                    "test_name": test_name, "effect_size": effect_size,
+                    "n": n, "alpha": alpha}
+        crit = stats.t.ppf(1 - alpha / tail_factor, df)
+        power = 1 - stats.nct.cdf(crit, df, noncentrality)
+
+        def _required_n(target_power: float) -> int:
+            z_beta = stats.norm.ppf(target_power)
+            n_per = ((z_alpha + z_beta) / abs(effect_size)) ** 2 * (1 + 1.0 / ratio)
+            return max(int(np.ceil(n_per)), 2)
+
+    elif test_name in ("paired_t",):
+        noncentrality = abs(effect_size) * np.sqrt(n)
+        df = n - 1
+        if df < 1:
+            return {"power": 0.0, "n_for_80": None, "n_for_90": None,
+                    "test_name": test_name, "effect_size": effect_size,
+                    "n": n, "alpha": alpha}
+        crit = stats.t.ppf(1 - alpha / tail_factor, df)
+        power = 1 - stats.nct.cdf(crit, df, noncentrality)
+
+        def _required_n(target_power: float) -> int:
+            z_beta = stats.norm.ppf(target_power)
+            return max(int(np.ceil(((z_alpha + z_beta) / abs(effect_size)) ** 2)), 2)
+
+    elif test_name in ("one_way_anova",):
+        # Cohen's f, approximate power via noncentral F
+        # noncentrality parameter lambda = n * k * f^2 (k = groups, assume k=2)
+        k = 2
+        lam = n * k * effect_size ** 2
+        df1 = k - 1
+        df2 = k * (n - 1)
+        if df2 < 1:
+            return {"power": 0.0, "n_for_80": None, "n_for_90": None,
+                    "test_name": test_name, "effect_size": effect_size,
+                    "n": n, "alpha": alpha}
+        crit = stats.f.ppf(1 - alpha, df1, df2)
+        power = 1 - stats.ncf.cdf(crit, df1, df2, lam)
+
+        def _required_n(target_power: float) -> int:
+            z_beta = stats.norm.ppf(target_power)
+            return max(int(np.ceil(((z_alpha + z_beta) / abs(effect_size)) ** 2 / k)), 2)
+
+    else:
+        # Fallback: normal approximation for unknown test types
+        noncentrality = abs(effect_size) * np.sqrt(n)
+        power = 1 - stats.norm.cdf(z_alpha - noncentrality)
+
+        def _required_n(target_power: float) -> int:
+            z_beta = stats.norm.ppf(target_power)
+            return max(int(np.ceil(((z_alpha + z_beta) / abs(effect_size)) ** 2)), 2)
+
+    return {
+        "power": float(power),
+        "n_for_80": _required_n(0.80),
+        "n_for_90": _required_n(0.90),
+        "test_name": test_name,
+        "effect_size": effect_size,
+        "n": n,
+        "alpha": alpha,
+    }
+
+
+# =============================================================================
 # Convenience Functions
 # =============================================================================
 

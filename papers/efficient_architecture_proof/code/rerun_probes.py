@@ -9,7 +9,12 @@ Saves:
   - Complete results JSON
 """
 import sys, os, json, time, warnings
-sys.path.insert(0, "/lambda/nfs/experiment/code/v9_meta_fork")
+
+# Allow overriding the code root via environment variable for portability.
+# Default: the directory containing this script.
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_CODE_ROOT = os.environ.get("CODE_ROOT", _SCRIPT_DIR)
+sys.path.insert(0, _CODE_ROOT)
 
 import numpy as np
 import torch
@@ -30,9 +35,9 @@ NUM_LAYERS = 13
 N_FOLDS = 5
 N_PERMUTATIONS = 2000  # min p = 1/2001 = 0.0005, below Bonferroni 0.05/78 = 0.000641
 MODELS = ["m3", "m5"]
-CHECKPOINT_DIR = "/lambda/nfs/experiment/results/v9_meta_fork"
-DATA_PATH = "/lambda/nfs/experiment/code/v9_meta_fork/data/prosqa_test.json"
-OUTPUT_DIR = "/lambda/nfs/experiment/results/v9_meta_fork/experiments/probing_corrected"
+CHECKPOINT_DIR = os.environ.get("CHECKPOINT_DIR", os.path.join(_SCRIPT_DIR, "..", "results"))
+DATA_PATH = os.environ.get("DATA_PATH", os.path.join(_SCRIPT_DIR, "data", "prosqa_test.json"))
+OUTPUT_DIR = os.environ.get("OUTPUT_DIR", os.path.join(_SCRIPT_DIR, "..", "results", "experiments", "probing_corrected"))
 NUM_SAMPLES = 500
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)

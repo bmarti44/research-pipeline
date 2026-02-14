@@ -1,5 +1,7 @@
 # Phase 3: COCONUT + Pause-Token Training
 
+> **Portability note:** This document is the original execution log from a Lambda Labs H100 server. All paths referencing `/lambda/nfs/experiment/` and SSH commands are specific to that server. To reproduce, substitute your own GPU server and working directory. See the paper's [README.md](README.md) for portable reproduction instructions.
+
 **Prerequisites:** Phase 2 complete. Gate 2 passed.
 **Where:** Lambda H100.
 **Time estimate:** ~12 hours (4 models sequential — FSDP uses ~69 GB, can't parallel)

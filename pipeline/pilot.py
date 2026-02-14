@@ -154,12 +154,27 @@ def evaluate_pilot(study_path: Path, config: dict) -> PilotResult:
 
             # Effect detection power check (optional)
             if criteria.min_effect_detection_power is not None:
-                # This would need proper power calculation
-                # For now, just flag if effect is detected
-                p_value = primary_test.get("p_value", 1.0)
-                criteria_met["effect_detectable"] = p_value < 0.20  # Relaxed for pilot
-                if not criteria_met["effect_detectable"]:
-                    messages.append(f"Effect may be too small to detect (pilot p={p_value:.3f})")
+                from .stats import compute_power
+                observed_effect = primary_test.get("effect_size")
+                test_name = primary_test.get("test_name", "two_proportion_z")
+                if observed_effect is not None and observed_effect > 0:
+                    power_result = compute_power(
+                        test_name=test_name,
+                        effect_size=observed_effect,
+                        n=observed.get("completed_trials", 20),
+                        alpha=0.05,
+                    )
+                    pilot_power = power_result["power"]
+                    criteria_met["effect_detectable"] = pilot_power >= criteria.min_effect_detection_power
+                    if not criteria_met["effect_detectable"]:
+                        messages.append(
+                            f"Estimated power too low: {pilot_power:.2%} < "
+                            f"{criteria.min_effect_detection_power:.2%} "
+                            f"(observed effect={observed_effect:.3f})"
+                        )
+                else:
+                    criteria_met["effect_detectable"] = False
+                    messages.append("No measurable effect size in pilot data")
     else:
         observed["effect_size"] = None
         observed["p_value"] = None

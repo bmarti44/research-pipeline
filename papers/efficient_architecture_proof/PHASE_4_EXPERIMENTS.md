@@ -1,5 +1,7 @@
 # Phase 4: Experiments
 
+> **Portability note:** This document is the original execution log from a Lambda Labs H100 server. All paths referencing `/lambda/nfs/experiment/` and SSH commands are specific to that server. To reproduce, substitute your own GPU server and working directory. See the paper's [README.md](README.md) for portable reproduction instructions.
+
 **Prerequisites:** Phase 3 complete. Gates 3-5 passed (or Gate 4 failed → proceeding with negative-result framing).
 **Where:** Lambda H100.
 **Time estimate:** ~6-8 hours

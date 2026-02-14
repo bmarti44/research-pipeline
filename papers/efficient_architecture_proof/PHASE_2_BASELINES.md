@@ -1,5 +1,7 @@
 # Phase 2: Baseline Training
 
+> **Portability note:** This document is the original execution log from a Lambda Labs H100 server. All paths referencing `/lambda/nfs/experiment/` and SSH commands are specific to that server. To reproduce, substitute your own GPU server and working directory. See the paper's [README.md](README.md) for portable reproduction instructions.
+
 **Prerequisites:** v9_meta_fork set up with Meta's code + minimal M4/M4b additions.
 **Where:** Lambda H100.
 **Time estimate:** ~6 hours (2 models × 50 epochs × ~3 hrs each, sequential)

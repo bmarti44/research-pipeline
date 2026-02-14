@@ -5,13 +5,12 @@ Tests all 5 models (M1-M4b) on in-distribution test set and 4 OOD sets.
 Computes accuracy per model per test set, with verification checks.
 
 Usage:
+    cd code
     python exp_ood.py \
-        --checkpoint_dir /path/to/results/v9_meta_fork \
+        --checkpoint_dir ../results \
         --data_dir data/ \
-        --output_dir /path/to/experiments/ood/ \
+        --output_dir ../results/experiments/ood/ \
         --seed 0
-
-Deployed to: /lambda/nfs/experiment/code/v9_meta_fork/
 """
 
 import argparse

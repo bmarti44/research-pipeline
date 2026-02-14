@@ -15,14 +15,13 @@ MANDATORY Validation: M1 (CoT baseline) must show CE > 0.3 at ≥50% of CoT posi
 If M1 validation fails, the patching implementation is broken. Do not trust results.
 
 Usage:
+    cd code
     python exp_causal.py \
-        --checkpoint_dir /path/to/results/v9_meta_fork \
+        --checkpoint_dir ../results \
         --data data/prosqa_test.json \
         --num_samples 500 \
-        --output_dir /path/to/experiments/causal/ \
+        --output_dir ../results/experiments/causal/ \
         --seed 0
-
-Deployed to: /lambda/nfs/experiment/code/v9_meta_fork/
 """
 
 import argparse

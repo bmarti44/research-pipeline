@@ -5,11 +5,11 @@ Task 5: Unmatched cross-problem transplant
 Uses the same corruption API as exp_corruption.py.
 
 Usage:
-    cd /lambda/nfs/experiment/code/v9_meta_fork
+    cd code
     python task4_5_gpu.py \
-        --checkpoint_dir /lambda/nfs/experiment/results/v9_meta_fork \
+        --checkpoint_dir ../results \
         --data data/prosqa_test.json \
-        --output_dir /lambda/nfs/experiment/experiments/revision \
+        --output_dir ../results/experiments/revision \
         --seed 0
 """
 

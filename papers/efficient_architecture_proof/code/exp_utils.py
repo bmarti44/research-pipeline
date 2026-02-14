@@ -4,7 +4,6 @@ Shared utilities for COCONUT experiment scripts.
 Handles loading of all 5 model variants (M1-M4b), input preparation,
 inference, answer extraction, and hidden state extraction.
 
-Deployed to: /lambda/nfs/experiment/code/v9_meta_fork/
 Imports from local coconut.py and dataset.py in same directory.
 """
 

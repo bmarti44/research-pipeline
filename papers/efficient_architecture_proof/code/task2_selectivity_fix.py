@@ -9,11 +9,11 @@ Fix: Use pairwise alignment. For each (t, s) cross-position comparison, use
 min(n_t, n_s) samples instead of global min.
 
 Usage:
-    cd /lambda/nfs/experiment/code/v9_meta_fork
+    cd code
     python task2_selectivity_fix.py \
-        --checkpoint_dir /lambda/nfs/experiment/results/v9_meta_fork \
+        --checkpoint_dir ../results \
         --data data/prosqa_test.json \
-        --output_dir /lambda/nfs/experiment/experiments/revision
+        --output_dir ../results/experiments/revision
 """
 
 import argparse

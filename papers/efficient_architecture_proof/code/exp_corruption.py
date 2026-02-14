@@ -14,14 +14,13 @@ Corruption modes:
   6. Partial permutation: swap adjacent pairs of thought embeddings
 
 Usage:
+    cd code
     python exp_corruption.py \
-        --checkpoint_dir /path/to/results/v9_meta_fork \
+        --checkpoint_dir ../results \
         --data data/prosqa_test.json \
         --num_samples 500 \
-        --output_dir /path/to/experiments/corruption/ \
+        --output_dir ../results/experiments/corruption/ \
         --seed 0
-
-Deployed to: /lambda/nfs/experiment/code/v9_meta_fork/
 """
 
 import argparse

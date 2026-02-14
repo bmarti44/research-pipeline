@@ -1,5 +1,7 @@
 # Phase 5: Multi-Seed Runs + Review + Figures
 
+> **Portability note:** This document is the original execution log from a Lambda Labs H100 server. All paths referencing `/lambda/nfs/experiment/` and SSH commands are specific to that server. To reproduce, substitute your own GPU server and working directory. See the paper's [README.md](README.md) for portable reproduction instructions.
+
 **Prerequisites:** Phase 4 complete. Seed 0 results in hand.
 **Where:** Lambda H100.
 **Time estimate:** ~3-4 days

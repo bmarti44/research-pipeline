@@ -1,5 +1,7 @@
 # Phase 1: Setup + Data Preparation
 
+> **Portability note:** This document is the original execution log from a Lambda Labs H100 server. All paths referencing `/lambda/nfs/experiment/` and SSH commands to `192.222.52.148` are specific to that server. To reproduce, substitute your own GPU server and working directory. See the paper's [README.md](README.md) for portable reproduction instructions.
+
 **Prerequisites:** Read MASTER_REFERENCE.md first.
 **Where:** Everything on Lambda H100.
 **Time estimate:** ~1-2 hours

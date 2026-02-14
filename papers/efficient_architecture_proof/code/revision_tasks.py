@@ -6,11 +6,11 @@ Task 4: Cross-corruption (M3-magnitude noise applied to M5)
 Task 5: Unmatched cross-problem transplant
 
 Usage:
-    cd /lambda/nfs/experiment/code/v9_meta_fork
+    cd code
     python revision_tasks.py \
-        --checkpoint_dir /lambda/nfs/experiment/results/v9_meta_fork \
+        --checkpoint_dir ../results \
         --data data/prosqa_test.json \
-        --output_dir /lambda/nfs/experiment/experiments/revision
+        --output_dir ../results/experiments/revision
 """
 
 import argparse

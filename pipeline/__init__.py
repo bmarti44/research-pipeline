@@ -280,6 +280,7 @@ from .stats import (
     list_tests,
     run_test,
     run_analysis,
+    compute_power,
 )
 
 # Evaluator registry
