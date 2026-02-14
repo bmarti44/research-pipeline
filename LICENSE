@@ -2,7 +2,7 @@
 
 This repository contains multiple components with different licenses:
 
-## Paper and Figures (paper/)
+## Papers and Figures (papers/)
 Creative Commons Attribution 4.0 International (CC-BY-4.0)
 https://creativecommons.org/licenses/by/4.0/
 
@@ -13,7 +13,7 @@ You are free to:
 Under the following terms:
 - Attribution: You must give appropriate credit, provide a link to the license, and indicate if changes were made.
 
-## Code (experiments/, src/)
+## Code (pipeline/)
 MIT License
 
 Copyright (c) 2026 Brian Martin, Stephen Lipmann
@@ -36,7 +36,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-## Data (experiments/results/)
+## Data (papers/*/results/, papers/*/checkpoints/)
 Creative Commons Zero v1.0 Universal (CC0-1.0)
 https://creativecommons.org/publicdomain/zero/1.0/
 

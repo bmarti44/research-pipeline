@@ -1,30 +1,31 @@
 # Contributing Guide
 
-Thank you for your interest in contributing to the Format Friction research project.
+Thank you for your interest in contributing to the Autonomous Research Pipeline.
 
-## Project Status
+## Project Overview
 
-This is a **pre-registered study** with locked analysis code. Contributions are welcome but must respect the pre-registration integrity.
+This repository is an autonomous research pipeline that produces academically rigorous papers investigating LLM/AI behavior. The core infrastructure lives in `pipeline/`, study templates in `templates/`, and individual research papers in `papers/`.
 
 ## What You Can Contribute
 
 | Area | Welcome? | Notes |
 |------|----------|-------|
-| Bug fixes | ✅ Yes | For non-locked files only |
-| Documentation | ✅ Yes | Improvements, clarifications, typos |
-| Replication studies | ✅ Yes | Using different models or domains |
-| New analyses | ✅ Yes | Must be clearly marked as exploratory |
-| Visualization | ✅ Yes | New figures, improved plots |
+| Bug fixes | Yes | Pipeline code, documentation |
+| Documentation | Yes | Improvements, clarifications, typos |
+| New pipeline modules | Yes | Statistical tests, evaluators, exporters |
+| Replication studies | Yes | Using different models or domains |
+| New analyses | Yes | Must be clearly marked as exploratory |
+| Visualization | Yes | New figures, improved plots |
 
 ## What You Cannot Modify
 
-These files are **locked** after pre-registration and must not be changed:
+Each paper may have **preregistration locks**. After a study's preregistration is created (via `python -m pipeline prereg <study>`), these files are hash-locked and must not be changed:
 
-- `experiments/run_analysis.py` - Pre-registered analysis code
-- `experiments/scenarios/signal_detection.py` - Scenario definitions
-- `paper/PREREGISTRATION.md` - Hypotheses and statistical plan
+- `papers/<paper>/studies/<study>/config.yaml`
+- `papers/<paper>/studies/<study>/tasks.yaml`
+- `papers/<paper>/studies/<study>/analysis_plan.yaml`
 
-Checksums are verified in `verification/preregistration_lock.json`.
+Locks are stored in `papers/<paper>/studies/<study>/preregistration/preregistration_lock.json`. Any post-preregistration change must be documented as a deviation in `deviations.yaml`.
 
 ---
 
@@ -44,29 +45,76 @@ source .venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-# CRITICAL: Unset API keys (uses subscription CLIs only)
-unset ANTHROPIC_API_KEY OPENAI_API_KEY GOOGLE_API_KEY
+# Set API keys for the LLM providers you plan to use
+export ANTHROPIC_API_KEY="your-key"
+export OPENAI_API_KEY="your-key"
+export GOOGLE_API_KEY="your-key"
 
 # Verify setup
-python -c "from experiments.core import statistics, judge, cli_wrappers, checkpoint; print('OK')"
+python -c "import pipeline; print('OK')"
 ```
 
 ### 2. Understand the Codebase
 
-- **`README.md`** - Project overview and verification guide
-- **`AGENTS.md`** - Detailed instructions for working with the code
-- **`PLAN.md`** - Full research plan (71 KB)
+- **`README.md`** — Project overview, CLI reference, directory layout
+- **`AGENTS.md`** — Orchestrator protocol (how the agent pipeline works end-to-end)
+- **`PLAN.md`** — Architecture reference and design rationale
 
-### 3. Run Tests
+### 3. Run the Pipeline
 
 ```bash
-# Validate scenarios
-python -m experiments.cli validate
+# Check status of existing studies
+python -m pipeline status
 
-# Run analysis on existing data
-python experiments/run_analysis.py \
-  experiments/results/primary/signal_detection_20260203_074411_judged.json
+# Create a new study from a template
+python -m pipeline new my_study --template basic
+
+# Verify a study's stage gates
+python -m pipeline verify my_study --all
 ```
+
+---
+
+## Directory Layout
+
+```
+pipeline/          # Reusable pipeline infrastructure (stats, evaluators, runner, etc.)
+templates/study/   # Study templates (basic, tool_calling)
+papers/            # Individual research papers, each self-contained
+  <paper_name>/
+    paper.yaml
+    studies/<study_name>/
+      config.yaml, tasks.yaml, analysis_plan.yaml
+      preregistration/    # Hash-locked design
+      pilot/              # Pilot study data
+      stages/             # Main study data (configure, generate, execute, evaluate, analyze)
+      reviews/            # 5-round review files
+```
+
+---
+
+## Adding a New Study
+
+1. **Create from template:**
+   ```bash
+   python -m pipeline new my_study --paper my_paper --template basic
+   ```
+
+2. **Edit the generated files:**
+   - `config.yaml` — Conditions, design, models, trial parameters
+   - `tasks.yaml` — Task definitions with expected outputs
+   - `analysis_plan.yaml` — Statistical tests, alpha, corrections
+
+3. **Preregister (locks the design):**
+   ```bash
+   python -m pipeline prereg my_study
+   ```
+
+4. **Run pilot, then full pipeline:**
+   ```bash
+   python -m pipeline pilot my_study
+   python -m pipeline run my_study --full
+   ```
 
 ---
 
@@ -77,26 +125,6 @@ python experiments/run_analysis.py \
 - **Type hints**: Always include type annotations
 - **Descriptive names**: Prefer clarity over brevity
 - **Docstrings**: Required for public functions
-
-### Example
-
-```python
-def compute_friction(
-    detection_rate: float,
-    compliance_rate: float
-) -> float:
-    """
-    Compute format friction as the gap between detection and compliance.
-
-    Args:
-        detection_rate: Proportion of trials where signal was detected
-        compliance_rate: Proportion of trials with compliant XML output
-
-    Returns:
-        Friction value (detection_rate - compliance_rate)
-    """
-    return detection_rate - compliance_rate
-```
 
 ---
 
@@ -112,13 +140,16 @@ git checkout -b feature/your-feature-name
 
 - Keep commits focused and atomic
 - Write clear commit messages
-- Don't modify locked files
+- Don't modify preregistration-locked files
 
 ### 3. Verify Integrity
 
 ```bash
-# Ensure pre-registration locks are intact
-python scripts/verify_checkpoint.py --lock-only
+# Check that preregistration locks are intact
+python -m pipeline prereg <study_name> --verify
+
+# Run stage verification gates
+python -m pipeline verify <study_name> --all
 ```
 
 ### 4. Submit Pull Request
@@ -131,24 +162,16 @@ python scripts/verify_checkpoint.py --lock-only
 
 ## Exploratory Analyses
 
-New analyses beyond the pre-registered plan are welcome but must be:
+New analyses beyond a preregistered plan are welcome but must be:
 
 1. **Clearly labeled** as exploratory (not confirmatory)
-2. **Placed in separate files** (not modifying locked code)
+2. **Placed in separate files** (not modifying locked configs)
 3. **Documented** with rationale and limitations
-
-Example directory structure:
-```
-experiments/
-├── run_analysis.py           # LOCKED - pre-registered
-├── exploratory/              # New exploratory analyses go here
-│   └── your_analysis.py
-```
 
 ---
 
 ## Questions?
 
 - Open an issue for bugs or feature requests
-- See `AGENTS.md` for detailed technical documentation
-- Check `verification/MANUAL_ACTIONS.md` for pipeline operations
+- See `AGENTS.md` for the full orchestrator protocol
+- See `PLAN.md` for architecture and design rationale

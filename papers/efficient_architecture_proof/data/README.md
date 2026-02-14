@@ -1,36 +1,56 @@
 # Data
 
-This study uses Meta's ProsQA dataset from the COCONUT codebase. We do not redistribute it.
+This study uses Meta's ProsQA dataset from the COCONUT codebase. We do not redistribute it, but it is available via the Git submodule at `reference_repos/coconut/`.
 
 **Important:** Training configs and experiment scripts reference data as `data/prosqa_train.json` relative to the `code/` directory. All data files must be placed in `code/data/`, not this top-level `data/` directory.
 
-## Setup
+## Quick Setup
 
-### 1. Generate ProsQA data
-
-Clone Meta's COCONUT repository and generate the ProsQA dataset:
+Run the setup script from the paper root:
 
 ```bash
-git clone https://github.com/facebookresearch/coconut.git
-cd coconut/preprocessing
-python generate_data.py --task prosqa
+cd papers/efficient_architecture_proof
+
+# Initialize the COCONUT submodule (if not already done)
+git submodule update --init --recursive
+
+# Copy data and generate OOD test sets
+bash setup_data.sh
 ```
 
-This produces JSON files. Each sample is a dict with keys:
+## Manual Setup
+
+### 1. Get ProsQA data
+
+The ProsQA data files are included in Meta's COCONUT repository, which is available as a Git submodule at `reference_repos/coconut/data/`. Initialize the submodule, then copy the data:
+
+```bash
+git submodule update --init --recursive
+cp reference_repos/coconut/data/prosqa_*.json code/data/
+```
+
+Alternatively, clone Meta's repository directly:
+
+```bash
+git clone https://github.com/facebookresearch/coconut.git /tmp/coconut
+cp /tmp/coconut/data/prosqa_*.json code/data/
+```
+
+### 2. Expected files in code/data/
+
+```
+code/data/
+├── prosqa_train.json      # 17,886 samples (~29 MB)
+├── prosqa_valid.json      # 300 samples
+└── prosqa_test.json       # 500 samples
+```
+
+Each sample is a dict with keys:
 - `question`: graph traversal question with nonsense entities
 - `answer`: single entity name (the target node)
 - `steps`: list of intermediate reasoning steps (CoT)
 - `edges`: graph edge list
 - `root`, `target`, `neg_target`: graph metadata
-
-### 2. Place files in code/data/
-
-```
-code/data/
-├── prosqa_train.json      # 17,886 samples
-├── prosqa_valid.json      # 300 samples
-└── prosqa_test.json       # 500 samples
-```
 
 The training YAML configs reference `train_path: data/prosqa_train.json` and `val_path: data/prosqa_valid.json` (relative to the `code/` working directory). The experiment scripts reference `data/prosqa_test.json` the same way.
 
