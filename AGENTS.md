@@ -522,7 +522,7 @@ papers/<paper>/manuscript/
 ├── tables/
 │   ├── table1_<descriptive_name>.md
 │   └── table2_<descriptive_name>.md
-├── paper.md                     # Combined manuscript (all sections)
+├── manuscript.md                     # Combined manuscript (all sections)
 ├── references.bib               # BibTeX references
 └── metadata.yaml                # Title, authors, abstract, keywords
 ```
@@ -597,8 +597,8 @@ publishability_criteria:
 **Output**:
 ```
 papers/<paper>/manuscript/output/
-├── paper_final.pdf              # The finished paper
-├── paper_final.md               # Combined markdown source
+├── manuscript_final.pdf              # The finished paper
+├── manuscript_final.md               # Combined markdown source
 ├── supplementary_materials.pdf  # If applicable
 └── generation_log.json          # How the PDF was generated
 ```
@@ -873,11 +873,11 @@ Everything is organized paper-first. Only data relevant to a paper lives in that
         │   ├── sections/
         │   ├── figures/
         │   ├── tables/
-        │   ├── paper.md
+        │   ├── manuscript.md
         │   ├── references.bib
         │   ├── metadata.yaml
         │   └── output/
-        │       ├── paper_final.pdf
+        │       ├── manuscript_final.pdf
         │       └── generation_log.json
         └── supplementary/
 ```
