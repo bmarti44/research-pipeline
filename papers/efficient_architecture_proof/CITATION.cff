@@ -5,7 +5,7 @@ type: dataset
 authors:
   - family-names: Martin
     given-names: Brian
-repository-code: "https://github.com/brianmartin/tool-calling"
+repository-code: "https://github.com/bmarti44/research-pipeline"
 abstract: >-
   Meta's COCONUT replaces explicit chain-of-thought with continuous hidden
   states recycled as input embeddings, achieving 97% on ProsQA. We train a

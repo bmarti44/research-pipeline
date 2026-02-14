@@ -1,5 +1,7 @@
 # Format Friction: Experimental Results
 
+> **Note:** This document references file paths from an earlier repository structure (`experiments/`). Those paths no longer exist after the repo was restructured around the `pipeline/` and `papers/` layout. The data files referenced below are no longer available in the repository.
+
 ## Overview
 
 This document presents results from the Format Friction pilot study investigating whether requiring structured JSON tool calls causes failures that wouldn't occur with natural language output.

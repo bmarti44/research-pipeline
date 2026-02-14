@@ -273,7 +273,7 @@ sequential_analysis:
 ```
 
 **Verification Gate**:
-- [ ] `config.yaml` validates against Pydantic schema (run `python -m pipeline validate papers/<paper>/studies/<study>/config.yaml`)
+- [ ] `config.yaml` validates against Pydantic schema (run `python -m pipeline verify papers/<paper>/studies/<study>/`)
 - [ ] All conditions have prompt templates
 - [ ] All tasks have expected outputs matching the evaluator type
 - [ ] Power analysis justifies sample size (document: "N=X gives Y% power to detect effect size Z at alpha=W")
@@ -843,7 +843,7 @@ Everything is organized paper-first. Only data relevant to a paper lives in that
 │       ├── basic/
 │       │   ├── config.yaml
 │       │   └── tasks.yaml
-│       └── llm_behavioral/
+│       └── tool_calling/
 │           ├── config.yaml
 │           └── tasks.yaml
 │

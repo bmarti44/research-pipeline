@@ -9,7 +9,7 @@ authors:
   - family-names: Lipmann
     given-names: Stephen
     email: shlipmann@gmail.com
-repository-code: "https://github.com/brianmartin/tool-calling"
+repository-code: "https://github.com/bmarti44/research-pipeline"
 abstract: >-
   A fully autonomous research pipeline that takes a natural language
   hypothesis about LLM/AI behavior and produces a complete, PDF-ready

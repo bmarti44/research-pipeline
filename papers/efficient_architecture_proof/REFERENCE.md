@@ -293,7 +293,7 @@ We use Meta's official ProsQA dataset directly, without conversion or reformatti
 
 ### OOD Data: Custom Generator (Future Use)
 
-Our custom data generator (`src/data_gen.py`) is preserved for OOD experiments only. It generates:
+The OOD test set generator (`code/generate_ood_data.py`) produces:
 
 | Dataset | Samples | Hops | Graph | Notes |
 |---------|---------|------|-------|-------|

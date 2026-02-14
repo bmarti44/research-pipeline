@@ -976,6 +976,7 @@ def compute_power(
     alpha: float = 0.05,
     ratio: float = 1.0,
     alternative: str = "two-sided",
+    k: int = 2,
 ) -> dict[str, Any]:
     """
     Compute statistical power for a given test, effect size, and sample size.
@@ -992,6 +993,7 @@ def compute_power(
         alpha: Significance level
         ratio: Ratio of group sizes (n2/n1). Only used for two-sample tests.
         alternative: "two-sided" or "one-sided"
+        k: Number of groups (only used for one_way_anova, default 2)
 
     Returns:
         Dictionary with keys: power, n_for_80, n_for_90, test_name, effect_size, n, alpha
@@ -1048,8 +1050,7 @@ def compute_power(
 
     elif test_name in ("one_way_anova",):
         # Cohen's f, approximate power via noncentral F
-        # noncentrality parameter lambda = n * k * f^2 (k = groups, assume k=2)
-        k = 2
+        # noncentrality parameter lambda = n * k * f^2
         lam = n * k * effect_size ** 2
         df1 = k - 1
         df2 = k * (n - 1)
