@@ -81,6 +81,15 @@ zenodo_release/
 # Large data files (keep in results but ignore new ones)
 # experiments/results/primary/*.json  # Uncomment to ignore large data
 
+# Model weights and checkpoints
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+checkpoint_best
+**/coconut_checkpoints*/
+
 # Secrets (should never commit)
 .env.local
 .env.*.local
