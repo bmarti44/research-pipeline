@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-title: "Format Friction: The Compliance Gap in Prompt-Based Tool Calling"
-message: "If you use this research, please cite it as below."
-type: dataset
+title: "Autonomous Research Pipeline for LLM Behavioral Studies"
+message: "If you use this software, please cite it as below."
+type: software
 authors:
   - family-names: Martin
     given-names: Brian
@@ -11,17 +11,18 @@ authors:
     email: shlipmann@gmail.com
 repository-code: "https://github.com/brianmartin/tool-calling"
 abstract: >-
-  Research on format friction in LLM tool-calling systems.
-  We find a 10.3pp gap between signal detection and XML compliance,
-  with friction concentrating in ambiguous scenarios (0pp explicit vs 18.4pp implicit).
-  Two-pass recovery mechanisms can recover 50-74% of compliance gaps.
+  A fully autonomous research pipeline that takes a natural language
+  hypothesis about LLM/AI behavior and produces a complete, PDF-ready
+  academic paper. Orchestrated by a Claude Code agent with 9 specialized
+  expert sub-agents, featuring stage-gated execution, hash-locked
+  preregistration, 5-round expert review, and deterministic verification.
 keywords:
   - large language models
-  - tool calling
-  - structured output
-  - format compliance
-  - prompt engineering
+  - research automation
   - LLM agents
-license: CC-BY-4.0
+  - experimental design
+  - preregistration
+  - reproducibility
+license: MIT
 version: "1.0.0"
 date-released: "2026-02-03"

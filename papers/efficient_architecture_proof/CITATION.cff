@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "Does COCONUT Reason or Buffer? Dissecting Latent Thought Tokens on ProsQA"
+message: "If you use this research, please cite it as below."
+type: dataset
+authors:
+  - family-names: Martin
+    given-names: Brian
+repository-code: "https://github.com/brianmartin/tool-calling"
+abstract: >-
+  Meta's COCONUT replaces explicit chain-of-thought with continuous hidden
+  states recycled as input embeddings, achieving 97% on ProsQA. We train a
+  compute-matched pause-token control that matches COCONUT in-distribution
+  and outperforms it on 3 of 4 OOD test sets. The training curriculum drives
+  the gains; the continuous thought mechanism does not.
+keywords:
+  - latent reasoning
+  - chain of thought
+  - continuous thought
+  - COCONUT
+  - ProsQA
+  - graph traversal
+license: CC-BY-4.0
+version: "1.0.0"
+date-released: "2026-02-03"

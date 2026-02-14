@@ -417,7 +417,7 @@ papers/<paper>/checkpoints/
 ├── templates/
 │   └── study/
 │       ├── basic/
-│       └── llm_behavioral/
+│       └── tool_calling/
 │
 └── papers/
     └── <paper_name>/
