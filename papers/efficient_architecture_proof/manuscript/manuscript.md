@@ -64,7 +64,7 @@ The key architectural relationships: M3 and M6 share the same sequential process
 
 We train four models, all initialized from the same pretrained GPT-2 124M checkpoint (Radford et al., 2019; `openai-community/gpt2`, 124M parameters, 12 transformer layers, 768-dimensional hidden states). Table 1 summarizes the model configurations.
 
-**Table 1:** Model configurations. All share the same pretrained initialization, optimizer, and hyperparameters. M3, M5, and M6 share the same curriculum schedule.
+**Table 1:** Model configurations. M1 = CoT baseline, M3 = COCONUT, M5 = Pause, M6 = Pause-Multipass. All share the same pretrained initialization, optimizer, and hyperparameters. M3, M5, and M6 share the same curriculum schedule.
 
 | Model | Thought mechanism | Processing | Curriculum |
 |-------|-------------------|------------|------------|
@@ -133,10 +133,10 @@ Table 2 reports validation and test accuracy for all four models. M3 (COCONUT) a
 
 | Model | Mechanism | Processing | Val Accuracy | Test Accuracy | Best Epoch |
 |-------|-----------|------------|:------------:|:-------------:|:----------:|
-| M1 (CoT) | Explicit chain-of-thought | Single pass | 79.67% | 83.0% | 44 |
-| M3 (COCONUT) | Hidden-state recycling | 6 sequential passes | 97.3% | 97.0% | 49 |
-| M5 (Pause) | Learned pause embeddings | Single pass | 97.3% | 96.6% | 43 |
-| M6 (Pause-Multipass) | Learned pause embeddings | 6 sequential passes | [TBD]% | [TBD]% | [TBD] |
+| M1 | Explicit chain-of-thought | Single pass | 79.67% | 83.0% | 44 |
+| M3 | Hidden-state recycling | 6 sequential passes | 97.3% | 97.0% | 49 |
+| M5 | Learned pause embeddings | Single pass | 97.3% | 96.6% | 43 |
+| M6 | Learned pause embeddings | 6 sequential passes | [TBD]% | [TBD]% | [TBD] |
 
 Training curves for all four models are shown in Figure 1. M3, M5, and M6 converge at comparable rates under the shared curriculum schedule, while M1 plateaus earlier at a lower asymptote. The M3--M6 comparison is the cleanest test: if M6 matches M3, the recycled content is inert; if M6 matches M5, the sequential processing structure is inert.
 
@@ -148,8 +148,8 @@ We corrupted thought-token representations at each of the six latent positions (
 
 **Table 3:** Accuracy under progressive forward corruption by number of thought positions replaced with noise (n = 500 per condition).
 
-| Positions Corrupted | M3 (COCONUT) | M5 (Pause) | M6 (Pause-Multipass) |
-|:-------------------:|:------------:|:----------:|:--------------------:|
+| Positions Corrupted | M3 | M5 | M6 |
+|:-------------------:|:--:|:--:|:--:|
 | 0 (clean) | 97.0% | 96.6% | [TBD]% |
 | 1 | 96.8% | 96.4% | [TBD]% |
 | 2 | 96.8% | 96.2% | [TBD]% |
@@ -176,8 +176,8 @@ We trained linear probes on frozen hidden states at every (layer, position) cell
 
 **Table 4:** Probing summary statistics for M3, M5, and M6. Sample sizes vary by position: n = 500 (positions 0--2), n = 298 (position 3), n = 81 (position 4), n = 12 (position 5); absolute probe accuracies are not directly comparable across positions due to these differences. Selectivity is computed per-position using full sample sizes (original computation used n=12 truncation, producing an artifactual 0.0; see Appendix A.1 for correction details). For M3, selectivity is reported at layer 0 for positions 0, 1, and 3 (where recycled hidden states are injected) and layer 12 for position 2. For M5 and M6, selectivity is reported at peak accuracy layer. MLP probe results from grid search over 72 hyperparameter configurations (Appendix A.7).
 
-| Metric | M3 (COCONUT) | M5 (Pause) | M6 (Pause-Multipass) |
-|--------|:------------:|:----------:|:--------------------:|
+| Metric | M3 | M5 | M6 |
+|--------|:--:|:--:|:--:|
 | Peak probe accuracy | 55.4% | 57.0% | [TBD]% |
 | Peak location (layer, position) | (0, 3) | (12, 3) | [TBD] |
 | Position 3 selectivity | +52.0pp | +52.3pp | [TBD]pp |
@@ -212,8 +212,8 @@ We evaluated all four models on four out-of-distribution test sets that vary gra
 
 **Table 5a:** Out-of-distribution accuracy for all models.
 
-| Test Set | n | M1 (CoT) | M3 (COCONUT) | M5 (Pause) | M6 (Pause-Multipass) |
-|----------|:---:|:---------:|:---:|:---:|:---:|
+| Test Set | n | M1 | M3 | M5 | M6 |
+|----------|:---:|:--:|:--:|:--:|:--:|
 | ProsQA (ID) | 500 | 83.0% | 97.0% | 96.6% | [TBD]% |
 | 7-hop | 1000 | 10.7% | 66.0% | 75.4% | [TBD]% |
 | 8-hop | 1000 | 8.2% | 67.5% | 75.1% | [TBD]% |
@@ -230,9 +230,9 @@ We evaluated all four models on four out-of-distribution test sets that vary gra
 | DAG | --7.3 pp | 235 | 162 | < 0.001 | 0.0015 | Yes |
 | Dense | +7.2 pp | 139 | 211 | < 0.001 | < 0.001 | Yes |
 
-**Table 5c:** Factorial decomposition: M3 vs. M6 (isolates recycled content) and M5 vs. M6 (isolates sequential processing).
+**Table 5c:** Factorial decomposition. M3 vs. M6 isolates recycled content (same processing, different content); M5 vs. M6 isolates sequential processing (same content, different processing).
 
-| Test Set | M3 -- M6 (content) | p (Bonf.) | M6 -- M5 (processing) | p (Bonf.) |
+| Test Set | M3 -- M6 | p (Bonf.) | M6 -- M5 | p (Bonf.) |
 |----------|:------------------:|:---------:|:---------------------:|:---------:|
 | ProsQA (ID) | [TBD] pp | [TBD] | [TBD] pp | [TBD] |
 | 7-hop | [TBD] pp | [TBD] | [TBD] pp | [TBD] |
@@ -390,8 +390,8 @@ Positions 4 and 5 return 0.0% accuracy for both models (n = 81 with 32 classes a
 
 **Table A2:** Cross-problem transplantation accuracy under matched and unmatched conditions (200 pairs each).
 
-| Condition | M3 (COCONUT) | M5 (Pause) |
-|-----------|:------------:|:----------:|
+| Condition | M3 | M5 |
+|-----------|:--:|:--:|
 | Clean (no transplant) | 97.0% | 96.6% |
 | Matched transplant (hop-count aligned) | 97.0% | 96.5% |
 | Unmatched transplant (random pairing) | 97.5% | 96.5% |
@@ -404,8 +404,8 @@ With 5,000 permutation trials and zero observed flips, the exact binomial test e
 
 **Table A3:** Reverse corruption accuracy (corrupting from position 5 backward). Values show accuracy after corrupting the last k positions.
 
-| Positions Corrupted | M3 (COCONUT) | M5 (Pause) |
-|:-------------------:|:------------:|:----------:|
+| Positions Corrupted | M3 | M5 |
+|:-------------------:|:--:|:--:|
 | 1 (pos 5) | 97.0% | 96.6% |
 | 2 (pos 4--5) | 96.8% | 96.0% |
 | 3 (pos 3--5) | 96.8% | 96.0% |
@@ -415,8 +415,8 @@ With 5,000 permutation trials and zero observed flips, the exact binomial test e
 
 **Table A4:** Single-position corruption accuracy (corrupting only position k).
 
-| Position Corrupted | M3 (COCONUT) | M5 (Pause) |
-|:------------------:|:------------:|:----------:|
+| Position Corrupted | M3 | M5 |
+|:------------------:|:--:|:--:|
 | 0 | 96.8% | 96.4% |
 | 1 | 96.8% | 96.2% |
 | 2 | 96.8% | 96.2% |
