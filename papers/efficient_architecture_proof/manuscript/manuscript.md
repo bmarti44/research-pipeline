@@ -133,10 +133,10 @@ Table 2 reports validation and test accuracy for all four models. M3 (COCONUT) a
 
 | Model | Mechanism | Processing | Val Accuracy | Test Accuracy | Best Epoch |
 |-------|-----------|------------|:------------:|:-------------:|:----------:|
-| M1 | Explicit chain-of-thought | Single pass | 79.67% | 83.0% | 44 |
-| M3 | Hidden-state recycling | 6 sequential passes | 97.3% | 97.0% | 49 |
-| M5 | Learned pause embeddings | Single pass | 97.3% | 96.6% | 43 |
-| M6 | Learned pause embeddings | 6 sequential passes | [TBD]% | [TBD]% | [TBD] |
+| M1 (CoT) | Explicit chain-of-thought | Single pass | 79.67% | 83.0% | 44 |
+| M3 (COCONUT) | Hidden-state recycling | 6 sequential passes | 97.3% | 97.0% | 49 |
+| M5 (Pause) | Learned pause embeddings | Single pass | 97.3% | 96.6% | 43 |
+| M6 (Pause-Multipass) | Learned pause embeddings | 6 sequential passes | [TBD]% | [TBD]% | [TBD] |
 
 Training curves for all four models are shown in Figure 1. M3, M5, and M6 converge at comparable rates under the shared curriculum schedule, while M1 plateaus earlier at a lower asymptote. The M3--M6 comparison is the cleanest test: if M6 matches M3, the recycled content is inert; if M6 matches M5, the sequential processing structure is inert.
 
@@ -212,8 +212,8 @@ We evaluated all four models on four out-of-distribution test sets that vary gra
 
 **Table 5a:** Out-of-distribution accuracy for all models.
 
-| Test Set | n | M1 | M3 | M5 | M6 |
-|----------|:---:|:--:|:--:|:--:|:--:|
+| Test Set | n | M1 (CoT) | M3 (COCONUT) | M5 (Pause) | M6 (Pause-Multipass) |
+|----------|:---:|:---------:|:------------:|:----------:|:--------------------:|
 | ProsQA (ID) | 500 | 83.0% | 97.0% | 96.6% | [TBD]% |
 | 7-hop | 1000 | 10.7% | 66.0% | 75.4% | [TBD]% |
 | 8-hop | 1000 | 8.2% | 67.5% | 75.1% | [TBD]% |
