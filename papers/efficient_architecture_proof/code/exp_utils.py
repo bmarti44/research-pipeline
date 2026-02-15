@@ -1,8 +1,11 @@
 """
 Shared utilities for COCONUT experiment scripts.
 
-Handles loading of all model variants (M1, M3, M5, M6), input preparation,
+Handles loading of all model variants (M1 CoT, M2 COCONUT, M3 Pause, M4 Pause-Multipass),
 inference, answer extraction, and hidden state extraction.
+
+Model numbering (used in paper):
+  M1 = CoT Baseline, M2 = COCONUT, M3 = Pause-Curriculum, M4 = Pause-Multipass
 
 Imports from local coconut.py and dataset.py in same directory.
 """
@@ -49,8 +52,8 @@ def load_model(checkpoint_path, device="cuda", feedback_mode=None):
     """
     Load any model type from a state_dict checkpoint.
 
-    Auto-detects whether the checkpoint is a plain GPT-2 (M1/M2) or
-    a Coconut wrapper (M3/M4/M4b) by checking if any key starts with
+    Auto-detects whether the checkpoint is a plain GPT-2 (M1 CoT) or
+    a Coconut wrapper (M2/M3/M4) by checking if any key starts with
     'base_causallm'.
 
     For Coconut models, feedback_mode MUST be explicitly provided.
@@ -87,8 +90,8 @@ def load_model(checkpoint_path, device="cuda", feedback_mode=None):
         if feedback_mode is None:
             raise ValueError(
                 f"Coconut checkpoint detected at {checkpoint_path} but no feedback_mode "
-                f"provided. You MUST specify feedback_mode='continuous' (M3), "
-                f"'pause_curriculum' (M5), or 'pause_multipass' (M6). State dicts cannot "
+                f"provided. You MUST specify feedback_mode='continuous' (M2), "
+                f"'pause_curriculum' (M3), or 'pause_multipass' (M4). State dicts cannot "
                 f"distinguish these — defaulting silently would produce wrong behavior."
             )
         fm = feedback_mode
@@ -156,26 +159,55 @@ def load_model_by_name(model_name, checkpoint_dir, device="cuda"):
     """
     Convenience loader that maps model name -> checkpoint path + feedback_mode.
 
-    model_name: "m1" | "m3" | "m5" | "m6"
-    checkpoint_dir: directory containing prosqa-cot/, prosqa-coconut/, etc.
+    model_name: descriptive name ("cot-baseline", "coconut", "pause-curriculum",
+                "pause-multipass") or paper M-number ("m1", "m2", "m3", "m4").
+    checkpoint_dir: directory containing cot-baseline/, coconut/, etc.
+
+    WARNING: The M-number aliases use the PAPER numbering (M1=CoT, M2=COCONUT,
+    M3=Pause, M4=Pause-Multipass). Old experiment result JSONs from Lambda use
+    a different numbering (m3=COCONUT, m5=Pause, m6=Pause-Multipass). Do NOT
+    pass old JSON keys directly to this function — use descriptive names or
+    an explicit key translation map in your analysis script.
     """
     import os
 
     name_to_config = {
-        "m1": {"subdir": "prosqa-cot", "feedback_mode": None},
-        "m3": {"subdir": "prosqa-coconut", "feedback_mode": "continuous"},
-        "m5": {"subdir": "prosqa-m5-pause", "feedback_mode": "pause_curriculum"},
-        "m6": {"subdir": "prosqa-m6-pause-multipass", "feedback_mode": "pause_multipass"},
+        "cot-baseline":     {"subdirs": ["cot-baseline", "prosqa-cot"],                    "feedback_mode": None},
+        "coconut":          {"subdirs": ["coconut", "prosqa-coconut"],                     "feedback_mode": "continuous"},
+        "pause-curriculum": {"subdirs": ["pause-curriculum", "prosqa-m5-pause"],            "feedback_mode": "pause_curriculum"},
+        "pause-multipass":  {"subdirs": ["pause-multipass", "prosqa-m6-pause-multipass"],   "feedback_mode": "pause_multipass"},
     }
 
-    if model_name not in name_to_config:
-        raise ValueError(f"Unknown model name '{model_name}'. Expected one of {list(name_to_config.keys())}")
+    # Paper M-number aliases (M1=CoT, M2=COCONUT, M3=Pause, M4=Pause-Multipass)
+    # These are the FINAL paper numbering. NOT the old Lambda experiment numbering.
+    paper_aliases = {
+        "m1": "cot-baseline",
+        "m2": "coconut",
+        "m3": "pause-curriculum",
+        "m4": "pause-multipass",
+    }
 
-    cfg = name_to_config[model_name]
-    model_dir = os.path.join(checkpoint_dir, cfg["subdir"])
-    ckpt_path = find_checkpoint(model_dir)
+    resolved = paper_aliases.get(model_name, model_name)
 
-    return load_model(ckpt_path, device=device, feedback_mode=cfg["feedback_mode"])
+    if resolved not in name_to_config:
+        valid = list(name_to_config.keys()) + list(paper_aliases.keys())
+        raise ValueError(f"Unknown model name '{model_name}'. Expected one of {valid}")
+
+    cfg = name_to_config[resolved]
+
+    # Try each subdir name (new descriptive name first, then legacy Lambda name)
+    for subdir in cfg["subdirs"]:
+        model_dir = os.path.join(checkpoint_dir, subdir)
+        if os.path.isdir(model_dir):
+            ckpt_path = find_checkpoint(model_dir)
+            return load_model(ckpt_path, device=device, feedback_mode=cfg["feedback_mode"])
+
+    # None found — raise with helpful message listing both names
+    tried = [os.path.join(checkpoint_dir, s) for s in cfg["subdirs"]]
+    raise FileNotFoundError(
+        f"No checkpoint directory found for '{model_name}'. "
+        f"Tried: {tried}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -186,8 +218,8 @@ def prepare_input(sample, tokenizer, model_info, num_thoughts=6, device="cuda"):
     """
     Prepare input_ids for a single sample.
 
-    For CoT/direct models (M1/M2): tokenize question only.
-    For COCONUT models (M3/M4/M4b): question + start + latent*T + end.
+    For CoT model (M1): tokenize question only.
+    For COCONUT/Pause models (M2/M3/M4): question + start + latent*T + end.
 
     Args:
         sample: dict with "question", "steps", "answer" keys

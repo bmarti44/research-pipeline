@@ -4,13 +4,13 @@ Pretrained model checkpoints for "The Curriculum Is the Mechanism"
 
 ## HuggingFace Hub
 
-**Repository**: [briamart/coconut-curriculum-checkpoints](https://huggingface.co/briamart/coconut-curriculum-checkpoints) *(upload pending)*
+**Repository**: [bmarti44/coconut-curriculum-checkpoints](https://huggingface.co/bmarti44/coconut-curriculum-checkpoints) *(upload pending)*
 
-| Model | Feedback Mode | Best Epoch | Checkpoint | ProsQA Accuracy |
-|-------|--------------|:----------:|------------|:---------------:|
-| M3 (COCONUT) | `continuous` | 49 | `prosqa-coconut/checkpoint_best` | 97.0% |
-| M5 (Pause) | `pause_curriculum` | 43 | `prosqa-m5-pause/checkpoint_best` | 96.6% |
-| M6 (Pause-Multipass) | `pause_multipass` | TBD | `prosqa-m6-pause-multipass/checkpoint_best` | *training* |
+| Model | Name | Feedback Mode | Best Epoch | Checkpoint | ProsQA Accuracy |
+|-------|------|--------------|:----------:|------------|:---------------:|
+| M2 | COCONUT | `continuous` | 49 | `coconut/checkpoint_best` | 97.0% |
+| M3 | Pause-Curriculum | `pause_curriculum` | 43 | `pause-curriculum/checkpoint_best` | 96.6% |
+| M4 | Pause-Multipass | `pause_multipass` | TBD | `pause-multipass/checkpoint_best` | *training* |
 
 **Note**: Best epoch is determined by peak validation accuracy via `find_best_epoch.py`.
 The `checkpoint_best` symlink points to the peak-validation epoch.
@@ -26,7 +26,7 @@ python reproduce.py --from-checkpoints
 # Manual (via huggingface_hub)
 python -c "
 from huggingface_hub import snapshot_download
-snapshot_download('briamart/coconut-curriculum-checkpoints', local_dir='results/')
+snapshot_download('bmarti44/coconut-curriculum-checkpoints', local_dir='results/')
 "
 ```
 
@@ -35,20 +35,20 @@ snapshot_download('briamart/coconut-curriculum-checkpoints', local_dir='results/
 ```python
 from code.exp_utils import load_model_by_name
 
-# Load any model by name
-model, tokenizer, info = load_model_by_name("m3", "results/", device="cuda")
-model, tokenizer, info = load_model_by_name("m5", "results/", device="cuda")
-model, tokenizer, info = load_model_by_name("m6", "results/", device="cuda")
+# Load any model by descriptive name
+model, tokenizer, info = load_model_by_name("coconut", "results/", device="cuda")
+model, tokenizer, info = load_model_by_name("pause-curriculum", "results/", device="cuda")
+model, tokenizer, info = load_model_by_name("pause-multipass", "results/", device="cuda")
 ```
 
 ## Upload (maintainer only)
 
 ```bash
 # After training completes, upload checkpoints:
-python upload_checkpoints.py --repo briamart/coconut-curriculum-checkpoints
+python upload_checkpoints.py --repo bmarti44/coconut-curriculum-checkpoints
 
 # Dry run first:
-python upload_checkpoints.py --repo briamart/coconut-curriculum-checkpoints --dry-run
+python upload_checkpoints.py --repo bmarti44/coconut-curriculum-checkpoints --dry-run
 ```
 
 ## Checkpoint Format
@@ -56,6 +56,6 @@ python upload_checkpoints.py --repo briamart/coconut-curriculum-checkpoints --dr
 Each checkpoint is a PyTorch `state_dict` saved with `torch.save()`. The state dict contains:
 
 - `base_causallm.*` — GPT-2 weights (124M parameters)
-- `pause_embedding` — Learned pause embedding (M5, M6 only)
+- `pause_embedding` — Learned pause embedding (pause-curriculum and pause-multipass only)
 
 All models use `openai-community/gpt2` as the base and add 3 special tokens (`<|start-latent|>`, `<|end-latent|>`, `<|latent|>`), giving a vocab size of 50260.

@@ -21,7 +21,7 @@ class Coconut(nn.Module):
         start_latent_id,
         end_latent_id,
         eos_token_id,
-        feedback_mode="continuous",  # "continuous" (M3), "frozen" (M4), "learned_shared" (M4b), "pause_curriculum" (M5), "pause_multipass" (M6)
+        feedback_mode="continuous",  # "continuous" (M2 COCONUT), "pause_curriculum" (M3 Pause), "pause_multipass" (M4 Pause-Multipass)
     ):
 
         super(Coconut, self).__init__()

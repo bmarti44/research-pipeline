@@ -1,7 +1,7 @@
 """
 Experiment: OOD Generalization
 
-Tests all model variants (M1, M3, M5, M6) on in-distribution test set and 4 OOD sets.
+Tests all model variants (M1–M4) on in-distribution test set and 4 OOD sets.
 Computes accuracy per model per test set, with verification checks.
 
 Usage:
@@ -38,7 +38,7 @@ from exp_utils import (
 # Configuration
 # ---------------------------------------------------------------------------
 
-MODEL_NAMES = ["m1", "m3", "m5", "m6"]
+MODEL_NAMES = ["cot-baseline", "coconut", "pause-curriculum", "pause-multipass"]
 
 TEST_SETS = {
     "prosqa_test": "prosqa_test.json",
@@ -273,12 +273,12 @@ def main():
             print(f"  {model_name} / {set_name}: accuracy={accuracy:.4f} ({elapsed:.1f}s)")
 
         # M1 verification: check CoT generation
-        if model_name == "m1" and "prosqa_test" in all_outputs.get("m1", {}):
+        if model_name == "cot-baseline" and "prosqa_test" in all_outputs.get("cot-baseline", {}):
             verification["m1_generates_cot"] = verify_m1_generates_cot(
-                all_outputs["m1"]["prosqa_test"]
+                all_outputs["cot-baseline"]["prosqa_test"]
             )
             verification["parser_accuracy"] = verify_parser_accuracy(
-                all_outputs["m1"]["prosqa_test"],
+                all_outputs["cot-baseline"]["prosqa_test"],
                 test_data["prosqa_test"],
             )
 
@@ -289,7 +289,7 @@ def main():
     # Aggregate thought token verification
     thought_checks = verification.get("thought_token_checks", {})
     verification["thought_token_count_correct"] = all(
-        thought_checks.get(m, True) for m in ["m3", "m5", "m6"]
+        thought_checks.get(m, True) for m in ["coconut", "pause-curriculum", "pause-multipass"]
     )
 
     # Ensure verification keys exist even if M1 was skipped

@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """Upload trained model checkpoints to HuggingFace Hub.
 
-Reads best checkpoint for each model (M3, M5, M6), uploads with model cards.
-Includes config.yaml for each model so loaders know the feedback_mode.
+Reads best checkpoint for each model (M2 COCONUT, M3 Pause, M4 Pause-Multipass),
+uploads with model cards. Includes config.yaml so loaders know the feedback_mode.
 
 Usage:
     # Upload all models
-    python upload_checkpoints.py --repo briamart/coconut-curriculum-checkpoints
+    python upload_checkpoints.py --repo bmarti44/coconut-curriculum-checkpoints
 
-    # Upload just M6
-    python upload_checkpoints.py --repo briamart/coconut-curriculum-checkpoints --models m6
+    # Upload just pause-multipass
+    python upload_checkpoints.py --repo bmarti44/coconut-curriculum-checkpoints --models pause-multipass
 
     # Dry run (show what would be uploaded)
-    python upload_checkpoints.py --repo briamart/coconut-curriculum-checkpoints --dry-run
+    python upload_checkpoints.py --repo bmarti44/coconut-curriculum-checkpoints --dry-run
 """
 
 import argparse
@@ -26,18 +26,21 @@ RESULTS_DIR = REPO_ROOT / "results"
 CODE_DIR = REPO_ROOT / "code"
 
 MODELS = {
-    "m3": {
-        "subdir": "prosqa-coconut",
+    "coconut": {
+        "source_subdir": "prosqa-coconut",
+        "upload_subdir": "coconut",
         "feedback_mode": "continuous",
         "description": "COCONUT (continuous thought recycling) — Meta's original architecture",
     },
-    "m5": {
-        "subdir": "prosqa-m5-pause",
+    "pause-curriculum": {
+        "source_subdir": "prosqa-m5-pause",
+        "upload_subdir": "pause-curriculum",
         "feedback_mode": "pause_curriculum",
         "description": "Pause-Curriculum (single learned embedding, single forward pass)",
     },
-    "m6": {
-        "subdir": "prosqa-m6-pause-multipass",
+    "pause-multipass": {
+        "source_subdir": "prosqa-m6-pause-multipass",
+        "upload_subdir": "pause-multipass",
         "feedback_mode": "pause_multipass",
         "description": "Pause-Multipass (single learned embedding, 6 sequential passes)",
     },
@@ -148,7 +151,10 @@ def upload(repo_id, models_to_upload, dry_run=False):
 
     for name in models_to_upload:
         cfg = MODELS[name]
-        model_dir = RESULTS_DIR / cfg["subdir"]
+        # Source: read from Lambda-era directory names on disk
+        model_dir = RESULTS_DIR / cfg["source_subdir"]
+        # Destination: upload under clean descriptive names
+        hf_subdir = cfg["upload_subdir"]
 
         if not model_dir.exists():
             print(f"  SKIP {name}: {model_dir} does not exist")
@@ -161,13 +167,13 @@ def upload(repo_id, models_to_upload, dry_run=False):
 
         # Always upload as checkpoint_best/ so load_model_by_name finds it
         upload_name = "checkpoint_best"
-        print(f"\n  Uploading {name}: {ckpt.name}/ -> {upload_name}/")
+        print(f"\n  Uploading {name}: {ckpt.name}/ -> {hf_subdir}/{upload_name}/")
 
         # Training config to include
         config_name = {
-            "m3": "prosqa_coconut_1gpu.yaml",
-            "m5": "prosqa_m5_pause.yaml",
-            "m6": "prosqa_m6_pause_multipass.yaml",
+            "coconut": "prosqa_coconut_1gpu.yaml",
+            "pause-curriculum": "prosqa_m5_pause.yaml",
+            "pause-multipass": "prosqa_m6_pause_multipass.yaml",
         }.get(name)
         config_path = CODE_DIR / "args" / config_name
 
@@ -175,14 +181,14 @@ def upload(repo_id, models_to_upload, dry_run=False):
             if ckpt.is_dir():
                 size_mb = _dir_size_mb(ckpt)
                 files = list(ckpt.iterdir())
-                print(f"    Would upload directory to {repo_id}/{cfg['subdir']}/{upload_name}/:")
+                print(f"    Would upload directory to {repo_id}/{hf_subdir}/{upload_name}/:")
                 for f in sorted(files):
                     fsize = f.stat().st_size / (1024 * 1024)
                     print(f"      {f.name} ({fsize:.1f} MB)")
                 print(f"      Total: {size_mb:.1f} MB")
             else:
                 size_mb = ckpt.stat().st_size / (1024 * 1024)
-                print(f"    Would upload file to {repo_id}/{cfg['subdir']}/{upload_name}:")
+                print(f"    Would upload file to {repo_id}/{hf_subdir}/{upload_name}:")
                 print(f"      {ckpt.name} ({size_mb:.1f} MB)")
             if config_path.exists():
                 print(f"      + {config_name}")
@@ -197,7 +203,7 @@ def upload(repo_id, models_to_upload, dry_run=False):
                         continue
                     api.upload_file(
                         path_or_fileobj=str(f),
-                        path_in_repo=f"{cfg['subdir']}/{upload_name}/{f.name}",
+                        path_in_repo=f"{hf_subdir}/{upload_name}/{f.name}",
                         repo_id=repo_id,
                         repo_type="model",
                     )
@@ -206,7 +212,7 @@ def upload(repo_id, models_to_upload, dry_run=False):
                 # Single-file checkpoint (legacy format)
                 api.upload_file(
                     path_or_fileobj=str(ckpt),
-                    path_in_repo=f"{cfg['subdir']}/{upload_name}",
+                    path_in_repo=f"{hf_subdir}/{upload_name}",
                     repo_id=repo_id,
                     repo_type="model",
                 )
@@ -216,7 +222,7 @@ def upload(repo_id, models_to_upload, dry_run=False):
             if config_path.exists():
                 api.upload_file(
                     path_or_fileobj=str(config_path),
-                    path_in_repo=f"{cfg['subdir']}/{config_name}",
+                    path_in_repo=f"{hf_subdir}/{config_name}",
                     repo_id=repo_id,
                     repo_type="model",
                 )
@@ -226,7 +232,7 @@ def upload(repo_id, models_to_upload, dry_run=False):
             model_card = create_model_card(name, cfg, ckpt)
             api.upload_file(
                 path_or_fileobj=model_card.encode(),
-                path_in_repo=f"{cfg['subdir']}/README.md",
+                path_in_repo=f"{hf_subdir}/README.md",
                 repo_id=repo_id,
                 repo_type="model",
             )
@@ -242,7 +248,7 @@ def upload(repo_id, models_to_upload, dry_run=False):
             }
             api.upload_file(
                 path_or_fileobj=json.dumps(config_meta, indent=2).encode(),
-                path_in_repo=f"{cfg['subdir']}/config.json",
+                path_in_repo=f"{hf_subdir}/config.json",
                 repo_id=repo_id,
                 repo_type="model",
             )
@@ -257,8 +263,8 @@ def main():
     parser.add_argument(
         "--models",
         type=str,
-        default="m3,m5,m6",
-        help="Comma-separated model names to upload (default: m3,m5,m6)",
+        default="coconut,pause-curriculum,pause-multipass",
+        help="Comma-separated model names to upload (default: coconut,pause-curriculum,pause-multipass)",
     )
     parser.add_argument("--dry-run", action="store_true", help="Show what would be uploaded")
     args = parser.parse_args()

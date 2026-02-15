@@ -52,14 +52,18 @@ models:
     name: "CoT Baseline"
     architecture: "GPT-2 124M"
     description: "Standard chain-of-thought fine-tuning"
-  - id: M3
+  - id: M2
     name: "COCONUT"
     architecture: "Coconut-wrapped GPT-2 124M"
     description: "Meta's continuous thought with hidden-state recycling"
-  - id: M5
+  - id: M3
     name: "Pause-Curriculum"
     architecture: "GPT-2 124M"
     description: "Learned pause embedding with same 7-stage curriculum"
+  - id: M4
+    name: "Pause-Multipass"
+    architecture: "GPT-2 124M"
+    description: "Learned pause embedding with 6 sequential passes (same processing structure as COCONUT)"
 
 data:
   training:
@@ -102,30 +106,30 @@ training:
 results:
   in_distribution:
     M1_test: 0.830
-    M3_test: 0.980
-    M5_test: 0.956
+    M2_test: 0.980
+    M3_test: 0.956
+    M2_val: 0.973
     M3_val: 0.973
-    M5_val: 0.973
   corruption:
+    permutation_sensitivity_M2: 0.0
     permutation_sensitivity_M3: 0.0
-    permutation_sensitivity_M5: 0.0
-    cross_transplant_M3: 0.970
-    cross_transplant_M5: 0.965
+    cross_transplant_M2: 0.970
+    cross_transplant_M3: 0.965
     cliff_position: 4
   probing:
-    M3_peak_accuracy: 0.554
-    M5_peak_accuracy: 0.571
-    M3_peak_layer: 0
-    M5_peak_layer: 12
-    M3_selectivity: 0.0
-    M5_selectivity: 0.0
-    M3_thought_advantage: 0.105
-    M5_thought_advantage: 0.040
+    M2_peak_accuracy: 0.554
+    M3_peak_accuracy: 0.571
+    M2_peak_layer: 0
+    M3_peak_layer: 12
+    M2_selectivity: 0.52
+    M3_selectivity: 0.52
+    M2_thought_advantage: 0.105
+    M3_thought_advantage: 0.040
   ood:
-    7hop: { M1: 0.107, M3: 0.660, M5: 0.754 }
-    8hop: { M1: 0.082, M3: 0.675, M5: 0.751 }
-    dag:  { M1: 0.282, M3: 0.592, M5: 0.519 }
-    dense: { M1: 0.141, M3: 0.612, M5: 0.684 }
+    7hop: { M1: 0.107, M2: 0.660, M3: 0.754 }
+    8hop: { M1: 0.082, M2: 0.675, M3: 0.751 }
+    dag:  { M1: 0.282, M2: 0.592, M3: 0.519 }
+    dense: { M1: 0.141, M2: 0.612, M3: 0.684 }
 
 statistical_tests:
   mcnemar_7hop:

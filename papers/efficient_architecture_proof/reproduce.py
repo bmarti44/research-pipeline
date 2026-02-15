@@ -27,32 +27,32 @@ RESULTS_DIR = REPO_ROOT / "results"
 CKPT_DATA = REPO_ROOT / "checkpoints" / "data"
 REF_DATA = REPO_ROOT / "reference_repos" / "coconut" / "data"
 
-# HuggingFace Hub repo (placeholder — update after upload)
-HF_REPO = "briamart/coconut-curriculum-checkpoints"
+# HuggingFace Hub repo
+HF_REPO = "bmarti44/coconut-curriculum-checkpoints"
 
 # Models to train/evaluate
 MODELS = {
-    "m1": {
+    "cot-baseline": {
         "config": "args/prosqa_cot.yaml",
-        "subdir": "prosqa-cot",
+        "subdir": "cot-baseline",
         "feedback_mode": None,
         "train_hours": "~8h on H100",
     },
-    "m3": {
+    "coconut": {
         "config": "args/prosqa_coconut_1gpu.yaml",
-        "subdir": "prosqa-coconut",
+        "subdir": "coconut",
         "feedback_mode": "continuous",
         "train_hours": "~28h on H100",
     },
-    "m5": {
+    "pause-curriculum": {
         "config": "args/prosqa_m5_pause.yaml",
-        "subdir": "prosqa-m5-pause",
+        "subdir": "pause-curriculum",
         "feedback_mode": "pause_curriculum",
         "train_hours": "~28h on H100",
     },
-    "m6": {
+    "pause-multipass": {
         "config": "args/prosqa_m6_pause_multipass.yaml",
-        "subdir": "prosqa-m6-pause-multipass",
+        "subdir": "pause-multipass",
         "feedback_mode": "pause_multipass",
         "train_hours": "~40h on H100",
     },
@@ -173,8 +173,8 @@ def download_checkpoints(dry_run=False):
             from huggingface_hub import snapshot_download
 
     for name, cfg in MODELS.items():
-        if name == "m1":
-            continue  # M1 is a CoT baseline, not needed for core experiments
+        if name == "cot-baseline":
+            continue  # CoT baseline not needed for core experiments
         dest = RESULTS_DIR / cfg["subdir"]
         if dest.exists() and any(dest.iterdir()):
             print(f"  {name} ({cfg['subdir']}) already exists, skipping")
