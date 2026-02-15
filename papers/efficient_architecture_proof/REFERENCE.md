@@ -1,4 +1,4 @@
-# COCONUT Reasoning Study — Overall Reference
+# The Curriculum Is the Mechanism — Overall Reference
 
 > **Portability note:** This document references the original Lambda Labs H100 server used for the study. All paths under `/lambda/nfs/experiment/` and SSH commands to `192.222.52.148` are specific to that server. To reproduce, substitute your own GPU server and working directory. See the paper's [README.md](README.md) for portable reproduction instructions.
 

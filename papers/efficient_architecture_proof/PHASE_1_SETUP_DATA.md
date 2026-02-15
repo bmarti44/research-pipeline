@@ -123,7 +123,7 @@ print('ALL SMOKE TESTS PASSED')
 
 ## Step 1.4: Create Training Configs
 
-Create single-GPU YAML configs for all 5 models. Key parameters:
+Create single-GPU YAML configs for all models (M1, M3, M5, M6). Key parameters:
 - `batch_size_training: 32`, `gradient_accumulation_steps: 4` → effective batch 128 (matches Meta's 4-GPU setup)
 - `num_epochs: 50` for ALL models
 - `seed: 0` (seeds 1, 2 created in Phase 5)

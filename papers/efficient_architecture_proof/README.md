@@ -1,69 +1,104 @@
-# Does COCONUT Reason or Buffer?
+# The Curriculum Is the Mechanism
 
-Meta's COCONUT replaces chain-of-thought with continuous hidden states recycled as input embeddings, achieving 97% on ProsQA (graph traversal). We train a compute-matched control — same GPT-2 124M, same 7-stage curriculum, same number of thought positions — but with fixed learned pause embeddings instead of recycled hidden states. The pause baseline matches COCONUT in-distribution and outperforms it on 3 of 4 out-of-distribution test sets. The curriculum drives the gains; the mechanism does not.
+Meta's COCONUT model replaces human-readable chain-of-thought with a novel architecture: it recycles hidden states between reasoning steps, creating a "continuous latent space" for thinking. On ProsQA (a graph-traversal benchmark), COCONUT achieves 97% accuracy — far above chain-of-thought baselines. The natural conclusion is that this recycling mechanism enables a new form of reasoning.
 
-## Quick Result
+We show it doesn't. The training curriculum does all the work.
 
-| Test Set | M1 (CoT) | M3 (COCONUT) | M5 (Pause) | M5 - M3 |
-|----------|------:|------:|------:|--------:|
-| ProsQA (in-dist) | 83.0% | 97.0% | 96.6% | -0.4pp |
-| 7-hop | 10.7% | 66.0% | **75.4%** | **+9.4pp** |
-| 8-hop | 8.2% | 67.5% | **75.1%** | **+7.6pp** |
-| DAG | 28.2% | **59.2%** | 51.9% | -7.3pp |
-| Dense | 14.1% | 61.2% | **68.4%** | **+7.2pp** |
+## The Idea
 
-Both models show identical corruption profiles (zero permutation sensitivity, successful cross-problem transplant) and diagonal probing patterns. Neither performs sequential reasoning — both buffer compute.
+COCONUT is trained with a 7-stage curriculum that progressively removes explicit reasoning tokens, forcing the model to internalize multi-hop reasoning. But two things change simultaneously during this training: the model learns the curriculum *and* it uses the recycling mechanism. Which one drives the result?
 
-Full analysis with figures and statistical tests: **[RESULTS.md](RESULTS.md)**
+We built two controls to find out:
+
+- **M5 (Pause):** Same architecture, same curriculum, same number of thought positions — but instead of recycling hidden states between passes, every thought token gets the same fixed learned embedding. One forward pass. No information flows between reasoning steps.
+- **M6 (Pause-Multipass):** Same as M5, but processes thought tokens sequentially across 6 passes, exactly like COCONUT — just without the recycled content. This isolates whether COCONUT's advantage comes from the recycled information or from the sequential processing structure.
+
+## The Result
+
+| Model | What it does | Thought content | Processing | ProsQA Accuracy |
+|-------|-------------|----------------|------------|:---------:|
+| M1 (CoT) | Explicit reasoning tokens | Human-readable | Single pass | 83.0% |
+| M3 (COCONUT) | Recycles hidden states | Rich, information-carrying | 6 sequential passes | 97.0% |
+| M5 (Pause) | Fixed learned embedding | Empty | Single pass | 96.6% |
+| M6 (Pause-Multipass) | Fixed learned embedding | Empty | 6 sequential passes | *training* |
+
+M5 matches COCONUT despite having no information flow between reasoning steps *and* using 1/6th the compute. Three independent experiments (corruption analysis, probing, cross-model transplant) fail to distinguish the two models on any diagnostic.
+
+On out-of-distribution tests, M5 actually outperforms COCONUT on 3 of 4 test sets:
+
+| Test Set | M1 (CoT) | M3 (COCONUT) | M5 (Pause) |
+|----------|------:|------:|------:|
+| ProsQA (in-dist) | 83.0% | 97.0% | 96.6% |
+| 7-hop | 10.7% | 66.0% | **75.4%** |
+| 8-hop | 8.2% | 67.5% | **75.1%** |
+| DAG | 28.2% | **59.2%** | 51.9% |
+| Dense | 14.1% | 61.2% | **68.4%** |
+
+## What This Means
+
+This is *not* a story about "models just buffer compute." Both M3 and M5 develop structured, position-specific representations — the final thought position encodes the answer entity with +52 percentage points of selectivity over controls. That's real learned structure, not padding.
+
+But that structure comes entirely from the curriculum. The 7-stage progressive removal of chain-of-thought tokens teaches the model to internalize reasoning into whatever computational substrate is available — recycled hidden states, empty sequential passes, or parallel empty tokens. The thought tokens provide a computational budget (extra attention positions). The curriculum teaches the model how to use it. What's *in* the tokens doesn't matter.
+
+**For the latent reasoning community:** Stop optimizing mechanisms. Start optimizing curricula.
+
+## Quick Start
+
+```bash
+# From pretrained checkpoints (~2h on 1 GPU):
+python reproduce.py --from-checkpoints
+
+# Full reproduction from scratch (~120 GPU hours):
+python reproduce.py --full
+
+# Dry run (print steps without executing):
+python reproduce.py --from-checkpoints --dry-run
+```
+
+Requires Python 3.10+, CUDA 12.x, and an NVIDIA GPU with 40GB+ VRAM (H100/A100).
 
 ## Reproduce
 
-### Setup
+### Option A: From Pretrained Checkpoints
+
+Download pretrained model checkpoints from HuggingFace, then run experiments only. See [CHECKPOINTS.md](CHECKPOINTS.md) for checkpoint details.
 
 ```bash
-git clone <this-repo> && cd <this-repo>
+python reproduce.py --from-checkpoints
+```
+
+This will: install deps, set up data, download checkpoints from HuggingFace, run all experiments (corruption, probing, OOD, stats), and generate figures.
+
+### Option B: Full Reproduction
+
+Train all models from scratch, then run experiments.
+
+```bash
+python reproduce.py --full
+```
+
+### Manual Steps
+
+If you prefer to run each step individually:
+
+```bash
+# 1. Install dependencies
 pip install -r requirements.txt
-```
 
-Requires Python 3.10+, CUDA 12.x, and an NVIDIA GPU with >= 40GB VRAM (H100/A100). See `requirements.txt` for package versions.
+# 2. Set up data (copies ProsQA from submodule or checkpoints/data/, generates OOD sets)
+bash setup_data.sh
 
-### Data
-
-Download and generate ProsQA data from Meta's COCONUT repo (see [`data/README.md`](data/README.md)). Place the JSON files in `code/data/` — training configs and experiment scripts reference this path. Then generate OOD test sets:
-
-```bash
+# 3. Train models
 cd code
-python generate_ood_data.py    # writes to code/data/ood_{7hop,8hop,dag,dense}.json
-```
+torchrun --nproc_per_node=1 run.py args/prosqa_cot.yaml            # M1 (~8h)
+torchrun --nproc_per_node=1 run.py args/prosqa_coconut_1gpu.yaml    # M3 (~28h)
+torchrun --nproc_per_node=1 run.py args/prosqa_m5_pause.yaml        # M5 (~28h)
+torchrun --nproc_per_node=1 run.py args/prosqa_m6_pause_multipass.yaml  # M6 (~40h)
 
-### Train
+# 4. Find best checkpoints and create symlinks
+python find_best_epoch.py --all --log-dir ../logs --results-dir ../results --link
 
-```bash
-cd code
-
-# M1 (CoT baseline) — ~8h on H100
-torchrun --nproc_per_node=1 run.py args/prosqa_cot.yaml
-
-# M3 (COCONUT) — ~28h on H100
-torchrun --nproc_per_node=1 run.py args/prosqa_coconut_1gpu.yaml
-
-# M5 (Pause-Curriculum control) — ~28h on H100
-torchrun --nproc_per_node=1 run.py args/prosqa_m5_pause.yaml
-```
-
-Checkpoints save to `results/prosqa-{cot,coconut,m5-pause}/checkpoint_<epoch>`.
-
-### Experiments
-
-```bash
-cd code
-
-# Sanity gate (must pass first)
-python exp_causal.py --mode sanity --checkpoint_dir ../results \
-    --data data/prosqa_test.json --output_dir ../results/experiments/causal_sanity \
-    --models m1 --num_samples 50
-
-# Core experiments
+# 5. Run experiments
 python exp_corruption.py --checkpoint_dir ../results \
     --data data/prosqa_test.json --output_dir ../results/experiments/corruption \
     --num_samples 500
@@ -74,22 +109,28 @@ python exp_probing.py --checkpoint_dir ../results \
 
 python exp_ood.py --checkpoint_dir ../results \
     --data_dir data/ --output_dir ../results/experiments/ood
-```
 
-### Figures and Stats
+# 6. Run M6-specific experiment suite
+python run_all_m6.py --checkpoint ../results/prosqa-m6-pause-multipass/checkpoint_best \
+    --feedback-mode pause_multipass --name m6
 
-```bash
+# 7. Statistics and figures
+python statistical_analysis.py --results_dirs ../results/experiments \
+    --output ../results/statistical_analysis.json
 python generate_figures.py --results_dir ../results --output_dir ../results/figures
-python statistical_analysis.py --results_dirs ../results/experiments --output ../results/statistical_analysis.json
 ```
+
+Checkpoints save to `results/prosqa-{cot,coconut,m5-pause,m6-pause-multipass}/checkpoint_<epoch>`.
+Use `find_best_epoch.py --link` to create `checkpoint_best` symlinks to peak-validation epochs.
 
 ## Code Changes from Meta's COCONUT
 
-This repo is a fork of Meta's official COCONUT codebase with 3 modifications:
+This repo forks Meta's official COCONUT codebase with minimal modifications:
 
-1. **`coconut.py`** — Added `feedback_mode` parameter. `"pause_curriculum"` (M5) replaces hidden-state recycling with a single learned pause embedding and runs a single forward pass.
+1. **`coconut.py`** — Added `feedback_mode` parameter. `"pause_curriculum"` (M5) uses a single learned pause embedding in a single forward pass. `"pause_multipass"` (M6) uses the same pause embedding but processes thought tokens sequentially across 6 passes, matching COCONUT's processing structure.
 2. **`run.py`** — 2 lines to read `feedback_mode` from config and pass it to `Coconut`.
-3. **`args/prosqa_m5_pause.yaml`** — M5 training config (identical to M3 except `feedback_mode: pause_curriculum`).
+3. **`args/prosqa_m5_pause.yaml`** — M5 config (identical to M3 except `feedback_mode: pause_curriculum`).
+4. **`args/prosqa_m6_pause_multipass.yaml`** — M6 config (identical to M3 except `feedback_mode: pause_multipass`).
 
 `dataset.py` and `utils.py` are unmodified.
 
@@ -98,35 +139,39 @@ This repo is a fork of Meta's official COCONUT codebase with 3 modifications:
 ```
 ├── README.md                          # This file
 ├── RESULTS.md                         # Full technical writeup with figures
+├── CHECKPOINTS.md                     # Checkpoint download & loading guide
+├── reproduce.py                       # One-command reproduction script
+├── upload_checkpoints.py              # HuggingFace Hub upload script
 ├── requirements.txt                   # Python dependencies
-├── manuscript/
-│   ├── figures/                       # Publication-quality PNGs
+├── requirements-lock.txt              # Pinned transitive dependencies
+├── setup_data.sh                      # Data setup helper
+├── manuscript/                        # Paper manuscript and figures
 ├── code/
-│   ├── run.py                         # Meta's training script (+feedback_mode passthrough)
-│   ├── coconut.py                     # Meta's model (+feedback_mode parameter)
-│   ├── dataset.py                     # Meta's data loading (unmodified)
-│   ├── utils.py                       # Meta's utilities (unmodified)
+│   ├── run.py                         # Training script (+feedback_mode)
+│   ├── coconut.py                     # Model (+feedback_mode parameter)
+│   ├── dataset.py                     # Data loading (unmodified from Meta)
+│   ├── utils.py                       # Utilities (unmodified from Meta)
 │   ├── exp_utils.py                   # Shared experiment utilities
 │   ├── exp_causal.py                  # Exp 0: Causal tracing sanity gate
 │   ├── exp_corruption.py              # Exp 1: Corruption ablation
 │   ├── exp_probing.py                 # Exp 2: Representation probing
 │   ├── exp_ood.py                     # Exp 3: OOD generalization
+│   ├── run_all_m6.py                  # Unified M6 experiment pipeline
+│   ├── wilcoxon_teacher_forced.py     # Wilcoxon species token analysis
+│   ├── mlp_probe_grid_search.py       # MLP probe hyperparameter search
+│   ├── find_best_epoch.py             # Best checkpoint finder
 │   ├── generate_ood_data.py           # OOD test set generator
 │   ├── generate_figures.py            # Figure generation
 │   ├── statistical_analysis.py        # Statistical tests
-│   ├── find_best_epoch.py             # Checkpoint selection utility
-│   └── args/                          # Training configs (YAML)
-│       ├── prosqa_cot.yaml            # M1 (CoT baseline)
-│       ├── prosqa_nocot.yaml          # M2 (direct answer, not used in paper)
+│   ├── data/                          # ProsQA + OOD test data
+│   └── args/                          # Training configs
+│       ├── prosqa_cot.yaml            # M1 (CoT)
 │       ├── prosqa_coconut_1gpu.yaml   # M3 (COCONUT)
-│       └── prosqa_m5_pause.yaml       # M5 (Pause-Curriculum)
-├── results/
-│   ├── experiments/                   # Experiment output JSONs
-│   ├── statistical_analysis.json      # Full statistical analysis
-│   ├── m3_test_eval.json              # M3 test set accuracy
-│   └── m5_test_eval.json              # M5 test set accuracy
-└── data/
-    └── README.md                      # Data download instructions
+│       ├── prosqa_m5_pause.yaml       # M5 (Pause)
+│       └── prosqa_m6_pause_multipass.yaml  # M6 (Pause-Multipass)
+└── results/
+    ├── experiments/                    # Experiment output JSONs
+    └── statistical_analysis.json      # Statistical tests
 ```
 
 ## References

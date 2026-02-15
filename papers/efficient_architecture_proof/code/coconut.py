@@ -21,7 +21,7 @@ class Coconut(nn.Module):
         start_latent_id,
         end_latent_id,
         eos_token_id,
-        feedback_mode="continuous",  # "continuous" (M3), "frozen" (M4), "learned_shared" (M4b), "pause_curriculum" (M5)
+        feedback_mode="continuous",  # "continuous" (M3), "frozen" (M4), "learned_shared" (M4b), "pause_curriculum" (M5), "pause_multipass" (M6)
     ):
 
         super(Coconut, self).__init__()
@@ -44,7 +44,7 @@ class Coconut(nn.Module):
             # M4: fixed pause embedding, never updated by gradient
             pause_embed = self.embedding.weight.data[latent_token_id].clone()
             self.register_buffer("pause_embedding", pause_embed)
-        elif feedback_mode in ("learned_shared", "pause_curriculum"):
+        elif feedback_mode in ("learned_shared", "pause_curriculum", "pause_multipass"):
             # M4b/M5: single learnable embedding, same for all positions/problems
             # M4b uses it in multi-pass loop; M5 uses it in single-pass
             self.pause_embedding = nn.Parameter(

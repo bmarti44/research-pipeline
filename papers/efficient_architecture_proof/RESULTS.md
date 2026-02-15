@@ -1,4 +1,4 @@
-# Does COCONUT Reason or Buffer? Dissecting Latent Thought Tokens on ProsQA
+# The Curriculum Is the Mechanism: Dissecting COCONUT's Latent Thought Gains on ProsQA
 
 ## Summary
 
@@ -34,7 +34,7 @@ All models are GPT-2 124M (pretrained) trained for 50 epochs on Meta's ProsQA da
 
 ### Experiments
 
-Three diagnostic experiments, each testing a different aspect of the "reasoning vs buffering" question:
+Three diagnostic experiments, each testing whether the curriculum or the mechanism drives COCONUT's performance:
 
 **Exp 1 — Corruption:** Replace, permute, or transplant thought token representations. If thought tokens encode a sequential reasoning chain, permuting their order should destroy accuracy and transplanting between problems should fail.
 
@@ -76,22 +76,23 @@ If COCONUT's thought tokens encoded sequential reasoning states (step 1 → step
 
 ![Corruption curves](manuscript/figures/fig3_corruption_curves.png)
 
-### Exp 2 — Probing: Information present but not step-specific
+### Exp 2 — Probing: Step-specific encoding driven by shared curriculum
 
 Linear probes (RidgeClassifier, 500 samples) trained at each (layer, thought position) to predict the current reasoning step.
 
 | Metric | M3 | M5 |
 |--------|---:|---:|
-| Peak probe accuracy | 55.4% | 57.1% |
+| Peak probe accuracy | 55.4% | 57.0% |
 | Peak layer | 0 | 12 |
 | Peak position | 3 | 3 |
-| Selectivity (mean) | 0.0 | 0.0 |
-| Nonlinear advantage | 0 cells | 0 cells |
+| Position 3 selectivity | +52.0pp | +52.3pp |
+| Position 2 selectivity | +9.4pp | +10.2pp |
+| Significant cells (Bonferroni) | 29/78 | 11/78 |
 | Mean thought-vs-input advantage | 10.5% | 4.0% |
 
-Raw probe accuracy shows a weak diagonal trend (slightly higher accuracy when probing thought t for step t vs other steps), but selectivity is zero for both models — meaning every thought position decodes every reasoning step equally well. This is the signature of a general problem representation broadcast to all positions, not step-specific information encoded at dedicated positions. Neither model treats thought position t as "the place where step t lives."
+Corrected probing analysis (see manuscript Appendix A.1 for the n=12 truncation bug that produced the original 0.0 selectivity) reveals genuine step-specificity concentrated at position 3 in both models. At position 3, matched-step probe accuracy reaches 55.4% for M3 and 57.0% for M5, while cross-position controls achieve only ~3-5% — yielding selectivity of +52.0pp for M3 and +52.3pp for M5. Positions 0 and 1 are anti-selective: both models decode later reasoning steps better than their own matched steps, indicating a broadcast-then-attend strategy. The near-identical selectivity profiles across both architectures indicate the pattern arises from the shared curriculum, not the recycling mechanism.
 
-The one difference: M3's thought positions carry 10.5% more decodable information than its input positions, compared to only 4.0% for M5. COCONUT's hidden-state recycling does inject more task information into thought representations than pause tokens do. But this extra information doesn't translate to better task performance — M5 matches M3 in-distribution and beats it OOD. This is a textbook case of information being present in representations but not functionally used by the model (Ravichander et al., 2021).
+M3's thought positions carry 10.5% more decodable information than its input positions, compared to only 4.0% for M5, and M3 has nearly 3× more significant probing cells (29/78 vs 11/78). COCONUT's hidden-state recycling does inject more task information into thought representations. But this richer encoding doesn't translate to better task performance — M5 matches M3 in-distribution and beats it OOD. This is a textbook case of information being present in representations but not functionally used by the model (Ravichander et al., 2021).
 
 M3 concentrates probe-decodable information at layer 0 (input embeddings), while M5 builds it up through the transformer stack (peaking at layer 12). This is expected: hidden-state recycling injects information directly into input embeddings, while standard self-attention must propagate it through transformer blocks. Different computational pathways, same (lack of) step-specificity, same task performance.
 
@@ -119,12 +120,12 @@ COCONUT's hidden-state recycling creates a sequential bottleneck: each thought m
 
 All three experiments converge on the same conclusion: **the training curriculum, not the continuous thought mechanism, drives COCONUT's performance on ProsQA.**
 
-| Evidence | Reasoning claim | Buffering claim | Our result |
+| Evidence | Sequential reasoning prediction | Curriculum-driven prediction | Our result |
 |----------|:-:|:-:|:-:|
-| Permutation sensitivity | Order matters | Order irrelevant | **0% for both** → buffer |
-| Cross-transplant | Problem-specific states | Generic compute | **Both tolerate** → buffer |
+| Permutation sensitivity | Order matters | Order irrelevant | **0% for both** → curriculum |
+| Cross-transplant | Problem-specific states | Generic compute | **Both tolerate** → curriculum |
 | Corruption cliff | Gradual cascade | Threshold collapse | **Same cliff** → same mechanism |
-| Probing selectivity | Step-specific encoding | General broadcast | **0.0 for both** → buffer |
+| Probing selectivity | M3-specific step encoding | Shared curriculum-driven pattern | **+52pp at position 3 for both** → curriculum |
 | Thought-vs-input advantage | Only COCONUT | Equal | **M3 higher, but unused** → present ≠ functional |
 | OOD generalization | COCONUT advantages | Equal or M5 advantages | **M5 wins 3/4** → mechanism hurts |
 

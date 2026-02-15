@@ -1,4 +1,4 @@
-# Does COCONUT Reason or Buffer? Dissecting Latent Thought Tokens on ProsQA
+# The Curriculum Is the Mechanism: Dissecting COCONUT's Latent Thought Gains on ProsQA
 
 **Brian Martin**
 Independent
@@ -27,7 +27,7 @@ Wei et al. (2022) established that prompting large language models to produce in
 
 Hao et al. (2024) proposed COCONUT, which replaces chain-of-thought tokens with continuous thought tokens by recycling the transformer's last-hidden-state output back into the embedding stream. Trained with a multi-stage curriculum on ProsQA, COCONUT achieves 97% accuracy and the authors argue that the continuous space enables a breadth-first search strategy inaccessible to discrete tokens. Zhu et al. (2025) provided a theoretical foundation, proving that continuous thought tokens are strictly more expressive than discrete chain-of-thought under certain conditions. However, Zhang et al. (2025) challenged the empirical picture by applying causal interventions to COCONUT's latent tokens. They found that the continuous thoughts are largely causally inert: shuffling, zeroing, or replacing them with Gaussian noise produces minimal performance degradation. Our work complements Zhang et al. by constructing an explicit alternative -- the pause baseline -- that matches COCONUT's training regime while eliminating the recycling mechanism entirely.
 
-### 2.3 Pause Tokens and Compute Buffering
+### 2.3 Pause Tokens and Extra Computation
 
 Goyal et al. (2024) introduced pause tokens as a method for providing transformers with additional computation without requiring meaningful intermediate output. Appending learned, non-informative tokens to the input gives the model extra forward-pass steps, improving performance on tasks that benefit from additional depth. The pause-token framework provides a natural control for COCONUT: if the gains come from extra computation rather than from the content of the latent representations, a model trained with pause tokens under the same curriculum should perform comparably. Our M5 baseline instantiates this control.
 
@@ -87,7 +87,7 @@ All training was conducted on a single NVIDIA H100 80GB GPU. M1 required approxi
 
 ### 3.4 Experiments
 
-We design three experiments, each probing a different aspect of the distinction between sequential latent reasoning and unstructured compute buffering. All experiments use the 500-sample ProsQA test set unless otherwise noted.
+We design three experiments, each probing whether the continuous thought mechanism or the training curriculum drives COCONUT's performance. All experiments use the 500-sample ProsQA test set unless otherwise noted.
 
 **Experiment 1: Corruption Ablation.** If thought tokens encode a sequential reasoning chain, three predictions follow: (a) corrupting early positions should cascade through the chain, producing gradual degradation proportional to the number of positions corrupted; (b) permuting the order of thought tokens should disrupt the sequential dependency, changing the model's predictions; and (c) transplanting thought representations from one problem into another should fail, since a sequential chain encodes problem-specific intermediate states. If thought tokens instead serve as a generic compute buffer, the alternative predictions are: (a) degradation should be threshold-based — the model either has enough uncorrupted buffer positions to function or it does not; (b) permutation should have no effect, since buffer positions carry order-invariant information; and (c) transplantation should succeed, since the buffer carries no problem-specific content. We apply six corruption conditions to test these predictions:
 

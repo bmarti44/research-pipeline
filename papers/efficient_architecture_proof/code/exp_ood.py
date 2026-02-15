@@ -1,7 +1,7 @@
 """
 Experiment: OOD Generalization
 
-Tests all 5 models (M1-M4b) on in-distribution test set and 4 OOD sets.
+Tests all model variants (M1, M3, M5, M6) on in-distribution test set and 4 OOD sets.
 Computes accuracy per model per test set, with verification checks.
 
 Usage:
@@ -38,7 +38,7 @@ from exp_utils import (
 # Configuration
 # ---------------------------------------------------------------------------
 
-MODEL_NAMES = ["m1", "m2", "m3", "m4", "m4b", "m5"]
+MODEL_NAMES = ["m1", "m3", "m5", "m6"]
 
 TEST_SETS = {
     "prosqa_test": "prosqa_test.json",
@@ -289,7 +289,7 @@ def main():
     # Aggregate thought token verification
     thought_checks = verification.get("thought_token_checks", {})
     verification["thought_token_count_correct"] = all(
-        thought_checks.get(m, True) for m in ["m3", "m4", "m4b"]
+        thought_checks.get(m, True) for m in ["m3", "m5", "m6"]
     )
 
     # Ensure verification keys exist even if M1 was skipped

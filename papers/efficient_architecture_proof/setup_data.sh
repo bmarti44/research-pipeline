@@ -21,17 +21,21 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CODE_DIR="${SCRIPT_DIR}/code"
 DATA_DIR="${CODE_DIR}/data"
 REF_DATA="${SCRIPT_DIR}/reference_repos/coconut/data"
+CKPT_DATA="${SCRIPT_DIR}/checkpoints/data"
 
 echo "=== COCONUT Study: Data Setup ==="
 echo ""
 
-# Step 1: Check that the submodule is initialized
-if [ ! -f "${REF_DATA}/prosqa_train.json" ]; then
-    echo "ERROR: Meta's COCONUT submodule data not found at:"
-    echo "  ${REF_DATA}"
+# Step 1: Check that data is available from at least one source
+if [ ! -f "${REF_DATA}/prosqa_train.json" ] && [ ! -f "${CKPT_DATA}/prosqa_train.json" ]; then
+    echo "ERROR: ProsQA data not found in either:"
+    echo "  ${REF_DATA}  (git submodule)"
+    echo "  ${CKPT_DATA}  (checkpoints/data/)"
     echo ""
-    echo "Initialize the submodule first:"
+    echo "Option 1: Initialize the submodule:"
     echo "  git submodule update --init --recursive"
+    echo ""
+    echo "Option 2: Place data files in checkpoints/data/"
     exit 1
 fi
 
@@ -42,9 +46,14 @@ mkdir -p "${DATA_DIR}"
 for f in prosqa_train.json prosqa_valid.json prosqa_test.json; do
     if [ -f "${DATA_DIR}/${f}" ]; then
         echo "  ${f} already exists, skipping"
-    else
+    elif [ -f "${CKPT_DATA}/${f}" ]; then
+        cp "${CKPT_DATA}/${f}" "${DATA_DIR}/${f}"
+        echo "  Copied ${f} from checkpoints/data/"
+    elif [ -f "${REF_DATA}/${f}" ]; then
         cp "${REF_DATA}/${f}" "${DATA_DIR}/${f}"
-        echo "  Copied ${f}"
+        echo "  Copied ${f} from reference_repos/coconut/data/"
+    else
+        echo "  WARNING: ${f} not found in any source"
     fi
 done
 

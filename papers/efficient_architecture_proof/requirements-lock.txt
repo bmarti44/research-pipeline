@@ -1,0 +1,64 @@
+# Pinned dependencies for "The Curriculum Is the Mechanism"
+#
+# Core versions match requirements.txt (the experiment environment).
+# Transitive deps pinned from the Lambda H100 training environment.
+#
+# To reproduce exactly: pip install -r requirements-lock.txt
+# For flexible install:  pip install -r requirements.txt
+#
+# Note: CUDA/nvidia packages are auto-installed by torch and are
+# omitted here. They depend on your driver version.
+
+# === Core (experiment-critical) ===
+torch==2.5.1
+transformers==4.46.2
+numpy==2.1.3
+
+# === Training ===
+wandb==0.24.2
+tqdm==4.67.3
+PyYAML==6.0.3
+
+# === Experiments ===
+scikit-learn==1.7.2
+scipy==1.15.3
+
+# === Figures ===
+matplotlib==3.10.8
+
+# === Transitive: torch ===
+filelock==3.20.3
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+mpmath==1.3.0
+networkx==3.4.2
+sympy==1.14.0
+typing_extensions==4.15.0
+
+# === Transitive: transformers / huggingface ===
+huggingface_hub==0.36.2
+tokenizers==0.20.3
+safetensors==0.7.0
+regex==2026.1.15
+packaging==26.0
+
+# === Transitive: requests (used by transformers, wandb, huggingface_hub) ===
+requests==2.32.5
+certifi==2026.1.4
+charset-normalizer==3.4.4
+idna==3.11
+urllib3==2.6.3
+
+# === Transitive: scikit-learn ===
+joblib==1.5.3
+threadpoolctl==3.6.0
+
+# === Transitive: matplotlib ===
+contourpy==1.3.2
+cycler==0.12.1
+fonttools==4.61.1
+kiwisolver==1.4.9
+pillow==12.1.0
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+six==1.17.0

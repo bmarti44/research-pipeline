@@ -1,7 +1,7 @@
 """
 Shared utilities for COCONUT experiment scripts.
 
-Handles loading of all 5 model variants (M1-M4b), input preparation,
+Handles loading of all model variants (M1, M3, M5, M6), input preparation,
 inference, answer extraction, and hidden state extraction.
 
 Imports from local coconut.py and dataset.py in same directory.
@@ -54,13 +54,13 @@ def load_model(checkpoint_path, device="cuda", feedback_mode=None):
     'base_causallm'.
 
     For Coconut models, feedback_mode MUST be explicitly provided.
-    This prevents silent misidentification of M4/M4b as M3.
+    This prevents silent misidentification between feedback modes.
 
     Returns:
         (model, tokenizer, model_info)
         model_info = {
             "type": "cot" | "coconut",
-            "feedback_mode": "continuous" | "frozen" | "learned_shared" | None,
+            "feedback_mode": "continuous" | "pause_curriculum" | "pause_multipass" | None,
         }
     """
     tokenizer = setup_tokenizer()
@@ -87,9 +87,9 @@ def load_model(checkpoint_path, device="cuda", feedback_mode=None):
         if feedback_mode is None:
             raise ValueError(
                 f"Coconut checkpoint detected at {checkpoint_path} but no feedback_mode "
-                f"provided. You MUST specify feedback_mode='continuous' (M3), 'frozen' (M4), "
-                f"'learned_shared' (M4b), or 'pause_curriculum' (M5). State dicts cannot distinguish these — "
-                f"defaulting silently would make M4/M4b behave as M3."
+                f"provided. You MUST specify feedback_mode='continuous' (M3), "
+                f"'pause_curriculum' (M5), or 'pause_multipass' (M6). State dicts cannot "
+                f"distinguish these — defaulting silently would produce wrong behavior."
             )
         fm = feedback_mode
         model = Coconut(
@@ -118,32 +118,62 @@ def load_model(checkpoint_path, device="cuda", feedback_mode=None):
     return model, tokenizer, model_info
 
 
+def find_checkpoint(model_dir):
+    """Find the best checkpoint in a model directory.
+
+    Search order: checkpoint_best (symlink to peak validation epoch),
+    then checkpoint_50 (final epoch), then highest-numbered checkpoint.
+
+    Args:
+        model_dir: path to a model checkpoint directory
+            (e.g. results/prosqa-coconut/)
+
+    Returns:
+        str: path to the best checkpoint file
+
+    Raises:
+        FileNotFoundError: if no checkpoint_* files exist in model_dir
+    """
+    import os
+    import glob
+
+    for name in ["checkpoint_best", "checkpoint_50"]:
+        p = os.path.join(model_dir, name)
+        if os.path.exists(p):
+            return p
+
+    ckpts = sorted(glob.glob(os.path.join(model_dir, "checkpoint_*")))
+    if ckpts:
+        return ckpts[-1]
+
+    raise FileNotFoundError(
+        f"No checkpoint found in {model_dir}. "
+        f"Expected checkpoint_best, checkpoint_50, or checkpoint_N."
+    )
+
+
 def load_model_by_name(model_name, checkpoint_dir, device="cuda"):
     """
     Convenience loader that maps model name -> checkpoint path + feedback_mode.
 
-    model_name: "m1" | "m2" | "m3" | "m4" | "m4b" | "m5"
-    checkpoint_dir: directory containing prosqa-cot/, prosqa-nocot/, etc.
+    model_name: "m1" | "m3" | "m5" | "m6"
+    checkpoint_dir: directory containing prosqa-cot/, prosqa-coconut/, etc.
     """
     import os
 
     name_to_config = {
         "m1": {"subdir": "prosqa-cot", "feedback_mode": None},
-        "m2": {"subdir": "prosqa-nocot", "feedback_mode": None},
         "m3": {"subdir": "prosqa-coconut", "feedback_mode": "continuous"},
-        "m4": {"subdir": "prosqa-m4-frozen", "feedback_mode": "frozen"},
-        "m4b": {"subdir": "prosqa-m4b-shared", "feedback_mode": "learned_shared"},
         "m5": {"subdir": "prosqa-m5-pause", "feedback_mode": "pause_curriculum"},
+        "m6": {"subdir": "prosqa-m6-pause-multipass", "feedback_mode": "pause_multipass"},
     }
 
     if model_name not in name_to_config:
         raise ValueError(f"Unknown model name '{model_name}'. Expected one of {list(name_to_config.keys())}")
 
     cfg = name_to_config[model_name]
-    ckpt_path = os.path.join(checkpoint_dir, cfg["subdir"], "checkpoint_50")
-
-    if not os.path.exists(ckpt_path):
-        raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
+    model_dir = os.path.join(checkpoint_dir, cfg["subdir"])
+    ckpt_path = find_checkpoint(model_dir)
 
     return load_model(ckpt_path, device=device, feedback_mode=cfg["feedback_mode"])
 

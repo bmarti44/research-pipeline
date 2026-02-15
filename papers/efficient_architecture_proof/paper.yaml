@@ -1,5 +1,5 @@
-title: "Does COCONUT Reason or Buffer? Dissecting Latent Thought Tokens on ProsQA"
-short_title: "COCONUT: Reasoning vs Buffering"
+title: "The Curriculum Is the Mechanism: Dissecting COCONUT's Latent Thought Gains on ProsQA"
+short_title: "COCONUT: Curriculum vs Mechanism"
 
 authors:
   - name: "Brian Martin"
@@ -28,7 +28,7 @@ keywords:
   - COCONUT
   - ProsQA
   - graph traversal
-  - compute buffering
+  - curriculum learning
   - pause tokens
 
 venue: "Preprint"
