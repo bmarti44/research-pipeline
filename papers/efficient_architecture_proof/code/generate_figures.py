@@ -59,29 +59,27 @@ plt.rcParams.update({
 })
 
 # Colorblind-friendly palette (IBM Design Library)
+# Keys are descriptive names matching load_model_by_name() and result JSONs.
 MODEL_COLORS = {
-    "m1": "#648FFF",   # blue
-    "m2": "#785EF0",   # purple
-    "m3": "#DC267F",   # magenta
-    "m4": "#FE6100",   # orange
-    "m4b": "#FFB000",  # gold
-    "m5": "#44AA99",   # teal
+    "cot-baseline":     "#648FFF",   # blue
+    "coconut":          "#DC267F",   # magenta
+    "pause-curriculum": "#44AA99",   # teal
+    "pause-multipass":  "#FE6100",   # orange
 }
 
+# Labels use PAPER M-numbers: M1=CoT, M2=COCONUT, M3=Pause, M4=Pause-Multipass
 MODEL_LABELS = {
-    "m1": "M1 (CoT)",
-    "m2": "M2 (Direct)",
-    "m3": "M3 (COCONUT)",
-    "m4": "M4 (Pause-Frozen)",
-    "m4b": "M4b (Pause-Learned)",
-    "m5": "M5 (Pause-Curriculum)",
+    "cot-baseline":     "M1 (CoT)",
+    "coconut":          "M2 (COCONUT)",
+    "pause-curriculum": "M3 (Pause)",
+    "pause-multipass":  "M4 (Pause-Multipass)",
 }
 
 OOD_TEST_SETS = ["prosqa_test", "ood_7hop", "ood_8hop", "ood_dag", "ood_dense"]
 OOD_LABELS = ["ProsQA\n(ID)", "7-hop", "8-hop", "DAG", "Dense"]
 
-ALL_MODELS = ["m1", "m3", "m5"]
-THOUGHT_MODELS = ["m3", "m5"]  # Models with thought tokens
+ALL_MODELS = ["cot-baseline", "coconut", "pause-curriculum", "pause-multipass"]
+THOUGHT_MODELS = ["coconut", "pause-curriculum", "pause-multipass"]  # Models with thought tokens
 
 # Colors for OOD test sets (used in fig6)
 OOD_COLORS = {
@@ -390,7 +388,7 @@ def _extract_ce_matrix(model_data):
 
 
 def fig4_causal_heatmap(causal_data, output_dir):
-    """3-panel heatmap: M3, M4, M4b. Color = CE(l,p)."""
+    """Heatmap panels for thought models. Color = CE(l,p)."""
     matrices = {}
     for model in THOUGHT_MODELS:
         if model in causal_data:
@@ -467,10 +465,11 @@ def parse_training_log(log_path):
 
 
 def fig5_curriculum_divergence(logs_dir, output_dir):
-    """Training curves for M3, M4, M4b with stage boundaries."""
+    """Training curves for all curriculum models with stage boundaries."""
     log_files = {
-        "m3": os.path.join(logs_dir, "m3_coconut.log"),
-        "m5": os.path.join(logs_dir, "m5_pause.log"),
+        "coconut": os.path.join(logs_dir, "coconut.log"),
+        "pause-curriculum": os.path.join(logs_dir, "pause-curriculum.log"),
+        "pause-multipass": os.path.join(logs_dir, "pause-multipass.log"),
     }
 
     fig, ax = plt.subplots(figsize=(7, 3.5))
@@ -524,11 +523,11 @@ def fig5_curriculum_divergence(logs_dir, output_dir):
 # ---------------------------------------------------------------------------
 
 def fig6_token_count(token_count_data, output_dir):
-    """M3 accuracy vs number of thought tokens, one line per OOD test set."""
-    # Normalize: accept {token_count: {test_set: acc}} or {m3: {tc: {ts: acc}}}
+    """M2 (COCONUT) accuracy vs number of thought tokens, one line per OOD test set."""
+    # Normalize: accept {token_count: {test_set: acc}} or {coconut: {tc: {ts: acc}}}
     data = token_count_data
-    if "m3" in data and isinstance(data["m3"], dict):
-        data = data["m3"]
+    if "coconut" in data and isinstance(data["coconut"], dict):
+        data = data["coconut"]
 
     # Identify numeric token count keys
     token_counts = sorted(int(k) for k in data if str(k).isdigit())
@@ -568,7 +567,7 @@ def fig6_token_count(token_count_data, output_dir):
 
     ax.set_xlabel("Number of Thought Tokens")
     ax.set_ylabel("Accuracy")
-    ax.set_title("M3 Accuracy vs Token Count")
+    ax.set_title("M2 (COCONUT) Accuracy vs Token Count")
     ax.set_ylim(0, 1.05)
     ax.legend(fontsize=7, loc="lower right")
     ax.grid(alpha=0.3)
@@ -581,8 +580,8 @@ def fig6_token_count(token_count_data, output_dir):
 # ---------------------------------------------------------------------------
 
 def fig7_cross_transplant(corruption_data, output_dir):
-    """Heatmap: source-hop × target-hop transplant accuracy for M3."""
-    m3 = corruption_data.get("m3", {})
+    """Heatmap: source-hop x target-hop transplant accuracy for M2 (COCONUT)."""
+    m3 = corruption_data.get("coconut", {})
     details = m3.get("cross_transplant_details", [])
     if not details:
         print("  SKIPPED: No cross_transplant_details in M3 corruption data")
@@ -626,7 +625,7 @@ def fig7_cross_transplant(corruption_data, output_dir):
     ax.set_yticklabels(tick_labels)
     ax.set_xlabel("Target Hop Count")
     ax.set_ylabel("Source Hop Count")
-    ax.set_title("Cross-Problem Thought Transplant (M3)")
+    ax.set_title("Cross-Problem Thought Transplant (M2 COCONUT)")
 
     # Cell annotations
     for i in range(n):

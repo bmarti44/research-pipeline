@@ -197,17 +197,13 @@ def upload(repo_id, models_to_upload, dry_run=False):
         else:
             # Upload checkpoint directory (or file) AS checkpoint_best/
             if ckpt.is_dir():
-                # Upload each file in the checkpoint directory
-                for f in sorted(ckpt.iterdir()):
-                    if not f.is_file():
-                        continue
-                    api.upload_file(
-                        path_or_fileobj=str(f),
-                        path_in_repo=f"{hf_subdir}/{upload_name}/{f.name}",
-                        repo_id=repo_id,
-                        repo_type="model",
-                    )
-                    print(f"    Uploaded {f.name}")
+                api.upload_folder(
+                    folder_path=str(ckpt),
+                    path_in_repo=f"{hf_subdir}/{upload_name}",
+                    repo_id=repo_id,
+                    repo_type="model",
+                )
+                print(f"    Uploaded {ckpt.name}/ -> {hf_subdir}/{upload_name}/")
             else:
                 # Single-file checkpoint (legacy format)
                 api.upload_file(
