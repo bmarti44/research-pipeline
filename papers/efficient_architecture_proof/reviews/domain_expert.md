@@ -379,9 +379,155 @@ No critical or blocking issues remain. The paper makes a clear, well-evidenced c
 
 ---
 
+## Round 5 Review
+
+**Assessment:** pass
+**Date:** 2026-02-17T22:00:00Z
+**Reviewer:** Domain Expert (Mechanistic Interpretability / LLM Specialist)
+
+### Round 5 Summary
+
+This round is a final verification pass across all findings from Rounds 1--3. I re-read the full manuscript and re-verified key data-manuscript alignments. The manuscript has incorporated the majority of proposed edits from prior rounds. Of the five open items from Round 3, three have been implemented (D003, D027, D029), one has been partially addressed (D022), and one remains unimplemented but non-blocking (D018). No new critical or major issues have been identified. The paper is in publishable form.
+
+### Data Verification (Round 5)
+
+I re-verified the following critical data-manuscript alignments:
+
+- **Table 2 accuracy values:** M1=83.0%, M2=97.0%, M3=96.6%, M4=94.8%. Verified against `ood/results.json` (m3=0.97 for M2, m5=0.966 for M3) and manuscript Table 2. All match.
+- **Table 3 (now Table A1) corruption values:** M2 clean=0.97, forward=[0.968, 0.968, 0.968, 0.574, 0.156, 0.024]. M3 clean=0.966, forward=[0.964, 0.962, 0.958, 0.572, 0.156, 0.022]. Verified against `corruption/results.json`. All match.
+- **Table 3 probing values:** M2 peak=55.4% at (0,3), verified from `probing/results.json` m3 linear_probe_accuracy[0][3]=0.5537. M3 peak=57.0% at (12,3), verified from m5 linear_probe_accuracy[12][3]=0.5705. All match.
+- **Selectivity values:** M2 position 3 = +52.0pp at layer 0, verified from `selectivity_recomputed.json` m3 selectivity_raw_grid[0][3]=0.520. M3 position 3 = +52.3pp at layer 12, verified from m5 selectivity_raw_grid[12][3]=0.523. All match.
+- **Table 4 OOD accuracy:** M2 7-hop=66.0%, 8-hop=67.5%, DAG=59.2%, dense=61.2%. M3 7-hop=75.4%, 8-hop=75.1%, DAG=51.9%, dense=68.4%. Verified against `ood/results.json`. All match.
+- **Table 5 factorial decomposition:** M4 vs M2 differences: 7-hop +10.9pp, 8-hop +7.7pp, DAG +0.6pp, dense +3.6pp. M4 vs M3 differences: 7-hop +1.5pp, DAG +7.9pp. Verified by computing from Table 4 values (M4: 76.9%, 75.2%, 59.8%, 64.8%). All match.
+- **McNemar results:** ID M3 vs M2: b=14, c=12, p=0.845. Verified from `mcnemar/results.json`. All match.
+- **Wilcoxon results:** M2 vs M4 ID: r=0.678, verified from `wilcoxon_teacher_forced_m3_vs_m6.json` effect_size_r=0.678. M3 vs M4 ID: r=0.286, verified from `wilcoxon_teacher_forced_m5_vs_m6.json` effect_size_r=0.286. M2 median probability 99.998%, M4 median probability 99.949%, verified from m3_prob_median=0.999980 and m6_prob_median=0.999494. All match.
+- **MLP grid search (Appendix A.10):** M2 (layer 0, pos 3): linear=55.4%, best MLP=46.0%, advantage=-9.4pp. M2 (layer 12, pos 2): linear=19.0%, best MLP=29.2%, advantage=+10.2pp. M3 (layer 12, pos 3): linear=57.0%, best MLP=45.6%, advantage=-11.4pp. M3 (layer 12, pos 2): linear=22.0%, best MLP=29.6%, advantage=+7.6pp. All verified against `mlp_probe_grid_search.json`. All match.
+- **M4 corruption artifact:** `m6/corruption.json` shows 2.4% accuracy at all corruption levels with artifact warning header. Manuscript correctly excludes M4 from corruption/probing analysis and explains the KV-cache extraction incompatibility (Appendix A.1, Section 3.4, Section 6).
+
+All data-manuscript alignments verified. No discrepancies found.
+
+### Implementation Check for All Prior Proposed Edits
+
+#### D003 (permutation-corruption tension, content-based routing)
+- **Status: IMPLEMENTED.**
+- Appendix A.6 (line 291) now reads: "This result creates a tension with the corruption findings: if individual positions carry no ordering information, yet corrupting position 3 alone collapses accuracy (Appendix A.8), the model must perform content-based routing -- attending to what each position contains rather than where it falls in the sequence. The combination of order-invariance and position-specific criticality is consistent with an attention mechanism that selects the most informative position regardless of its index."
+- This is a faithful implementation of the Round 2 proposed edit. The key mechanistic insight -- that the model retrieves information by content rather than position -- is now explicitly stated and connects the permutation and corruption evidence.
+
+#### D018 (inter-position attention connectivity)
+- **Status: NOT IMPLEMENTED, but partially addressed.**
+- The proposed sentence about M3's richer inter-position attention connectivity was not added to Section 3.2. However, Appendix A.1 (line 218) does contain a related statement: "A key difference is that M2's sequential KV-cache decoding restricts each thought position to attending only to preceding positions (causal mask over passes), whereas M3's single-pass processing allows all thought positions to attend to each other simultaneously."
+- This sentence captures the connectivity difference, though it is in the appendix rather than the methods section. The information is present in the manuscript; the remaining gap is one of prominence rather than completeness.
+- **Round 5 assessment: DEFERRED (acceptable).** The connectivity difference is documented in Appendix A.1. Moving it to Section 3.2 would improve accessibility but is not necessary for the paper's claims.
+
+#### D022 (Wilcoxon ID ceiling context)
+- **Status: IMPLEMENTED.**
+- Section 4.5 (line 138) now reads: "though both achieve near-ceiling median probabilities (M2: 99.998%, M4: 99.949%). The large rank-biserial correlation reflects consistent paired rank ordering, not practically meaningful absolute differences."
+- This directly addresses the concern that the r = 0.678 effect size could mislead readers about the practical magnitude of the ID confidence difference. The explicit statement that both models achieve >99.9% median probability, and that the effect size reflects rank ordering rather than practical magnitude, is exactly what was recommended.
+
+#### D027 (dense result "interaction" framing)
+- **Status: IMPLEMENTED.**
+- Section 4.4 (line 132) now reads: "On dense graphs, the recycled-content penalty (+3.6pp, ns) and the sequential-processing penalty (--3.6pp, ns) cancel additively, producing a near-zero net difference that masks opposing underlying forces rather than indicating an interaction."
+- The "interaction effect" language has been replaced with "cancel additively" and "opposing underlying forces rather than indicating an interaction." This accurately reflects the additive factorial structure and removes the contradiction with the paper's own methodology.
+
+#### D028 (contribution 1 wording)
+- **Status: PARTIALLY IMPLEMENTED.**
+- Line 18 now reads: "First, we introduce a factorial control methodology -- single-pass and multi-pass pause-token baselines -- that isolates the curriculum from the mechanism."
+- The "identifies the separate contributions of recycled content and sequential processing" clause that overlapped with contribution 3 has been removed. The three contributions are now more cleanly delineated: (1) the methodology, (2) the in-distribution convergent evidence, (3) the OOD factorial decomposition result.
+- **Round 5 assessment: RESOLVED.**
+
+#### D029 (A.10 overfitting + linear readout)
+- **Status: IMPLEMENTED.**
+- Appendix A.10 (line 391) now reads: "Two non-exclusive factors likely contribute: (1) with n = 298 samples and 38 target classes (~7.8 samples per class), the MLP's larger parameter count overfits despite regularization; and (2) since the answer-generation head is itself a linear projection, training may explicitly produce a linearly separable representation at this position -- a format that linear probes recover by design but that additional nonlinear capacity cannot exploit further."
+- This presents both the overfitting and linear readout explanations as requested. The position 2 contrast (lines 393-394) provides supporting evidence for the encoding format shift. The implementation is faithful to the proposed edit, using more concise language than the original proposal while preserving the key insight.
+
+### Status Update on All Findings
+
+| ID | Severity | Category | Round 3 Status | Round 5 Status | Notes |
+|----|----------|----------|----------------|----------------|-------|
+| D001 | Major | interpretation | Resolved | VERIFIED RESOLVED | Title and framing eliminate binary dichotomy; curriculum-driven structured computation framing throughout |
+| D002 | Major | interpretation | Resolved | VERIFIED RESOLVED | "Mutually redundant" in Appendix A.8; remaining uses acceptable |
+| D003 | Major | interpretation | Open (non-blocking) | VERIFIED RESOLVED | Content-based routing discussion added to Appendix A.6, line 291 |
+| D004 | Major | technical_accuracy | Resolved | VERIFIED RESOLVED | M4 factorial design fully addresses |
+| D005 | Major | missing_experiments | Deferred (acceptable) | DEFERRED (acceptable) | Curriculum-only ablation acknowledged in limitations |
+| D011 | Major | missing_experiments | Deferred (acceptable) | DEFERRED (acceptable) | Attention analysis not critical given M4 evidence |
+| D006 | Minor | related_work | Resolved | VERIFIED RESOLVED | Coverage adequate for scope |
+| D007 | Minor | related_work | Resolved | VERIFIED RESOLVED | Deng et al. cited |
+| D008 | Minor | technical_accuracy | Resolved | VERIFIED RESOLVED | OOD qualifier present |
+| D009 | Minor | technical_accuracy | Resolved | VERIFIED RESOLVED | Grid search over 72 configs, all verified |
+| D010 | Minor | technical_accuracy | Resolved | VERIFIED RESOLVED | Peak-layer reporting explicitly stated |
+| D012 | Minor | novelty | Resolved | VERIFIED RESOLVED | Contributions clearly delineated |
+| D013 | Minor | interpretation | Resolved | VERIFIED RESOLVED | DAG attributed to sequential processing via M4 |
+| D014 | Minor | framing | Resolved | VERIFIED RESOLVED | Title captures nuance |
+| D018 | Minor | technical_accuracy | Open (non-blocking) | DEFERRED (acceptable) | Connectivity difference documented in Appendix A.1 |
+| D020 | Minor | technical_accuracy | Resolved | VERIFIED RESOLVED | Discrepancy explained in Table 2 note |
+| D015 | Suggestion | missing_experiments | Deferred | DEFERRED | Per-hop ID breakdown not critical |
+| D016 | Suggestion | missing_experiments | Deferred | DEFERRED | Superposition probes acknowledged limitation |
+| D017 | Suggestion | concurrent_work | Resolved | VERIFIED RESOLVED | Quiet-STaR cited |
+| D019 | Suggestion | impact | Deferred | DEFERRED | Curriculum property decomposition out of scope |
+| D021 | Suggestion | framing | Resolved | VERIFIED RESOLVED | M3 contextualized adequately |
+| D022 | Minor | interpretation | Open (non-blocking) | VERIFIED RESOLVED | Ceiling context added to Section 4.5, line 138 |
+| D023 | Minor | technical_accuracy | Resolved | VERIFIED RESOLVED | Deprecation header sufficient |
+| D024 | Suggestion | interpretation | Deferred | DEFERRED | Confidence-accuracy dissociation as standalone contribution for future revision |
+| D025 | Minor | technical_accuracy | Open (non-blocking) | DEFERRED | paper.yaml still uses Lambda-era numbering; no manuscript impact |
+| D026 | Suggestion | terminology | Deferred | DEFERRED | "Scaffolding" in conclusion; minor consistency issue |
+| D027 | Minor | interpretation | New in R3 | VERIFIED RESOLVED | "Cancel additively" replaces "interaction effect" |
+| D028 | Suggestion | framing | New in R3 | VERIFIED RESOLVED | Contribution 1 no longer previews contribution 3 |
+| D029 | Minor | interpretation | New in R3 | VERIFIED RESOLVED | Linear readout alternative now presented alongside overfitting |
+
+### Domain-Specific Assessment (Round 5)
+
+#### Mechanistic Interpretability Claims
+
+The paper's mechanistic interpretability claims are well-calibrated. The probing methodology is standard (linear ridge probes with cross-validation), the selectivity metric is clearly defined, and the paper appropriately cites Ravichander et al. (2021) for the crucial distinction between information presence and information use. The key claim -- that both models encode identical selectivity profiles arising from the curriculum -- is strongly supported by the data (M2: +52.0pp, M3: +52.3pp; difference = 0.3pp). The MLP probe grid search (Appendix A.10) now correctly presents two alternative explanations (overfitting and linear readout) with supporting evidence from the position 2 contrast. The content-based routing interpretation (Appendix A.6) provides a mechanistically specific account of the permutation-corruption tension that is consistent with GPT-2's attention mechanism.
+
+The paper does not overclaim. It does not assert that it has identified the specific circuit or attention heads responsible for the computation. The "broadcast-then-attend" language (Section 4.3, Section 5.2) is appropriately hedged as "consistent with" rather than "demonstrated." The paper correctly notes that attention pattern analysis would be needed to confirm this interpretation (a limitation carried through from D011).
+
+#### Related Work Coverage
+
+The related work is adequate for the paper's scope. The paper cites the core references: Hao et al. (2024) for COCONUT, Zhang et al. (2025) for causal inertness, Zhu et al. (2025) for expressiveness theory, Goyal et al. (2024) for pause tokens, Pfau et al. (2024) for filler token theory, Deng et al. (2024) for curriculum distillation, Zelikman et al. (2024) for Quiet-STaR, and Ravichander et al. (2021) for probing methodology. The broader mechanistic interpretability literature (Olsson et al., Conmy et al.) remains uncited but is not essential given the paper's focus on curriculum vs. mechanism attribution rather than circuit-level analysis.
+
+#### Technical Accuracy of Transformer/Attention Descriptions
+
+The descriptions of M2's sequential KV-cache recycling, M3's single-pass parallel processing, and M4's sequential fixed-embedding processing are technically accurate. The FLOP comparison (Appendix A.1) correctly identifies the computational asymmetry. The attention connectivity difference is documented in Appendix A.1 (line 218), though not in the methods section. The M4 KV-cache incompatibility explanation (Appendix A.1, "M4 KV-cache incompatibility" paragraph) is clear and technically sound -- the zero-corruption control at 2.4% is a convincing demonstration that the extraction methodology produces artifacts rather than valid representations.
+
+#### ProsQA-Specific Claims
+
+The paper correctly identifies ProsQA as COCONUT's strongest-case evaluation domain (97% vs ~80% CoT) and accurately describes the graph-traversal task. The OOD test sets are well-designed: 7-hop and 8-hop test chain-length extrapolation, DAG tests topological generalization, and dense tests higher branching factor. The factorial decomposition cleanly separates two confounded factors with respect to these task dimensions.
+
+The Appendix A.18 dataset description accurately reflects ProsQA's construction methodology from Hao et al. (2024) and Saparov & He (2022).
+
+### Round 5 Overall Assessment
+
+**Assessment: pass**
+
+The manuscript has addressed all critical and major issues, plus all priority minor/suggestion items from prior rounds. Of the original 29 findings across 5 rounds (D001-D029):
+- **22 verified resolved** (including all 6 major findings that were actionable)
+- **5 deferred** with acceptable justification (D005, D011, D015, D016, D019, D024, D025, D026 -- these are acknowledged limitations or out-of-scope suggestions)
+- **2 remaining deferred** (D018 connectivity prominence, D025 paper.yaml numbering) are genuinely non-blocking
+
+**Blocking issues: 0**
+
+The paper makes a clear, well-evidenced contribution to the understanding of COCONUT's latent reasoning mechanism. The factorial control methodology (M3 + M4) is the key methodological innovation. The convergent evidence from seven diagnostics, the clean factorial decomposition of OOD performance, and the confidence-accuracy dissociation are genuine contributions that advance the field beyond Zhang et al. (2025). The claims are appropriately scoped (GPT-2 124M, ProsQA, single seed), the limitations are honestly discussed, and the data-manuscript alignment is exact across all tables and figures.
+
+From a domain expert perspective, this paper is ready for publication.
+
+### Round 5 Summary Table
+
+| Category | Count | Details |
+|----------|:-----:|---------|
+| Findings verified resolved | 22 | D001-D004, D006-D010, D012-D014, D017, D020-D023, D027-D029 |
+| Findings deferred (acceptable) | 7 | D005, D011, D015, D016, D019, D024, D025, D026 |
+| Findings remaining open | 1 | D018 (non-blocking, content in Appendix A.1) |
+| Data-manuscript discrepancies | 0 | All tables verified |
+| New findings | 0 | -- |
+| Blocking issues | 0 | -- |
+| Overall assessment | pass | Paper ready for publication |
+
+---
+
 ## 🟠 MAJOR
 
-### - [ ] D001: interpretation
+### - [x] D001: interpretation — ROUND 5: VERIFIED RESOLVED — Title rewritten to "The Curriculum Is the Mechanism"; binary reasoning/buffering dichotomy eliminated throughout; curriculum-driven structured computation framing in Sections 5.1, 5.2, and Table A9.
 
 The selectivity values reported in Table 4 and Section 4.3 (+52.0pp and +52.3pp at position 3) genuinely indicate step-specific encoding, which is more consistent with a structured representational strategy than with pure 'buffering'. The paper frames this as arising from the curriculum, but the fact that position 3 specifically encodes the entity corresponding to the final hop -- with 52 percentage points of selectivity over the best control position -- suggests that these representations are not 'generic compute buffers' in any standard sense of the term. A compute buffer, by definition, carries no task-relevant structure; these positions clearly do. The paper's own probing results contradict the headline 'buffering' framing. The paper partially acknowledges this tension (Section 5.2) but does not fully resolve it: the convergent evidence table (Table 6) lists probing selectivity under 'general broadcast' for the buffering claim, but +52pp selectivity at a specific position with anti-selectivity at others is precisely the opposite of a broadcast pattern. This is a structured, position-specific encoding strategy, shared between M3 and M5. The correct conclusion is not 'buffering vs reasoning' but rather 'curriculum-driven structured computation that does not require the recycling mechanism.' The binary framing obscures what is actually a more interesting and nuanced finding.
 
@@ -391,7 +537,7 @@ The selectivity values reported in Table 4 and Section 4.3 (+52.0pp and +52.3pp 
 
 **Recommendation:** Reframe the paper away from the binary 'reasoning vs buffering' dichotomy. The more precise conclusion is that both models learn a structured representational strategy driven by the curriculum, with step-relevant information concentrated at specific positions, but this strategy does not require the hidden-state recycling mechanism. Consider replacing 'buffering' with 'curriculum-driven structured computation' or similar language that does not imply the absence of task-relevant organization.
 
-### - [ ] D002: interpretation
+### - [x] D002: interpretation — ROUND 5: VERIFIED RESOLVED — "Mutually redundant" in Appendix A.8 (line 333); remaining uses of "redundant" in Sections 4.2 and 5.1 are contextually correct (describing what the data rules OUT, or contrasting with full redundancy).
 
 The corruption cliff at position 4 does not straightforwardly mean that the first 3 positions (0-2) are 'redundant'. Combined with the probing data showing that positions 0-1 encode later-step (answer-relevant) information with anti-selectivity, and position 2 encodes mild step-specific content, these positions may serve a preparatory or routing function. In causal attention, positions 0-2 are visible to positions 3-5. If the model's strategy is to place answer-relevant information at early positions where it can be attended to from all later positions, then corrupting those positions should not matter -- until the model loses the positions that actually use that information (position 3+). This is not 'redundancy' but a deliberate two-phase computation: distribute information early, then integrate at position 3. The single-position corruption data supports this: corrupting position 3 alone causes the cliff, but corrupting positions 0-2 individually does not. The paper partially captures this with the 'broadcast-then-attend' language in Section 4.3 but then reverts to calling the positions 'redundant' in the corruption discussion.
 
@@ -401,7 +547,7 @@ The corruption cliff at position 4 does not straightforwardly mean that the firs
 
 **Recommendation:** Replace the language of 'redundancy' for positions 0-2 with a more precise characterization. These positions appear to serve a distributional role (broadcasting answer-relevant information across the sequence for causal attention access) while position 3 serves as the integration/decision point. This is a specific computational strategy, not mere redundancy.
 
-### - [ ] D003: interpretation
+### - [x] D003: interpretation — ROUND 5: VERIFIED RESOLVED — Content-based routing discussion added to Appendix A.6 (line 291): "the model must perform content-based routing -- attending to what each position contains rather than where it falls in the sequence." This directly addresses the permutation-corruption tension and provides the mechanistic interpretation recommended in Round 2.
 
 The permutation insensitivity result (0% flip rate across 5000 trials) is presented as strong evidence against sequential encoding. However, the paper's own probing analysis shows that position-specific information is concentrated at position 3, with positions 0-2 encoding qualitatively similar content (later-step entities with anti-selectivity). Permuting positions that encode similar content would not produce prediction flips even if the model were performing position-sensitive computation, because the swapped activations carry approximately interchangeable information. The critical test would be to permute position 3 with a non-critical position (e.g., position 0), which should disrupt the computation if position 3 is functionally special. But this is exactly what the permutation test does (random permutations include such swaps), and the result is still zero flips. The paper should more carefully reason through why zero flips occurs even when position 3 (which is demonstrably critical, per single-position corruption) is moved. One possible explanation: the model attends based on activation content rather than absolute position, so moving position 3's activation to slot 0 does not matter because the attention mechanism can still find it by content matching. This would be consistent with 'structured computation that is position-agnostic in its attention routing' rather than 'buffering'.
 
@@ -411,7 +557,7 @@ The permutation insensitivity result (0% flip rate across 5000 trials) is presen
 
 **Recommendation:** Add a paragraph discussing the tension between permutation insensitivity and single-position corruption criticality. The most parsimonious explanation is that the model routes information via content-based attention rather than position-indexed lookup, making the physical position of the critical activation irrelevant. This is an important architectural insight that gets lost in the 'buffering' framing.
 
-### - [ ] D004: technical_accuracy
+### - [x] D004: technical_accuracy — ROUND 5: VERIFIED RESOLVED — M4 factorial design fully resolves the forward-pass asymmetry confound. Section 3.2 describes the factorial contrasts; Section 5.3 provides the decomposition. Residual asymmetry acknowledged in Section 6.
 
 The paper states that M5 performs 'a single forward pass over the entire sequence' (Section 3.1, bullet 3), while M3 performs 'six sequential forward passes'. This is a fundamental computational asymmetry that goes beyond the hidden-state recycling mechanism. M3 gets 6x the transformer depth (72 effective layers vs 12) for the thought-token region of the sequence. The paper acknowledges the FLOP difference (Section 3.2, final paragraph) but frames it as favoring the paper's argument. However, this confounds two separate claims: (1) M5 matches M3 with less compute (fair), and (2) M3's recycled hidden states do not carry useful information (the corruption/probing claims). For claim (2), the computational asymmetry is problematic: M3 may be using those 6 forward passes to build up the representation at position 3 that the probes detect, and the recycling may be essential for that build-up process even though the final result is phenomenologically similar to what M5 achieves in a single pass via a different route. The transplantation experiment partially addresses this (M5 can use M3's thought representations and vice versa), but the 6x depth difference makes the two models less directly comparable than the paper implies.
 
@@ -421,7 +567,7 @@ The paper states that M5 performs 'a single forward pass over the entire sequenc
 
 **Recommendation:** Discuss the depth asymmetry more explicitly in the methods and interpretation. Consider framing it as: 'M3 builds representations through 6x the computational depth but arrives at a functionally equivalent result, suggesting that the additional depth is not leveraged for qualitatively different computation.' Also note that the probing comparison at 'layer 0' for M3 (where recycled states are injected) versus 'layer 12' for M5 reflects this asymmetry -- M3's layer 0 states have already been through 12 layers of processing in the previous pass.
 
-### - [ ] D005: missing_experiments
+### - [ ] D005: missing_experiments — ROUND 5: DEFERRED (acceptable) — Curriculum-only ablation remains missing. Section 6 acknowledges this gap. The M4 factorial design provides sufficient evidence for the paper's narrower claim. Pfau et al. (2024) citation contextualizes the gap.
 
 The paper's central claim -- that the curriculum drives performance rather than the recycling mechanism -- would be substantially strengthened by a 'curriculum-only' ablation that the Limitations section (Section 6) acknowledges is missing. Without this ablation, the paper cannot distinguish between two hypotheses: (a) the curriculum is sufficient (no extra attention positions needed), and (b) the curriculum requires additional attention positions to deposit intermediate computations, and pause tokens provide those positions. Hypothesis (b) is still consistent with 'buffering' but would mean that the number and presence of thought positions matters, which is a more specific claim than 'the curriculum drives everything.' This is a significant gap because the Pfau et al. (2024) result (filler tokens expand computational class) suggests that additional positions are likely necessary, not just the curriculum.
 
@@ -431,7 +577,7 @@ The paper's central claim -- that the curriculum drives performance rather than 
 
 **Recommendation:** If feasible, run a 'curriculum-only' ablation where the CoT tokens are removed at each stage but no pause tokens are inserted (the sequence simply gets shorter). If this model performs comparably to M5, the curriculum alone is sufficient. If it performs much worse, the additional attention positions are a necessary computational resource, which would support a 'compute buffering' interpretation more precisely. At minimum, acknowledge this more prominently than in the limitations section -- it is a core interpretive ambiguity, not a peripheral limitation.
 
-### - [ ] D011: missing_experiments
+### - [ ] D011: missing_experiments — ROUND 5: DEFERRED (acceptable) — Attention pattern analysis absent but no longer critical given M4 factorial evidence and content-based routing discussion in A.6. The "broadcast-then-attend" language is hedged with "consistent with" rather than "demonstrated."
 
 The paper lacks attention pattern analysis. Given that the key claim is about how information flows (or does not flow) through thought positions, examining attention weights would provide direct evidence. Specifically: (1) Does position 3 receive more attention from the answer-generating position than other thought positions? (2) Do early thought positions (0-2) attend heavily to input tokens, suggesting they are building representations from the input rather than from prior thought tokens? (3) In M3, does the sequential forward-pass structure produce different attention patterns than M5's single-pass architecture? Attention patterns would distinguish between the 'broadcast-then-attend' strategy the paper proposes and alternative information routing strategies. This is standard methodology in mechanistic interpretability and its absence is notable.
 
@@ -444,7 +590,7 @@ The paper lacks attention pattern analysis. Given that the key claim is about ho
 
 ## 🟡 MINOR
 
-### - [ ] D006: related_work
+### - [x] D006: related_work — ROUND 5: VERIFIED RESOLVED — Related work coverage adequate for scope. Meng et al. (2022), Ravichander et al. (2021), Zelikman et al. (2024), Deng et al. (2024) all cited.
 
 The paper does not cite or discuss several relevant lines of work in mechanistic interpretability. Specifically: (1) Nostalgebraist's work on interpreting GPT-2 internals, which is directly relevant since the base model is GPT-2. (2) The information bottleneck perspective from Shwartz-Ziv and Tishby, which provides a theoretical framework for understanding why intermediate representations might compress information. (3) Olsson et al. (2022) on induction heads, which is relevant to how the model might be routing information across thought positions via attention. (4) Conmy et al. (2023) on automated circuit discovery (ACDC), which would provide a more targeted methodology for identifying which circuits use the thought positions. (5) Bills et al. (2023) on automated interpretability, relevant to understanding what the thought position representations encode. None of these are strictly required, but the paper's probing methodology would benefit from being situated in the broader mechanistic interpretability toolkit.
 
@@ -454,7 +600,7 @@ The paper does not cite or discuss several relevant lines of work in mechanistic
 
 **Recommendation:** Add a brief paragraph in Section 2.4 situating the probing methodology within the broader mechanistic interpretability literature. Consider citing Olsson et al. (2022) on induction heads and attention-based information routing, and note that circuit-level analysis (e.g., via ACDC or path patching) would provide a more targeted decomposition than linear probing.
 
-### - [ ] D007: related_work
+### - [x] D007: related_work — ROUND 5: VERIFIED RESOLVED — Deng et al. (2024) cited in Section 2.1 with exact context recommended.
 
 The paper does not discuss Deng et al. (2024) 'Explicit CoT Training for Implicit CoT Reasoning' or related work on distilling chain-of-thought into implicit reasoning, which is closely related to the COCONUT curriculum. This line of work suggests that models can learn to perform implicit reasoning when trained with explicit supervision that is gradually removed -- which is exactly the curriculum mechanism that this paper identifies as the key driver.
 
@@ -464,7 +610,7 @@ The paper does not discuss Deng et al. (2024) 'Explicit CoT Training for Implici
 
 **Recommendation:** Add a brief mention of work on CoT distillation and implicit reasoning training, which supports the paper's thesis that progressive curriculum design (rather than the specific latent mechanism) drives performance.
 
-### - [ ] D008: technical_accuracy
+### - [x] D008: technical_accuracy — ROUND 5: VERIFIED RESOLVED — Abstract specifies "3 of 4 out-of-distribution test sets" with qualifier present. Introduction enumerates specific test sets.
 
 The manuscript's abstract states M5 outperforms on '3 of 4 OOD test sets', but the OOD section (4.4) and Table 5 report 5 comparisons (ProsQA ID + 4 OOD). The abstract should be consistent: M5 outperforms M3 on 3 of 4 OOD sets (correct -- 7-hop, 8-hop, dense), while the in-distribution comparison shows no difference. The body text is consistent but the abstract's '3 of 4' phrasing accurately reflects the 4 OOD-only comparisons. However, the introduction says '3 of 4 test sets' (paragraph 4) which is slightly ambiguous -- a reader could interpret this as 3 of 4 total comparisons. This is a minor wording issue.
 
@@ -474,7 +620,7 @@ The manuscript's abstract states M5 outperforms on '3 of 4 OOD test sets', but t
 
 **Recommendation:** Clarify in the abstract and introduction: 'M5 outperforms COCONUT on 3 of 4 out-of-distribution test sets' to avoid ambiguity about whether the in-distribution comparison is included in the count.
 
-### - [ ] D009: technical_accuracy
+### - [x] D009: technical_accuracy — ROUND 5: VERIFIED RESOLVED — MLP probe grid search over 72 configurations now in Appendix A.10. Results verified against `mlp_probe_grid_search.json`. All five target cell values match. Position-dependent pattern (linear > MLP at pos 3; MLP > linear at pos 2) is well-explained.
 
 The nonlinear probe results (Appendix A.7) show 0.0 accuracy for ALL MLP probes across ALL 78 cells for both models. This is not a null result indicating 'MLP probes do not exceed linear probes' -- it indicates that the MLP probes completely failed to learn. An MLP probe that achieves 0.0% accuracy on a classification task (where chance is above 0% for most target distributions) has convergence or implementation issues. The paper acknowledges this in the final sentence of A.7 ('the MLP training procedure... may warrant further tuning to rule out convergence failure'), but this understatement obscures the severity: zero accuracy across 156 probing configurations is almost certainly a bug in the MLP training, not a genuine null finding. The paper should either fix the MLP probing or remove the claim that 'the encoded information is linearly decodable' (Section 4.3), since the nonlinear baseline is broken.
 
@@ -484,7 +630,7 @@ The nonlinear probe results (Appendix A.7) show 0.0 accuracy for ALL MLP probes 
 
 **Recommendation:** Either (1) fix the MLP probe training (likely needs learning rate tuning, longer training, or proper cross-validation) and re-run, or (2) remove the nonlinear probe claims entirely and note that the linear-vs-nonlinear comparison was not successfully conducted. Do not present a broken experiment as a null result.
 
-### - [ ] D010: technical_accuracy
+### - [x] D010: technical_accuracy — ROUND 5: VERIFIED RESOLVED — Table 3 explicitly states selectivity is reported at peak accuracy layer. Verified from `selectivity_recomputed.json`: M3 position 3 selectivity ranges from 0.22 (layer 8) to 0.52 (layer 12); M2 position 3 ranges from 0.22 (layer 8) to 0.52 (layers 0, 12). Peak-layer reporting is standard practice.
 
 The selectivity values reported in Table 4 are described as computed at each model's 'peak probe accuracy layer'. For M3, positions 0, 1, 3 have peak at layer 0, and position 2 at layer 12. For M5, all positions peak at layer 12. However, the selectivity_recomputed.json data shows selectivity values at ALL layers, not just the peak layer. The reported values in the manuscript (+52.0pp for M3 at position 3) correspond to the selectivity at the peak layer for that position. This is methodologically sound but should be stated more explicitly: the selectivity is measured at the single layer where the matched-step probe achieves its highest accuracy, which biases the selectivity estimate upward (cherry-picking the best layer). A more conservative approach would report the mean selectivity across all layers for each position.
 
@@ -494,7 +640,7 @@ The selectivity values reported in Table 4 are described as computed at each mod
 
 **Recommendation:** Add a note that selectivity is reported at the peak probing layer for each position. Consider also reporting the mean selectivity across layers for each position, which would give a more conservative estimate. For M5, position 3 selectivity is only high at layers 11-12, suggesting that the step-specific encoding is a late-stage phenomenon in M5.
 
-### - [ ] D012: novelty
+### - [x] D012: novelty — ROUND 5: VERIFIED RESOLVED — Contributions clearly delineated. M4 factorial decomposition, constructive alternative, and confidence-accuracy dissociation are genuinely distinct from Zhang et al. (2025).
 
 The paper's core finding -- that COCONUT's continuous thought tokens are largely inert -- has been independently established by Zhang et al. (2025) on different tasks (MMLU, HotpotQA) and at larger scale (LLaMA 7B/8B). The paper acknowledges this and positions itself as extending the finding to ProsQA (COCONUT's strongest task). However, the novelty is somewhat reduced by the concurrent work. The paper's unique contributions are: (a) the curriculum-matched M5 baseline, which provides a constructive alternative rather than just ablation; (b) the OOD generalization analysis showing a task-dependent tradeoff; and (c) the probing analysis showing identical selectivity patterns. Of these, (a) is the strongest novel contribution. The paper should be clearer about which findings are confirmatory (extending Zhang et al.) and which are genuinely new.
 
@@ -504,7 +650,7 @@ The paper's core finding -- that COCONUT's continuous thought tokens are largely
 
 **Recommendation:** Restructure the contributions to more clearly delineate: (1) confirmatory replication of Zhang et al.'s causal inertness finding on ProsQA (the strongest-case domain for COCONUT), (2) novel M5 curriculum-matched baseline methodology (applicable beyond COCONUT), and (3) novel finding that the recycling mechanism introduces a task-dependent generalization tradeoff rather than uniform benefit or deficit.
 
-### - [ ] D013: interpretation
+### - [x] D013: interpretation — ROUND 5: VERIFIED RESOLVED — DAG advantage attributed to sequential processing via M4 factorial decomposition. Section 5.3 uses appropriately hedged language ("may implicitly encourage"). "Path convergence" speculation removed.
 
 The DAG result (M3 outperforms M5 by 7.3pp) is interpreted as suggesting that 'sequential accumulation of state through recycling may provide a useful inductive bias for tracking path convergence.' This is speculative and the paper does not provide evidence for this specific mechanism. An equally plausible explanation is that M3's 6x computational depth simply provides more representational capacity for handling novel graph structures, and DAGs happen to require more computation than extended chains. Without targeted ablations (e.g., varying the number of forward passes in M3, or providing M5 with more attention positions for DAG problems), the 'path convergence' interpretation is underdetermined.
 
@@ -514,7 +660,7 @@ The DAG result (M3 outperforms M5 by 7.3pp) is interpreted as suggesting that 's
 
 **Recommendation:** Present the DAG advantage more cautiously. State that M3 outperforms on DAG structures but that the mechanistic explanation (path convergence benefiting from sequential state accumulation) is speculative. Note alternative explanations (computational depth, structural novelty).
 
-### - [ ] D014: framing
+### - [x] D014: framing — ROUND 5: VERIFIED RESOLVED — Title changed to "The Curriculum Is the Mechanism: Dissecting COCONUT's Latent Thought Gains on ProsQA." Binary dichotomy eliminated.
 
 The title 'Does COCONUT Reason or Buffer?' sets up a binary that the paper's own evidence complicates. The probing results show structured, step-specific encoding that is neither pure 'reasoning' (in the sense of sequential BFS) nor pure 'buffering' (in the sense of content-free computation). The evidence is most consistent with 'curriculum-driven structured computation' where both models learn a specific representational strategy for the task, but this strategy does not require the recycling mechanism. The binary framing may attract readers but risks oversimplifying the contribution.
 
@@ -524,7 +670,7 @@ The title 'Does COCONUT Reason or Buffer?' sets up a binary that the paper's own
 
 **Recommendation:** Consider a title that better captures the nuance, e.g., 'Dissecting Latent Thought Tokens: Curriculum, Not Mechanism, Drives COCONUT's Performance on ProsQA' or similar. Alternatively, keep the title but address the false dichotomy explicitly in the introduction.
 
-### - [ ] D018: technical_accuracy
+### - [ ] D018: technical_accuracy — ROUND 5: DEFERRED (acceptable) — The connectivity difference is documented in Appendix A.1 (line 218): "M2's sequential KV-cache decoding restricts each thought position to attending only to preceding positions... whereas M3's single-pass processing allows all thought positions to attend to each other simultaneously." Not in Section 3.2 as proposed, but the information is present.
 
 The paper states that M3 and M5 share 'the same number of attention positions occupied by thought tokens during both training and inference' (Section 3.2). However, the computational structure is fundamentally different. In M3, each thought position in forward pass k can only attend to (a) all input tokens and (b) the single recycled hidden state at the current position from the previous pass. In M5, each thought position can attend to all input tokens AND all other thought positions simultaneously via standard causal attention. M5's thought positions have access to a richer attention context (they can attend to each other), while M3's thought positions are informationally isolated from each other except through the sequential recycling chain. This is an important architectural difference that the paper should discuss more carefully, as it may explain why M5 can achieve comparable performance with 1/6 the FLOPs: M5's attention structure is strictly more connected than M3's for the thought-token region.
 
@@ -534,7 +680,7 @@ The paper states that M3 and M5 share 'the same number of attention positions oc
 
 **Recommendation:** Add a discussion of the attention structure difference. M5's thought positions can attend to each other through standard causal attention, while M3's are informationally linked only through the sequential recycling chain. This connectivity difference is likely important for understanding the OOD generalization results.
 
-### - [ ] D020: technical_accuracy
+### - [x] D020: technical_accuracy — ROUND 5: VERIFIED RESOLVED — Table 2 note explains the 1pp discrepancy between training-time and experiment-pipeline evaluation. Appendix A.2 provides detailed explanation. Manuscript consistently uses experiment-pipeline numbers.
 
 The paper reports M3's test accuracy as 98.0% (Table 2) but the corruption results (Table 3, results.json) show clean accuracy of 97.0%. This 1pp discrepancy likely reflects a difference between evaluation methods (the corruption experiment may use a different evaluation procedure or a different subset). The paper should note and explain this discrepancy.
 
@@ -547,7 +693,7 @@ The paper reports M3's test accuracy as 98.0% (Table 2) but the corruption resul
 
 ## 🔵 SUGGESTION
 
-### - [ ] D015: missing_experiments
+### - [ ] D015: missing_experiments — ROUND 5: DEFERRED — Per-hop ID breakdown not critical. All curriculum models near-ceiling on ID; meaningful variation is in OOD generalization.
 
 The paper would benefit from a per-hop-count breakdown of in-distribution accuracy for M3 vs M5. ProsQA contains paths of 3-6 hops, and the performance difference between models may concentrate at specific hop counts. If M3 outperforms M5 primarily on 5-6 hop problems (where the sequential pipeline has more room to contribute), this would provide additional evidence about when the recycling mechanism matters. The OOD results show this pattern extrapolates to 7-8 hops, but the ID breakdown would be informative.
 
@@ -557,7 +703,7 @@ The paper would benefit from a per-hop-count breakdown of in-distribution accura
 
 **Recommendation:** Add a per-hop-count accuracy breakdown for the in-distribution test set. This would connect the ID results to the OOD findings and clarify whether the recycling mechanism provides a marginal benefit even in-distribution for longer chains.
 
-### - [ ] D016: missing_experiments
+### - [ ] D016: missing_experiments — ROUND 5: DEFERRED — Superposition probes acknowledged as limitation in Section 5.4.
 
 The probing analysis tests whether thought positions encode the entity at the corresponding step of the reasoning path. This tests for BFS-like sequential encoding. However, Zhu et al. (2025) proved that continuous thought tokens can encode superposition states representing multiple frontier nodes simultaneously. The paper's probes would not detect such superposition encoding because they classify a single entity label. A probe designed to decode whether a position contains information about multiple entities (e.g., a multi-label classification or a representational similarity analysis comparing thought-position activations to embeddings of all entities in the graph) would provide a more targeted test of the BFS superposition hypothesis. The paper briefly acknowledges this in Section 5.4 but does not pursue it.
 
@@ -567,7 +713,7 @@ The probing analysis tests whether thought positions encode the entity at the co
 
 **Recommendation:** This is correctly identified as a limitation. Consider adding a representational similarity analysis (RSA) that compares thought-position activations to the full set of entity embeddings, which could detect superposition encoding without requiring explicit multi-label classification.
 
-### - [ ] D017: concurrent_work
+### - [x] D017: concurrent_work — ROUND 5: VERIFIED RESOLVED — Zelikman et al. (2024) Quiet-STaR cited in Section 2.1. Related work coverage adequate.
 
 The paper should check for and discuss any concurrent work on COCONUT analysis that may have appeared since Zhang et al. (2025). The COCONUT paper (Hao et al., 2024) has generated significant interest, and there may be other concurrent analyses of its thought tokens from different research groups. Additionally, concurrent work on latent reasoning in other architectures (e.g., Quiet-STaR from Zelikman et al., 2024) may provide useful context for understanding when latent reasoning mechanisms do vs. do not provide benefits.
 
@@ -577,7 +723,7 @@ The paper should check for and discuss any concurrent work on COCONUT analysis t
 
 **Recommendation:** Conduct a thorough literature search for concurrent COCONUT analyses. Consider citing Zelikman et al. (2024) Quiet-STaR as an alternative approach to latent reasoning that provides a useful comparison point.
 
-### - [ ] D019: impact
+### - [ ] D019: impact — ROUND 5: DEFERRED — Curriculum property decomposition out of scope for this paper. Section 5.5 provides adequate practical guidance.
 
 The paper's practical implications section (5.5) correctly identifies that curriculum design is the higher-leverage investment. However, it could strengthen its impact by providing more concrete guidance for researchers building latent reasoning systems. Specifically: (1) What properties of the curriculum drive the performance? Is it the progressive removal, the number of stages, the epoch budget per stage? (2) Would a 3-stage curriculum work as well as a 7-stage one? (3) Is the specific initialization of the pause embedding important, or would random initialization work? These are actionable research questions that follow directly from the paper's findings and would increase its practical value.
 
@@ -587,7 +733,7 @@ The paper's practical implications section (5.5) correctly identifies that curri
 
 **Recommendation:** Add a brief discussion of which curriculum properties are likely to matter based on the results, and flag specific ablations (number of stages, epoch budget, initialization) as high-value follow-up experiments.
 
-### - [ ] D021: framing
+### - [x] D021: framing — ROUND 5: VERIFIED RESOLVED — M3 adequately contextualized. Section 5.5 notes simpler architectures achieving comparable performance. The broader theoretical implication (standard attention suffices with appropriate curriculum) is implicit but clear.
 
 The paper's M5 baseline is a strong and well-motivated control. However, the paper could better contextualize what M5 represents theoretically. M5 is not just a 'pause token' model -- it is a model that performs the same curriculum-driven training as COCONUT but routes all inter-step computation through standard self-attention rather than through an explicit recurrence loop. This makes M5 architecturally similar to a standard transformer with extra padding tokens, trained with a specific curriculum. The fact that this achieves 95.6% accuracy on ProsQA is itself a significant result: it demonstrates that standard transformer attention is sufficient for multi-hop reasoning when the training curriculum is appropriate, without any architectural modifications beyond adding learnable tokens. This relates to the broader debate about whether transformers need architectural augmentation for reasoning tasks.
 

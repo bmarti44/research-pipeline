@@ -1,5 +1,6 @@
 {
   "bug_description": "Original selectivity used n_common=min(all positions)=12. Positions 0-2 with 500 samples were truncated to 12, making probes unable to learn with 38+ classes.",
+  "_NOTE": "selectivity_raw_grid contains the values reported in the manuscript (Section 4.3, Table 3). selectivity_aligned_grid uses an alternative alignment method that produces near-zero values; it is retained for completeness but is NOT used in any manuscript claims. The raw grid computes selectivity(l,t) = probe_acc(target=step_t) - max_{s!=t} probe_acc(target=step_s), matching the manuscript definition.",
   "original_selectivity": {
     "m3": "0.0 all 78 cells",
     "m5": "0.0 all 78 cells"
@@ -1540,6 +1541,6 @@
       "n_cells": 65
     }
   },
-  "outcome": "B",
+  "outcome": "B \u2014 strong selectivity at position 3 using the raw (manuscript-reported) computation",
   "interpretation": "After correcting the n_common=12 truncation bug, selectivity at position 3 reaches +52pp for both M2 and M3, demonstrating strong step-specific encoding. The curriculum produces position-specific representational structure in both models, contradicting the pre-correction near-zero values."
 }

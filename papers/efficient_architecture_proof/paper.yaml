@@ -2,8 +2,8 @@ title: "The Curriculum Is the Mechanism: Dissecting COCONUT's Latent Thought Gai
 short_title: "COCONUT: Curriculum vs Mechanism"
 
 authors:
-  - name: "Brian Martin"
-    affiliation: "Independent"
+  - name: "Anonymous Author(s)"
+    affiliation: "Anonymous Institution"
 
 abstract: >
   Meta's COCONUT (Chain of Continuous Thought) replaces explicit chain-of-thought
@@ -24,8 +24,8 @@ abstract: >
   p < 0.001), while sequential processing drives DAG generalization (M4 outperforms
   M3 by 7.9pp, p < 0.001). At GPT-2 124M scale, the training curriculum drives
   COCONUT's accuracy on ProsQA; the continuous thought mechanism contributes
-  measurably higher confidence (Wilcoxon r = 0.678 on in-distribution data) but
-  does not improve accuracy.
+  higher confidence that becomes miscalibrated on extended chains, but does not
+  improve accuracy.
 
 keywords:
   - latent reasoning

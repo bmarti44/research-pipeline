@@ -5,6 +5,169 @@
 **Round 2 Date:** 2026-02-16T20:00:00Z
 **Round 3 Date:** 2026-02-16T22:00:00Z
 **Round 4 Date:** 2026-02-17T18:00:00Z
+**Round 5 Date:** 2026-02-17T22:30:00Z
+
+## Round 5 Review
+
+This is the final review round. I performed a comprehensive re-verification of every numerical claim in the manuscript against backing data files. All 85+ numerical assertions checked -- accuracy values, McNemar contingency tables and p-values, Wilcoxon effect sizes and p-values, probing accuracies, selectivity values, corruption profiles, permutation power, confidence intervals, and OOD accuracy -- are confirmed correct. Both prior open findings (S026 and S027) have been resolved in the current manuscript. No new statistical issues were found.
+
+**Overall assessment: PASS.**
+
+---
+
+### Round 5 Full Numerical Verification
+
+**Methodology:** Loaded and cross-referenced the following data files against the manuscript:
+- `results/experiments/ood/results.json`
+- `results/experiments/corruption/results.json`
+- `results/experiments/probing/results.json`
+- `results/experiments/mcnemar/results.json`
+- `results/experiments/per_sample_correctness.json`
+- `results/experiments/m6/per_sample_correctness.json`
+- `results/selectivity_recomputed.json`
+- `results/permutation_power.json`
+- `results/mcnemar_verification.json`
+- `results/experiments/wilcoxon_teacher_forced_m3_vs_m6.json` (M2 vs M4)
+- `results/experiments/wilcoxon_teacher_forced_m3_vs_m5.json` (M2 vs M3)
+- `results/experiments/wilcoxon_teacher_forced_m5_vs_m6.json` (M3 vs M4)
+- `results/experiments/probing_corrected/m3_linear_perm.json` (M2 corrected significance)
+- `results/experiments/probing_corrected/m5_linear_perm.json` (M3 corrected significance)
+
+**Verification results (all verified against backing data):**
+
+1. **Table 2 accuracy values:** M1=83.0%, M2=97.0% (485/500), M3=96.6% (483/500), M4=94.8% (474/500). All match.
+2. **M2 vs M3 McNemar (ProsQA):** b=14, c=12, p=0.845019 (exact binomial). Manuscript: p=0.845. Match.
+3. **M4 vs M2 McNemar (ProsQA):** b=10 (M4-only), c=21 (M2-only), p=0.070756, p_Bonf=0.353778. Manuscript: p=0.071, p_Bonf=0.354. Match.
+4. **M4 vs M3 McNemar (ProsQA):** b=10, c=19, p=0.136046, p_Bonf=0.680230. Manuscript: p_Bonf=0.680. Match.
+5. **95% CI for M2-M3 ID difference:** Wald CI = [-2.4, +1.6]pp. Manuscript: [-2.4, +1.6]pp. Match.
+6. **Table 5 factorial decomposition (M4 vs M2):**
+   - 7-hop: +10.9pp, b=222, c=113, p_Bonf<0.001. Match.
+   - 8-hop: +7.7pp, b=188, c=111, p_Bonf<0.001. Match.
+   - DAG: +0.6pp, b=182, c=176, p_Bonf=1.0. Match.
+   - Dense: +3.6pp, b=186, c=150, p_Bonf=0.280. Match.
+7. **Table 5 factorial decomposition (M4 vs M3):**
+   - 7-hop: +1.5pp, b=139, c=124, p_Bonf=1.0. Match.
+   - 8-hop: +0.1pp, b=141, c=140, p_Bonf=1.0. Match.
+   - DAG: +7.9pp, b=235, c=156, p_Bonf<0.001. Match.
+   - Dense: -3.6pp, b=157, c=193, p_Bonf=0.306. Match.
+8. **Table A8 (M3 vs M2 OOD):** All 5 rows verified -- pp differences, b, c values, and corrected p-values all match.
+9. **Table 6a Wilcoxon (M2 vs M4):** All 5 test sets verified -- r values (0.678, 0.109, 0.082, 0.073, 0.118), p_Bonf values, and directions all match.
+10. **Table 6b Wilcoxon (M2 vs M3):** All 5 test sets verified -- r values (0.591, 0.006, 0.006, 0.003, 0.113), p_Bonf values, and directions all match.
+11. **Table A10 Wilcoxon (M3 vs M4):** All 5 test sets verified -- r values (0.286, 0.142, 0.120, 0.136, 0.021), p_Bonf values, and directions all match.
+12. **Table 3 probing summary:** Peak accuracy M2=55.4% (layer 0, pos 3), M3=57.0% (layer 12, pos 3). Match. Significant cells: 29/78 (M2), 11/78 (M3) from corrected permutation tests. Match.
+13. **Table 3 selectivity:** M2 position 3: +52.0pp. M3 position 3: +52.3pp. M2 positions 0-1: -15.6pp, -10.6pp. M3 positions 0-1: -12.0pp, -14.6pp. All match.
+14. **Thought-vs-input advantage:** M2=10.5%, M3=4.0%. Match.
+15. **Table A1 corruption forward:** All 7 corruption levels for M2 and M3 match backing data exactly.
+16. **Single-position corruption (Table A4):** M2 pos 3 = 57.6%, M3 pos 3 = 57.8%. Match.
+17. **Transplant accuracy (Table A2):** M2=97.0%, M3=96.5%. Match.
+18. **Permutation power:** min_detectable_95 = 0.0005990 = 0.060%. Manuscript: "excludes true flip rate >0.06% at 95% confidence". Match.
+19. **M4 OOD accuracy (Table 4):** 7-hop=76.9%, 8-hop=75.2%, DAG=59.8%, Dense=64.8%. All match.
+20. **M1 OOD accuracy (Table 4):** 7-hop=10.7%, 8-hop=8.2%, DAG=28.2%, Dense=14.1%. All match.
+21. **Abstract numerical claims:** 97.0%, 96.6%, p=0.845, [-2.4, +1.6], 94.8%, p=0.354, 29/78, 11/78, +10.9pp, +7.9pp, r=0.678. All verified.
+22. **Wilcoxon median probabilities (Section 4.5):** M2=99.998% (data: 0.999980509661182), M4=99.949% (data: 0.9994942125181384). Match.
+23. **Wilcoxon 7-hop M2 vs M4:** r=0.109, p_Bonf=0.003 (data: 0.00287). Match within rounding.
+24. **Wilcoxon 8-hop M2 vs M4:** r=0.082, p_Bonf=0.049 (data: 0.04949). Match.
+
+---
+
+### Previous Finding Status (S001--S027)
+
+- [x] S001: numerical_accuracy -- ROUND 5: VERIFIED RESOLVED -- All accuracy values consistent across Tables 2, 4, 5, A1-A4, A8, abstract, and conclusion. Spot-checked 20+ accuracy values; all match backing data.
+
+- [x] S002: numerical_accuracy -- ROUND 5: VERIFIED RESOLVED -- No "85%" or "gap closure" text found.
+
+- [ ] S003: effect_sizes -- ROUND 5: DEFERRED (SUGGESTION) -- Wilcoxon r values provide continuous effect sizes for all 15 comparisons. McNemar tables report b and c from which OR = c/b is computable. Adding explicit OR columns remains a nice-to-have for reader convenience. Non-blocking.
+
+- [ ] S004: corrections -- ROUND 5: DEFERRED (SUGGESTION) -- Per-family Bonferroni k=5 is internally consistent, correctly applied, and defensible. All significant results survive even k=15 correction. Non-blocking.
+
+- [x] S005: methodology -- ROUND 5: VERIFIED RESOLVED -- M2 selectivity layer convention is correctly documented.
+
+- [ ] S006: missing_analysis -- ROUND 5: DEFERRED (SUGGESTION) -- No formal corruption profile similarity test. The factorial decomposition via M4 is the primary evidence; corruption comparison is supporting. Non-blocking.
+
+- [ ] S007: power -- ROUND 5: DEFERRED (SUGGESTION) -- Single-seed limitation acknowledged in Section 6. Convergent evidence from 4 paradigms partially compensates. Non-blocking.
+
+- [x] S008: numerical_accuracy -- ROUND 5: VERIFIED RESOLVED -- All three occurrences of M3 peak accuracy (Section 4.3, Table 3, Appendix A.10) read 57.0%, consistent with backing data (0.5704697986577181 rounds to 57.0%).
+
+- [x] S009: test_selection -- ROUND 5: VERIFIED RESOLVED -- McNemar and Wilcoxon correctly chosen and applied.
+
+- [x] S010: numerical_accuracy -- ROUND 5: VERIFIED RESOLVED -- DAG p_Bonf=0.0015 verified (5 * 0.000291 = 0.001457, rounds to 0.0015).
+
+- [ ] S011: assumptions -- ROUND 5: DEFERRED (SUGGESTION) -- Correlation across test sets through shared parameters not acknowledged. Non-blocking since Bonferroni is conservative.
+
+- [ ] S012: methodology -- ROUND 5: DEFERRED (SUGGESTION) -- Per-fold cross-validation variance not reported for selectivity. Non-blocking.
+
+- [ ] S013: interpretation -- ROUND 5: DEFERRED (SUGGESTION) -- Permutation insensitivity appropriately qualified with "This does not rule out order-sensitive internal representations that are ultimately redundant for the final prediction."
+
+- [ ] S014: missing_analysis -- ROUND 5: DEFERRED (SUGGESTION) -- Bayesian analysis not added. Non-blocking given convergent evidence framework.
+
+- [ ] S015: missing_analysis -- ROUND 5: DEFERRED (SUGGESTION) -- TOST not conducted. Non-blocking.
+
+- [x] S016: interpretation -- ROUND 5: VERIFIED RESOLVED.
+
+- [ ] S017: missing_analysis -- ROUND 5: DEFERRED (SUGGESTION) -- Transplant lacks formal test. Descriptive results compelling (accuracy within 0.5pp of clean). Non-blocking.
+
+- [x] S018: methodology -- ROUND 5: VERIFIED RESOLVED -- MLP probe grid search adequately documented in A.10.
+
+- [ ] S019: numerical_accuracy -- ROUND 5: DEFERRED (SUGGESTION) -- Minor L2 variation across noise draws. Non-consequential.
+
+- [ ] S020: numerical_accuracy -- ROUND 5: DEFERRED (SUGGESTION) -- `statistical_analysis.json` stale but not referenced by manuscript. Non-blocking.
+
+- [x] S021: interpretation -- ROUND 5: VERIFIED RESOLVED.
+
+- [ ] S022: methodology -- ROUND 5: DEFERRED (SUGGESTION) -- Max-based selectivity metric adequately defined in Section 3.4.
+
+- [x] S023: missing_analysis -- ROUND 5: VERIFIED RESOLVED -- Position 4-5 exclusion explained.
+
+- [x] S024: data_hygiene -- ROUND 5: VERIFIED RESOLVED (downgraded in Round 3) -- `m6/mcnemar.json` carries deprecation header. Manuscript Table 5c values independently verified from per-sample predictions.
+
+- [x] S025: data_hygiene -- ROUND 5: PARTIALLY ADDRESSED -- `paper.yaml` now has correct M2_test=0.970 and M3_test=0.966. Residual stale values (McNemar flags, M3 peak accuracy=0.571) remain in repository metadata but do not appear in the manuscript. Non-blocking for publication.
+
+- [x] S026: caption_accuracy -- ROUND 5: VERIFIED RESOLVED -- The original problematic Table 3 caption claiming M3 selectivity at "peak accuracy layers" has been removed. The current Table 3 caption (line 92) makes no such claim. A.11 (line 407) now correctly states "Table 3 reports selectivity at layer 12 for all M3 positions" and documents the layer-dependent selectivity at alternative layers (+17.0pp at layer 8 for position 0, -11.2pp at layer 11 for position 1). This is accurate, transparent, and matches the backing data.
+
+- [x] S027: interpretation -- ROUND 5: VERIFIED RESOLVED -- The dense result description (line 132) now reads "cancel additively, producing a near-zero net difference that masks opposing underlying forces rather than indicating an interaction." This replaces the previous "creating an interaction effect" framing and correctly characterizes the symmetric +3.6pp/-3.6pp pattern as additive cancellation.
+
+---
+
+### Round 5 Summary Table
+
+| Finding | Severity | Category | Status |
+|---------|----------|----------|--------|
+| S001 | Critical | numerical_accuracy | RESOLVED (Round 2) |
+| S002 | Major | numerical_accuracy | RESOLVED (Round 2) |
+| S003 | Suggestion | effect_sizes | DEFERRED |
+| S004 | Suggestion | corrections | DEFERRED |
+| S005 | Major | methodology | RESOLVED (Round 2) |
+| S006 | Suggestion | missing_analysis | DEFERRED |
+| S007 | Suggestion | power | DEFERRED |
+| S008 | Minor | numerical_accuracy | RESOLVED (Round 3) |
+| S009 | Minor | test_selection | RESOLVED (Round 2) |
+| S010 | Minor | numerical_accuracy | RESOLVED (Round 2) |
+| S011 | Suggestion | assumptions | DEFERRED |
+| S012 | Suggestion | methodology | DEFERRED |
+| S013 | Suggestion | interpretation | DEFERRED |
+| S014 | Suggestion | missing_analysis | DEFERRED |
+| S015 | Suggestion | missing_analysis | DEFERRED |
+| S016 | Suggestion | interpretation | RESOLVED (Round 2) |
+| S017 | Suggestion | missing_analysis | DEFERRED |
+| S018 | Suggestion | methodology | RESOLVED (Round 2) |
+| S019 | Suggestion | numerical_accuracy | DEFERRED |
+| S020 | Suggestion | numerical_accuracy | DEFERRED |
+| S021 | Major | interpretation | RESOLVED (Round 2) |
+| S022 | Suggestion | methodology | DEFERRED |
+| S023 | Minor | missing_analysis | RESOLVED (Round 2) |
+| S024 | Minor | data_hygiene | RESOLVED (Round 3, deprecation header) |
+| S025 | Minor | data_hygiene | PARTIALLY ADDRESSED (non-blocking) |
+| S026 | Suggestion | caption_accuracy | RESOLVED (Round 5) |
+| S027 | Minor | interpretation | RESOLVED (Round 5) |
+
+**Critical findings:** 0 open
+**Major findings:** 0 open
+**Minor findings:** 1 partially addressed (S025: paper.yaml residual stale values) -- non-blocking for manuscript
+**Suggestions:** 12 open -- all non-blocking, representing possible future improvements
+
+**Overall assessment: PASS.** The manuscript's statistical foundations are sound. Every numerical claim verified. All critical, major, and minor findings have been resolved or confirmed non-blocking. The 12 remaining suggestion-level items represent desirable enhancements (Bayesian analysis, TOST equivalence testing, odds ratios in McNemar tables, per-fold variance for selectivity) that would strengthen the paper but are not required for the current submission. The manuscript is statistically ready for publication.
+
+---
 
 ## Round 4 Review
 

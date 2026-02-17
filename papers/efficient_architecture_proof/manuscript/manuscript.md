@@ -1,7 +1,7 @@
 # The Curriculum Is the Mechanism: Dissecting COCONUT's Latent Thought Gains on ProsQA
 
-**Brian Martin**
-Independent Researcher
+**Anonymous Author(s)**
+Anonymous Institution
 
 COCONUT's training curriculum has not been isolated from its recycling mechanism. We construct a factorial control design: M4 matches COCONUT's sequential multi-pass processing but uses fixed embeddings instead of recycled hidden states; M3 uses the same fixed embeddings in a single forward pass. M3 reaches 96.6% test accuracy (McNemar p = 0.845 vs. COCONUT's 97.0%); M4 reaches 94.8%. Three converging experiments — corruption analysis, linear probing, and cross-model transplantation — fail to distinguish COCONUT from M3 on any diagnostic where sequential reasoning and curriculum-driven computation make divergent predictions. The factorial decomposition reveals that recycled content impairs chain-length extrapolation (M4 outperforms COCONUT by 10.9pp on 7-hop, p < 0.001), while sequential processing drives topological generalization (M4 outperforms M3 by 7.9pp on DAG, p < 0.001). Recycled content also produces higher confidence that becomes miscalibrated on extended chains. At GPT-2 124M scale, the training curriculum — not the continuous thought mechanism — drives COCONUT's accuracy on ProsQA.
 
@@ -11,11 +11,9 @@ Chain-of-thought prompting shows that large language models solve multi-step rea
 
 This attribution faces an uncontrolled confound. COCONUT is trained with a 7-stage curriculum that progressively removes explicit reasoning tokens, forcing the model to internalize computation that was previously externalized. The curriculum transforms the training distribution, the loss landscape, and the model's learned representations simultaneously with the introduction of the recycling mechanism. Any performance gain could arise from the curriculum alone, from the mechanism alone, or from their interaction. Prior work by Deng et al. (2024) has shown that progressive removal of chain-of-thought steps can teach models implicit reasoning, suggesting the curriculum may be the active ingredient. Without a control that isolates one factor from the other, the causal claim remains underdetermined.
 
-We introduce two controls designed to resolve this confound. M3 is a single-pass pause-token baseline that shares every architectural and training detail with the COCONUT model (M2) — same GPT-2 124M backbone, same 7-stage curriculum schedule, same number of latent thought positions — but replaces recycled hidden-state embeddings with fixed learned pause vectors (Goyal et al., 2024). M4 extends M3 by matching COCONUT's sequential multi-pass processing structure while retaining the fixed pause embeddings, creating a clean factorial design: M2 vs. M4 isolates recycled content (same sequential processing, different content); M3 vs. M4 isolates sequential processing (same fixed content, different processing structure).
+We introduce two curriculum-matched pause-token controls: M3 replaces recycled hidden states with a fixed learned embedding in a single forward pass; M4 matches COCONUT's sequential multi-pass processing while retaining the fixed embedding, enabling a clean factorial decomposition of recycled content and sequential processing (Section 3.2). M3 matches COCONUT on in-distribution ProsQA; three converging experiments fail to distinguish the two models on any diagnostic where sequential reasoning and curriculum-driven computation make divergent predictions. On out-of-distribution tests, the factorial decomposition reveals that recycled content impairs chain-length extrapolation while sequential processing drives topological generalization, and that recycled content produces miscalibrated confidence on extended chains.
 
-M3 reaches 96.6% test accuracy (McNemar p = 0.845 vs. COCONUT's 97.0%); M4 reaches 94.8%. Three converging experiments — corruption analysis, representational probing, and cross-model transplantation — fail to distinguish M2 and M3 on any diagnostic where sequential reasoning and curriculum-driven computation make divergent predictions. On out-of-distribution tests, the factorial decomposition via M4 reveals that recycled content impairs chain-length extrapolation (M4 outperforms M2 by 10.9pp on 7-hop, p < 0.001), while sequential processing drives topological generalization (M4 outperforms M3 by 7.9pp on DAG, p < 0.001). Recycled content also produces miscalibrated confidence — COCONUT is simultaneously more confident and less accurate than M4 on extended chains.
-
-This paper makes three contributions. First, we introduce a factorial control methodology — single-pass and multi-pass pause-token baselines — that isolates the curriculum from the mechanism. Second, we provide converging evidence from three independent experimental paradigms that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance. Third, we characterize the separate contributions of recycled content and sequential processing to out-of-distribution generalization via the factorial decomposition.
+This paper makes three contributions. First, we introduce a factorial control methodology — single-pass and multi-pass pause-token baselines — that isolates the curriculum from the mechanism and decomposes out-of-distribution generalization into recycled-content and sequential-processing components. Second, we provide converging evidence from three independent experimental paradigms that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance. Third, we show that recycled content produces systematically miscalibrated confidence on out-of-distribution chains — higher confidence with lower accuracy — revealing a failure mode specific to the recycling mechanism.
 
 ## 2 Related Work
 
@@ -29,9 +27,9 @@ This paper makes three contributions. First, we introduce a factorial control me
 
 ### 3.1 Task: ProsQA
 
-ProsQA (Hao et al., 2024) is a synthetic graph-traversal benchmark where each sample presents inheritance rules over nonsense entities (e.g., "Alex is a jompus. Every jompus is a zhorpus."), followed by a binary question whose answer requires traversing the implied entity graph across 3 to 6 hops. The dataset contains 17,886 training samples, 300 validation samples, and 500 test samples. ProsQA is the task where COCONUT achieves its strongest reported results (~97%), substantially above chain-of-thought baselines (~80%), making it the strongest-case evaluation domain for the mechanism.
+ProsQA (Hao et al., 2024) is a synthetic graph-traversal benchmark where each sample presents inheritance rules over nonsense entities (e.g., "Alex is a jompus. Every jompus is a zhorpus."), followed by a binary question whose answer requires traversing the implied entity graph across 3 to 6 hops. The dataset contains 17,886 training samples, 300 validation samples, and 500 test samples. ProsQA is COCONUT's strongest-case task (~97% vs. ~80% for chain-of-thought).
 
-To illustrate: given rules mapping Alex → jompus → zhorpus → brimpus, the model must traverse a 3-hop chain to answer "Is Alex a brimpus or a daxil?" M2 processes six thought positions sequentially, each containing the recycled final-layer hidden state; M3 processes six positions containing a fixed learned embedding in a single forward pass; M4 matches M2's sequential structure with M3's fixed embedding. The key contrasts: M2 vs. M4 isolates recycled content; M3 vs. M4 isolates sequential processing.
+To illustrate: given rules mapping Alex → jompus → zhorpus → brimpus, the model must traverse a 3-hop chain to answer "Is Alex a brimpus or a daxil?" The models differ in how they process these thought positions (Table 1, Section 3.2).
 
 ### 3.2 Models
 
@@ -46,7 +44,7 @@ We train four models, all initialized from the same pretrained GPT-2 124M checkp
 | M3 (Pause) | Fixed learned pause embedding (`nn.Parameter`) at each thought position | Single pass | Same 7-stage curriculum as M2 |
 | M4 (Pause-Multipass) | Fixed learned pause embedding (`nn.Parameter`) at each thought position | 6 sequential passes | Same 7-stage curriculum as M2 |
 
-M3 is the primary control, isolating the continuous thought mechanism while holding all other factors constant: same initialization, optimizer (AdamW, lr = 1e-4, weight_decay = 0.01), curriculum schedule (epochs_per_stage = 5, max_latent_stage = 6), effective batch size 128, and number of attention positions. The sole difference is what occupies thought positions: M2 recycles hidden states across multiple forward passes, while M3 uses a single learned 768-dimensional embedding repeated at all six positions in a single forward pass.
+M3 is the primary control: it shares every architectural and training detail with M2 (Table 1), differing only in what occupies thought positions — a fixed learned embedding rather than recycled hidden states.
 
 However, M2 and M3 differ in two confounded ways: (1) the *content* of thought-token embeddings (recycled hidden states vs. fixed pause vectors) and (2) the *sequential processing structure* (6-pass incremental decoding vs. single-pass parallel). M4 resolves this confound by matching M2's sequential processing while using M3's fixed embeddings, creating a clean factorial decomposition:
 
@@ -58,11 +56,11 @@ If M4 matches M2, the sequential processing structure drives differences and rec
 
 ### 3.3 Training
 
-All models were trained for 50 epochs on the ProsQA training set (17,886 samples) using AdamW (lr = 1e-4, weight_decay = 0.01) with an effective batch size of 128, fp32 precision, and seed 0. For the curriculum models (M2, M3, M4), training proceeds through 7 stages: Stage 0 (epochs 0--4) trains with full chain-of-thought supervision; at each subsequent stage k, the last k reasoning steps are replaced with thought tokens. By Stage 6 (epochs 30--49), all reasoning steps are latent. Thought positions are padded to 6 regardless of path length. Additional training details (hardware, per-model wall time, optimizer protocol) are in Appendix A.2.
+All models were trained for 50 epochs on the ProsQA training set (17,886 samples) with the hyperparameters in Table 1 (fp32 precision, seed 0). For the curriculum models (M2, M3, M4), training proceeds through 7 stages: Stage 0 (epochs 0--4) trains with full chain-of-thought supervision; at each subsequent stage k, the last k reasoning steps are replaced with thought tokens. By Stage 6 (epochs 30--49), all reasoning steps are latent. Thought positions are padded to 6 regardless of path length. Additional training details (hardware, per-model wall time, optimizer protocol) are in Appendix A.2.
 
 ### 3.4 Experiments
 
-We design three experiments. Experiment 1 (corruption ablation) progressively replaces thought-token representations with calibrated Gaussian noise. Experiment 2 (representation probing) trains linear probes on frozen hidden states across a 13×6 (layer × position) grid. Experiment 3 evaluates out-of-distribution generalization on four test sets (7-hop, 8-hop, DAG, dense; 1,000 samples each). Experiments 1 and 2 are restricted to M2 and M3 due to M4's KV-cache extraction incompatibility (Appendix A.1). Full methodological details are in Appendix A.3.
+We design three experiments. Experiment 1 (corruption ablation) progressively replaces thought-token representations with calibrated Gaussian noise. Experiment 2 (representation probing) trains linear probes on frozen hidden states across a 13×6 (layer × position) grid. Experiment 3 evaluates out-of-distribution generalization on four test sets (7-hop, 8-hop, DAG, dense; 1,000 samples each). Experiments 1 and 2 are restricted to M2 and M3 due to M4's KV-cache extraction incompatibility (Appendix A.1). A fourth analysis extracts teacher-forced log-probabilities by force-decoding through the answer prefix and measuring log P(species_token), testing for confidence differences via Wilcoxon signed-rank tests (Bonferroni-corrected k = 5). Full methodological details are in Appendix A.3.
 
 ## 4 Results
 
@@ -79,11 +77,13 @@ Table 2 reports accuracy for all four models. M2 (COCONUT) achieves 97.0% test a
 | M3 (Pause) | Learned pause embeddings | Single pass | 97.3% | 96.6% | 43 |
 | M4 (Pause-Multipass) | Learned pause embeddings | 6 sequential passes | 96.7% | 94.8% | 30 |
 
-M4's best epoch (30) occurs 13--19 epochs earlier than M2 (49) and M3 (43). Whether this reflects an inherent capacity limit of the multi-pass fixed-embedding architecture, or indicates that M4 would benefit from different hyperparameters (e.g., a lower learning rate in later curriculum stages), remains an open question. The 2.2pp gap could reflect a systematic architectural limitation, a suboptimal training configuration, or initialization variance; multi-seed replication with hyperparameter sensitivity analysis would clarify this (Section 6). Despite this earlier plateau, the 2.2pp gap between M4 (94.8%) and M2 (97.0%) does not reach significance after Bonferroni correction (p = 0.354); however, non-significance does not establish equivalence, and the gap may reflect a systematic architectural limitation that multi-seed replication could confirm (Section 6). Training curves and M4's plateau analysis are in Appendix A.2.
+M4's best epoch (30) is 13--19 epochs earlier than M2 (49) and M3 (43); the 2.2pp gap does not reach significance after Bonferroni correction (p = 0.354), though non-significance does not establish equivalence (Section 6). Detailed M4 plateau analysis is in Appendix A.2. M4's validation accuracy plateaus near 95% from epoch 30 onward, fluctuating between 93.7% and 96.7% through epoch 49 (Appendix A.2), suggesting the gap reflects architectural capacity limits rather than insufficient training.
 
 ### 4.2 Experiment 1: Corruption Ablation
 
 M2 and M3 exhibit nearly identical degradation profiles under progressive forward corruption (Table A1 in Appendix A.5): accuracy remains near ceiling through position 3, drops precipitously between positions 3 and 4 (from ~96% to ~57%), and collapses to near chance by position 6, with a maximum difference of 1.0pp at any corruption level. Single-position corruption confirms that position 3 alone is critical (M2: 57.6%, M3: 57.8%), ruling out redundant distributed storage (Appendix A.8). Permutation testing (5,000 trials per model) produced zero prediction flips (excludes true flip rate >0.06% at 95% confidence). Cross-problem transplantation succeeded for both models (M2: 97.0%, M3: 96.5% with hop-count-matched donors), confirming thought representations carry no problem-specific information (Appendices A.6--A.7).
+
+![Progressive forward corruption accuracy for M2 (COCONUT) and M3 (Pause). Both models degrade identically, with a cliff between positions 3 and 4.](figures/fig2_corruption_curves.png){ width=90% }
 
 ### 4.3 Experiment 2: Representation Probing
 
@@ -99,11 +99,13 @@ Linear probes trained on frozen hidden states reveal that both models concentrat
 | Positions 0--1 selectivity | --15.6pp, --10.6pp | --12.0pp, --14.6pp |
 | Significant cells (Bonferroni) | 29 / 78 | 11 / 78 |
 
-M2 shows more broadly distributed probing signal: 29/78 cells reach significance versus 11/78 for M3, with M2's signal spanning all layers at positions 2--3 while M3's is confined to late layers (9--12). M2 also shows higher thought-vs-input advantage (10.5% vs. 4.0%). However, this richer encoding does not translate to an accuracy advantage: M3 matches M2 on in-distribution accuracy and outperforms it on most OOD tests (Section 4.4). The selectivity pattern is a product of the shared training curriculum. Full heatmaps and nonlinear analysis are in Appendices A.10--A.11.
+M2 shows broader probing signal (29/78 significant cells vs. 11/78) and higher thought-vs-input advantage (10.5% vs. 4.0%), but this richer encoding does not translate to an accuracy advantage (Section 4.4). Full heatmaps and nonlinear analysis are in Appendices A.10--A.11.
+
+![Linear probe accuracy by layer and thought position for M2 (left) and M3 (right). Stars indicate Bonferroni-significant cells (p < 0.05/78, 2,000 permutations).](figures/fig4_probing_heatmap.png){ width=90% }
 
 ### 4.4 Experiment 3: Out-of-Distribution Generalization
 
-Table 4 reports accuracy for all four models on four OOD test sets. M3 outperforms M2 on 7-hop (+9.4pp), 8-hop (+7.6pp), and dense (+7.2pp), while M2 outperforms M3 on DAG (--7.3pp), all significant after Bonferroni correction (pairwise details in Appendix A.12).
+Table 4 reports OOD accuracy for all models. The confounded M2 vs. M3 comparison shows task-dependent tradeoffs (pairwise details in Appendix A.12); the factorial decomposition via M4 separates the underlying factors (Table 5).
 
 **Table 4:** Out-of-distribution accuracy for all models.
 
@@ -115,69 +117,59 @@ Table 4 reports accuracy for all four models on four OOD test sets. M3 outperfor
 | DAG | 1000 | 28.2% | 59.2% | 51.9% | 59.8% |
 | Dense | 1000 | 14.1% | 61.2% | 68.4% | 64.8% |
 
-The factorial decomposition via M4 cleanly separates the two confounded factors (Table 5). The M4 vs. M2 comparison (isolating recycled content) reveals that recycled content impairs chain-length extrapolation: M4 outperforms M2 by 10.9pp on 7-hop and 7.7pp on 8-hop (both p < 0.001 after Bonferroni correction), with no significant difference on DAG (+0.6pp, p = 1.0) or dense (+3.6pp, p = 0.280). The M4 vs. M3 comparison (isolating sequential processing) reveals that sequential processing helps topological generalization: M4 outperforms M3 by 7.9pp on DAG (p < 0.001), with no significant difference on chain-length tasks (+1.5pp and +0.1pp, both ns) or dense (--3.6pp, p = 0.306).
+The factorial decomposition via M4 separates the two confounded factors (Table 5). Recycled content impairs chain-length extrapolation: M4 outperforms M2 by 10.9pp on 7-hop and 7.7pp on 8-hop (both p < 0.001), with no significant difference on DAG or dense. Sequential processing helps topological generalization: M4 outperforms M3 by 7.9pp on DAG (p < 0.001), with no significant difference on other tests.
 
 **Table 5:** Factorial decomposition. M4 vs. M2 isolates recycled content; M4 vs. M3 isolates sequential processing.
 
 | Test Set | M4 -- M2 | b | c | p (Bonf.) | Sig. | M4 -- M3 | b | c | p (Bonf.) | Sig. |
 |----------|:--------:|:---:|:---:|:---------:|:----:|:--------:|:---:|:---:|:---------:|:----:|
-| ProsQA (ID) | --2.2 pp | 21 | 10 | 0.354 | No | --1.8 pp | 19 | 10 | 0.680 | No |
-| 7-hop | +10.9 pp | 113 | 222 | < 0.001 | Yes | +1.5 pp | 124 | 139 | 1.000 | No |
-| 8-hop | +7.7 pp | 111 | 188 | < 0.001 | Yes | +0.1 pp | 140 | 141 | 1.000 | No |
-| DAG | +0.6 pp | 176 | 182 | 1.000 | No | +7.9 pp | 156 | 235 | < 0.001 | Yes |
-| Dense | +3.6 pp | 150 | 186 | 0.280 | No | --3.6 pp | 193 | 157 | 0.306 | No |
+| ProsQA (ID) | --2.2 pp | 10 | 21 | 0.354 | No | --1.8 pp | 10 | 19 | 0.680 | No |
+| 7-hop | +10.9 pp | 222 | 113 | < 0.001 | Yes | +1.5 pp | 139 | 124 | 1.000 | No |
+| 8-hop | +7.7 pp | 188 | 111 | < 0.001 | Yes | +0.1 pp | 141 | 140 | 1.000 | No |
+| DAG | +0.6 pp | 182 | 176 | 1.000 | No | +7.9 pp | 235 | 156 | < 0.001 | Yes |
+| Dense | +3.6 pp | 186 | 150 | 0.280 | No | --3.6 pp | 157 | 193 | 0.306 | No |
+
+*b* = number of samples where only the row model is correct; *c* = number where only the column comparator is correct. Exact binomial test (two-sided) on discordant pairs with Bonferroni correction (k = 5).
 
 ![Out-of-distribution accuracy for M1, M2, M3, and M4 across four test sets.](figures/fig5_ood_bar.png){ width=90% }
 
-The decomposition is approximately additive: on 7-hop, the recycled-content penalty (10.9pp) plus the neutral sequential-processing effect (1.5pp, ns) approximates the M3--M2 difference (9.4pp); on DAG, the sequential-processing advantage (7.9pp) plus the neutral recycled-content effect (0.6pp, ns) approximates the M2--M3 difference (7.3pp). On dense graphs, the recycled-content penalty (+3.6pp, ns) and the sequential-processing penalty (--3.6pp, ns) cancel additively, producing a near-zero net difference that masks opposing underlying forces rather than indicating an interaction. M1 performs near chance on all OOD sets (8--28%), confirming that curriculum-trained latent reasoning provides substantial generalization benefits over explicit chain-of-thought at this scale.
+The two factors combine approximately additively (detailed decomposition in Appendix A.13). M1 performs near chance on all OOD sets (8--28%), confirming that curriculum-trained latent reasoning provides substantial generalization benefits over explicit chain-of-thought at this scale.
 
 ### 4.5 Teacher-Forced Confidence Analysis
 
-Teacher-forced log-probabilities — extracted by force-decoding through the answer prefix and measuring log P(species_token) — reveal systematic confidence differences invisible to binary accuracy tests (Wilcoxon signed-rank, Bonferroni-corrected k = 5; M3 vs. M4 details in Appendix A.15).
+Teacher-forced log-probabilities reveal systematic confidence differences invisible to binary accuracy tests (M3 vs. M4 details in Appendix A.15).
 
-On ProsQA, M2 assigns systematically higher confidence than M4 (r = 0.678, p < 10^{-50}), though both achieve near-ceiling median probabilities (M2: 99.998%, M4: 99.949%). The large rank-biserial correlation reflects consistent paired rank ordering, not practically meaningful absolute differences. On OOD chain-length tasks, the confidence signal becomes miscalibrated: on 7-hop, M2 is more confident than M4 (r = 0.109, p_Bonf = 0.003) yet less accurate (66.0% vs. 76.9%, +10.9pp); the same pattern appears on 8-hop (r = 0.082, p_Bonf = 0.049; accuracy 67.5% vs. 75.2%). No significant confidence difference appears on DAG (r = 0.073, p = 0.106) or dense (r = 0.118, p_Bonf = 0.001, M2 > M4). The full table is in Appendix A.14.
-
-One possible explanation: during curriculum training on 3--6 hop problems, recycled content learns a confidence signal correlated with correctness; on out-of-distribution chains (7--8 hops), this signal persists even though the reasoning path exceeds the model's capacity. Fixed embeddings avoid this failure mode because they carry no distribution-specific content. The confounded M2 vs. M3 comparison is in Appendix A.14.
+On ProsQA, M2 assigns higher confidence than M4, but both achieve near-ceiling median probabilities (>99.9%); the difference is statistically large (r = 0.678) but practically negligible. On OOD chain-length tasks, this confidence signal becomes miscalibrated: M2 is more confident yet less accurate than M4 on both 7-hop and 8-hop (full statistics in Table 6a, Appendix A.14). A mechanistic account of this miscalibration is discussed in Section 5.2. The confounded M2 vs. M3 comparison is in Appendix A.14.
 
 Across all four results sections, a consistent pattern emerges: every diagnostic where sequential reasoning and curriculum-driven computation make divergent predictions favors the curriculum account. Section 5.1 synthesizes this convergent evidence.
 
 ## 5 Discussion
 
-### 5.1 Convergent Evidence
+### 5.1 Convergent Evidence and Curriculum-Driven Representations
 
-All seven diagnostics — permutation, transplant, corruption, selectivity, significance, OOD, and confidence — favor the curriculum account (full table in Appendix A.13, Table A9). The evidence does not support pure "buffering" — the strong selectivity at position 3 (+52pp) and anti-selectivity at positions 0--1 reveal structured, position-specific encoding in both models. However, this structure arises from the shared curriculum rather than the recycling mechanism.
+Seven independent diagnostics — permutation, transplant, corruption, selectivity, significance, OOD, and confidence — consistently favor the curriculum account over the sequential reasoning account (full analysis in Table A9, Appendix A.13). No single experiment is decisive: permutation insensitivity could reflect redundant encoding — if thought tokens encoded a sequential reasoning chain, reordering them should disrupt the dependency structure; the zero flip rate indicates that the model routes information by content rather than position — but single-position corruption rules this out — corrupting position 3 alone collapses accuracy to ~57%, indicating concentrated rather than redundant storage. The identical cliff profiles rule out the possibility that M2's recycled hidden states provide a more robust or differently structured representation than M3's fixed embeddings — under matched perturbation, both models fail at exactly the same point. Both models encode step-specific information in identical patterns (+52pp selectivity at position 3), and this shared pattern arises from the curriculum that both models undergo, not from the recycling mechanism that only M2 possesses. M2's richer encoding — 29/78 significant probing cells versus 11/78 — does not produce a detectable accuracy advantage. This dissociation between representational richness and behavioral outcome is consistent with Ravichander et al. (2021): information linearly decodable from representations is not necessarily used by downstream computation.
 
-No single experiment is decisive. Permutation insensitivity could reflect redundant encoding, but single-position corruption rules this out: corrupting position 3 alone collapses accuracy to ~57% (Appendix A.8), indicating concentrated rather than redundant storage. Taken together, seven independent diagnostics consistently fail to find evidence that COCONUT's recycled hidden states carry reasoning content that differs functionally from M3's learned pause vectors.
-
-### 5.2 Curriculum-Driven Representations
-
-Both M2 and M3 encode step-specific information in identical patterns: strong selectivity at position 3 (+52pp), anti-selectivity at positions 0--1, differing by only 0.3pp. M2's richer encoding — 10.5% thought-vs-input advantage, 29/78 significant cells versus 11/78 — does not produce a detectable accuracy advantage on our metrics. M3 builds its probing signal through the standard transformer computation, peaking at layer 12, yet reaches comparable or superior accuracy. This dissociation is consistent with Ravichander et al. (2021): information linearly decodable from representations is not necessarily used by downstream computation.
-
-### 5.3 Factorial Decomposition of OOD Performance
+### 5.2 Factorial Decomposition of OOD Performance
 
 The factorial decomposition fully resolves the M2--M3 OOD tradeoff. M2's chain-length disadvantage arises entirely from recycled content (M4 matches M3, not M2), while M2's DAG advantage arises entirely from sequential processing (M4 matches M2, not M3). The factors combine additively and affect different task types. The recycled hidden states are not merely inert — on chain-length extrapolation, models trained with recycling generalize significantly worse than matched controls, possibly because recycled content carries distribution-specific information that becomes misleading at longer path lengths.
 
-### 5.4 Relation to Prior Work
+The teacher-forced confidence analysis supports this interpretation: during curriculum training on 3--6 hop problems, recycled content learns a confidence signal correlated with correctness; on out-of-distribution chains (7--8 hops), this signal persists even though the reasoning path exceeds the model's capacity. Fixed embeddings avoid this failure mode because they carry no distribution-specific content.
 
-Our results extend Zhang et al.'s (2025) finding of causal inertness from MMLU and HotpotQA to ProsQA — the task where COCONUT achieves its strongest reported performance. The convergence across tasks and scales (GPT-2 124M through LLaMA 8B) strengthens the generality, though the scale gap remains a limitation. Zhu et al.'s (2025) theoretical expressiveness is not realized in practice at this scale. Goyal et al.'s (2024) pause-token finding is confirmed and extended: curriculum-trained pause tokens match COCONUT in-distribution and exceed it on most OOD tests.
+### 5.3 Relation to Prior Work and Practical Implications
 
-### 5.5 Practical Implications
-
-The continuous thought mechanism introduces substantial architectural complexity: multi-pass forward loops during training and inference roughly double VRAM consumption. Our results suggest this complexity yields no measurable benefit on ProsQA at GPT-2 124M scale. For researchers building on COCONUT, curriculum design — the progressive removal of explicit reasoning tokens, the scheduling of thought-token introduction — is likely to produce larger returns than the hidden-state recycling mechanism. Simpler architectures that exploit the same curriculum achieve comparable performance at lower computational cost.
+Our results extend Zhang et al.'s (2025) finding of causal inertness to ProsQA — COCONUT's strongest-case task — strengthening generality across tasks and scales (GPT-2 124M through LLaMA 8B). Zhu et al.'s (2025) theoretical expressiveness is not realized in practice at this scale. Goyal et al.'s (2024) pause-token finding is confirmed and extended: curriculum-trained pause tokens match COCONUT in-distribution and exceed it on most OOD tests. For researchers building on COCONUT, curriculum design is likely the higher-return lever: the continuous thought mechanism roughly doubles VRAM consumption yet yields no measurable accuracy benefit at this scale.
 
 ## 6 Limitations
 
-All experiments use GPT-2 124M on synthetic ProsQA with a single training seed. The continuous thought mechanism may provide benefits at larger scale where models have capacity for the superposition states Zhu et al. (2025) proved are available, and ProsQA's unambiguous reasoning paths may understate the value of maintaining multiple candidate interpretations. Replication across 3--5 seeds would clarify whether M4's 94.8% reflects a systematic gap or initialization variance; training-time evaluation at best epoch yielded a larger apparent gap (M2 = 98.0%, M3 = 95.6%), and this sensitivity to the inference code path — arising because the training evaluator uses teacher-forced prefix tokens while the experiment pipeline uses greedy autoregressive decoding — underscores the need for multi-seed replication. All pairwise comparisons, OOD evaluations, and corruption analyses use the experiment pipeline consistently.
+All experiments use GPT-2 124M on synthetic ProsQA with a single training seed. The continuous thought mechanism may provide benefits at larger scale or on tasks with ambiguous reasoning paths (Section A.16). M4's 2.2pp gap from M2, though non-significant, may reflect a systematic architectural limitation; multi-seed replication would clarify. M4's corruption and probing coverage is limited by KV-cache incompatibility (Appendix A.1). We do not test a curriculum-only condition (no thought positions), which would distinguish whether the curriculum alone drives gains or requires additional attention positions as computational budget. Extended discussion of each limitation is in Appendix A.16.
 
-M4's corruption and probing coverage is limited by KV-cache incompatibility (Appendix A.1). We do not test a curriculum-only condition — one where removed reasoning tokens are simply deleted, producing shorter sequences with no thought positions. A curriculum-only ablation would distinguish whether the curriculum alone drives the gains or whether it requires additional attention positions as a computational budget; this predicts that if such a model reached ~96%, pause tokens would be unnecessary rather than merely sufficient. M2's richer encoding (29/78 significant cells vs. 11/78) does not produce a detectable accuracy advantage on our metrics, but a more sensitive measure might reveal functional consequences. Extended discussion of each limitation is in Appendix A.16.
+**Null-result sensitivity.** The convergent evidence in Section 5.1 chains multiple null or near-null diagnostics. Each has finite resolution: the permutation test (5,000 trials, 0 flips) excludes true flip rates above 0.06% at 95% confidence but cannot detect subtler ordering effects; the corruption analysis detects degradation differences of approximately 1 percentage point at n = 500 (the maximum observed M2--M3 difference at any corruption level); the probing selectivity comparison (+52.0pp vs. +52.3pp) has cross-validation variability of approximately 2--3pp at n = 298, sufficient to detect a 5pp selectivity difference but not a 1pp difference. These bounds define the resolution of the null results: effects smaller than these thresholds would not be detected by the current experimental design.
 
 ## 7 Conclusion
 
-We asked whether COCONUT's continuous thought tokens perform sequential latent reasoning or serve as curriculum-shaped computational scaffolding. A curriculum-matched pause baseline (M3) matches COCONUT on in-distribution ProsQA (96.6% vs. 97.0%, McNemar p = 0.845) without recycling any hidden states. A second control (M4) matches COCONUT's sequential processing with fixed embeddings, enabling factorial decomposition. Three converging experiments — corruption analysis, representational probing, and cross-model transplantation — fail to distinguish M2 and M3 on any diagnostic where the two accounts make divergent predictions.
+A curriculum-matched pause baseline (M3) matches COCONUT on in-distribution ProsQA (McNemar p = 0.845) and three converging experiments fail to distinguish the models on any diagnostic where sequential reasoning and curriculum-driven computation make divergent predictions. The factorial decomposition via M4 resolves the out-of-distribution attribution: recycled content impairs chain-length extrapolation while sequential processing drives topological generalization.
 
-The factorial decomposition via M4 resolves the out-of-distribution attribution: recycled content impairs chain-length extrapolation (M4 outperforms M2 by 10.9pp on 7-hop, p < 0.001), while sequential processing drives topological generalization (M4 outperforms M3 by 7.9pp on DAG, p < 0.001). Recycled content also produces miscalibrated confidence on extended chains.
-
-At GPT-2 124M scale, the training curriculum drives COCONUT's accuracy on ProsQA. The continuous thought mechanism contributes measurably to internal representations and confidence but does not improve accuracy. For researchers developing latent reasoning architectures, curriculum design warrants at least as much attention as the choice of thought-token mechanism. Code, configurations, and experiment scripts are available at https://github.com/bmarti44/research-pipeline.
+At GPT-2 124M scale, the training curriculum drives COCONUT's accuracy on ProsQA. The continuous thought mechanism affects internal representations and produces higher confidence that is practically negligible on in-distribution data (both models >99.9%) but becomes miscalibrated on extended chains; it does not improve accuracy. For researchers developing latent reasoning architectures, curriculum design warrants at least as much attention as the choice of thought-token mechanism. Code, configurations, and experiment scripts are available at [URL redacted for review].
 
 ## References
 
@@ -332,7 +324,7 @@ Fully unmatched transplantation (random donor-recipient pairing with no hop-coun
 
 Reverse and single-position corruption confirm the forward corruption findings. The cliff occurs at the same position regardless of corruption direction. Single-position corruption at position 3 alone causes the same catastrophic drop as corrupting positions 0--3 together, indicating that position 3 carries critical information while positions 0--2 carry mutually redundant copies of answer-relevant content.
 
-![Progressive corruption curves for M2 and M3. Both models show identical degradation profiles with a cliff between positions 3 and 4.](figures/fig2_corruption_curves.png){ width=90% }
+*Figure reproduced in Section 4.2.*
 
 ### A.9 Full Linear Probe Accuracy Grids
 
@@ -398,11 +390,11 @@ Both models show the same qualitative pattern (linear-sufficient at position 3, 
 
 **Probing heatmaps.** Figure 5 shows the full linear probe accuracy heatmaps across all layers and thought positions for both models.
 
-![Linear probe accuracy heatmaps (layer × thought position) for M2 (COCONUT) and M3 (Pause).](figures/fig4_probing_heatmap.png){ width=90% }
+*Figure reproduced in Section 4.3.*
 
 The two models concentrate decodable information at different locations in the network. M2's peak probe accuracy occurs at layer 0, position 3. Because COCONUT recycles the final-layer hidden state back into the input embedding stream, the recycled representation arrives pre-processed at layer 0, making intermediate information linearly accessible from the earliest layer. M3 builds its representations through the transformer stack, with peak accuracy at layer 12 (the final layer). The diagonal peak layers for M2 are [8, 12, 12, 0] across positions 0--3; for M3 they are [8, 11, 12, 12]. These patterns reflect architectural differences in where information is injected, not differences in what information is encoded.
 
-**Thought-vs-input advantage.** M2's thought-token positions encode 10.5% more decodable information than its input positions, compared with 4.0% for M3. The recycling mechanism creates broadly distributed, robustly decodable intermediate representations, consistent with its architectural design. But this richer encoding does not produce a different selectivity pattern or an accuracy advantage.
+**Thought-vs-input advantage.** M2's thought-token positions encode 10.5% more decodable information than its input positions, compared with 4.0% for M3. The recycling mechanism creates broadly distributed, robustly decodable intermediate representations, consistent with its architectural design. But this richer encoding does not produce a different selectivity pattern, a binary-accuracy advantage, or a change in OOD generalization direction — though it does produce measurably higher per-sample confidence (Section 4.5).
 
 **Layer-dependent selectivity for M3.** Table 3 reports selectivity at layer 12 for all M3 positions. At alternative layers, selectivity values differ: position 0 shows +17.0pp (positive, not anti-selective) at layer 8, while position 1 shows --11.2pp at layer 11. The anti-selectivity pattern at early positions is thus layer-dependent for M3.
 
@@ -414,11 +406,11 @@ This table is retained from the two-model analysis for completeness. The M2 vs. 
 
 | Test Set | M3 -- M2 | b | c | p (exact) | p (Bonf.) | Sig. |
 |----------|:--------:|:---:|:---:|:---------:|:---------:|:----:|
-| ProsQA (ID) | --0.4 pp | 14 | 12 | 0.845 | 1.000 | No |
-| 7-hop | +9.4 pp | 120 | 214 | < 0.001 | < 0.001 | Yes |
-| 8-hop | +7.6 pp | 122 | 198 | < 0.001 | < 0.001 | Yes |
-| DAG | --7.3 pp | 235 | 162 | < 0.001 | 0.0015 | Yes |
-| Dense | +7.2 pp | 139 | 211 | < 0.001 | < 0.001 | Yes |
+| ProsQA (ID) | --0.4 pp | 12 | 14 | 0.845 | 1.000 | No |
+| 7-hop | +9.4 pp | 214 | 120 | < 0.001 | < 0.001 | Yes |
+| 8-hop | +7.6 pp | 198 | 122 | < 0.001 | < 0.001 | Yes |
+| DAG | --7.3 pp | 162 | 235 | < 0.001 | 0.0015 | Yes |
+| Dense | +7.2 pp | 211 | 139 | < 0.001 | < 0.001 | Yes |
 
 ### A.13 Full Convergent Evidence Table
 
@@ -436,6 +428,8 @@ Section 5.1 in the main text provides a compact summary. Table A9 below gives th
 | Thought-vs-input advantage | Only COCONUT benefits | Equal benefit | M2 higher (10.5% vs. 4.0%), but does not produce different strategy |
 | OOD generalization | COCONUT advantages | Equal or M3 advantages | M3 wins 3/4; M2 wins DAG (all significant). Factorial decomposition: training with recycled content impairs chain-length extrapolation; sequential processing drives DAG advantage |
 | Teacher-forced confidence | M2 uniformly more confident | Equal confidence | M2 more confident on ID (r = 0.678) but overconfident on OOD: higher confidence with lower accuracy on 7-hop and 8-hop |
+
+**Additivity analysis.** The decomposition is approximately additive: on 7-hop, the recycled-content penalty (10.9pp) plus the neutral sequential-processing effect (1.5pp, ns) approximates the M3--M2 difference (9.4pp); on DAG, the sequential-processing advantage (7.9pp) plus the neutral recycled-content effect (0.6pp, ns) approximates the M2--M3 difference (7.3pp). On dense graphs, the recycled-content penalty (+3.6pp, ns) and the sequential-processing penalty (--3.6pp, ns) cancel additively, producing a near-zero net difference that masks opposing underlying forces rather than indicating an interaction.
 
 **Detailed discussion.** No single experiment is decisive in isolation. Permutation insensitivity could in principle reflect redundant encoding, where each position stores a complete copy of the reasoning chain. However, single-position corruption rules this out: if all positions stored the complete chain redundantly, corrupting any single position should be compensated by the remaining uncorrupted copies. Instead, corrupting position 3 alone collapses accuracy to ~57% (Table A4), indicating that critical information is concentrated at position 3 rather than redundantly distributed. Cross-transplant tolerance could indicate overlapping representations. But taken together, seven independent diagnostics consistently fail to find evidence that COCONUT's recycled hidden states carry reasoning content that differs functionally from M3's learned pause vectors on in-distribution evaluation. The convergence across methods strengthens the conclusion beyond what any single test provides.
 

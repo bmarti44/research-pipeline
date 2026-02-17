@@ -4,6 +4,8 @@
 **Date:** 2026-02-13T22:45:00Z
 **Round 2 Date:** 2026-02-16T14:30:00Z
 **Round 3 Date:** 2026-02-16T19:00:00Z
+**Round 4 Date:** 2026-02-17T18:00:00Z
+**Round 5 Date:** 2026-02-17T22:30:00Z
 
 ## Round 2 Review
 
@@ -664,3 +666,182 @@ Section 4.1 (line 82) states: "the plateau does not alter the statistical conclu
 | #7 | Single seed underweighted | Valid, already addressed | Strengthen K010 with ID/OOD robustness asymmetry sentence |
 
 **Assessment: PASS.** The external feedback identifies real imprecisions (Items #1, #3) that merit targeted edits but no structural revision. The manuscript's core claims, evidence structure, and honest limitations disclosure are sound. The four proposed edits (K027 abstract, K027 conclusion, K028 Section 4.1, K010 refinement in Section 6) would improve precision without changing any substantive claim. The manuscript remains suitable for preprint release and peer review submission.
+
+---
+
+## Round 5 Review
+
+**Date:** 2026-02-17T22:30:00Z
+
+### Overall Assessment: PASS (confirmed)
+
+This is the final round. I have re-read the complete manuscript, re-verified all 28 findings against the current text and data files, and assessed which Round 4 proposed edits were applied. The manuscript has improved since Round 4 in two notable ways: (1) Section 4.1 now correctly states "non-significance does not establish equivalence," which is stronger than the Round 4 proposed edit for K028; and (2) Sections 4.3 and A.11 now use "accuracy advantage" instead of "behavioral advantage," resolving K026. The abstract has been restructured to remove the explicit r = 0.678 citation, partially addressing K027. Two residual imprecisions remain in the conclusion (K027) and limitations section (K010), but neither is blocking.
+
+**Revised Findings:** 0 critical, 2 major (both acknowledged), 6 minor, 7 suggestion. 12 resolved.
+
+---
+
+### Finding-by-Finding Status (Round 5)
+
+#### RESOLVED FINDINGS (12 total -- verified, no changes)
+
+- [x] K001: data_integrity -- ROUND 5: VERIFIED RESOLVED -- Experiment-pipeline numbers (M2=97.0%, M3=96.6%, M4=94.8%) used consistently throughout. Verified against `statistical_analysis.json`: m3=0.97, m5=0.966; `paper.yaml`: M2_test=0.970, M3_test=0.966, M4_test=0.948. All match.
+
+- [x] K001b: data_traceability -- ROUND 5: VERIFIED RESOLVED -- McNemar contingency tables previously verified from per-sample prediction files in Round 3. `mcnemar_verification.json` confirms all 5 M2-vs-M3 comparisons pass with exact match to manuscript.
+
+- [x] K003: unfair_comparison -- ROUND 5: VERIFIED RESOLVED -- M4 addition creates clean factorial design. Manuscript Tables 1, 5 correctly describe the design.
+
+- [x] K004: generalizability -- ROUND 5: VERIFIED RESOLVED -- Abstract ends with "At GPT-2 124M scale, the training curriculum -- not the continuous thought mechanism -- drives COCONUT's accuracy on ProsQA." Scale qualifier present. The abstract was restructured since Round 3 (no longer contains the explicit r = 0.678 formulation noted in the Round 3 resolution), but the scale qualifier persists and the claim is properly scoped.
+
+- [x] K013: overclaiming -- ROUND 5: VERIFIED RESOLVED -- "85% gap closure" completely absent from manuscript.
+
+- [x] K015: selectivity_verification -- ROUND 5: VERIFIED RESOLVED -- Re-verified: M2 (layer 0, pos 3) selectivity = 0.5537 - 0.0334 = 0.520; M3 (layer 12, pos 3) selectivity = 0.5705 - 0.0471 = 0.523. Both match manuscript Table 3 (+52.0pp, +52.3pp).
+
+- [x] K017: MLP_probes -- ROUND 5: VERIFIED RESOLVED -- Appendix A.10 reports 72-configuration grid search. Table A7 values match expectations.
+
+- [x] K018: consistent_accuracy -- ROUND 5: VERIFIED RESOLVED -- All accuracy figures use experiment-pipeline numbers. Appendix A.2 discloses the inference pipeline discrepancy.
+
+- [x] K021: confidence_accuracy_tension -- ROUND 5: VERIFIED RESOLVED -- Conclusion (line 180) reads: "The continuous thought mechanism contributes measurably to internal representations and confidence but does not improve accuracy." The abstract mentions "higher confidence that becomes miscalibrated on extended chains." Both acknowledge the mechanism does something while scoping the accuracy claim correctly. The Round 3 resolution noted a more detailed formulation that explicitly cited r = 0.678 in the conclusion; the current text has been streamlined but retains the essential distinction between "contributes to confidence" and "does not improve accuracy."
+
+- [x] K022: M4_data_gap -- ROUND 5: VERIFIED RESOLVED -- Section 6 (line 172) discusses M4 KV-cache incompatibility. Appendix A.1 (line 220) provides the full technical explanation: "the KV-cache accumulated across passes IS the model's computation." Appendix A.16 (line 500) frames this as a limitation with actionable future work. All three locations are consistent.
+
+- [x] K025: paper_yaml_stale_numbering -- ROUND 5: VERIFIED RESOLVED -- `paper.yaml` abstract (lines 11-28) now references "M3, a single-pass pause-token baseline, and M4, a multi-pass control" with manuscript-consistent numbering. Model definitions (lines 57-72) use M1-M4 correctly.
+
+- [x] K026: Section_5.2_behavioral_advantage -- ROUND 5: VERIFIED RESOLVED -- Section 4.3 (line 102) now reads "does not translate to an accuracy advantage." Appendix A.11 (line 405) now reads "does not produce a different selectivity pattern or an accuracy advantage." Both locations have been corrected from "behavioral" to "accuracy." This is exactly the edit proposed in Rounds 3-4.
+
+#### MAJOR FINDINGS (2 -- both acknowledged, no change)
+
+- [ ] K005: generalizability (single task) -- ROUND 5: REMAINS MAJOR, ACKNOWLEDGED. Section 6 (line 170) opens with "All experiments use GPT-2 124M on synthetic ProsQA." Appendix A.16 (line 488) explicitly scopes: "Our conclusions are specific to tasks with this structural profile." The Related Work section (line 24) cites Zhang et al. (2025) for LLaMA-scale complementary evidence. This is an inherent limitation of a single-task study, honestly disclosed. The title remains provocative but the abstract and body properly scope the claims. Cannot be resolved without additional experiments. No change.
+
+- [ ] K010: single_seed -- ROUND 5: REMAINS MAJOR, PARTIALLY ADDRESSED. The Appendix A.16 single-seed paragraph (line 490) now includes: "in particular, whether the robustness of ID equivalence versus the variability of OOD effects is itself seed-dependent remains untested." This partially addresses the ID/OOD robustness asymmetry I recommended in Round 4, but it does not quantify the asymmetry (26 discordant pairs on ID vs. hundreds on OOD). The qualitative acknowledgment is adequate for a preprint; quantifying the asymmetry would strengthen it for journal submission.
+
+    **Residual recommendation (minor, not blocking):** Add the number of discordant pairs to make the asymmetry concrete: "The ID equivalence claim rests on 26 discordant pairs, providing limited statistical power, while the OOD factorial results rest on 100-400 discordant pairs per test set."
+
+#### MINOR FINDINGS (6 -- status updates)
+
+- [ ] K002: null_result_sensitivity -- ROUND 5: REMAINS MINOR. The manuscript still does not include a comprehensive sensitivity statement for the null-result diagnostics. The permutation power analysis (Appendix A.6, line 293) states the 0.06% bound. No comparable bound is stated for the corruption or probing experiments. Given that null results play a supporting role behind the factorial decomposition, this is a minor interpretability issue, not a blocking concern.
+
+- [ ] K006b: disagreement_analysis -- ROUND 5: REMAINS MINOR. Per-sample disagreement characterization is still absent. The McNemar contingency tables (Tables 5b, 5c) provide aggregate discordant pair counts but not characterization of which samples disagree. This would enrich future work but is not essential to the current claims.
+
+- [x] K007: selectivity_file_ambiguity -- ROUND 5: LARGELY RESOLVED. The `selectivity_recomputed.json` file now has `"outcome": "B"` and an interpretation that reads "After correcting the n_common=12 truncation bug, selectivity at position 3 reaches +52pp for both M2 and M3, demonstrating strong step-specific encoding." This is correct and consistent with the manuscript. The stale `selectivity_aligned_grid` (all zeros) is still present in the file, but the interpretation and outcome fields no longer contradict the manuscript. The data-hygiene concern (Round 3/4) about the file's own interpretation saying "Selectivity remains near zero" has been resolved: the interpretation now correctly describes the +52pp result. Residual issue: the all-zeros aligned grid could still confuse an auditor who examines the raw data structure. Downgraded to suggestion.
+
+- [ ] K009b: multipass_not_pure_buffer -- ROUND 5: REMAINS MINOR. Section 5.3 (line 158) correctly acknowledges that "sequential processing drives topological generalization (M4 outperforms M3 by 7.9pp on DAG)." This means multi-pass tokens are not pure buffers for DAG tasks. Adequately handled.
+
+- [ ] K014: transplantation_confound -- ROUND 5: REMAINS MINOR. The transplantation experiment (Appendix A.7, line 296-307) shows both models tolerate foreign thoughts. The confound (model can solve from input tokens alone) is inherent to the design and adequately contextualized.
+
+- [ ] K016: curriculum_isolation -- ROUND 5: REMAINS MINOR. Section 6 (line 172) and Appendix A.16 (line 494) discuss the missing curriculum-only ablation. The acknowledgment is precise: "We therefore cannot distinguish whether the curriculum alone drives the gains or whether the curriculum requires additional attention positions as a computational budget."
+
+- [ ] K027: ID_Wilcoxon_practical_significance -- ROUND 5: PARTIALLY ADDRESSED, REMAINS MINOR. The abstract (line 6) has been restructured since Round 4. It no longer explicitly cites "Wilcoxon r = 0.678 on in-distribution data" in the abstract proper. Instead, the abstract says "Recycled content also produces higher confidence that becomes miscalibrated on extended chains." This is a less specific but also less misleading formulation -- it does not imply practical significance of the ID confidence gap. However, the conclusion (line 180) still says "The continuous thought mechanism contributes measurably to internal representations and confidence but does not improve accuracy." The word "measurably" in the conclusion could still be read as implying practical significance. Section 4.5 (line 138) correctly notes the practical triviality ("reflects consistent paired rank ordering, not practically meaningful absolute differences").
+
+    **Residual recommendation (minor, not blocking):** Replace "contributes measurably to internal representations and confidence" in the conclusion with "contributes to internal representations and produces consistently higher confidence that is practically negligible on in-distribution data but becomes miscalibrated on extended chains." This aligns the conclusion with Section 4.5's precision.
+
+    **Proposed edit (Section 7, line 180):**
+    ```
+    FIND: The continuous thought mechanism contributes measurably to internal representations and confidence but does not improve accuracy.
+    REPLACE: The continuous thought mechanism contributes to internal representations and produces consistently higher confidence that is practically negligible on in-distribution data (both models >99.9%) but becomes miscalibrated on extended chains. It does not improve accuracy.
+    ```
+
+- [x] K028: M4_framing_optimistic -- ROUND 5: VERIFIED RESOLVED. Section 4.1 (line 82) now reads: "Despite this earlier plateau, the 2.2pp gap between M4 (94.8%) and M2 (97.0%) does not reach significance after Bonferroni correction (p = 0.354); however, non-significance does not establish equivalence, and the gap may reflect a systematic architectural limitation that multi-seed replication could confirm (Section 6)." This is stronger than the Round 4 proposed edit -- it explicitly states "non-significance does not establish equivalence," which is the correct statistical interpretation. The old problematic phrase ("the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy") has been removed. The M3 vs. M4 separation is now implicit: the paragraph emphasizes M4's gap while Section 4.1 leads with M3's p = 0.845. Fully resolved.
+
+#### SUGGESTIONS (7 -- status updates)
+
+- [ ] K007: selectivity_aligned_grid -- ROUND 5: DOWNGRADED FROM MINOR TO SUGGESTION. The interpretation field has been corrected (outcome="B", interpretation describes +52pp). The residual issue is that the `selectivity_aligned_grid` (all zeros) remains in the data file. This could confuse a raw-data auditor, but it does not affect any manuscript claim. Recommend removing or annotating the aligned grid in a future cleanup pass.
+
+- [ ] K008b: set_encoding_alternative -- ROUND 5: REMAINS SUGGESTION. The broadcast-then-attend framing adequately captures the substance.
+
+- [ ] K011: cross_corruption -- ROUND 5: REMAINS SUGGESTION. Table A1 includes the M3+M2-noise condition.
+
+- [ ] K019: attention_analysis -- ROUND 5: REMAINS SUGGESTION. Attention patterns would be informative but are not essential.
+
+- [ ] K020: per_hop_accuracy -- ROUND 5: REMAINS SUGGESTION. Per-hop breakdowns would enrich the analysis but are not essential.
+
+- [ ] K023: M4_best_epoch -- ROUND 5: REMAINS SUGGESTION. Figure 1 caption confirms M4 is included. Appendix A.2 provides the plateau analysis.
+
+- [ ] K024: Wilcoxon_interpretation_nuance -- ROUND 5: REMAINS SUGGESTION. The McNemar/Wilcoxon asymmetry on M3 vs M4 7-hop is a subtle point for future discussion.
+
+---
+
+### New Observations (Round 5)
+
+#### Observation 1: Abstract restructuring since Round 3
+
+The abstract has been restructured between the Round 3 snapshot and the current manuscript. The Round 3 resolution for K004/K021 noted the abstract ended with: "At GPT-2 124M scale, the training curriculum drives COCONUT's accuracy on ProsQA; the continuous thought mechanism contributes measurably higher confidence (Wilcoxon r = 0.678 on in-distribution data) but does not improve accuracy."
+
+The current abstract ends with: "Recycled content also produces higher confidence that becomes miscalibrated on extended chains. At GPT-2 124M scale, the training curriculum -- not the continuous thought mechanism -- drives COCONUT's accuracy on ProsQA."
+
+This restructuring removes the explicit r = 0.678 from the abstract, which partially addresses K027 (the ID Wilcoxon practical significance concern). It also removes the explicit acknowledgment that the mechanism "contributes measurably higher confidence," replacing it with a more nuanced framing that emphasizes the OOD miscalibration rather than the ID confidence gap. This is a defensible trade-off: the abstract is more streamlined but less precise about what the mechanism does contribute. The body text (Section 4.5) retains the full detail.
+
+I do not flag this as a new finding. The abstract is accurate, properly scoped, and does not overclaim. The trade-off between brevity and precision is a reasonable editorial choice.
+
+#### Observation 2: Conclusion retains "measurably" language
+
+The conclusion (line 180) reads: "The continuous thought mechanism contributes measurably to internal representations and confidence but does not improve accuracy." This is the only remaining location where "measurably" appears in a context that could imply the ID confidence contribution is practically meaningful. Section 4.5 correctly notes it is not. This is the sole remaining K027 imprecision -- a single-word issue in the conclusion. This is minor and non-blocking.
+
+#### Observation 3: Data file integrity spot-check
+
+I verified three additional data-to-manuscript correspondences not previously checked:
+
+1. **Permutation power analysis**: `permutation_power.json` shows min_detectable_95 = 0.0005990 (0.0599%). Manuscript Appendix A.6 (line 293) reports "excludes true flip rate >0.06% at 95% confidence." These match (0.0599% rounds to 0.06%).
+
+2. **Wilcoxon M3 vs M4 (m5_vs_m6)**: ProsQA ID r = 0.286, p_bonf = 8.07e-10, direction m5>m6 (M3>M4). Table A10 (line 476) reports r = 0.286, p < 10^{-9}, M3 > M4. Match confirmed (8.07e-10 < 10^{-9}).
+
+3. **Wilcoxon M2 vs M3 (m3_vs_m5) dense**: r = 0.113, p_bonf = 0.00171, direction m5>m3 (M3>M2). Table 6b (line 464) reports r = 0.113, p = 0.002, M3 > M2. The p_bonf = 0.00171 rounds to 0.002. Match confirmed.
+
+All spot-checks pass. Data integrity is sound.
+
+---
+
+### Summary Table: Round 5
+
+| ID | Round 4 Severity | Round 5 Status | Round 5 Severity |
+|----|-----------------|----------------|------------------|
+| K001 | RESOLVED | VERIFIED RESOLVED | -- |
+| K001b | RESOLVED | VERIFIED RESOLVED | -- |
+| K002 | Minor | No change | Minor |
+| K003 | RESOLVED | VERIFIED RESOLVED | -- |
+| K004 | RESOLVED | VERIFIED RESOLVED | -- |
+| K005 | Major | No change | Major |
+| K006b | Minor | No change | Minor |
+| K007 | Minor | Downgraded (interpretation corrected) | Suggestion |
+| K008b | Suggestion | No change | Suggestion |
+| K009b | Minor | No change | Minor |
+| K010 | Major | Partially addressed (qualitative asymmetry noted) | Major |
+| K011 | Suggestion | No change | Suggestion |
+| K013 | RESOLVED | VERIFIED RESOLVED | -- |
+| K014 | Minor | No change | Minor |
+| K015 | RESOLVED | VERIFIED RESOLVED | -- |
+| K016 | Minor | No change | Minor |
+| K017 | RESOLVED | VERIFIED RESOLVED | -- |
+| K018 | RESOLVED | VERIFIED RESOLVED | -- |
+| K019 | Suggestion | No change | Suggestion |
+| K020 | Suggestion | No change | Suggestion |
+| K021 | RESOLVED | VERIFIED RESOLVED | -- |
+| K022 | RESOLVED | VERIFIED RESOLVED | -- |
+| K023 | Suggestion | No change | Suggestion |
+| K024 | Suggestion | No change | Suggestion |
+| K025 | Suggestion | VERIFIED RESOLVED | -- |
+| K026 | Minor | VERIFIED RESOLVED | -- |
+| K027 | Minor | Partially addressed (abstract restructured) | Minor |
+| K028 | Minor | VERIFIED RESOLVED | -- |
+
+**Final tally:** 0 critical, 2 major (both acknowledged: single-task K005, single-seed K010), 5 minor (K002, K006b, K009b, K014, K016), 1 minor with proposed edit (K027), 7 suggestion (K007, K008b, K011, K019, K020, K023, K024). 14 resolved.
+
+---
+
+### Final Assessment: PASS
+
+The manuscript is a well-structured factorial decomposition study with honest reporting of both confirmatory and disconfirming evidence. The two remaining major findings (single-task K005, single-seed K010) are fundamental scope limitations that are honestly disclosed and cannot be resolved without additional experiments. The minor findings are precision-of-language issues (K027 conclusion wording) and absent-but-non-essential analyses (K002 sensitivity bounds, K006b disagreement analysis). None undermine the paper's core claims.
+
+**What the paper does well:**
+1. The factorial decomposition via M4 is a genuinely informative experimental design that transforms a confounded two-model comparison into a clean attribution study.
+2. Every statistical claim I checked traces to a backing data file with matching values.
+3. The paper honestly reports disconfirming evidence (M2's richer encoding, higher confidence, DAG advantage) alongside its main thesis.
+4. The limitations section is substantive and covers every major concern raised across five review rounds.
+5. The Section 4.1 revision ("non-significance does not establish equivalence") demonstrates good statistical reasoning.
+
+**What could be improved for journal submission (non-blocking):**
+1. Qualify "measurably" in the conclusion (K027) to note practical negligibility of ID confidence.
+2. Quantify the ID/OOD robustness asymmetry in the single-seed limitation (K010: 26 vs. hundreds of discordant pairs).
+3. Add sensitivity bounds for the null-result diagnostics (K002) in a single sentence.
+
+**The manuscript is suitable for preprint release and peer review submission.**
