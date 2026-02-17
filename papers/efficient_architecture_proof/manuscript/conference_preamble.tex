@@ -1,0 +1,18 @@
+% ICML-style two-column preamble
+% Specs: 10pt Times, 6.5in text width, 9.0in text height, 0.25in columnsep
+
+% Tighter spacing for conference format
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{2.0ex plus 0.5ex minus 0.2ex}{1.0ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{1.5ex plus 0.3ex minus 0.2ex}{0.8ex plus 0.2ex}
+
+% Compact caption formatting
+\usepackage[font=small,labelfont=bf]{caption}
+
+% Tighter list spacing
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.5em}
+
+% Smaller table font
+\usepackage{etoolbox}
+\AtBeginEnvironment{tabular}{\small}

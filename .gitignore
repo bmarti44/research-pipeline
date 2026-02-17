@@ -64,9 +64,19 @@ htmlcov/
 .pytest_cache/
 .hypothesis/
 
-# Build artifactslog
+# Build artifacts
 *.tmp
 *.temp
+
+# LaTeX intermediate files
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+**/manuscript/output/manuscript.tex
 
 # Local/backup
 backup/
