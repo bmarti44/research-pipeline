@@ -52,12 +52,12 @@ for f in "${TARGETS[@]}"; do
 done
 echo ""
 
-# Count occurrences before
+# Count occurrences before (grep -w for word boundary, works on macOS)
 echo "Before:"
 for pat in 'M3' 'M5' 'M6'; do
     count=0
     for f in "${TARGETS[@]}"; do
-        c=$(grep -o "\b${pat}\b" "$f" 2>/dev/null | wc -l)
+        c=$(grep -ow "${pat}" "$f" 2>/dev/null | wc -l | tr -d ' ')
         count=$((count + c))
     done
     echo "  $pat: $count occurrences"
@@ -65,33 +65,36 @@ done
 echo ""
 
 if $DRY_RUN; then
-    echo "[DRY RUN] Would apply the following sed replacements:"
+    echo "[DRY RUN] Would apply the following perl replacements:"
     echo "  Pass 1: M3 -> __M2__, M5 -> __M3__, M6 -> __M4__"
     echo "  Pass 2: __M2__ -> M2, __M3__ -> M3, __M4__ -> M4"
     echo ""
     echo "Preview of lines that would change (M3/M5/M6 references):"
     for f in "${TARGETS[@]}"; do
-        grep -n '\bM[356]\b' "$f" 2>/dev/null | head -20 | sed "s|^|  $(basename "$f"):|"
+        grep -nw 'M[356]' "$f" 2>/dev/null | head -20 | while IFS= read -r line; do
+            echo "  $(basename "$f"):$line"
+        done
     done
     exit 0
 fi
 
 # === Pass 1: Replace old names with unique placeholders ===
-# Order doesn't matter here since placeholders don't collide with each other
+# Using perl -pi -e because macOS BSD sed does not support \b word boundaries
 for f in "${TARGETS[@]}"; do
     # M3 (COCONUT) -> __M2__ (new M2)
-    sed -i '' 's/\bM3\b/__M2__/g' "$f"
+    perl -pi -e 's/\bM3\b/__M2__/g' "$f"
     # M5 (Pause) -> __M3__ (new M3)
-    sed -i '' 's/\bM5\b/__M3__/g' "$f"
+    perl -pi -e 's/\bM5\b/__M3__/g' "$f"
     # M6 (Pause-Multipass) -> __M4__ (new M4)
-    sed -i '' 's/\bM6\b/__M4__/g' "$f"
+    perl -pi -e 's/\bM6\b/__M4__/g' "$f"
 done
 
 # === Pass 2: Replace placeholders with final names ===
+# Placeholders contain no word-boundary issues, but use perl for consistency
 for f in "${TARGETS[@]}"; do
-    sed -i '' 's/__M2__/M2/g' "$f"
-    sed -i '' 's/__M3__/M3/g' "$f"
-    sed -i '' 's/__M4__/M4/g' "$f"
+    perl -pi -e 's/__M2__/M2/g' "$f"
+    perl -pi -e 's/__M3__/M3/g' "$f"
+    perl -pi -e 's/__M4__/M4/g' "$f"
 done
 
 # === Verification ===
@@ -100,7 +103,7 @@ errors=0
 for pat in 'M3' 'M5' 'M6'; do
     count=0
     for f in "${TARGETS[@]}"; do
-        c=$(grep -o "\b${pat}\b" "$f" 2>/dev/null | wc -l)
+        c=$(grep -ow "${pat}" "$f" 2>/dev/null | wc -l | tr -d ' ')
         count=$((count + c))
     done
     # M3 should now have NEW M3 (formerly M5) occurrences
