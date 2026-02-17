@@ -1540,6 +1540,6 @@
       "n_cells": 65
     }
   },
-  "outcome": "A",
-  "interpretation": "Selectivity remains near zero even with correct pairwise alignment. The original finding holds: thought positions broadcast a general problem representation rather than encoding step-specific reasoning information. The n_common=12 bug existed but did not affect the conclusion."
+  "outcome": "B",
+  "interpretation": "After correcting the n_common=12 truncation bug, selectivity at position 3 reaches +52pp for both M2 and M3, demonstrating strong step-specific encoding. The curriculum produces position-specific representational structure in both models, contradicting the pre-correction near-zero values."
 }
