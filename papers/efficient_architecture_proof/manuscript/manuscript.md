@@ -140,7 +140,7 @@ Table 2 reports validation and test accuracy for all four models. M2 (COCONUT) a
 
 Training curves for all four models are shown in Figure 1. M2, M3, and M4 converge at comparable rates under the shared curriculum schedule, while M1 plateaus earlier at a lower asymptote. M4's 94.8% test accuracy falls 2.2pp below M2 (p = 0.071 uncorrected, p = 0.354 Bonferroni-corrected) — a gap that, while not significant, motivates examining the out-of-distribution comparisons where recycled content and sequential processing can be factorially decomposed (Section 4.4).
 
-![Figure 1: Training curves for M1 (CoT), M2 (COCONUT), and M3 (Pause) across 50 epochs.](figures/fig1_training_curves.png){ width=90% }
+![Figure 1: Training curves for M1 (CoT), M2 (COCONUT), M3 (Pause), and M4 (Pause-Multipass) across 50 epochs.](figures/fig1_training_curves.png){ width=90% }
 
 ### 4.2 Experiment 1: Corruption Ablation
 
