@@ -4,6 +4,230 @@
 **Date:** 2026-02-13T23:45:00Z
 **Round 2 Date:** 2026-02-16T20:00:00Z
 **Round 3 Date:** 2026-02-16T22:00:00Z
+**Round 4 Date:** 2026-02-17T18:00:00Z
+
+## Round 4 Review
+
+This is a fresh review incorporating external reviewer feedback on four specific items (#1, #2, #3, #8), plus a complete re-verification of all previous findings (S001--S026). All numerical claims were re-checked against backing data files.
+
+**Overall assessment: PASS.**
+
+The manuscript's statistical claims remain accurate. The external feedback items identify genuine nuance issues, but the manuscript already handles most of them adequately. One item (#1) is well-handled in Section 4.5 but could be slightly tightened in the abstract/conclusion; one item (#2) identifies a legitimate interpretive gap in the dense results; one item (#3) is already handled with appropriate transparency; and item #8's minor issues are largely non-problems or already addressed. I identify one new finding (S027) and update S026.
+
+---
+
+### External Feedback Item #1: Conclusion oversells ID Wilcoxon result
+
+**Concern:** The conclusion says "miscalibrated confidence" but the ID confidence difference is trivial in absolute terms (M2 median=99.998%, M4 median=99.949%). The large r=0.678 reflects rank ordering, not practically meaningful absolute differences on ID data. The practical significance is in the OOD extrapolation pattern, not the ID magnitude.
+
+**Assessment: ADEQUATELY HANDLED in Section 4.5; MINOR gap in abstract/conclusion.**
+
+Section 4.5 (line 138) already contains the exact qualification the external reviewer wants: "though both achieve near-ceiling median probabilities (M2: 99.998%, M4: 99.949%). The large rank-biserial correlation reflects consistent paired rank ordering, not practically meaningful absolute differences." This is a textbook-quality contextualization of rank-based effect sizes in a ceiling regime.
+
+The abstract (line 6) says "Recycled content also produces higher confidence that becomes miscalibrated on extended chains." The conclusion (line 178) says "Recycled content also produces miscalibrated confidence on extended chains." Neither the abstract nor the conclusion claims ID miscalibration -- both specifically scope "miscalibrated" to the OOD/extended-chain regime, which is the correct claim. On OOD chains, M2 IS simultaneously more confident and less accurate than M4 (7-hop: r=0.109, p_Bonf=0.003, but M2 accuracy 66.0% vs M4 76.9%), which is a genuine calibration failure.
+
+Verified against data: `wilcoxon_teacher_forced_m3_vs_m6.json` confirms M2 median prob on ProsQA = 0.999980509661182 (99.998%), M4 = 0.9994942125181384 (99.949%), r = 0.678. The 0.005pp absolute difference is indeed trivial. On 7-hop: M2 median prob = 0.974039683283398, M4 = 0.966618355268511. The miscalibration claim is about the direction of the accuracy-confidence coupling reversing (M2 more confident but less accurate), not about the magnitude of the confidence gap.
+
+**Verdict:** No manuscript edit required. The abstract/conclusion correctly scope the miscalibration claim to extended chains. Section 4.5 explicitly contextualizes the ID r=0.678 as rank ordering. If the author wishes to be maximally careful, a parenthetical in the conclusion like "(higher confidence accompanied by lower accuracy on 7-hop and 8-hop chains)" would make the scope explicit, but this is a suggestion, not a requirement.
+
+---
+
+### External Feedback Item #2: Table 5 dense result underinterpreted
+
+**Concern:** M4-M2 = +3.6pp and M4-M3 = -3.6pp on dense are symmetric and suggest additive cancellation (recycled content helps topology but hurts chains, and dense requires both), not an interaction effect.
+
+**Assessment: PARTIALLY ADDRESSED. The manuscript notes additivity but does not fully interpret dense.**
+
+The manuscript (line 132) says: "Dense graphs may require both extended chains and richer topology simultaneously, creating an interaction effect that the additive factorial decomposition cannot capture." This is a reasonable hypothesis but the external reviewer's point is more specific and arguably more parsimonious: the symmetry (+3.6pp and -3.6pp) is exactly what you would expect from additive cancellation of two opposing effects, NOT an interaction. If recycled content hurts by ~3.6pp (chain-length penalty) and sequential processing helps by ~3.6pp (topological benefit), and dense requires both, the two effects cancel to produce the observed zero net difference for both M4 vs. M2 and M4 vs. M3 comparisons.
+
+The distinction matters: "interaction effect" implies the factors combine non-additively (i.e., the effect of one factor depends on the level of the other). "Additive cancellation" implies the factors combine additively but in opposite directions, producing a net-zero. The data are more consistent with additive cancellation: the magnitudes are symmetric (both 3.6pp), and neither comparison reaches significance (p=0.280 and p=0.306). An interaction would typically produce asymmetric magnitudes.
+
+The manuscript's current framing ("creating an interaction effect that the additive factorial decomposition cannot capture") is slightly misleading because the factorial decomposition IS capturing an additive pattern on dense -- it shows two opposing effects of equal magnitude that cancel. The decomposition works fine; it just yields a null net result because the effects offset.
+
+**New Finding: S027 (MINOR) -- Dense interpretation imprecision**
+
+**Proposed edit (line 132):**
+```
+FIND: Dense graphs may require both extended chains and richer topology simultaneously, creating an interaction effect that the additive factorial decomposition cannot capture.
+REPLACE: Dense graphs show symmetric opposing effects: recycled content incurs the same ~3.6pp penalty as on chain-length tasks, while the absence of sequential processing incurs a similar ~3.6pp cost, producing additive cancellation that leaves neither factorial comparison significant.
+```
+
+This is a more precise characterization of the data pattern and avoids the potentially misleading "interaction" framing.
+
+---
+
+### External Feedback Item #3: M4 early plateau -- paper too generous with Bonferroni
+
+**Concern:** M4 vs M2 uncorrected p = 0.071 is marginal. The paper uses Bonferroni to dismiss it (p_Bonf = 0.354). Check whether the paper is appropriately transparent.
+
+**Assessment: ADEQUATELY HANDLED. The manuscript is transparent about both the uncorrected and corrected p-values.**
+
+Line 71 reports: "M4 (pause-multipass) reaches 94.8%; the 2.2pp gap from M2 does not reach significance after Bonferroni correction (p = 0.071, p_Bonf = 0.354, 31 discordant pairs)." This explicitly reports the uncorrected p-value (0.071) alongside the corrected value (0.354), allowing the reader to form their own judgment.
+
+Verified against data: From per-sample correctness files, M4 vs M2 on ProsQA ID has b=21 (M4-only correct), c=10 (M2-only correct). Exact McNemar: `binomtest(10, 31, 0.5)` gives p = 0.0708 (two-sided), matching the reported p = 0.071 within rounding. Bonferroni: 5 * 0.0708 = 0.354. All verified.
+
+The manuscript goes further -- line 82 provides an extensive, honest treatment of the M4 plateau: "M4's best epoch (30) occurs 13--19 epochs earlier than M2 (49) and M3 (43). Whether this reflects an inherent capacity limit of the multi-pass fixed-embedding architecture, or indicates that M4 would benefit from different hyperparameters (e.g., a lower learning rate in later curriculum stages), remains an open question. The 2.2pp gap could reflect a systematic architectural limitation, a suboptimal training configuration, or initialization variance; multi-seed replication with hyperparameter sensitivity analysis would clarify this (Section 6)."
+
+The manuscript does NOT "dismiss" the p=0.071 via Bonferroni. It reports both values, explicitly acknowledges the gap might be real, lists three possible explanations, and recommends further investigation. It also notes that "the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy" -- which is technically correct: not reaching significance means you fail to reject the null, not that you accept the null. The manuscript appropriately avoids claiming M4 equals M2.
+
+The Bonferroni correction itself is justified: k=5 test sets are tested within each comparison family, and the correction was prespecified. One could argue that the ID comparison is the most important and should not be corrected, but this would be post-hoc reasoning. The current approach (report both, correct as prespecified, honestly discuss the ambiguity) is the methodologically conservative choice.
+
+**Verdict:** No edit required. The manuscript handles this with exemplary transparency.
+
+---
+
+### External Feedback Item #8: Minor issues
+
+**#8a: Table 2 says n=500 for ProsQA test but does not clarify n for validation.**
+
+Table 2 caption (line 73) says "ProsQA validation (n = 300) and test (n = 500) sets." Both n values are stated. Additionally, Section 3.1 (line 32) states: "The dataset contains 17,886 training samples, 300 validation samples, and 500 test samples." Table A13 in A.18 (line 546-548) repeats these numbers. The n values are clearly stated in multiple locations.
+
+**Verdict:** No issue. The n for validation (300) is explicitly stated in the Table 2 caption.
+
+**#8b: Table 3 n-values potentially inconsistent (check corruption sample sizes).**
+
+Table 3 is the probing summary table, not the corruption table. The corruption table is Table A1. Table A1 caption says "n = 500 per condition." The probing uses n = 500 for positions 0-2, n = 298 for position 3, n = 81 for position 4, n = 12 for position 5, as documented in A.3 (line 251) and A.4 (line 259). The n values are internally consistent and correctly documented.
+
+For corruption specifically: forward corruption (Table A1) uses n = 500. Single-position corruption (Table A4) -- no n stated in caption. Reverse corruption (Table A3) -- no n stated in caption. From context (these all use the ProsQA test set), n = 500 for all. However, no n is explicitly stated in the Table A3 and A4 captions. This is a minor omission.
+
+**Proposed micro-edit:** Add "(n = 500)" to the Table A3 and A4 captions for completeness, matching the Table A1 convention. This is a SUGGESTION-level issue.
+
+**#8c: A.4 p-value clarification needed.**
+
+A.4 (line 263) states: "minimum achievable p = 1/2001 = 0.0005, below the Bonferroni threshold of 0.05/78 = 0.000641." The claim is that 1/2001 < 0.05/78. Verified: 1/2001 = 0.000499750..., and 0.05/78 = 0.000641025..., so 0.000500 < 0.000641. Correct. However, the text also states the permutation test uses "the conservative estimator p = (count + 1) / (n_perms + 1)." If count = 0 (best case), then p = 1/2001 = 0.000500. This is indeed below the Bonferroni threshold. The statement is clear and correct.
+
+**Verdict:** No issue. The computation is correctly documented.
+
+**#8d: Table 6b -- is r (rank-biserial correlation) defined before first use?**
+
+Table 6a caption (line 446) states: "r = rank-biserial correlation." Table 6b (line 456) comes immediately after. Since Table 6a is read before Table 6b, the definition is available to the reader. However, the first textual use of "r" in Section 4.5 (line 138) says "r = 0.678" without defining what r is. The Wilcoxon signed-rank test is named (line 136), and r is defined in the Table 6a caption, but there is a gap: the reader encounters "r = 0.678" in the main text (line 138) before reaching the table caption (line 446 in the appendix). The methods section (A.3, line 255) says "exact McNemar's test" but does not describe the Wilcoxon methodology.
+
+However, r is introduced with context: "M2 assigns systematically higher confidence than M4 (r = 0.678, p < 10^{-50})" -- the parenthetical format (effect size, p-value) makes the role of r clear from context. The table caption formally defines it. This is adequate.
+
+**Verdict:** No issue. The definition in the Table 6a caption is sufficient. A reader who encounters r in Section 4.5 text can infer from context that it is an effect size measure, and the formal definition follows in the appendix.
+
+**#8e: A.18 placement (is there an A.18?)**
+
+A.18 exists at line 516. It is titled "### A.18 Datasets" and contains the ProsQA example, construction methodology, graph statistics (Table A12), and dataset split sizes (Table A13). The placement is logical -- datasets are supplementary material that supports the Methods section but is not required for the main narrative. The section exists and contains substantive content.
+
+**Verdict:** No issue. A.18 exists.
+
+---
+
+### Previous Finding Status Update (S001--S026)
+
+**S001 (numerical_accuracy, CRITICAL):** ROUND 4: CONFIRMED RESOLVED. All accuracy values remain internally consistent across all tables and text. Spot-checked: M2=97.0% (Table 2, abstract, Section 4.1, Table 4, Table 5); M3=96.6% (same locations); M4=94.8% (same). All match backing data.
+
+**S002 (numerical_accuracy, MAJOR):** ROUND 4: CONFIRMED RESOLVED. No "85%" or "gap closure" text found.
+
+**S003 (effect_sizes, SUGGESTION):** ROUND 4: DEFERRED. Wilcoxon r values provide effect sizes for continuous measures. OR for McNemar tables still not reported but can be computed by readers from b and c values. Non-blocking.
+
+**S004 (corrections, SUGGESTION):** ROUND 4: DEFERRED. Per-family Bonferroni k=5 remains internally consistent and correctly applied. Non-blocking.
+
+**S005 (methodology):** ROUND 4: CONFIRMED RESOLVED (M2 side). See S026 for M3 side.
+
+**S006 (missing_analysis, SUGGESTION):** ROUND 4: DEFERRED. No formal corruption profile similarity test added. Non-blocking given factorial decomposition is the primary evidence.
+
+**S007 (power, SUGGESTION):** ROUND 4: DEFERRED. Single-seed limitation adequately acknowledged. Non-blocking.
+
+**S008 (numerical_accuracy):** ROUND 4: CONFIRMED RESOLVED. All three occurrences of M3 peak accuracy read 57.0%.
+
+**S009 (test_selection):** ROUND 4: CONFIRMED RESOLVED. McNemar and Wilcoxon correctly applied.
+
+**S010 (numerical_accuracy):** ROUND 4: CONFIRMED RESOLVED. DAG p=0.0015 correct.
+
+**S011 (assumptions, SUGGESTION):** ROUND 4: DEFERRED. Non-blocking.
+
+**S012 (methodology, SUGGESTION):** ROUND 4: DEFERRED. Non-blocking.
+
+**S013 (interpretation, SUGGESTION):** ROUND 4: DEFERRED. Permutation insensitivity appropriately qualified.
+
+**S014 (missing_analysis, SUGGESTION):** ROUND 4: DEFERRED. Bayesian analysis not added. Non-blocking.
+
+**S015 (missing_analysis, SUGGESTION):** ROUND 4: DEFERRED. TOST not conducted. Non-blocking.
+
+**S016 (interpretation):** ROUND 4: CONFIRMED RESOLVED.
+
+**S017 (missing_analysis, SUGGESTION):** ROUND 4: DEFERRED. Transplant still lacks formal test. Non-blocking.
+
+**S018 (methodology):** ROUND 4: CONFIRMED RESOLVED. MLP probe grid search adequately reported.
+
+**S019 (numerical_accuracy, SUGGESTION):** ROUND 4: DEFERRED. Non-consequential L2 variation.
+
+**S020 (numerical_accuracy, SUGGESTION):** ROUND 4: DEFERRED. `statistical_analysis.json` stale but manuscript uses correct values.
+
+**S021 (interpretation):** ROUND 4: CONFIRMED RESOLVED.
+
+**S022 (methodology, SUGGESTION):** ROUND 4: DEFERRED. Selectivity metric adequately defined.
+
+**S023 (missing_analysis):** ROUND 4: CONFIRMED RESOLVED.
+
+**S024 (data hygiene, MINOR):** ROUND 4: CONFIRMED PARTIALLY ADDRESSED. Deprecation header present. Ideal: regenerate. Non-blocking for manuscript.
+
+**S025 (data hygiene, MINOR):** ROUND 4: CONFIRMED PARTIALLY ADDRESSED. `paper.yaml` accuracy values corrected (M2=0.970, M3=0.966). McNemar significance flags and M3_peak_accuracy remain stale. Non-blocking for manuscript.
+
+**S026 (caption accuracy, MINOR):** ROUND 4: STATUS UPDATE. The original problematic text in the Table 3 caption ("For M3, selectivity is reported at the peak accuracy layer for each position: layer 8 for position 0, layer 11 for position 1, and layer 12 for positions 2 and 3") has been removed. The current Table 3 caption (line 92) no longer makes this claim. However, A.11 (line 407) still says "Table 3 reports selectivity at M3's peak accuracy layers (layer 12 for most positions)" -- the parenthetical "(layer 12 for most positions)" is technically correct (layer 12 IS the peak accuracy layer for positions 2 and 3) but the framing "peak accuracy layers" is misleading for positions 0 and 1, where the values are from layer 12 but the peak accuracy layers are 8 and 11 respectively. The sentence then correctly notes the layer-dependent selectivity, which addresses the substance of the concern. This is now a VERY MINOR issue -- the main Table 3 caption is fixed, and the A.11 text contains the qualification. Downgrading from MINOR to SUGGESTION.
+
+**Proposed micro-edit for A.11 (line 407):**
+```
+FIND: Table 3 reports selectivity at M3's peak accuracy layers (layer 12 for most positions).
+REPLACE: Table 3 reports M3 selectivity at layer 12 for all positions (matching the final-layer convention used for the main probing grids).
+```
+
+---
+
+### New Finding: S027 (MINOR) -- Dense result interpretation
+
+See External Feedback Item #2 above. The manuscript describes the dense result as "creating an interaction effect that the additive factorial decomposition cannot capture" (line 132), but the data pattern (symmetric +3.6pp and -3.6pp) is more consistent with additive cancellation of opposing effects than a true interaction. The proposed edit is included above.
+
+---
+
+### Round 4 Summary Table
+
+| Finding | Severity | Category | Status |
+|---------|----------|----------|--------|
+| S001 | Critical | numerical_accuracy | RESOLVED (Round 2) |
+| S002 | Major | numerical_accuracy | RESOLVED (Round 2) |
+| S003 | Suggestion | effect_sizes | DEFERRED |
+| S004 | Suggestion | corrections | DEFERRED |
+| S005 | Major | methodology | RESOLVED (Round 2, M2 side) |
+| S006 | Suggestion | missing_analysis | DEFERRED |
+| S007 | Suggestion | power | DEFERRED |
+| S008 | Minor | numerical_accuracy | RESOLVED (Round 3) |
+| S009 | Minor | test_selection | RESOLVED (Round 2) |
+| S010 | Minor | numerical_accuracy | RESOLVED (Round 2) |
+| S011 | Suggestion | assumptions | DEFERRED |
+| S012 | Suggestion | methodology | DEFERRED |
+| S013 | Suggestion | interpretation | DEFERRED |
+| S014 | Suggestion | missing_analysis | DEFERRED |
+| S015 | Suggestion | missing_analysis | DEFERRED |
+| S016 | Suggestion | interpretation | RESOLVED (Round 2) |
+| S017 | Suggestion | missing_analysis | DEFERRED |
+| S018 | Suggestion | methodology | RESOLVED (Round 2) |
+| S019 | Suggestion | numerical_accuracy | DEFERRED |
+| S020 | Suggestion | numerical_accuracy | DEFERRED |
+| S021 | Major | interpretation | RESOLVED (Round 2) |
+| S022 | Suggestion | methodology | DEFERRED |
+| S023 | Minor | missing_analysis | RESOLVED (Round 2) |
+| S024 | Minor | data_hygiene | PARTIALLY ADDRESSED |
+| S025 | Minor | data_hygiene | PARTIALLY ADDRESSED |
+| S026 | Suggestion | caption_accuracy | PARTIALLY ADDRESSED (downgraded) |
+| S027 | Minor | interpretation | NEW -- dense "interaction" framing |
+
+**Critical findings:** 0 open
+**Major findings:** 0 open
+**Minor findings:** 3 open (S024, S025, S027) -- all non-blocking
+**Suggestions:** 14 open -- all non-blocking
+
+**External feedback assessment:**
+- Item #1 (ID Wilcoxon oversold): No edit needed. Section 4.5 already contextualizes appropriately.
+- Item #2 (Dense underinterpreted): Minor edit proposed (S027). Non-blocking.
+- Item #3 (Bonferroni shields M4 gap): No edit needed. Already transparent.
+- Item #8 (minor issues): All checked, no substantive issues found.
+
+**Overall assessment: PASS.** The manuscript's statistical foundations are sound. All numerical claims verified. The external feedback items reveal the manuscript already handles most interpretive nuances well. The one substantive suggestion (S027, dense interpretation) is a minor framing improvement. No blocking issues remain.
+
+---
 
 ## Round 3 Review
 

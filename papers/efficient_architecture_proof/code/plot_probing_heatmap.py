@@ -2,7 +2,8 @@
 Regenerate fig4_probing_heatmap with Bonferroni significance markers.
 
 Reads corrected permutation test results from m3_linear_perm.json and
-m5_linear_perm.json, plots probe accuracy heatmaps with asterisks on
+m5_linear_perm.json (Lambda-era filenames: m3=COCONUT=paper M2,
+m5=Pause=paper M3), plots probe accuracy heatmaps with asterisks on
 cells that pass Bonferroni correction (p < 0.05/78 = 0.000641).
 
 Usage:
@@ -37,7 +38,7 @@ plt.rcParams.update({
     "savefig.pad_inches": 0.1,
 })
 
-RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
+RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results", "experiments", "probing_corrected")
 FIGURES_DIR = os.path.join(os.path.dirname(__file__), "..", "manuscript", "figures")
 
 
@@ -48,12 +49,12 @@ def load_model(name):
 
 
 def main():
-    m3 = load_model("m3")
-    m5 = load_model("m5")
+    m2_data = load_model("m3")   # Lambda-era m3 = paper M2 (COCONUT)
+    m3_data = load_model("m5")   # Lambda-era m5 = paper M3 (Pause)
 
     panels = [
-        ("M3 (COCONUT)", m3),
-        ("M5 (Pause-Curriculum)", m5),
+        ("M2 (COCONUT)", m2_data),
+        ("M3 (Pause)", m3_data),
     ]
 
     fig, axes = plt.subplots(1, 2, figsize=(8, 3.5), sharey=True)

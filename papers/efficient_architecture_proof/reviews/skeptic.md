@@ -417,3 +417,250 @@ REPLACE: But this richer encoding does not produce a different selectivity patte
 **Final tally:** 0 critical, 2 major (both acknowledged limitations: single-task K005, single-seed K010), 6 minor (K002, K006b, K007, K009b, K014, K016, K026), 7 suggestion (K008b, K011, K019, K020, K023, K024, K025). 6 resolved since Round 2.
 
 **Assessment: PASS.** The two remaining major findings (single-task, single-seed) are fundamental limitations that are honestly acknowledged in the manuscript and cannot be resolved without additional experiments. The minor findings are data-hygiene and precision-of-language issues, none of which undermine the paper's claims. The manuscript is suitable for preprint release and peer review submission.
+
+---
+
+## Round 4 Review
+
+**Date:** 2026-02-17T18:00:00Z
+
+### Overall Assessment: pass (with recommended edits)
+
+This round addresses four specific items raised by an external reviewer. The manuscript is in strong shape after three prior rounds, and none of the external feedback items constitute blocking issues. However, two items (#1 and #3) identify real imprecisions that the manuscript should correct before submission. Item #5 is a judgment call where the paper is defensible but could be more honest. Item #7 is substantively addressed by the existing limitations section but could be strengthened with a single sentence. I also re-verify all previous findings (K001-K026).
+
+**Revised Findings:** 18 active (0 critical, 2 major, 8 minor, 8 suggestion); 6 resolved. Two new findings (K027, K028) from external feedback.
+
+---
+
+### External Feedback Item #1: Conclusion oversells ID Wilcoxon result
+
+**Assessment: Valid concern. Manuscript needs a targeted edit.**
+
+The external reviewer is correct that the ID Wilcoxon result (r = 0.678, p < 10^{-50}) is statistically impressive but practically trivial in absolute terms. From the backing data file (`wilcoxon_teacher_forced_m3_vs_m6.json`):
+
+- M2 median probability: 99.998% (log-prob: -1.949e-05)
+- M4 median probability: 99.949% (log-prob: -5.059e-04)
+- Absolute gap: 0.049 percentage points
+
+Both models are essentially at ceiling. The r = 0.678 is large because the Wilcoxon signed-rank test measures consistency of paired rank ordering across all 500 samples, and M2 consistently assigns slightly higher log-probabilities than M4 on a per-sample basis. This consistency produces a large rank-biserial correlation even though the absolute differences are negligible. The test is doing exactly what it should -- detecting a consistent directional pattern -- but the practical significance is near zero on ID data.
+
+The manuscript at Section 4.5 (lines 137-138) does note: "though both achieve near-ceiling median probabilities (M2: 99.998%, M4: 99.949%). The large rank-biserial correlation reflects consistent paired rank ordering, not practically meaningful absolute differences." This is the correct caveat and directly addresses the concern.
+
+However, the abstract (line 6) says "the continuous thought mechanism contributes measurably higher confidence (Wilcoxon r = 0.678 on in-distribution data)" without any qualification that this is practically trivial. The conclusion (Section 7, line 180) says "The continuous thought mechanism contributes measurably to internal representations and confidence but does not improve accuracy." This phrasing suggests the confidence contribution is practically meaningful, when the ID data shows it is not.
+
+The OOD confidence result IS practically meaningful because it reveals miscalibration (higher confidence with lower accuracy on 7-hop and 8-hop). The paper correctly identifies this. The issue is specifically with how the ID confidence result is framed in the abstract and conclusion.
+
+**Location:** Abstract (line 6); Section 7 conclusion (line 180); Section 4.5 (lines 137-138, already adequate).
+
+**Recommendation (K027):** The abstract's parenthetical "(Wilcoxon r = 0.678 on in-distribution data)" should be qualified. The Section 4.5 text already contains the right caveat; the abstract and conclusion should not imply practical significance where none exists.
+
+**Proposed edit (Abstract, line 6):**
+```
+FIND: the continuous thought mechanism contributes measurably higher confidence (Wilcoxon r = 0.678 on in-distribution data) but does not improve accuracy.
+REPLACE: the continuous thought mechanism produces consistently higher but practically negligible confidence on in-distribution data (Wilcoxon r = 0.678; both models >99.9% median probability) and miscalibrated confidence on out-of-distribution chains, but does not improve accuracy.
+```
+
+**Proposed edit (Section 7, line 180):**
+```
+FIND: The continuous thought mechanism contributes measurably to internal representations and confidence but does not improve accuracy.
+REPLACE: The continuous thought mechanism contributes measurably to internal representations and produces consistently higher confidence that is practically negligible on in-distribution data (both models >99.9%) but becomes miscalibrated on extended chains. It does not improve accuracy.
+```
+
+**Severity:** Minor (K027). The Section 4.5 body text already contains the correct caveat; this is about aligning the abstract and conclusion with that precision.
+
+---
+
+### External Feedback Item #3: M4 early plateau -- paper too generous
+
+**Assessment: Partially valid. The paper handles this adequately in the body but the abstract framing is borderline.**
+
+The external reviewer's concern is that the uncorrected p = 0.071 for M4 vs. M2 is marginal and the paper uses Bonferroni correction (p_Bonf = 0.354) to dismiss it, potentially shielding a real architectural limitation behind multiple comparison correction.
+
+Let me examine this carefully:
+
+1. **Is Bonferroni correction appropriate here?** Yes. The paper conducts 5 pairwise McNemar tests per comparison family (ProsQA ID, 7-hop, 8-hop, DAG, dense) and applies Bonferroni across the 5 tests. This is a preregistered correction applied uniformly, not selectively invoked to hide an inconvenient result. The same correction is applied to the OOD tests that DO reach significance (many p < 0.001 after Bonferroni). The paper is not selectively applying correction.
+
+2. **Is the 2.2pp gap meaningful?** It is the largest gap between any two curriculum-trained models on ID data. M4's best epoch (30) is 13-19 epochs earlier than M2 (49) and M3 (43). The paper's Section 4.1 (lines 82) discusses this honestly: "Whether this reflects an inherent capacity limit of the multi-pass fixed-embedding architecture, or indicates that M4 would benefit from different hyperparameters (e.g., a lower learning rate in later curriculum stages), remains an open question. The 2.2pp gap could reflect a systematic architectural limitation, a suboptimal training configuration, or initialization variance."
+
+3. **Is the paper too generous?** The Appendix A.2 M4 plateau analysis (lines 234) provides a detailed analysis of M4's validation trajectory, noting that M4 fluctuates between 93.7% and 96.7% after epoch 30, with the "best epoch 30" being a fluctuation peak. The paper explicitly presents two competing interpretations: (a) M4 has reached its representational capacity limit, and (b) the curriculum schedule may be suboptimal for M4. It states: "The present data cannot distinguish these accounts."
+
+This is honest reporting. The paper does NOT claim M4 is statistically equivalent to M2 in any strong sense -- it says the gap "does not reach significance after Bonferroni correction" and immediately discusses the plateau as an open question. The phrase "the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy" (line 82) is defensible but slightly optimistic: it frames the non-significant result as supporting "comparable accuracy" when p_uncorrected = 0.071 is arguably suggestive of a real difference.
+
+**However**, I note that the abstract and main paper framing emphasize M3 (p = 0.845) as the primary evidence for curriculum equivalence, not M4. The abstract explicitly states M4's result with the Bonferroni-corrected p-value. The conclusion does not claim M4 matches M2; it uses M4 solely for the factorial decomposition of OOD results. This separation is appropriate.
+
+**Location:** Section 4.1 (lines 71-82); Appendix A.2 (lines 234).
+
+**Recommendation (K028):** The sentence "the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy" (line 82) should be softened. The uncorrected p = 0.071 is marginal, and a honest paper should note this more explicitly.
+
+**Proposed edit (Section 4.1, line 82):**
+```
+FIND: Despite this earlier plateau, M4's 94.8% does not significantly differ from M2's 97.0% after Bonferroni correction (p = 0.354), so the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy.
+REPLACE: Despite this earlier plateau, M4's 94.8% does not significantly differ from M2's 97.0% after Bonferroni correction (p = 0.354), though the uncorrected p = 0.071 is marginal and the 2.2pp gap is the largest among curriculum-trained models. The primary equivalence evidence rests on M3 (p = 0.845), not M4; M4's role is the factorial decomposition of OOD effects, not the ID equivalence claim.
+```
+
+**Severity:** Minor (K028). The body text handles this honestly; the edit makes the logic structure more explicit.
+
+---
+
+### External Feedback Item #5: Three contributions claim
+
+**Assessment: Valid observation. The paper is defensible but would be stronger framed as two contributions.**
+
+The introduction (line 18) claims three contributions:
+
+1. "we introduce a factorial control methodology -- single-pass and multi-pass pause-token baselines -- that isolates the curriculum from the mechanism and identifies the separate contributions of recycled content and sequential processing"
+2. "we provide converging evidence from three independent experimental paradigms that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance"
+3. "we characterize the separate contributions of recycled content and sequential processing to out-of-distribution generalization via the factorial decomposition"
+
+The external reviewer correctly notes that contributions 1 and 3 are related: #1 says "we built a factorial design" and #3 says "we applied the factorial design to OOD." These are not independent contributions -- #3 is the natural application of #1.
+
+However, this is a common rhetorical structure in scientific papers ("we develop X; we show Y using X; we discover Z using X"), and reviewers differ on whether the methodology and its application count as one or two contributions. The distinction between #1 (methodological contribution: the control design itself is reusable by others) and #3 (empirical contribution: the specific findings about content vs. processing) is real, even if they share the same tool.
+
+The more serious issue is whether contribution #2 is genuinely distinct from #1 and #3. The "converging evidence from three independent experimental paradigms" (corruption, probing, transplantation) is restricted to M2 vs. M3 and does not use the M4 factorial design at all. So the paper's evidence structure is:
+
+- Contribution 2: M2 vs. M3 diagnostics (corruption, probing, transplant) -- these predate M4
+- Contributions 1+3: M4 factorial decomposition -- OOD attribution
+
+These ARE genuinely distinct evidence streams. The question is whether the factorial methodology (#1) and its OOD application (#3) should be listed separately.
+
+**Recommendation:** This is a minor framing issue. The paper could merge contributions #1 and #3 into a single contribution ("we introduce a factorial control methodology and use it to cleanly separate the contributions of recycled content and sequential processing to OOD generalization") without loss, making it a two-contribution paper. Alternatively, it could keep three contributions but reword #1 to emphasize the reusable methodological contribution and #3 to emphasize the specific empirical findings. Either way, this is not a substantive weakness -- it is a rhetorical choice.
+
+I do not issue a new finding for this because it is below the threshold of a minor finding. It is a stylistic suggestion. The three-contribution framing is defensible; the two-contribution framing would be more conservative. I leave this to the author's judgment.
+
+---
+
+### External Feedback Item #7: Single seed still the elephant
+
+**Assessment: Valid and already acknowledged, but the manuscript could be more explicit about the asymmetry between ID and OOD claim robustness.**
+
+The external reviewer notes that the ID equivalence claim (0.4pp, p = 0.845) rests on a single training seed, and asks whether the paper gives single-seed enough weight relative to the strength of its claims.
+
+The paper's Section 6 (lines 170, 490-491) discusses this extensively:
+
+- "All results are from a single training seed (seed 0). The 0.4-percentage-point test-set gap between M2 (97.0%) and M3 (96.6%) is not statistically significant (McNemar p = 0.845), but could widen or reverse under different random initializations."
+- "Replication across 3--5 training seeds with paired statistical tests would provide confidence intervals around these estimates and clarify whether M4's 94.8% reflects a systematic gap or initialization variance."
+- "Training-time evaluation at best epoch yielded a larger apparent gap (M2 = 98.0%, M3 = 95.6%), differing from the experiment-pipeline numbers by 5 samples per model in opposite directions; this sensitivity to the inference code path underscores the need for multi-seed replication."
+
+This is honest and substantive. The paper does acknowledge single-seed as a limitation.
+
+However, the external reviewer has a deeper point: there is an asymmetry in claim robustness. The OOD results (many p < 0.001 after Bonferroni, with hundreds of discordant pairs) are robust to the single-seed issue because even if the exact effect sizes shifted across seeds, the qualitative pattern (recycled content hurts chain-length, sequential processing helps DAG) is unlikely to reverse. The ID "equivalence" claim (p = 0.845, 26 discordant pairs) is fragile to the single-seed issue because 26 discordant pairs provide little statistical power and a different seed could easily produce a meaningful gap.
+
+The manuscript does not explicitly call out this asymmetry. It treats all results as equally affected by the single-seed limitation, when in reality the ID claim is far more vulnerable than the OOD claims.
+
+**Recommendation:** Add one sentence to the limitations section (or Section 4.1) making the claim-robustness asymmetry explicit. This is not a new finding but a refinement of K010.
+
+**Proposed addition to Section 6 single-seed paragraph (line 170):**
+```
+After: "but could widen or reverse under different random initializations."
+Add: "The ID equivalence claim is particularly sensitive to seed variance: with only 26 discordant pairs on ProsQA, the McNemar test has limited power to detect small differences, and a different seed could plausibly shift the gap beyond significance. The OOD factorial results, based on hundreds of discordant pairs per test set, are more robust to initialization variance."
+```
+
+This does not change the finding severity (K010 remains major, acknowledged) but would strengthen the paper's honesty about where its evidence is strongest and weakest.
+
+---
+
+### Previous Findings Re-Verification (K001-K026)
+
+I have re-verified all 26 previous findings against the current manuscript. Status for each:
+
+**RESOLVED (6 findings -- no changes):**
+- K001 (data integrity): RESOLVED. Experiment-pipeline numbers used consistently. Verified.
+- K001b (data traceability): RESOLVED. Contingency tables verified in Round 3.
+- K003 (unfair comparison): RESOLVED. M4 addition.
+- K004 (abstract generalizability): RESOLVED. Scale qualifier in abstract.
+- K013 (85% gap closure): RESOLVED. Removed.
+- K015 (selectivity verification): RESOLVED. Verified.
+- K017 (MLP probes): RESOLVED. Grid search added.
+- K018 (consistent accuracy reporting): RESOLVED. Verified.
+- K021 (confidence-accuracy tension): RESOLVED. Abstract and conclusion reconciled.
+- K022 (M4 data gap): RESOLVED. Limitation documented.
+
+**MAJOR (2 findings -- no changes):**
+- K005 (single task): Remains major, acknowledged. The manuscript honestly scopes its claims to ProsQA at GPT-2 124M scale. Cannot be resolved without additional experiments.
+- K010 (single seed): Remains major, acknowledged. The manuscript discusses this in Section 6. The external feedback (Item #7) suggests adding the ID/OOD robustness asymmetry (see above), which would strengthen the disclosure but does not change the severity.
+
+**MINOR (6 findings -- no changes):**
+- K002 (null result sensitivity): Remains minor. Null results now play a supporting role behind the factorial decomposition.
+- K006b (disagreement analysis): Remains minor. Per-sample disagreement characterization is still absent.
+- K007 (selectivity file ambiguity): Remains minor. The data file still contains the stale `selectivity_aligned_grid`. Data-hygiene issue.
+- K009b (multipass not pure buffer): Remains minor. Adequately handled.
+- K014 (transplantation confound): Remains minor. Acknowledged.
+- K016 (curriculum isolation): Remains minor. Acknowledged in Section 6.
+- K026 (Section 5.2 "behavioral advantage"): Remains minor. Section 5.2 still uses "behavioral advantage" where "accuracy advantage" would be more precise. I verified: the current manuscript line 102 reads "However, this richer encoding does not translate to a behavioral advantage." This should read "accuracy advantage" given the Wilcoxon confidence result. No change in severity.
+
+**SUGGESTION (7 findings -- no changes):**
+- K008b (set-encoding alternative): Remains suggestion.
+- K011 (cross-corruption): Remains suggestion.
+- K019 (attention analysis): Remains suggestion.
+- K020 (per-hop accuracy): Remains suggestion.
+- K023 (M4 best epoch): Remains suggestion. Figure 1 includes M4 per the caption.
+- K024 (Wilcoxon interpretation nuance): Remains suggestion.
+- K025 (paper.yaml stale numbering): Remains suggestion. The paper.yaml abstract has been updated to include M3/M4 language (verified: lines 11-28 now reference "M3, a single-pass pause-token baseline, and M4, a multi-pass control"). However, the `conclusion` field (line 206) still uses "the content of the recycled hidden states" which is consistent with manuscript language. No action needed.
+
+---
+
+### New Findings
+
+#### K027: ID Wilcoxon practical significance not qualified in abstract/conclusion (minor)
+
+The abstract (line 6) and conclusion (line 180) present the ID Wilcoxon r = 0.678 as evidence that the mechanism "contributes measurably higher confidence" without noting that the absolute difference is 0.049 percentage points (99.998% vs. 99.949%), which is practically meaningless. Section 4.5 (lines 137-138) correctly notes both models achieve "near-ceiling median probabilities" and that the large r "reflects consistent paired rank ordering, not practically meaningful absolute differences." The abstract and conclusion should match this precision.
+
+**Severity:** Minor.
+**Location:** Abstract line 6; Section 7 line 180; Section 4.5 lines 137-138 (already correct).
+**Proposed edits:** See Item #1 above.
+
+#### K028: M4 ID result framing slightly optimistic (minor)
+
+Section 4.1 (line 82) states: "the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy." With p_uncorrected = 0.071 and the largest inter-model gap among curriculum models (2.2pp), this sentence could be read as using Bonferroni correction to shield a marginal result. The paper is honest in the surrounding text (presenting both interpretations of the plateau, acknowledging the gap could be systematic), but the specific sentence could be more precise about the ID evidence structure: M3 (p = 0.845) provides the primary ID equivalence evidence, not M4.
+
+**Severity:** Minor.
+**Location:** Section 4.1 line 82.
+**Proposed edit:** See Item #3 above.
+
+---
+
+### Summary Table: Round 4
+
+| ID | Round 3 Severity | Round 4 Status | Round 4 Severity |
+|----|-----------------|----------------|------------------|
+| K001 | RESOLVED | RESOLVED | -- |
+| K001b | RESOLVED | RESOLVED | -- |
+| K002 | Minor | No change | Minor |
+| K003 | RESOLVED | RESOLVED | -- |
+| K004 | RESOLVED | RESOLVED | -- |
+| K005 | Major | No change | Major |
+| K006b | Minor | No change | Minor |
+| K007 | Minor | No change | Minor |
+| K008b | Suggestion | No change | Suggestion |
+| K009b | Minor | No change | Minor |
+| K010 | Major | No change (see Item #7 refinement) | Major |
+| K011 | Suggestion | No change | Suggestion |
+| K012/K026 | Minor | No change | Minor |
+| K013 | RESOLVED | RESOLVED | -- |
+| K014 | Minor | No change | Minor |
+| K015 | RESOLVED | RESOLVED | -- |
+| K016 | Minor | No change | Minor |
+| K017 | RESOLVED | RESOLVED | -- |
+| K018 | RESOLVED | RESOLVED | -- |
+| K019 | Suggestion | No change | Suggestion |
+| K020 | Suggestion | No change | Suggestion |
+| K021 | RESOLVED | RESOLVED | -- |
+| K022 | RESOLVED | RESOLVED | -- |
+| K023 | Suggestion | No change | Suggestion |
+| K024 | Suggestion | No change | Suggestion |
+| K025 | Suggestion | No change | Suggestion |
+| K027 | NEW | -- | Minor |
+| K028 | NEW | -- | Minor |
+
+**Final tally:** 0 critical, 2 major (both acknowledged: single-task K005, single-seed K010), 8 minor (K002, K006b, K007, K009b, K014, K016, K026, K027, K028), 7 suggestion (K008b, K011, K019, K020, K023, K024, K025).
+
+### External Feedback Summary
+
+| Item | Concern | Verdict | Action |
+|------|---------|---------|--------|
+| #1 | ID Wilcoxon oversold | Valid | K027: edit abstract + conclusion to note practical triviality |
+| #3 | M4 plateau dismissed via Bonferroni | Partially valid | K028: clarify M3 is primary ID evidence, not M4 |
+| #5 | Three contributions inflated | Defensible | No finding; author's judgment. Two would be more conservative. |
+| #7 | Single seed underweighted | Valid, already addressed | Strengthen K010 with ID/OOD robustness asymmetry sentence |
+
+**Assessment: PASS.** The external feedback identifies real imprecisions (Items #1, #3) that merit targeted edits but no structural revision. The manuscript's core claims, evidence structure, and honest limitations disclosure are sound. The four proposed edits (K027 abstract, K027 conclusion, K028 Section 4.1, K010 refinement in Section 6) would improve precision without changing any substantive claim. The manuscript remains suitable for preprint release and peer review submission.

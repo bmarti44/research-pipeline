@@ -185,6 +185,200 @@ The paper's strongest contributions are: (1) the M5 control methodology, which i
 
 ---
 
+## Round 3 Review
+
+**Assessment:** pass
+**Date:** 2026-02-17T14:00:00Z
+**Reviewer:** Domain Expert (Mechanistic Interpretability / LLM Specialist)
+**Trigger:** External feedback items #2, #5, #6; D002/D003/D018 implementation check
+
+### Round 3 Summary
+
+This round addresses three specific external feedback items and checks whether three proposed edits from Round 2 have been incorporated. The manuscript remains in strong shape. The external feedback items raise genuine interpretive questions, two of which require minor manuscript edits and one of which is already adequately handled. Of the three Round 2 proposed edits, one (D002 Appendix A.8) was incorporated; two (D003 permutation-corruption tension, D018 attention connectivity) were not.
+
+### External Feedback Item #2: Table 5 Dense Result -- "Interaction" vs. "Additive Cancellation"
+
+**Manuscript text (line 132):** "Dense graphs may require both extended chains and richer topology simultaneously, creating an interaction effect that the additive factorial decomposition cannot capture."
+
+**External reviewer's alternative:** The symmetric +3.6/-3.6 pattern (M4-M2 = +3.6pp ns, M4-M3 = -3.6pp ns) reflects additive cancellation rather than interaction. Dense graphs stress both factors, and the two effects (recycled-content penalty and sequential-processing benefit) cancel out, producing no net difference for either contrast.
+
+**Assessment: The external reviewer's framing is more parsimonious and better supported by the data.** Here is the reasoning:
+
+In a 2x2 factorial design, an interaction effect means that the effect of one factor depends on the level of the other factor. Additive cancellation means both factors operate independently but with opposite signs, producing a net-zero observed difference. The distinction matters for the paper's narrative.
+
+The data from Table 5:
+- M4-M2 on dense = +3.6pp (ns): recycled content hurts by ~3.6pp (same direction as 7-hop/8-hop, just smaller magnitude)
+- M4-M3 on dense = -3.6pp (ns): sequential processing helps by ~3.6pp (same direction as DAG, just smaller magnitude)
+
+On 7-hop, recycled content hurts by 10.9pp and sequential processing is neutral (+1.5pp ns). On DAG, sequential processing helps by 7.9pp and recycled content is neutral (+0.6pp ns). Dense graphs combine both demands (longer effective chains from higher connectivity, plus richer topology from multiple paths), so both factors activate simultaneously -- each producing a moderate effect that cancels the other.
+
+This is the textbook definition of additive independence, not interaction. If it were a true interaction, we would expect a pattern where the combined effect is qualitatively different from what the individual effects predict. Instead, the individual effects predict exactly what we observe: a moderate penalty from recycled content and a moderate benefit from sequential processing, summing to approximately zero for both contrasts.
+
+The manuscript's "interaction" language is technically incorrect. The factorial decomposition's strength is precisely that it reveals additive factor structure. Calling the dense result an "interaction" undermines the factorial narrative. The external reviewer is correct that this should be reframed as additive cancellation, which actually strengthens the paper's claim that the factorial decomposition provides a complete account.
+
+**Proposed edit (line 132):**
+```
+FIND: Dense graphs may require both extended chains and richer topology simultaneously, creating an interaction effect that the additive factorial decomposition cannot capture.
+
+REPLACE: Dense graphs appear to stress both factors simultaneously -- longer effective chains from higher connectivity, plus richer topology from multiple paths -- producing moderate effects of opposite sign that cancel additively. This is consistent with the factorial decomposition's additive structure rather than a true interaction: the recycled-content penalty (+3.6pp, same direction as chain-length tasks) and the sequential-processing benefit (--3.6pp, same direction as DAG) operate independently but in opposition.
+```
+
+**Severity:** Minor. The current phrasing is imprecise rather than wrong, and the non-significance of both contrasts means this is interpretive commentary, not a statistical claim. But the "interaction" framing subtly contradicts the paper's own factorial methodology.
+
+### External Feedback Item #5: Three Contributions Claim
+
+**Manuscript text (line 18):** "This paper makes three contributions. First, we introduce a factorial control methodology [...]. Second, we provide converging evidence [...]. Third, we characterize the separate contributions of recycled content and sequential processing to out-of-distribution generalization via the factorial decomposition."
+
+**External reviewer's concern:** Contributions 1 and 3 overlap -- one is the tool (factorial methodology), the other is the result from applying that tool (the OOD decomposition).
+
+**Assessment: From a domain perspective, these are genuinely distinct contributions, and the three-contribution structure should be retained.**
+
+The distinction is real and standard in experimental science:
+
+- Contribution 1 (the methodology) is reusable: any researcher studying a latent reasoning architecture confounded with a training curriculum can apply the single-pass/multi-pass pause-token factorial design. This is the general tool. It has value independent of the specific results on ProsQA.
+
+- Contribution 3 (the OOD decomposition result) is a specific empirical finding about COCONUT: recycled content hurts chain-length extrapolation, sequential processing helps DAG generalization. Another researcher could apply the same methodology to a different architecture and find a different decomposition. The result is not implied by the methodology.
+
+An analogy: developing a new statistical test (methodology contribution) and reporting the results of applying that test to a specific dataset (empirical contribution) are routinely listed as separate contributions. The methodology has independent value as a transferable tool.
+
+That said, the overlap is perceptible because contribution 1 already says "identifies the separate contributions of recycled content and sequential processing," which partially previews contribution 3. A minor rewording of contribution 1 to focus on the methodological design (without previewing the result) would sharpen the distinction.
+
+**Proposed edit (line 18):**
+```
+FIND: First, we introduce a factorial control methodology — single-pass and multi-pass pause-token baselines — that isolates the curriculum from the mechanism and identifies the separate contributions of recycled content and sequential processing.
+
+REPLACE: First, we introduce a factorial control methodology — single-pass and multi-pass pause-token baselines — that cleanly isolates the curriculum from the mechanism in latent reasoning architectures.
+```
+
+This removes the "identifies the separate contributions" clause from contribution 1, reserving that language for contribution 3 where the specific results are stated. The three-contribution structure is preserved.
+
+**Severity:** Suggestion. The current phrasing is defensible, but the edit would sharpen the distinction.
+
+### External Feedback Item #6: Appendix A.10 -- Overfitting vs. Linear Readout
+
+**Manuscript text (line 391):** "With n = 298 samples and 38 target classes (~7.8 samples per class), the MLP's larger parameter count overfits despite regularization. The information encoded at position 3 is linearly separable -- consistent with a broadcast representation where the final-hop entity is placed in a linearly accessible format for the answer-generation head."
+
+**External reviewer's alternative:** The information at position 3 may be specifically formatted for linear readout by the model's answer head. The answer head is itself a linear projection (GPT-2's LM head is an unembedding matrix), so if the model places the final-hop entity in the subspace that the answer head reads from, a linear probe would naturally outperform an MLP. This is not overfitting but architectural alignment between the probe and the model's own readout mechanism.
+
+**Assessment: The external reviewer's linear readout explanation is a superior account and should be mentioned alongside the overfitting explanation.** Both mechanisms likely contribute, but the linear readout explanation is more informative because it provides a mechanistic reason rather than a statistical limitation.
+
+Evidence supporting the linear readout account:
+1. The answer-generation head in GPT-2 is a linear projection (unembedding matrix W_U). If the model has learned to project the answer entity into the subspace that W_U reads, position 3's representation is optimized for linear decoding.
+2. At position 2 (the intermediate hop), where the model does NOT need to present information for the answer head, MLPs outperform linear probes by 7.6-10.2pp. This contrast is exactly what the linear readout account predicts: position 2 is encoded in a more complex format because it is not the final readout point.
+3. The overfitting explanation predicts that with more data, MLPs would eventually match or exceed linear probes at position 3. The linear readout explanation predicts they would not, because the information is genuinely in a linear subspace. This is testable with the existing data by examining the learning curves of the MLP probes.
+
+However, the overfitting explanation also has support: n = 298 with 38 classes is genuinely low (~7.8 samples per class), and the best MLP configuration at position 3 uses a 512-unit hidden layer (M2) or 128-unit hidden layer (M3) -- both with many more parameters than the ridge regression. The grid search results show that all 72 MLP configurations underperform the linear probe at position 3 for both models, which is consistent with both overfitting (all configurations have too many parameters) and linear readout (no nonlinear transformation helps because the information is already linear).
+
+The manuscript should present both explanations rather than committing to overfitting alone. The linear readout account connects more naturally to the "broadcast representation" language that immediately follows.
+
+**Proposed edit (line 391):**
+```
+FIND: With n = 298 samples and 38 target classes (~7.8 samples per class), the MLP's larger parameter count overfits despite regularization. The information encoded at position 3 is linearly separable — consistent with a broadcast representation where the final-hop entity is placed in a linearly accessible format for the answer-generation head.
+
+REPLACE: Two non-exclusive explanations account for this pattern. First, with n = 298 samples and 38 target classes (~7.8 samples per class), the MLP's larger parameter count may overfit despite regularization. Second, the model's answer head is itself a linear projection (GPT-2's unembedding matrix), so if the model has learned to format position 3's representation for linear readout by the answer head, a linear probe is architecturally aligned with the model's own decoding mechanism while an MLP's additional nonlinear capacity provides no benefit. The position 2 contrast supports the linear readout account: at an intermediate position where the model is not preparing for the answer head, MLPs outperform linear probes by 7.6--10.2pp, suggesting the encoding format shifts from nonlinear (intermediate steps) to linear (final answer) as information approaches the readout point.
+```
+
+**Severity:** Minor. The overfitting explanation is not wrong, but it is incomplete. The linear readout explanation is more informative, more testable, and better integrated with the paper's broader narrative about how curriculum shapes representations. Mentioning both is standard practice when two mechanisms could explain the same observation.
+
+### D002/D003/D018 Implementation Status Check
+
+**D002 (Replace "redundant" with "mutually redundant"):**
+- Appendix A.8 (line 333): IMPLEMENTED. Current text reads "positions 0--2 carry mutually redundant copies of answer-relevant content." This matches the proposed edit.
+- Section 4.2 (line 86): NOT IMPLEMENTED. Current text reads "ruling out redundant distributed storage." The Round 2 proposed edit targeted a different exact phrase ("indicating that positions 0--2 carry redundant information") that does not appear in the current manuscript -- the text was likely edited between rounds, changing the exact wording. The current "redundant distributed storage" phrasing at line 86 is actually acceptable in context because it is describing what the data rules OUT (i.e., the corruption cliff rules out that information is redundantly distributed across all positions). The phrase correctly indicates that storage is NOT redundantly distributed. No further edit needed at this location.
+- Section 5.1 (line 150): PARTIALLY ADDRESSED. Current text reads "concentrated rather than redundant storage." This is less precise than "mutually redundant" but is used in the context of contrasting with fully redundant encoding (every position storing the complete chain), which is the correct comparison. Acceptable as is.
+- **Status: D002 is effectively resolved.** The critical Appendix A.8 location was corrected, and the remaining instances use "redundant" in contexts where the meaning is clear.
+
+**D003 (Add permutation-corruption tension discussion):**
+- Appendix A.6 (line 291): NOT IMPLEMENTED. The text still ends with "This does not rule out order-sensitive internal representations that are ultimately redundant for the final prediction." The proposed follow-up sentences about content-based attention routing were not added.
+- Section 4.2 (line 86): NOT IMPLEMENTED. The main text does not discuss the permutation-corruption tension.
+- **Status: D003 remains unimplemented.** The proposed edit would strengthen the mechanistic argument by explaining WHY position 3 can be moved without affecting output yet cannot be destroyed. The content-based attention routing interpretation is the most parsimonious account and directly supports the "broadcast-then-attend" narrative. This remains a valuable but non-blocking addition.
+
+**D018 (Add inter-position attention connectivity sentence):**
+- Section 3.2 / Appendix A.1 (line 218): NOT IMPLEMENTED. The text after the positional encoding sentence does not mention attention connectivity differences between M3 (inter-thought-position attention via causal masking) and M2/M4 (thought positions processed in isolation via sequential KV-cache decoding).
+- **Status: D018 remains unimplemented.** The connectivity difference is architecturally important: M3's thought positions can attend to each other through standard causal self-attention, while M2/M4's thought positions are informationally linked only through sequential passes. This constrains the interpretation of how sequential processing helps on DAG tasks (it is KV-cache state accumulation, not inter-thought-token attention). The edit would add one sentence and is non-blocking.
+
+### Status Update on All Previous Findings
+
+| ID | Severity | Category | Round 2 Status | Round 3 Status | Notes |
+|----|----------|----------|----------------|----------------|-------|
+| D001 | Major | interpretation | Substantially resolved | Resolved | New title and framing eliminate the binary dichotomy |
+| D002 | Major | interpretation | Partially resolved | Resolved | Appendix A.8 corrected; remaining uses acceptable in context |
+| D003 | Major | interpretation | Partially resolved | Open (non-blocking) | Proposed edit not yet incorporated; content-based attention routing remains unmentioned |
+| D004 | Major | technical_accuracy | Resolved | Resolved | M4 factorial design fully addresses |
+| D005 | Major | missing_experiments | Deferred | Deferred (acceptable) | Curriculum-only ablation acknowledged in limitations |
+| D011 | Major | missing_experiments | Deferred | Deferred (acceptable) | Attention analysis not critical given M4 evidence |
+| D006 | Minor | related_work | Partially resolved | Resolved | Coverage adequate for paper's scope |
+| D007 | Minor | related_work | Resolved | Resolved | Deng et al. cited |
+| D008 | Minor | technical_accuracy | Resolved | Resolved | OOD qualifier present |
+| D009 | Minor | technical_accuracy | Resolved | Resolved | Grid search over 72 configs, all verified |
+| D010 | Minor | technical_accuracy | Partially resolved | Resolved | Peak-layer reporting explicitly stated |
+| D012 | Minor | novelty | Resolved | Resolved | Contributions clearly delineated |
+| D013 | Minor | interpretation | Resolved | Resolved | DAG attributed to sequential processing via M4 |
+| D014 | Minor | framing | Resolved | Resolved | New title captures nuance |
+| D018 | Minor | technical_accuracy | Partially resolved | Open (non-blocking) | Connectivity sentence not yet added |
+| D020 | Minor | technical_accuracy | Resolved | Resolved | Discrepancy explained |
+| D015 | Suggestion | missing_experiments | Deferred | Deferred | Per-hop ID breakdown not critical |
+| D016 | Suggestion | missing_experiments | Deferred | Deferred | Superposition probes acknowledged limitation |
+| D017 | Suggestion | concurrent_work | Resolved | Resolved | Quiet-STaR cited |
+| D019 | Suggestion | impact | Deferred | Deferred | Curriculum property decomposition out of scope |
+| D021 | Suggestion | framing | Partially resolved | Resolved | M3 contextualized adequately |
+| D022 | Minor | interpretation | New in R2 | Open (non-blocking) | Wilcoxon ID ceiling context not yet added |
+| D023 | Minor | technical_accuracy | New in R2 | Resolved | Deprecation header sufficient |
+| D024 | Suggestion | interpretation | New in R2 | Deferred | Confidence-accuracy dissociation as standalone contribution |
+| D025 | Minor | technical_accuracy | New in R2 | Open (non-blocking) | paper.yaml still uses Lambda-era numbering |
+| D026 | Suggestion | terminology | New in R2 | Deferred | "Scaffolding" vs "curriculum-driven computation" |
+
+### New Findings (Round 3)
+
+#### D027 (new, minor): Dense result "interaction" framing contradicts factorial methodology
+
+See External Feedback Item #2 analysis above. The manuscript describes the dense result as an "interaction effect" (line 132), but the symmetric +3.6/-3.6 pattern is better explained as additive cancellation of independently operating factors. The "interaction" framing subtly undermines the paper's factorial decomposition narrative. Proposed edit provided above.
+
+**Location:** Section 4.4, line 132
+
+#### D028 (new, suggestion): Contribution 1 partially previews Contribution 3
+
+See External Feedback Item #5 analysis above. The current wording of contribution 1 includes "identifies the separate contributions of recycled content and sequential processing," which overlaps with contribution 3. The three-contribution structure is defensible but could be sharpened by removing the result preview from the methodology contribution. Proposed edit provided above.
+
+**Location:** Introduction, line 18
+
+#### D029 (new, minor): A.10 overfitting explanation should mention linear readout alternative
+
+See External Feedback Item #6 analysis above. The manuscript attributes MLP underperformance at position 3 solely to overfitting. The linear readout explanation (position 3 is formatted for the answer head's linear projection) is a superior account that should be mentioned alongside overfitting. The position 2 contrast (MLPs outperform linear probes there) provides supporting evidence. Proposed edit provided above.
+
+**Location:** Appendix A.10, line 391
+
+### Round 3 Overall Assessment
+
+**Assessment: pass**
+
+The manuscript is sound. The three external feedback items identify genuine interpretive improvements:
+
+1. **Dense result framing (Item #2, D027):** The "interaction" language should be replaced with "additive cancellation." This is a minor but precise correction that aligns the discussion with the paper's own factorial methodology. Priority: should fix.
+
+2. **Three contributions (Item #5, D028):** The three-contribution structure is defensible. A minor rewording of contribution 1 would sharpen the distinction, but this is a suggestion, not a required change.
+
+3. **A.10 overfitting explanation (Item #6, D029):** The linear readout alternative is a better account that the manuscript should mention. The position 2 contrast provides natural supporting evidence. Priority: should fix.
+
+The three unimplemented Round 2 edits (D003, D018, D022) remain valuable but non-blocking. Of these, D003 (content-based attention routing) is the most substantive, as it would strengthen the mechanistic argument at the paper's interpretive core. D018 (attention connectivity) and D022 (Wilcoxon ceiling context) are single-sentence additions.
+
+No critical or blocking issues remain. The paper makes a clear, well-evidenced contribution.
+
+### Round 3 Summary Table
+
+| Category | Count | Details |
+|----------|:-----:|---------|
+| External items assessed | 3 | #2 (dense: fix), #5 (contributions: suggestion), #6 (A.10: fix) |
+| Round 2 edits checked | 3 | D002 (resolved), D003 (not implemented), D018 (not implemented) |
+| New findings | 3 | D027 (minor), D028 (suggestion), D029 (minor) |
+| Total open non-blocking | 5 | D003, D018, D022, D027, D029 |
+| Blocking issues | 0 | -- |
+| Priority edits | 2 | D027 (dense framing), D029 (A.10 linear readout) |
+| Recommended edits | 3 | D003 (permutation-corruption tension), D018 (connectivity), D028 (contribution 1 wording) |
+| Overall assessment | pass | No critical issues; five minor/suggestion improvements proposed |
+
+---
+
 ## 🟠 MAJOR
 
 ### - [ ] D001: interpretation

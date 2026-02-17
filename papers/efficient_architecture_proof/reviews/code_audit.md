@@ -1,6 +1,6 @@
 # Technical / Code Audit Reviewer Review
 
-**Assessment:** pass_with_conditions
+**Assessment:** pass
 **Date:** 2026-02-13T22:00:00+00:00
 
 ## Round 3 Review
@@ -94,6 +94,164 @@ The M2 vs M4 8-hop Wilcoxon comparison in Table 7 reports p(Bonf.) = 0.049 and S
 | **Total** | **30** | **18** | **1** | **10** | **1** |
 
 The one open minor finding (F029) has a specific proposed fix (change "10^{-51}" to "10^{-50}" in the abstract). The one partially resolved finding (F026) affects paper.yaml metadata only, not the manuscript. All deferred findings are low-priority and do not affect publishability.
+
+---
+
+## Round 4 Review
+
+**Date:** 2026-02-17T20:00:00+00:00
+**Assessment:** PASS
+
+### Round 4 Summary
+
+Fresh data-manuscript consistency check incorporating external reviewer feedback. Five specific items were investigated: (1) the dense +3.6/-3.6 symmetry in Table 5, (2) minor reporting issues across Tables 2, 3, 6b, and appendices, (3) F029 status check, (4) complete re-verification of all major tables, and (5) status update on all previous findings.
+
+All claims verified. F029 (abstract p-value exponent) has been resolved -- the manuscript no longer contains "10^{-51}" anywhere; all instances now correctly use "10^{-50}". No new findings identified.
+
+---
+
+### External Feedback Item #2: Dense +3.6/-3.6 Symmetry Verification
+
+**Question:** Are the M4-M2 = +3.6pp and M4-M3 = -3.6pp values on dense an artifact of rounding?
+
+**Verification result: The symmetry is exact, not a rounding artifact.**
+
+From per-sample correctness data:
+- M2 dense correct: 612/1000 = 61.2%
+- M3 dense correct: 684/1000 = 68.4%
+- M4 dense correct: 648/1000 = 64.8%
+- M4 - M2 = (648 - 612) / 1000 = 36/1000 = +3.6pp (exactly)
+- M4 - M3 = (648 - 684) / 1000 = -36/1000 = -3.6pp (exactly)
+
+M4 falls at exactly the midpoint of M2 and M3 on dense: (612 + 684) / 2 = 648.0 = M4's count. This is a genuine numerical coincidence rather than a rounding artifact. The McNemar contingency tables confirm:
+
+M4 vs M2 Dense: b=150, c=186 (recomputed from per-sample data, matches manuscript Table 5 line 128)
+- Exact McNemar p_raw = 0.056048, p_Bonf = 0.280 (manuscript: 0.280 -- MATCH)
+
+M4 vs M3 Dense: b=193, c=157 (recomputed from per-sample data, matches manuscript Table 5 line 128)
+- Exact McNemar p_raw = 0.061214, p_Bonf = 0.306 (manuscript: 0.306 -- MATCH)
+
+Note: Despite the symmetric accuracy differences, the contingency tables are NOT symmetric: b/c for M4-vs-M2 are 150/186 while b/c for M4-vs-M3 are 193/157. This is expected because the discordant pairs are different samples in each comparison.
+
+---
+
+### External Feedback Item #8: Minor Reporting Issues
+
+**8a. Table 2: Does it say n=500 for ProsQA test? Is validation n=300 stated?**
+
+VERIFIED (line 73). Table 2 caption reads: "Accuracy by model on ProsQA validation (n = 300) and test (n = 500) sets." Both n-values are explicitly stated. This is further confirmed by Table A13 (line 544-548) which reports ProsQA split sizes: Training 17,886, Validation 300, Test 500.
+
+**8b. Table 3: What are the n-values? Are they consistent across all corruption conditions?**
+
+Table 3 in the current manuscript (lines 92-100) is the probing summary table, not a corruption table. The corruption data is in Table A1 (Appendix A.5, line 277). Table A1's caption explicitly states "n = 500 per condition." The probing Table 3 does not state n-values directly, but Section 4.3 (line 90) states "At position 3 (n = 298)" and Appendix A.4 (lines 250-251) specifies all per-position sample sizes: "All probes use 5-fold cross-validation over 500 samples. The number of valid probe targets varies by position: all 500 samples contribute labels for positions 0--2, 298 for position 3, 81 for position 4, and 12 for position 5." The corruption sample sizes are consistent: corruption/results.json reports total_samples=500 for both M2 and M3.
+
+**8c. A.4: Any p-value clarification issues?**
+
+No. Appendix A.4 (lines 257-271) clearly documents the corrected permutation tests: 2,000 permutations per cell, minimum achievable p = 1/2001 = 0.0005, Bonferroni threshold 0.05/78 = 0.000641. The conservative estimator p = (count + 1) / (n_perms + 1) is stated. Results are clearly reported: M2 29/78 significant, M3 11/78 significant. No ambiguity in p-value reporting.
+
+**8d. Table 6b: Is r (rank-biserial correlation) defined before its first use?**
+
+The first use of "r" in the Wilcoxon context appears in Section 4.5 (line 138): "M2 assigns systematically higher confidence than M4 (r = 0.678, p < 10^{-50})". The next sentence provides the contextual definition: "The large rank-biserial correlation reflects consistent paired rank ordering." Table 6a (line 446) provides the explicit definition in its caption: "r = rank-biserial correlation." Table 6b (line 456) does NOT redefine r in its caption -- it says only "Confounded comparison -- forward-pass asymmetry (M2 vs. M3)." This is acceptable because Table 6a immediately precedes 6b and defines r explicitly.
+
+However, for a strict reader encountering the manuscript for the first time, the first use of "r" at line 138 in Section 4.5 lacks a parenthetical definition. The contextual definition ("The large rank-biserial correlation") follows in the next clause of the same sentence, which is adequate but could be clearer. This is a style preference, not an error. No action required.
+
+**8e. A.18: Is there an appendix section A.18? If so, what is it and is its placement appropriate?**
+
+Yes. Section A.18 ("Datasets", line 516) exists and is the final appendix section. It contains: (1) an example ProsQA question with reasoning steps and answer, (2) a description of ProsQA's construction methodology following Hao et al. (2024), (3) Table A12 with graph structure statistics, and (4) Table A13 with dataset split sizes. Placement after A.17 (OOD Dataset Statistics) is appropriate -- A.17 covers OOD test sets while A.18 covers the base ProsQA dataset.
+
+---
+
+### F029 Status Check
+
+**RESOLVED.** The manuscript no longer contains "10^{-51}" anywhere. All occurrences have been corrected to "10^{-50}":
+- Section 4.5 (line 138): "p < 10^{-50}" -- CORRECT (actual p_Bonf = 2.76e-51 < 1e-50)
+- Table 6a (line 450): "< 10^{-50}" -- CORRECT
+
+Additional p-value exponents verified:
+- Table 6a ProsQA: "< 10^{-50}" -- p_Bonf = 2.76e-51 < 1e-50 = TRUE
+- Table 6b ProsQA: "< 10^{-38}" -- p_Bonf = 3.57e-39 < 1e-38 = TRUE
+- Table A10 ProsQA: "< 10^{-9}" -- p_Bonf = 8.07e-10 < 1e-9 = TRUE
+
+All p-value upper bounds are mathematically correct.
+
+---
+
+### Complete Fresh Data-Manuscript Verification Summary
+
+| Table/Section | Data Source | Verification Method | Status |
+|---------------|------------|---------------------|--------|
+| **Table 2 (accuracy)** | ood/results.json, m6/accuracy.json | Direct comparison: M1=83.0%, M2=97.0%, M3=96.6%, M4=94.8% | VERIFIED |
+| **Table 2 (n-values)** | Caption + Table A13 | n=300 validation, n=500 test stated in caption | VERIFIED |
+| **Table 3 (probing)** | selectivity_recomputed.json, probing data | Peak acc M2=55.4% (layer 0, pos 3), M3=57.0% (layer 12, pos 3); selectivity M2=+52.0pp, M3=+52.3pp; sig cells 29/78 vs 11/78 | VERIFIED |
+| **Table 4 (OOD accuracy)** | ood/results.json, m6/accuracy.json | All 20 cells match (4 models x 5 test sets) | VERIFIED |
+| **Table 5 (factorial McNemar)** | Recomputed from per_sample_correctness.json + m6/per_sample_correctness.json | All 10 comparisons independently verified: diffs, b, c, p_Bonf all match | VERIFIED |
+| **Table 5 dense symmetry** | Per-sample recomputation | +3.6/-3.6 is exact (36/-36 out of 1000), not rounding artifact | VERIFIED |
+| **Table 6a (M2 vs M4 Wilcoxon)** | wilcoxon_teacher_forced_m3_vs_m6.json | All 5 test sets: r, p_Bonf, direction, n verified | VERIFIED |
+| **Table 6b (M2 vs M3 Wilcoxon)** | wilcoxon_teacher_forced_m3_vs_m5.json | All 5 test sets: r, p_Bonf, direction, n verified | VERIFIED |
+| **Table A1 (cross-corruption)** | appendix_data.json task4 | n=500 stated in caption, 21 cells verified | VERIFIED |
+| **Table A2 (transplant)** | corruption/results.json, appendix_data.json task5 | M2 matched=97.0%, M3 matched=96.5%; unmatched M2=97.5%, M3=96.5% | VERIFIED |
+| **Table A3 (reverse corruption)** | corruption/results.json | All 12 cells match | VERIFIED |
+| **Table A4 (single-position)** | corruption/results.json | All 12 cells match | VERIFIED |
+| **Tables A5-A6 (probe grids)** | selectivity_recomputed.json matched_accuracy_grid | Spot-checked: M2 layer 0 pos 3 = 55.4%, M3 layer 12 pos 3 = 57.0% (both match) | VERIFIED |
+| **Table A7 (MLP grid search)** | Appendix values | M3 (12,3) linear = 57.0% (consistent with Tables 3, A6) | VERIFIED |
+| **Table A10 (M3 vs M4 Wilcoxon)** | wilcoxon_teacher_forced_m5_vs_m6.json | All 5 test sets: r, p_Bonf, direction, n verified | VERIFIED |
+| **Section 4.5 inline claims** | wilcoxon_teacher_forced_m3_vs_m6.json | r=0.678, p<10^{-50}, medians 99.998%/99.949%, 7hop r=0.109 p=0.003, 8hop r=0.082 p=0.049, DAG r=0.073 p=0.106, dense r=0.118 p=0.001 -- all match | VERIFIED |
+| **Abstract claims** | Multiple data files | p=0.845, 96.6% vs 97.0%, 10.9pp 7-hop, 7.9pp DAG -- all match | VERIFIED |
+| **p-value exponents** | Wilcoxon JSON files | 10^{-50}, 10^{-38}, 10^{-9} all verified as correct upper bounds | VERIFIED |
+| **Placeholder text** | Full manuscript search | No TODO/TBD/PLACEHOLDER/XXX/FIXME found | VERIFIED |
+
+---
+
+### Previous Finding Status Updates (Round 4)
+
+| ID | Severity | Category | Round 3 Status | Round 4 Status | Notes |
+|----|----------|----------|---------------|---------------|-------|
+| F001 | Major | data_integrity | RESOLVED | RESOLVED | Dual-pipeline documented; experiment pipeline used consistently |
+| F010 | Major | statistical_impl | RESOLVED | RESOLVED | DAG p=0.0015 correctly reported |
+| F002 | Minor | data_integrity | PARTIALLY RESOLVED | RESOLVED | F028 fixed the last 57.1% residual |
+| F003 | Minor | data_integrity | RESOLVED | RESOLVED | |
+| F004 | Minor | code | RESOLVED | RESOLVED | Selectivity bug documented |
+| F005 | Minor | code | DEFERRED | DEFERRED | Hardcoded values in plot script; values verified correct |
+| F009 | Minor | data_integrity | RESOLVED | RESOLVED | Independent verification confirmed |
+| F012 | Minor | data_integrity | DEFERRED | DEFERRED | Unmatched transplant anomaly (1 sample) |
+| F014 | Minor | code | RESOLVED | RESOLVED | |
+| F016 | Minor | data_integrity | RESOLVED | RESOLVED | |
+| F018 | Minor | code | DEFERRED | DEFERRED | Script duplication |
+| F021 | Minor | data_integrity | RESOLVED (false alarm) | RESOLVED | |
+| F022 | Minor | statistical_impl | RESOLVED | RESOLVED | |
+| F023 | Minor | code | RESOLVED | RESOLVED | Permutation tests corrected |
+| F026 | Minor | data_integrity | PARTIALLY RESOLVED | PARTIALLY RESOLVED | paper.yaml metadata still has minor stale values; does not affect manuscript |
+| F027 | Minor | data_integrity | RESOLVED | RESOLVED | m6/mcnemar.json has deprecation notice |
+| F028 | Suggestion | data_integrity | RESOLVED | RESOLVED | 57.0% consistent throughout |
+| F029 | Minor | statistical_reporting | OPEN | **RESOLVED** | Abstract and Section 4.5 now use "10^{-50}" correctly |
+| F030 | Suggestion | statistical_reporting | Noted | Noted | 8-hop p_Bonf=0.049 borderline; correctly reported |
+| F006 | Suggestion | code | DEFERRED | DEFERRED | |
+| F007 | Suggestion | reproducibility | DEFERRED | DEFERRED | |
+| F008 | Suggestion | code | RESOLVED | RESOLVED | |
+| F011 | Suggestion | code | DEFERRED | DEFERRED | |
+| F013 | Suggestion | reproducibility | DEFERRED | DEFERRED | |
+| F015 | Suggestion | code | RESOLVED | RESOLVED | |
+| F017 | Suggestion | reproducibility | DEFERRED | DEFERRED | |
+| F019 | Suggestion | data_integrity | RESOLVED | RESOLVED | |
+| F020 | Suggestion | code | DEFERRED | DEFERRED | |
+| F024 | Suggestion | reproducibility | DEFERRED | DEFERRED | |
+| F025 | Suggestion | data_integrity | DEFERRED | DEFERRED | Documented in A.4 |
+
+---
+
+### Cumulative Finding Counts (Rounds 1-4)
+
+| Severity | Total | Resolved | Partially Resolved | Deferred | Open |
+|----------|:-----:|:--------:|:------------------:|:--------:|:----:|
+| Critical | 0 | 0 | 0 | 0 | 0 |
+| Major | 2 | 2 | 0 | 0 | 0 |
+| Minor | 15 | 11 | 1 | 3 | 0 |
+| Suggestion | 13 | 6 | 0 | 7 | 0 |
+| **Total** | **30** | **19** | **1** | **10** | **0** |
+
+No open findings remain. The one partially resolved finding (F026) affects paper.yaml metadata only. All 10 deferred findings are low-priority code/reproducibility items that do not affect the manuscript or its publishability.
+
+**Overall assessment: PASS.** No blocking issues. No new findings. F029 resolved. All external feedback items verified satisfactorily.
 
 ---
 

@@ -346,3 +346,210 @@ The remaining issues (M024, M025, M026) are all metadata and housekeeping items 
 1. Update CHECKPOINTS.md M4 row with epoch 30 and 94.8% accuracy (M024).
 2. Update paper.yaml abstract and statistical_tests to match manuscript (M025).
 3. Optionally document or remove m6_epoch39/ data (M026).
+
+---
+
+## Round 4 Review
+
+**Round 4 Date:** 2026-02-17T20:00:00Z
+**Updated Assessment:** PASS
+
+Round 4 addresses four specific items of external feedback (#3, #5, #7, #8), re-verifies all previous findings (M001--M026), and checks for any new issues introduced since Round 3.
+
+**Round 4 finding counts:** 0 new critical, 0 new major, 2 new minor (M027, M028), 1 new suggestion (M029). All prior findings remain at their Round 3 status.
+
+---
+
+### External Feedback Item #3: M4 Early Plateau -- Bonferroni Correction Appropriateness
+
+**Question:** Is the Bonferroni correction appropriate for the M4 vs. M2 ID comparison, or does it minimize a potentially real architectural limitation?
+
+**Assessment: The Bonferroni correction is methodologically appropriate, and the manuscript's handling of the ambiguity is adequate, with one recommended clarification.**
+
+The details:
+
+1. **Bonferroni k=5 is correct for the chosen family structure.** The manuscript defines three comparison families (M2 vs. M3, M4 vs. M2, M4 vs. M3), each tested across five test sets. Bonferroni correction within each family (k=5) is the standard approach for controlling the family-wise error rate when a single comparison is applied to multiple outcome measures. The alternative -- correcting across all 15 tests (3 comparisons x 5 test sets) -- would be more conservative than necessary and is not standard practice when the comparisons test distinct hypotheses (recycled content, sequential processing, confounded two-model).
+
+2. **The uncorrected p=0.071 is correctly reported.** Section 4.1 reports both the uncorrected p (0.071) and the corrected p (0.354), allowing readers to assess the result at either threshold. This is transparent and appropriate.
+
+3. **The external reviewer's concern has genuine methodological substance, but the manuscript already addresses it.** The key paragraph in Section 4.1 reads: "M4's best epoch (30) occurs 13--19 epochs earlier than M2 (49) and M3 (43). Whether this reflects an inherent capacity limit of the multi-pass fixed-embedding architecture, or indicates that M4 would benefit from different hyperparameters (e.g., a lower learning rate in later curriculum stages), remains an open question. The 2.2pp gap could reflect a systematic architectural limitation, a suboptimal training configuration, or initialization variance; multi-seed replication with hyperparameter sensitivity analysis would clarify this (Section 6)." This explicitly acknowledges that the gap could be real (architectural limitation) or artifactual (hyperparameter/seed) -- it does not use the Bonferroni p to dismiss the gap.
+
+4. **The Appendix A.2 plateau analysis adds further nuance.** It documents that M4's validation accuracy fluctuates between 93.7% and 96.7% across epochs 30--49 (mean ~95.0%), hitting 96.7% again at epoch 39. This is evidence of a noisy plateau rather than degradation, which argues against strict overfitting but is consistent with a capacity ceiling.
+
+5. **One concern with the manuscript's current framing.** The sentence "so the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy" (Section 4.1) could be read as dismissive. The statistical conclusion (not significant after correction) is accurate, but the framing leans toward interpreting non-significance as equivalence. Given that the uncorrected p is marginal (0.071), a more measured phrasing would acknowledge that the test is also underpowered to detect a 2.2pp difference with only 31 discordant pairs out of 500. Non-significance at p=0.354 with 31 discordant pairs has limited evidential value in either direction.
+
+**Proposed edit (Section 4.1, line 82):**
+
+FIND: "Despite this earlier plateau, M4's 94.8% does not significantly differ from M2's 97.0% after Bonferroni correction (p = 0.354), so the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy."
+
+REPLACE: "Despite this earlier plateau, M4's 94.8% does not significantly differ from M2's 97.0% after Bonferroni correction (uncorrected p = 0.071, p_Bonf = 0.354, 31 discordant pairs). However, the small number of discordant pairs limits the test's power to detect a 2.2pp difference, so the non-significant result should not be interpreted as evidence of equivalence. The plateau does not alter the paper's primary conclusion -- that the training curriculum drives performance -- because M3, which does not plateau and reaches 96.6%, provides the cleaner test of that claim."
+
+This edit: (a) reports the uncorrected p alongside the corrected p for transparency, (b) explicitly notes the low power from 31 discordant pairs, (c) avoids equating non-significance with equivalence, and (d) redirects attention to M3 as the stronger test of the curriculum claim. Filed as M027 (minor).
+
+---
+
+### External Feedback Item #5: Contribution Framing -- Are (1) and (3) Distinct?
+
+**Question:** Are the factorial methodology (contribution 1) and the factorial decomposition of OOD (contribution 3) genuinely distinct contributions?
+
+**Assessment: The external reviewer raises a valid methodological point. The current framing conflates tool and application, but the result is substantive enough that a reframing (not a reduction) is warranted.**
+
+The details:
+
+1. **In methods papers, building the tool and demonstrating it are typically one contribution.** The methodological standard in experimental design papers is that a novel methodology is demonstrated through its application. If the methodology is the contribution, the application is the validation. Claiming both as separate contributions inflates the contribution count.
+
+2. **However, the OOD decomposition yields a genuinely surprising result that goes beyond validation.** The factorial decomposition does not merely confirm that the methodology works -- it produces a non-obvious finding: recycled content *hurts* chain-length extrapolation (M4 > M2 by 10.9pp on 7-hop, p < 0.001), while sequential processing *helps* topological generalization (M4 > M3 by 7.9pp on DAG, p < 0.001). These are opposite-signed effects on different task types that sum approximately to the confounded M2--M3 differences. This is a substantive empirical result, not a methodological demonstration.
+
+3. **The distinction is defensible if reframed.** Contribution 1 is the design innovation (the factorial decomposition *framework*). Contribution 3 is the empirical discovery that recycled content and sequential processing have separable, opposite-signed effects on different OOD dimensions. The former could be applied to any COCONUT-like architecture; the latter is a specific finding about this architecture on ProsQA.
+
+4. **Current framing is borderline.** The current text reads: "(1) we introduce a factorial control methodology... that isolates the curriculum from the mechanism and identifies the separate contributions of recycled content and sequential processing. (3) we characterize the separate contributions of recycled content and sequential processing to out-of-distribution generalization via the factorial decomposition." The overlap in language ("identifies the separate contributions" vs. "characterize the separate contributions") makes them read as the same thing stated twice. The difference is in-distribution vs. OOD application, but this is not clearly delineated.
+
+**Proposed edit (Section 1, line 18):**
+
+FIND: "This paper makes three contributions. First, we introduce a factorial control methodology — single-pass and multi-pass pause-token baselines — that isolates the curriculum from the mechanism and identifies the separate contributions of recycled content and sequential processing. Second, we provide converging evidence from three independent experimental paradigms that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance. Third, we characterize the separate contributions of recycled content and sequential processing to out-of-distribution generalization via the factorial decomposition."
+
+REPLACE: "This paper makes three contributions. First, we introduce a factorial control methodology — single-pass and multi-pass pause-token baselines — that isolates the curriculum from the mechanism. Second, we provide converging evidence from three independent experimental paradigms that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance. Third, we show that the factorial decomposition reveals separable, opposite-signed contributions of recycled content and sequential processing to out-of-distribution generalization: recycled content impairs chain-length extrapolation while sequential processing drives topological generalization."
+
+This edit: (a) tightens contribution 1 to focus on the design, (b) keeps contribution 2 unchanged, and (c) reframes contribution 3 to emphasize the empirical discovery (opposite-signed effects) rather than the methodology. The key distinction is now clearer: (1) is the tool, (3) is the surprising finding that the tool reveals. Filed as M028 (minor).
+
+---
+
+### External Feedback Item #7: Single Seed and Training-Time/Experiment-Pipeline Discrepancy
+
+**Question:** How much weight should the non-significant McNemar test carry given single-seed, and does the training-time evaluation discrepancy raise concerns?
+
+**Assessment: The manuscript handles this limitation adequately in Section 6, with one area where it could be more explicit about the direction of the training-time discrepancy.**
+
+The details:
+
+**(a) Weight of the McNemar test under single-seed.**
+
+The McNemar p=0.845 tests whether M2 and M3 disagree on specific samples more than expected by chance. This is a within-sample test: it asks "do these two models, trained once, make systematically different errors on the same test set?" It does NOT test whether the accuracy difference is robust across training seeds. The manuscript correctly reports the McNemar test as evidence of within-sample equivalence and correctly identifies multi-seed replication as a separate, unaddressed question (Section 6).
+
+The McNemar test's evidential value is real but limited: it establishes that 97.0% vs. 96.6% is indistinguishable from chance disagreement on this particular test set, which is the appropriate statistical question for a single-seed study. It cannot address between-seed variance. The manuscript does not overclaim: it says "not significantly different from M2" rather than "equivalent to M2."
+
+**(b) Training-time/experiment-pipeline discrepancy.**
+
+The training-time evaluation shows M2=98.0%, M3=95.6% (gap=2.4pp, M2 advantage), while the experiment pipeline shows M2=97.0%, M3=96.6% (gap=0.4pp, M2 advantage). The gap reversal is concerning at first glance but is explained by the pipeline difference: the training evaluator uses teacher-forced prefix tokens while the experiment pipeline uses greedy autoregressive decoding. The key observations:
+
+- Both pipelines agree on the direction (M2 > M3).
+- The absolute magnitudes differ by only 5 samples per model, but in opposite directions (M2 drops 5, M3 gains 5 from training to experiment pipeline).
+- The manuscript correctly uses the experiment-pipeline numbers throughout for internal consistency.
+- Section 6 ("Single seed") explicitly flags this sensitivity: "training-time evaluation at best epoch yielded a larger apparent gap (M2 = 98.0%, M3 = 95.6%), and this sensitivity to the inference code path... underscores the need for multi-seed replication."
+- Appendix A.2 provides the mechanistic explanation for the discrepancy.
+
+The discrepancy does NOT reverse M3's advantage -- M2 > M3 in both pipelines. What it does is widen the gap from 0.4pp to 2.4pp. If the 2.4pp gap were the "true" gap, the McNemar test on the experiment-pipeline data would be less informative (it tests the 0.4pp gap, not the 2.4pp gap). However, the experiment pipeline is the correct measurement instrument because it matches the inference conditions used for all other analyses.
+
+**(c) Adequacy of Section 6 handling.**
+
+Section 6 is adequate. The relevant text: "Replication across 3--5 seeds would clarify whether M4's 94.8% reflects a systematic gap or initialization variance; training-time evaluation at best epoch yielded a larger apparent gap (M2 = 98.0%, M3 = 95.6%), and this sensitivity to the inference code path — arising because the training evaluator uses teacher-forced prefix tokens while the experiment pipeline uses greedy autoregressive decoding — underscores the need for multi-seed replication."
+
+One possible improvement: the Section 6 text could note that the training-time gap (2.4pp) would still likely be non-significant by McNemar (since the experiment-pipeline McNemar found only 26 discordant pairs out of 500 for a 0.4pp gap, a 2.4pp gap with proportionally more discordant pairs might or might not reach significance depending on the distribution of disagreements). However, this is speculative without running the McNemar on training-time per-sample predictions, and the current disclosure is sufficient.
+
+**Verdict:** No manuscript edits required. The handling in Section 6 and Appendix A.2 is methodologically adequate. The single-seed limitation is real and honestly disclosed. The training-time discrepancy is explained mechanistically and flagged as motivation for multi-seed replication.
+
+---
+
+### External Feedback Item #8: N-Value Consistency in Tables
+
+**Question:** Are n-values clearly stated for corruption conditions (Table 3) and OOD test sets (Table 4)?
+
+**Assessment: N-values are clearly stated for OOD (Table 4) but require a minor clarification note about table numbering for corruption data.**
+
+The details:
+
+1. **Table numbering clarification.** The external reviewer refers to "Table 3's n-values across corruption conditions." In the manuscript, Table 3 is the probing summary table, not a corruption table. The corruption data appears in Table A1 (Appendix A.5), Table A3 (reverse corruption), and Table A4 (single-position corruption). This may indicate reviewer confusion about table numbering, or a reference to an earlier draft. Regardless, the substantive question is whether n-values are stated.
+
+2. **Corruption experiments (Tables A1, A3, A4):** Table A1 explicitly states "n = 500 per condition" in the caption. Tables A3 and A4 do not restate the n-value, but they appear in the same appendix section (A.8) and use the same ProsQA test set. The n=500 is also stated in Section 3.4: "500 samples" for permutation testing. The corruption methodology section (A.3) states "500 test samples" for cross-problem transplantation. The n-value is stated but could be reinforced in Tables A3/A4.
+
+3. **OOD experiments (Table 4):** Table 4 includes an explicit `n` column showing 500 for ProsQA and 1000 for each OOD test set. This is clear and unambiguous.
+
+4. **Table 5 (factorial decomposition):** Table 5 does not include an n column, but the n is implicit from Table 4 (same test sets) and the discordant pair counts (b, c) are reported, from which the reader can infer the total disagreements. The n for each test set could be added to Table 5 for completeness, but this is a minor formatting preference.
+
+5. **Appendix A.17 (OOD Dataset Statistics):** Table A11 explicitly states n for each OOD test set (500 for ProsQA, 1000 for each OOD set), confirming the values in Table 4.
+
+**Verdict:** N-values are adequately stated throughout. No mandatory edits required. For maximum clarity, Tables A3 and A4 could add "n = 500" to their captions, mirroring Table A1. Filed as M029 (suggestion).
+
+---
+
+### Re-Verification of All Previous Findings (M001--M026)
+
+| Finding | Severity | Round 2 Status | Round 3 Status | Round 4 Status | Notes |
+|---------|----------|----------------|----------------|----------------|-------|
+| M001 | Critical | RESOLVED | RESOLVED | RESOLVED | M4 factorial design intact |
+| M002 | Critical | RESOLVED | RESOLVED | RESOLVED | Experiment-pipeline numbers used consistently |
+| M003 | Major | ACKNOWLEDGED | ACKNOWLEDGED | ACKNOWLEDGED | Single-seed limitation, adequate disclosure in Section 6 |
+| M004 | Major | PARTIALLY ADDRESSED | PARTIALLY ADDRESSED | PARTIALLY ADDRESSED | Construct validity; convergent evidence approach mitigates |
+| M005 | Major | PARTIALLY ADDRESSED | PARTIALLY ADDRESSED | PARTIALLY ADDRESSED | Permutation logit-space analysis still missing; Wilcoxon partially compensates |
+| M006 | Major | ADEQUATELY ADDRESSED | ADEQUATELY ADDRESSED | ADEQUATELY ADDRESSED | Presence-vs-use distinction properly handled |
+| M007 | Major | RESOLVED | RESOLVED | RESOLVED | Resolved by M4 |
+| M008 | Major | ACKNOWLEDGED | ACKNOWLEDGED | ACKNOWLEDGED | Transplant sensitivity acknowledged as one of seven diagnostics |
+| M009 | Major | DEFERRED | DEFERRED | DEFERRED | Curriculum-only control; adequate disclosure |
+| M010 | Major | RESOLVED | RESOLVED | RESOLVED | Exact McNemar used consistently |
+| M011 | Minor | RESOLVED | RESOLVED | RESOLVED | DAG p-value rounding |
+| M012 | Minor | ACKNOWLEDGED | ACKNOWLEDGED | ACKNOWLEDGED | Position 4-5 sample limitations documented |
+| M013 | Minor | RESOLVED | RESOLVED | RESOLVED | ProsQA qualifier in title, abstract, conclusion |
+| M014 | Minor | ADEQUATELY ADDRESSED | ADEQUATELY ADDRESSED | ADEQUATELY ADDRESSED | Cross-corruption analysis framing |
+| M015 | Minor | PARTIALLY ADDRESSED | PARTIALLY ADDRESSED | PARTIALLY ADDRESSED | Broadcast-then-attend mechanism interpretation; minor residual |
+| M016 | Minor | RESOLVED | RESOLVED | RESOLVED | MLP grid search conducted |
+| M017 | Suggestion | DEFERRED | DEFERRED | DEFERRED | M1 corruption/probing as positive control |
+| M018 | Suggestion | RESOLVED | RESOLVED | RESOLVED | Gap closure claim removed |
+| M019 | Suggestion | DEFERRED | DEFERRED | DEFERRED | Crossed OOD conditions |
+| M020 | Suggestion | ADEQUATELY ADDRESSED | ADEQUATELY ADDRESSED | ADEQUATELY ADDRESSED | Scale limitation disclosure |
+| M021 | Major | -- | RESOLVED | RESOLVED | Deprecated header on stale McNemar file |
+| M022 | Minor | -- | PARTIALLY RESOLVED | PARTIALLY RESOLVED | paper.yaml accuracy updated; abstract/stats stale (see M025) |
+| M023 | Minor | -- | RESOLVED | RESOLVED | M4 corruption artifact warning added |
+| M024 | Minor | -- | NEW | OPEN | CHECKPOINTS.md M4 row still shows TBD |
+| M025 | Minor | -- | NEW | OPEN | paper.yaml statistical_tests and abstract stale |
+| M026 | Suggestion | -- | NEW | OPEN | m6_epoch39/ data undocumented |
+
+---
+
+### New Findings
+
+### - [ ] M027: statistical_framing (MINOR)
+
+Section 4.1, line 82, presents the non-significant M4 vs. M2 comparison in language that could be read as equating non-significance with equivalence ("so the plateau does not alter the statistical conclusion that curriculum-matched controls reach comparable accuracy"). With only 31 discordant pairs, the McNemar test has limited power to detect a 2.2pp difference, and the uncorrected p=0.071 is marginal. The proposed edit (see Item #3 analysis above) would reframe this to acknowledge the test's power limitation and redirect attention to M3 as the stronger test of the curriculum claim.
+
+**Location:** Manuscript Section 4.1, line 82.
+
+**Severity:** Minor. The statistical values themselves are correct; this is a framing concern about interpreting non-significance.
+
+### - [ ] M028: contribution_framing (MINOR)
+
+The three claimed contributions (Section 1, line 18) show significant linguistic overlap between contribution 1 (factorial control methodology) and contribution 3 (factorial decomposition of OOD). The proposed edit (see Item #5 analysis above) sharpens the distinction by tightening contribution 1 to the design innovation and reframing contribution 3 to emphasize the empirical discovery (opposite-signed effects) rather than repeating the methodology.
+
+**Location:** Manuscript Section 1, line 18.
+
+**Severity:** Minor. This is a presentation issue, not a methodological error.
+
+### - [ ] M029: table_completeness (SUGGESTION)
+
+Tables A3 (reverse corruption) and A4 (single-position corruption) do not restate the sample size in their captions, unlike Table A1 which specifies "n = 500 per condition." Adding "n = 500" to the captions of Tables A3 and A4 would make each table self-contained for readers who navigate directly to the appendix.
+
+**Location:** Manuscript Appendix A.8, Tables A3 and A4.
+
+---
+
+### Round 4 Summary
+
+| Category | Count |
+|----------|-------|
+| New critical | 0 |
+| New major | 0 |
+| New minor | 2 (M027, M028) |
+| New suggestion | 1 (M029) |
+| Prior findings changed status | 0 |
+| Total open findings (all rounds) | 5 minor (M024, M025, M027, M028, M022) + 1 suggestion (M026, M029) |
+| Blocking issues | 0 |
+
+**Overall Assessment: PASS**
+
+The manuscript is methodologically sound. The four external feedback items have been evaluated:
+
+- **Item #3 (M4 plateau / Bonferroni):** The Bonferroni correction is appropriate; the manuscript already acknowledges the ambiguity but could be slightly more careful about not equating non-significance with equivalence (M027, minor).
+- **Item #5 (contribution framing):** Contributions 1 and 3 have defensible but poorly delineated boundaries; a minor reframing would sharpen the distinction (M028, minor).
+- **Item #7 (single seed):** The manuscript handles this limitation adequately in Section 6 and Appendix A.2. No edits required.
+- **Item #8 (n-values):** N-values are clearly stated in Tables 4 and A1. Minor suggestion to add n to Tables A3/A4 captions (M029, suggestion).
+
+**No blocking edits required.** The two minor findings (M027, M028) would improve clarity but do not affect the correctness of any statistical claim or methodological conclusion. The manuscript remains publication-ready from a methodological standpoint.

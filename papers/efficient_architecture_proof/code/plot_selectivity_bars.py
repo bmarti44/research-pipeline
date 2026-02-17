@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Generate Figure 3: Step selectivity by thought position for M3 and M5.
+"""Generate Figure 3: Step selectivity by thought position for M2 and M3.
 
 Uses selectivity values at each model's peak probe accuracy layer:
-  M3: layer 0 for positions 0, 1, 3; layer 12 for position 2
-  M5: layer 12 for all positions
+  M2 (COCONUT): layer 0 for positions 0, 1, 3; layer 12 for position 2
+  M3 (Pause): layer 12 for all positions
 
 Data source: results/selectivity_recomputed.json
+
+Note: Data files use Lambda-era keys (m3=COCONUT, m5=Pause).
+Paper numbering: M2=COCONUT, M3=Pause.
 """
 
 import matplotlib.pyplot as plt
@@ -17,27 +20,27 @@ import os
 positions = [0, 1, 2, 3, 4]
 pos_labels = ['Pos 0', 'Pos 1', 'Pos 2', 'Pos 3', 'Pos 4']
 
-# M3: layer 0 for pos 0,1,3; layer 12 for pos 2
-m3_selectivity = [-15.6, -10.6, 9.4, 52.0, 0.0]
+# M2 (COCONUT): layer 0 for pos 0,1,3; layer 12 for pos 2
+m2_selectivity = [-15.6, -10.6, 9.4, 52.0, 0.0]
 
-# M5: layer 12 for all positions
-m5_selectivity = [-12.0, -14.6, 10.2, 52.3, 0.0]
+# M3 (Pause): layer 12 for all positions
+m3_selectivity = [-12.0, -14.6, 10.2, 52.3, 0.0]
 
 # Colors
-m3_color = '#E8778B'    # pink/coral for M3 (COCONUT)
-m5_color = '#5BA4B5'    # teal for M5 (Pause)
-m3_text = '#C4475A'     # darker pink for annotations
-m5_text = '#2E7D8A'     # darker teal for annotations
+m2_color = '#E8778B'    # pink/coral for M2 (COCONUT)
+m3_color = '#5BA4B5'    # teal for M3 (Pause)
+m2_text = '#C4475A'     # darker pink for annotations
+m3_text = '#2E7D8A'     # darker teal for annotations
 
 fig, ax = plt.subplots(figsize=(8, 5))
 
 x = np.arange(len(positions))
 width = 0.35
 
-bars_m3 = ax.bar(x - width/2, m3_selectivity, width, label='M3 (COCONUT)',
+bars_m2 = ax.bar(x - width/2, m2_selectivity, width, label='M2 (COCONUT)',
+                  color=m2_color, edgecolor='white', linewidth=0.5)
+bars_m3 = ax.bar(x + width/2, m3_selectivity, width, label='M3 (Pause)',
                   color=m3_color, edgecolor='white', linewidth=0.5)
-bars_m5 = ax.bar(x + width/2, m5_selectivity, width, label='M5 (Pause)',
-                  color=m5_color, edgecolor='white', linewidth=0.5)
 
 # Zero line
 ax.axhline(y=0, color='black', linewidth=0.8, linestyle='-')
@@ -73,15 +76,15 @@ for i in range(4):  # positions 0-3
 
     # For position 3, same height side by side (smaller font to fit)
     if is_hero:
-        annotate_bar(ax, x[i] - width/2, m3_selectivity[i], m3_text,
+        annotate_bar(ax, x[i] - width/2, m2_selectivity[i], m2_text,
                      offset=4, fontsize=9.5, fontweight=fw)
-        annotate_bar(ax, x[i] + width/2, m5_selectivity[i], m5_text,
+        annotate_bar(ax, x[i] + width/2, m3_selectivity[i], m3_text,
                      offset=4, fontsize=9.5, fontweight=fw)
     else:
-        offset = 3.5 if abs(m3_selectivity[i]) > 5 else 2.5
-        annotate_bar(ax, x[i] - width/2, m3_selectivity[i], m3_text,
+        offset = 3.5 if abs(m2_selectivity[i]) > 5 else 2.5
+        annotate_bar(ax, x[i] - width/2, m2_selectivity[i], m2_text,
                      offset=offset, fontsize=fs, fontweight=fw)
-        annotate_bar(ax, x[i] + width/2, m5_selectivity[i], m5_text,
+        annotate_bar(ax, x[i] + width/2, m3_selectivity[i], m3_text,
                      offset=offset, fontsize=fs, fontweight=fw)
 
 # Labels and formatting
