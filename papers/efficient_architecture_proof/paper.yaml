@@ -8,18 +8,24 @@ authors:
 abstract: >
   Meta's COCONUT (Chain of Continuous Thought) replaces explicit chain-of-thought
   with continuous hidden states recycled as input embeddings, achieving 97% accuracy
-  on ProsQA graph traversal. We train a compute-matched pause-token control (M5) that
-  receives the same 7-stage curriculum and same number of thought positions but uses a
-  single learned embedding instead of recycled hidden states. M5 matches COCONUT on
-  in-distribution accuracy (97.3% vs 97.3% validation; 95.6% vs 98.0% test) and shows
-  identical corruption profiles: same degradation cliff at position 4, zero permutation
-  sensitivity, and successful cross-problem transplantation. On out-of-distribution
-  generalization, M5 outperforms COCONUT on 3 of 4 test sets by 7-9 percentage points
-  (McNemar p=0.001 on 7-hop after Bonferroni correction). Linear probes reveal zero
-  step-specific selectivity in both models, with COCONUT encoding more task information
-  at thought positions (10.5% vs 4.0% advantage over input positions) that does not
-  translate to better performance. The training curriculum drives COCONUT's gains on
-  ProsQA; the continuous thought mechanism does not.
+  on ProsQA graph traversal. We construct two curriculum-matched controls: M3, a
+  single-pass pause-token baseline, and M4, a multi-pass control matching COCONUT's
+  sequential processing structure while using fixed embeddings, enabling factorial
+  decomposition of recycled-content and sequential-processing factors. M3 reaches
+  96.6% test accuracy, not significantly different from COCONUT's 97.0% (McNemar
+  p = 0.845); M4 reaches 94.8% (p = 0.354 after Bonferroni correction). Three
+  converging experiments probe the distinction: corruption analysis reveals identical
+  degradation profiles for M2 and M3, linear probes reveal identical selectivity
+  profiles despite COCONUT encoding information more broadly across layers (29/78
+  vs. 11/78 significant probing cells), and cross-model thought transplantation
+  succeeds bidirectionally. On out-of-distribution generalization, factorial
+  decomposition via M4 cleanly separates two confounded factors: recycled content
+  actively hurts chain-length extrapolation (M4 outperforms M2 by 10.9pp on 7-hop,
+  p < 0.001), while sequential processing drives DAG generalization (M4 outperforms
+  M3 by 7.9pp, p < 0.001). At GPT-2 124M scale, the training curriculum drives
+  COCONUT's accuracy on ProsQA; the continuous thought mechanism contributes
+  measurably higher confidence (Wilcoxon r = 0.678 on in-distribution data) but
+  does not improve accuracy.
 
 keywords:
   - latent reasoning
@@ -106,8 +112,8 @@ training:
 results:
   in_distribution:
     M1_test: 0.830
-    M2_test: 0.980
-    M3_test: 0.956
+    M2_test: 0.970
+    M3_test: 0.966
     M4_test: 0.948
     M2_val: 0.973
     M3_val: 0.973
@@ -122,7 +128,7 @@ results:
     M4_all_positions_critical: true  # 2.4% accuracy when any single position corrupted
   probing:
     M2_peak_accuracy: 0.554
-    M3_peak_accuracy: 0.571
+    M3_peak_accuracy: 0.570
     M2_peak_layer: 0
     M3_peak_layer: 12
     M2_selectivity: 0.52
@@ -151,27 +157,38 @@ results:
     M3_vs_M4_id: { r: 0.286, p: 1.61e-10, direction: "M3>M4" }
 
 statistical_tests:
-  # M3 vs M2 (original two-model comparison)
+  _NOTE: "All McNemar tests are exact (two-sided binomial on discordant pairs), matching manuscript Tables 5b/5c."
+  # M3 vs M2 (original two-model comparison, exact McNemar)
+  mcnemar_prosqa_id:
+    b: 14
+    c: 12
+    p_exact: 0.845
+    p_bonferroni: 1.000
+    significant: false
   mcnemar_7hop:
-    chi2: 10.107
-    p_raw: 0.00148
-    p_bonferroni: 0.00739
+    b: 120
+    c: 214
+    p_exact: 0.000
+    p_bonferroni: 0.000
     significant: true
   mcnemar_8hop:
-    chi2: 6.643
-    p_raw: 0.00995
-    p_bonferroni: 0.04977
+    b: 122
+    c: 198
+    p_exact: 0.000
+    p_bonferroni: 0.000
     significant: true
   mcnemar_dag:
-    chi2: 5.076
-    p_raw: 0.02425
-    p_bonferroni: 0.12126
-    significant: false
+    b: 235
+    c: 162
+    p_exact: 0.000291
+    p_bonferroni: 0.0015
+    significant: true
   mcnemar_dense:
-    chi2: 5.340
-    p_raw: 0.02084
-    p_bonferroni: 0.10420
-    significant: false
+    b: 139
+    c: 211
+    p_exact: 0.000
+    p_bonferroni: 0.000
+    significant: true
   # M4 vs M2 ID (recycled content test)
   mcnemar_M4_vs_M2_id:
     diff_pp: -2.2

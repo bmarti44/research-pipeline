@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # Setup data for the COCONUT study.
 #
-# This script copies ProsQA data from Meta's COCONUT submodule into
-# code/data/ where training configs and experiment scripts expect it,
-# then generates the OOD test sets.
+# ProsQA data files are tracked in code/data/ and available after cloning.
+# This script is only needed if code/data/ is missing (e.g., fresh clone
+# without LFS, or data files were deleted) — it copies from the COCONUT
+# git submodule. It also regenerates OOD test sets if missing.
 #
 # Prerequisites:
-#   - Git submodules must be initialized:
+#   - Git submodules initialized (for ProsQA source):
 #       git submodule update --init --recursive
 #   - Python environment with dependencies installed:
 #       pip install -r requirements.txt
@@ -21,43 +22,43 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CODE_DIR="${SCRIPT_DIR}/code"
 DATA_DIR="${CODE_DIR}/data"
 REF_DATA="${SCRIPT_DIR}/reference_repos/coconut/data"
-CKPT_DATA="${SCRIPT_DIR}/checkpoints/data"
 
 echo "=== COCONUT Study: Data Setup ==="
 echo ""
 
-# Step 1: Check that data is available from at least one source
-if [ ! -f "${REF_DATA}/prosqa_train.json" ] && [ ! -f "${CKPT_DATA}/prosqa_train.json" ]; then
-    echo "ERROR: ProsQA data not found in either:"
-    echo "  ${REF_DATA}  (git submodule)"
-    echo "  ${CKPT_DATA}  (checkpoints/data/)"
-    echo ""
-    echo "Option 1: Initialize the submodule:"
-    echo "  git submodule update --init --recursive"
-    echo ""
-    echo "Option 2: Place data files in checkpoints/data/"
-    exit 1
-fi
-
-# Step 2: Copy ProsQA data to code/data/
-echo "Step 1: Copying ProsQA data to code/data/..."
+# Step 1: Copy ProsQA data to code/data/ if missing
 mkdir -p "${DATA_DIR}"
+NEED_COPY=false
 
 for f in prosqa_train.json prosqa_valid.json prosqa_test.json; do
-    if [ -f "${DATA_DIR}/${f}" ]; then
-        echo "  ${f} already exists, skipping"
-    elif [ -f "${CKPT_DATA}/${f}" ]; then
-        cp "${CKPT_DATA}/${f}" "${DATA_DIR}/${f}"
-        echo "  Copied ${f} from checkpoints/data/"
-    elif [ -f "${REF_DATA}/${f}" ]; then
-        cp "${REF_DATA}/${f}" "${DATA_DIR}/${f}"
-        echo "  Copied ${f} from reference_repos/coconut/data/"
-    else
-        echo "  WARNING: ${f} not found in any source"
+    if [ ! -f "${DATA_DIR}/${f}" ]; then
+        NEED_COPY=true
+        break
     fi
 done
 
-# Step 3: Verify data
+if [ "${NEED_COPY}" = true ]; then
+    echo "Step 1: Copying ProsQA data to code/data/..."
+    if [ ! -f "${REF_DATA}/prosqa_train.json" ]; then
+        echo "ERROR: ProsQA data not found in ${REF_DATA}"
+        echo ""
+        echo "Initialize the submodule first:"
+        echo "  git submodule update --init --recursive"
+        exit 1
+    fi
+    for f in prosqa_train.json prosqa_valid.json prosqa_test.json; do
+        if [ -f "${DATA_DIR}/${f}" ]; then
+            echo "  ${f} already exists, skipping"
+        else
+            cp "${REF_DATA}/${f}" "${DATA_DIR}/${f}"
+            echo "  Copied ${f} from reference_repos/coconut/data/"
+        fi
+    done
+else
+    echo "Step 1: ProsQA data already present in code/data/, skipping"
+fi
+
+# Step 2: Verify data
 echo ""
 echo "Step 2: Verifying data files..."
 for f in prosqa_train.json prosqa_valid.json prosqa_test.json; do
@@ -65,9 +66,9 @@ for f in prosqa_train.json prosqa_valid.json prosqa_test.json; do
     echo "  ${f}: ${size}"
 done
 
-# Step 4: Generate OOD test sets
+# Step 3: Generate OOD test sets if missing
 echo ""
-echo "Step 3: Generating OOD test sets..."
+echo "Step 3: Checking OOD test sets..."
 cd "${CODE_DIR}"
 
 if [ -f data/ood_7hop.json ] && [ -f data/ood_8hop.json ] && \

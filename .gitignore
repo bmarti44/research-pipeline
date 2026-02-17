@@ -64,8 +64,7 @@ htmlcov/
 .pytest_cache/
 .hypothesis/
 
-# Build artifacts
-*.log
+# Build artifactslog
 *.tmp
 *.temp
 
@@ -87,6 +86,7 @@ zenodo_release/
 *.bin
 *.onnx
 *.safetensors
+*.npz
 checkpoint_best
 **/coconut_checkpoints*/
 

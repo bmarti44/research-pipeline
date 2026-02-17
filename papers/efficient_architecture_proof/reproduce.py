@@ -24,7 +24,6 @@ REPO_ROOT = Path(__file__).resolve().parent
 CODE_DIR = REPO_ROOT / "code"
 DATA_DIR = CODE_DIR / "data"
 RESULTS_DIR = REPO_ROOT / "results"
-CKPT_DATA = REPO_ROOT / "checkpoints" / "data"
 REF_DATA = REPO_ROOT / "reference_repos" / "coconut" / "data"
 
 # HuggingFace Hub repo
@@ -107,40 +106,25 @@ def setup_data(dry_run=False):
     core_files = ["prosqa_train.json", "prosqa_valid.json", "prosqa_test.json"]
     ood_files = ["ood_7hop.json", "ood_8hop.json", "ood_dag.json", "ood_dense.json"]
 
-    # Copy core ProsQA data
+    # Copy core ProsQA data if missing (data is tracked in code/data/)
     for f in core_files:
         dest = DATA_DIR / f
         if dest.exists():
             print(f"  {f} already exists, skipping")
             continue
-        # Try checkpoints/data/ first, then reference_repos/
-        src = CKPT_DATA / f
+        src = REF_DATA / f
         if not src.exists():
-            src = REF_DATA / f
-        if not src.exists():
-            print(f"  ERROR: {f} not found in checkpoints/data/ or reference_repos/coconut/data/")
+            print(f"  ERROR: {f} not found in reference_repos/coconut/data/")
             print(f"  Run: git submodule update --init --recursive")
             return False
         if not dry_run:
             shutil.copy2(src, dest)
-        print(f"  Copied {f} from {src.parent.name}/")
+        print(f"  Copied {f} from reference_repos/coconut/data/")
 
-    # Copy OOD data if available, otherwise generate
+    # Generate OOD data if missing (data is tracked in code/data/)
     ood_missing = [f for f in ood_files if not (DATA_DIR / f).exists()]
     if ood_missing:
-        # Try copying from checkpoints/data/
-        copied = False
-        for f in ood_missing:
-            src = CKPT_DATA / f
-            if src.exists():
-                if not dry_run:
-                    shutil.copy2(src, DATA_DIR / f)
-                print(f"  Copied {f} from checkpoints/data/")
-                copied = True
-
-        # If any still missing, generate them
-        still_missing = [f for f in ood_files if not (DATA_DIR / f).exists()]
-        if still_missing and not dry_run:
+        if not dry_run:
             print("  Generating OOD test sets...")
             run([sys.executable, "generate_ood_data.py"], dry_run=dry_run, cwd=str(CODE_DIR))
     else:

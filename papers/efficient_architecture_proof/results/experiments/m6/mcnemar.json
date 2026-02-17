@@ -1,4 +1,7 @@
 {
+  "_DEPRECATED": "This file uses training-time evaluation predictions (M2=98.0%, M3=95.6%), not experiment-pipeline predictions (M2=97.0%, M3=96.6%). The manuscript (Tables 5b, 5c) was recomputed from experiment-pipeline per-sample predictions. Do not use this file for manuscript claims. See manuscript Table 2 footnote for pipeline discrepancy details.",
+  "_stale_ref_acc_m2": "0.98 (training-time); correct experiment-pipeline value is 0.970",
+  "_stale_ref_acc_m3": "0.956 (training-time); correct experiment-pipeline value is 0.966",
   "n_tests": 10,
   "results": {
     "m6_vs_m3_prosqa_test": {

@@ -1,0 +1,37 @@
+{
+  "model": "m6_epoch39",
+  "checkpoint": "/lambda/nfs/experiment/results/v9_meta_fork/prosqa-m6-pause-multipass/checkpoint_39",
+  "feedback_mode": "pause_multipass",
+  "stages_run": [
+    "accuracy"
+  ],
+  "results": {
+    "accuracy": {
+      "prosqa_test": {
+        "accuracy": 0.95,
+        "correct": 475,
+        "total": 500
+      },
+      "ood_7hop": {
+        "accuracy": 0.73,
+        "correct": 730,
+        "total": 1000
+      },
+      "ood_8hop": {
+        "accuracy": 0.732,
+        "correct": 732,
+        "total": 1000
+      },
+      "ood_dag": {
+        "accuracy": 0.608,
+        "correct": 608,
+        "total": 1000
+      },
+      "ood_dense": {
+        "accuracy": 0.667,
+        "correct": 667,
+        "total": 1000
+      }
+    }
+  }
+}

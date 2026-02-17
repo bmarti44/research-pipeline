@@ -1,0 +1,36 @@
+{
+  "clean_accuracy": 0.97,
+  "forward_corruption": [
+    0.968,
+    0.968,
+    0.968,
+    0.574,
+    0.156,
+    0.024
+  ],
+  "reverse_corruption": [
+    0.97,
+    0.968,
+    0.968,
+    0.574,
+    0.156,
+    0.024
+  ],
+  "single_position": [
+    0.968,
+    0.968,
+    0.968,
+    0.576,
+    0.156,
+    0.024
+  ],
+  "total_samples": 500,
+  "sensitivity": "high_uniform",
+  "cross_transplant_accuracy": 0.97,
+  "cross_transplant_pairs": 200,
+  "permutation_flip_rate": 0.0,
+  "mean_permutation_flip_rate": 0.0,
+  "permutation_total_samples": 500,
+  "partial_permutation_flip_rate": 0.0,
+  "partial_permutation_total_samples": 500
+}

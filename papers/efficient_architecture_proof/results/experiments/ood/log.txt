@@ -1,0 +1,375 @@
+======================================================================
+OOD GENERALIZATION EXPERIMENT
+======================================================================
+Checkpoint dir: /lambda/nfs/experiment/results/v9_meta_fork
+Data dir:       data/
+Output dir:     /lambda/nfs/experiment/results/v9_meta_fork/experiments/ood/
+Seed:           0
+Num thoughts:   6
+
+Loading test sets...
+  prosqa_test: 500 samples
+  ood_7hop: 1000 samples
+  ood_8hop: 1000 samples
+  ood_dag: 1000 samples
+  ood_dense: 1000 samples
+
+============================================================
+Loading model: m1
+============================================================
+[load_model] Plain GPT-2 loaded from /lambda/nfs/experiment/results/v9_meta_fork/prosqa-cot/checkpoint_50
+  Missing keys: []
+  Unexpected keys: []
+  Type: cot, feedback_mode: None
+
+  Evaluating m1 on prosqa_test (500 samples)...
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+    Sample 0: GT='Sally is a sterpus.' Pred='Sally is a sterpus.' Correct=True
+    Sample 1: GT='Bob is a shumpus.' Pred='Bob is a zhorpus.' Correct=False
+    Sample 2: GT='Max is a boompus.' Pred='Max is a boompus.' Correct=True
+    Progress: 100/500 acc=0.8000
+    Progress: 200/500 acc=0.8300
+    Progress: 300/500 acc=0.8167
+    Progress: 400/500 acc=0.8225
+    Progress: 500/500 acc=0.8300
+  m1 / prosqa_test: accuracy=0.8300 (303.2s)
+
+  Evaluating m1 on ood_7hop (1000 samples)...
+    Sample 0: GT='Davis is a boompus.' Pred='Davis is a lempus.' Correct=False
+    Sample 1: GT='Sally is a yerpus.' Pred='Sally is a zumpus.' Correct=False
+    Sample 2: GT='Wren is a yumpus.' Pred='Every boompus is a gerpus. Every scrompus is a quimpus. Every quimpus is a timpus. Every numpus is a yimpus. Every brimpus is a timpus. Every worpus is a brimpus. Every yimpus is a brimpus. Every yimpus is a timpus. Every quimpus is a kerpus. Wren is a numpus. Every rempus is a worpus. Every boompus is a storpus. Every rempus is a numpus. Every boompus is a timpus. Every yumpus is a timpus. Every worpus is a boompus. Every kerpus is a storpus. Wren is a storpus. Wren is a yimpus. Every gerpus is a storpus. Every boompus is a numpus. Every boompus is a yimpus. Every gerpus is a scrompus. Every kerpus is a yumpus. Every quimpus is a numpus. Every worpus is a storpus. Every kerpus is a yimpus. Every timpus is a brimpus. Every rempus is a storpus. Is Wren a yumpus or a brimpus?
+Wren is a yimpus.
+Every yimpus is a brimpus.
+Every brimpus is a timpus.
+Every timpus is a brimpus.
+Every brimpus is a timpus.
+Every timpus is a brimpus.
+Every brimpus is a timpus.
+Every timpus is a brimpus.
+Every brimpus is a timpus.
+Every timpus is a brimpus.
+Every brimpus is a timpus.
+Every timpus is a brimpus' Correct=False
+    Progress: 100/1000 acc=0.1700
+    Progress: 200/1000 acc=0.1350
+    Progress: 300/1000 acc=0.1033
+    Progress: 400/1000 acc=0.1150
+    Progress: 500/1000 acc=0.1100
+    Progress: 600/1000 acc=0.1050
+    Progress: 700/1000 acc=0.1057
+    Progress: 800/1000 acc=0.1100
+    Progress: 900/1000 acc=0.1056
+    Progress: 1000/1000 acc=0.1070
+  m1 / ood_7hop: accuracy=0.1070 (969.6s)
+
+  Evaluating m1 on ood_8hop (1000 samples)...
+    Sample 0: GT='Sally is a boompus.' Pred='Every rempus is a scrompus. Every grimpus is a scrompus. Every yumpus is a felpus. Every fompus is a brimpus. Every jompus is a rompus. Every tumpus is a hilpus. Every tumpus is a jompus. Every quimpus is a felpus. Every felpus is a yimpus. Every zhorpus is a hilpus. Every yimpus is a grimpus. Every wumpus is a shumpus. Every gorpus is a fompus. Every brimpus is a yumpus. Every zhorpus is a yimpus. Every shumpus is a grimpus. Every yimpus is a shumpus. Every yumpus is a wumpus. Sally is a felpus. Every grimpus is a bompus. Every rompus is a quimpus. Every quimpus is a scrompus. Every quimpus is a boompus. Every bompus is a hilpus. Every quimpus is a shumpus. Every yumpus is a tumpus. Is Sally a boompus or a rempus?
+Sally is a felpus.
+Every felpus is a yimpus.
+Every yimpus is a grimpus.
+Every grimpus is a bompus.
+Every bompus is a yimpus.
+Every yimpus is a shumpus.
+Every shumpus is a grimpus.
+Every grimpus is a bompus.
+Every bompus is a yimpus.
+Every yimpus is a shumpus.
+Every shumpus is a grimpus.
+Every grimpus is a bompus' Correct=False
+    Sample 1: GT='Bob is a lorpus.' Pred='Bob is a sterpus. Every impus is a chorpus. Every numpus is a brimpus. Every vumpus is a wumpus. Every zumpus is a sterpus. Every numpus is a gorpus. Every gorpus is a sterpus. Every zumpus is a gorpus. Every zumpus is a lorpus. Every yumpus is a chorpus. Every yumpus is a grimpus. Every hilpus is a vumpus. Bob is a brimpus. Every sterpus is a grimpus. Every brimpus is a gorpus. Every impus is a sterpus. Every lorpus is a chorpus. Every vumpus is a yumpus. Every rorpus is a gorpus. Every rorpus is a hilpus. Every brimpus is a chorpus. Every tumpus is a numpus. Every numpus is a zumpus. Every numpus is a wumpus. Every rorpus is a chorpus. Every wumpus is a sterpus. Every yumpus is a impus. Every grimpus is a brimpus. Bob is a chorpus. Every vumpus is a grimpus. Every rorpus is a grimpus. Every vumpus is a brimpus. Every impus is a tumpus. Is Bob a lorpus or a grimpus?
+Bob is a brimpus.
+Every brimpus is a gorpus.
+Every gorpus is a sterpus.
+Every sterpus is a grimpus.
+Every grimpus is a brimpus.
+Every brimpus is a gorpus.
+Every gorpus is a sterpus.
+Every sterpus is a grimpus.
+Every grimpus is a brimpus.
+Every brimpus is a gorpus.
+Every gorpus is a sterpus.
+Every sterpus is a grimpus.' Correct=False
+    Sample 2: GT='Bob is a kerpus.' Pred='Every dumpus is a jompus. Every dumpus is a gwompus. Every jompus is a rompus. Every storpus is a kerpus. Every rempus is a brimpus. Every gwompus is a yerpus. Every gorpus is a gwompus. Every kerpus is a quimpus. Every gorpus is a rompus. Every timpus is a rompus. Every hilpus is a jompus. Every timpus is a storpus. Every hilpus is a gorpus. Every sterpus is a hilpus. Every quimpus is a yerpus. Every timpus is a gwompus. Every gorpus is a rempus. Every brimpus is a dumpus. Every quimpus is a gwompus. Bob is a yerpus. Every dumpus is a yerpus. Every yerpus is a quimpus. Every dumpus is a timpus. Is Bob a kerpus or a yerpus?
+Bob is a yerpus.
+Every yerpus is a quimpus.
+Every quimpus is a gwompus.
+Every gwompus is a yerpus.
+Every yerpus is a quimpus.
+Every quimpus is a gwompus.
+Every gwompus is a yerpus.
+Every yerpus is a quimpus.
+Every quimpus is a gwompus.
+Every gwompus is a yerpus.
+Every yerpus is a qu' Correct=False
+    Progress: 100/1000 acc=0.0600
+    Progress: 200/1000 acc=0.0700
+    Progress: 300/1000 acc=0.0633
+    Progress: 400/1000 acc=0.0600
+    Progress: 500/1000 acc=0.0680
+    Progress: 600/1000 acc=0.0750
+    Progress: 700/1000 acc=0.0771
+    Progress: 800/1000 acc=0.0750
+    Progress: 900/1000 acc=0.0789
+    Progress: 1000/1000 acc=0.0820
+  m1 / ood_8hop: accuracy=0.0820 (955.1s)
+
+  Evaluating m1 on ood_dag (1000 samples)...
+    Sample 0: GT='Stella is a vumpus.' Pred='Stella is a vumpus.' Correct=True
+    Sample 1: GT='Sam is a yimpus.' Pred='Every hilpus is a lorpus. Every storpus is a yimpus. Every jelpus is a timpus. Every timpus is a yimpus. Every lorpus is a timpus. Every timpus is a bompus. Every timpus is a fompus. Every lempus is a hilpus. Every lempus is a jelpus. Every storpus is a gwompus. Sam is a gerpus. Every lempus is a rompus. Every rompus is a lorpus. Every chorpus is a bompus. Every dumpus is a quimpus. Every lempus is a storpus. Is Sam a yimpus or a dumpus?
+Sam is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.
+Every gerpus is a gerpus.' Correct=False
+    Sample 2: GT='Wren is a zhorpus.' Pred='Every chorpus is a zhorpus. Every hilpus is a worpus. Every gwompus is a yerpus. Every yimpus is a quimpus. Every hilpus is a yimpus. Every yerpus is a bompus. Every tumpus is a grimpus. Every quimpus is a yimpus. Every worpus is a tumpus. Every bompus is a chorpus. Every gorpus is a bompus. Every scrompus is a sterpus. Every hilpus is a zhorpus. Every gwompus is a gorpus. Every gwompus is a scrompus. Every jelpus is a yimpus. Every yimpus is a jelpus. Every quimpus is a jelpus. Every scrompus is a chorpus. Every gwompus is a hilpus. Is Wren a sterpus or a zhorpus?
+Wren is a yimpus.
+Every yimpus is a quimpus.
+Every quimpus is a yimpus.
+Every yimpus is a jelpus.
+Every jelpus is a yimpus.
+Every yimpus is a jelpus.
+Every jelpus is a yimpus.
+Every yimpus is a jelpus.
+Every jelpus is a yimpus.
+Every yimpus is a jelpus.
+Every jelpus is a yimpus.
+Every' Correct=False
+    Progress: 100/1000 acc=0.3200
+    Progress: 200/1000 acc=0.2950
+    Progress: 300/1000 acc=0.2900
+    Progress: 400/1000 acc=0.2775
+    Progress: 500/1000 acc=0.2720
+    Progress: 600/1000 acc=0.2750
+    Progress: 700/1000 acc=0.2814
+    Progress: 800/1000 acc=0.2787
+    Progress: 900/1000 acc=0.2889
+    Progress: 1000/1000 acc=0.2820
+  m1 / ood_dag: accuracy=0.2820 (736.6s)
+
+  Evaluating m1 on ood_dense (1000 samples)...
+    Sample 0: GT='Sally is a yerpus.' Pred='Sally is a yerpus.' Correct=True
+    Sample 1: GT='Fae is a rompus.' Pred='Every hilpus is a lempus. Every chorpus is a hilpus. Every zhorpus is a numpus. Every zhorpus is a kerpus. Every lempus is a kerpus. Every zhorpus is a shumpus. Every rompus is a lempus. Every chorpus is a fompus. Every kerpus is a yerpus. Every brimpus is a rompus. Every bompus is a brimpus. Every chorpus is a dumpus. Every numpus is a yerpus. Every numpus is a fompus. Every fompus is a dumpus. Every rompus is a worpus. Every yerpus is a kerpus. Every worpus is a kerpus. Every rompus is a felpus. Every kerpus is a gerpus. Every bompus is a hilpus. Every numpus is a gerpus. Every rompus is a sterpus. Every yerpus is a lorpus. Every numpus is a lorpus. Every shumpus is a felpus. Every brimpus is a chorpus. Every numpus is a bompus. Is Fae a lempus or a rompus?
+Fae is a bompus.
+Every bompus is a brimpus.
+Every brimpus is a rompus.
+Every rompus is a lempus.
+Every lempus is a kerpus.
+Every kerpus is a yerpus.
+Every yerpus is a kerpus.
+Every kerpus is a yerpus.
+Every yerpus is a kerpus.
+Every kerpus is a yerpus.
+Every yerpus is a kerpus.
+Every kerp' Correct=False
+    Sample 2: GT='Carol is a quimpus.' Pred='Carol is a chorpus.' Correct=False
+    Progress: 100/1000 acc=0.1900
+    Progress: 200/1000 acc=0.1950
+    Progress: 300/1000 acc=0.1800
+    Progress: 400/1000 acc=0.1650
+    Progress: 500/1000 acc=0.1600
+    Progress: 600/1000 acc=0.1517
+    Progress: 700/1000 acc=0.1514
+    Progress: 800/1000 acc=0.1450
+    Progress: 900/1000 acc=0.1444
+    Progress: 1000/1000 acc=0.1410
+  m1 / ood_dense: accuracy=0.1410 (386.2s)
+  M1 CoT check: 0/50 outputs contain CoT (0.00)
+  Parser check: 49/50 outputs have valid format (0.98)
+
+============================================================
+Loading model: m3
+============================================================
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+[load_model] Resized embeddings: 50260 -> 50260
+[load_model] Coconut (continuous) loaded from /lambda/nfs/experiment/results/v9_meta_fork/prosqa-coconut/checkpoint_50
+  Missing keys: []
+  Unexpected keys: []
+  Type: coconut, feedback_mode: continuous
+  Thought token check: found 3, expected 3
+
+  Evaluating m3 on prosqa_test (500 samples)...
+    Sample 0: GT='Sally is a sterpus.' Pred='Sally is a sterpus.' Correct=True
+    Sample 1: GT='Bob is a shumpus.' Pred='Bob is a shumpus.' Correct=True
+    Sample 2: GT='Max is a boompus.' Pred='Max is a boompus.' Correct=True
+    Progress: 100/500 acc=0.9600
+    Progress: 200/500 acc=0.9700
+    Progress: 300/500 acc=0.9700
+    Progress: 400/500 acc=0.9675
+    Progress: 500/500 acc=0.9700
+  m3 / prosqa_test: accuracy=0.9700 (34.1s)
+
+  Evaluating m3 on ood_7hop (1000 samples)...
+    Sample 0: GT='Davis is a boompus.' Pred='Davis is a lempus.' Correct=False
+    Sample 1: GT='Sally is a yerpus.' Pred='Sally is a yerpus.' Correct=True
+    Sample 2: GT='Wren is a yumpus.' Pred='Wren is a yumpus.' Correct=True
+    Progress: 100/1000 acc=0.7500
+    Progress: 200/1000 acc=0.6950
+    Progress: 300/1000 acc=0.6833
+    Progress: 400/1000 acc=0.6675
+    Progress: 500/1000 acc=0.6760
+    Progress: 600/1000 acc=0.6717
+    Progress: 700/1000 acc=0.6643
+    Progress: 800/1000 acc=0.6625
+    Progress: 900/1000 acc=0.6622
+    Progress: 1000/1000 acc=0.6600
+  m3 / ood_7hop: accuracy=0.6600 (74.7s)
+
+  Evaluating m3 on ood_8hop (1000 samples)...
+    Sample 0: GT='Sally is a boompus.' Pred='Sally is a boompus.' Correct=True
+    Sample 1: GT='Bob is a lorpus.' Pred='Bob is a grimpus.' Correct=False
+    Sample 2: GT='Bob is a kerpus.' Pred='Bob is a kerpus.' Correct=True
+    Progress: 100/1000 acc=0.7100
+    Progress: 200/1000 acc=0.7300
+    Progress: 300/1000 acc=0.7300
+    Progress: 400/1000 acc=0.7100
+    Progress: 500/1000 acc=0.7040
+    Progress: 600/1000 acc=0.7117
+    Progress: 700/1000 acc=0.6886
+    Progress: 800/1000 acc=0.6775
+    Progress: 900/1000 acc=0.6756
+    Progress: 1000/1000 acc=0.6750
+  m3 / ood_8hop: accuracy=0.6750 (76.8s)
+
+  Evaluating m3 on ood_dag (1000 samples)...
+    Sample 0: GT='Stella is a vumpus.' Pred='Stella is a vumpus.' Correct=True
+    Sample 1: GT='Sam is a yimpus.' Pred='Sam is a yimpus.' Correct=True
+    Sample 2: GT='Wren is a zhorpus.' Pred='Wren is a sterpus.' Correct=False
+    Progress: 100/1000 acc=0.5900
+    Progress: 200/1000 acc=0.6250
+    Progress: 300/1000 acc=0.6100
+    Progress: 400/1000 acc=0.6125
+    Progress: 500/1000 acc=0.6080
+    Progress: 600/1000 acc=0.6083
+    Progress: 700/1000 acc=0.5957
+    Progress: 800/1000 acc=0.5950
+    Progress: 900/1000 acc=0.5922
+    Progress: 1000/1000 acc=0.5920
+  m3 / ood_dag: accuracy=0.5920 (65.4s)
+
+  Evaluating m3 on ood_dense (1000 samples)...
+    Sample 0: GT='Sally is a yerpus.' Pred='Sally is a yerpus.' Correct=True
+    Sample 1: GT='Fae is a rompus.' Pred='Fae is a rompus.' Correct=True
+    Sample 2: GT='Carol is a quimpus.' Pred='Carol is a quimpus.' Correct=True
+    Progress: 100/1000 acc=0.6100
+    Progress: 200/1000 acc=0.6050
+    Progress: 300/1000 acc=0.6200
+    Progress: 400/1000 acc=0.6075
+    Progress: 500/1000 acc=0.5860
+    Progress: 600/1000 acc=0.5983
+    Progress: 700/1000 acc=0.6057
+    Progress: 800/1000 acc=0.6050
+    Progress: 900/1000 acc=0.6144
+    Progress: 1000/1000 acc=0.6120
+  m3 / ood_dense: accuracy=0.6120 (73.9s)
+
+============================================================
+Loading model: m5
+============================================================
+[load_model] Resized embeddings: 50260 -> 50260
+[load_model] Coconut (pause_curriculum) loaded from /lambda/nfs/experiment/results/v9_meta_fork/prosqa-m5-pause/checkpoint_50
+  Missing keys: []
+  Unexpected keys: []
+  Type: coconut, feedback_mode: pause_curriculum
+  Thought token check: found 3, expected 3
+
+  Evaluating m5 on prosqa_test (500 samples)...
+    Sample 0: GT='Sally is a sterpus.' Pred='Sally is a sterpus.' Correct=True
+    Sample 1: GT='Bob is a shumpus.' Pred='Bob is a shumpus.' Correct=True
+    Sample 2: GT='Max is a boompus.' Pred='Max is a boompus.' Correct=True
+    Progress: 100/500 acc=0.9600
+    Progress: 200/500 acc=0.9750
+    Progress: 300/500 acc=0.9633
+    Progress: 400/500 acc=0.9625
+    Progress: 500/500 acc=0.9660
+  m5 / prosqa_test: accuracy=0.9660 (24.7s)
+
+  Evaluating m5 on ood_7hop (1000 samples)...
+    Sample 0: GT='Davis is a boompus.' Pred='Davis is a boompus.' Correct=True
+    Sample 1: GT='Sally is a yerpus.' Pred='Sally is a rempus.' Correct=False
+    Sample 2: GT='Wren is a yumpus.' Pred='Wren is a yumpus.' Correct=True
+    Progress: 100/1000 acc=0.7600
+    Progress: 200/1000 acc=0.7250
+    Progress: 300/1000 acc=0.7367
+    Progress: 400/1000 acc=0.7450
+    Progress: 500/1000 acc=0.7360
+    Progress: 600/1000 acc=0.7317
+    Progress: 700/1000 acc=0.7314
+    Progress: 800/1000 acc=0.7325
+    Progress: 900/1000 acc=0.7478
+    Progress: 1000/1000 acc=0.7540
+  m5 / ood_7hop: accuracy=0.7540 (44.7s)
+
+  Evaluating m5 on ood_8hop (1000 samples)...
+    Sample 0: GT='Sally is a boompus.' Pred='Sally is a boompus.' Correct=True
+    Sample 1: GT='Bob is a lorpus.' Pred='Bob is a grimpus.' Correct=False
+    Sample 2: GT='Bob is a kerpus.' Pred='Bob is a kerpus.' Correct=True
+    Progress: 100/1000 acc=0.7600
+    Progress: 200/1000 acc=0.7500
+    Progress: 300/1000 acc=0.7500
+    Progress: 400/1000 acc=0.7425
+    Progress: 500/1000 acc=0.7480
+    Progress: 600/1000 acc=0.7433
+    Progress: 700/1000 acc=0.7386
+    Progress: 800/1000 acc=0.7462
+    Progress: 900/1000 acc=0.7511
+    Progress: 1000/1000 acc=0.7510
+  m5 / ood_8hop: accuracy=0.7510 (46.8s)
+
+  Evaluating m5 on ood_dag (1000 samples)...
+    Sample 0: GT='Stella is a vumpus.' Pred='Stella is a vumpus.' Correct=True
+    Sample 1: GT='Sam is a yimpus.' Pred='Sam is a yimpus.' Correct=True
+    Sample 2: GT='Wren is a zhorpus.' Pred='Wren is a sterpus.' Correct=False
+    Progress: 100/1000 acc=0.5600
+    Progress: 200/1000 acc=0.5200
+    Progress: 300/1000 acc=0.5500
+    Progress: 400/1000 acc=0.5475
+    Progress: 500/1000 acc=0.5380
+    Progress: 600/1000 acc=0.5317
+    Progress: 700/1000 acc=0.5229
+    Progress: 800/1000 acc=0.5288
+    Progress: 900/1000 acc=0.5200
+    Progress: 1000/1000 acc=0.5190
+  m5 / ood_dag: accuracy=0.5190 (40.8s)
+
+  Evaluating m5 on ood_dense (1000 samples)...
+    Sample 0: GT='Sally is a yerpus.' Pred='Sally is a yerpus.' Correct=True
+    Sample 1: GT='Fae is a rompus.' Pred='Fae is a lempus.' Correct=False
+    Sample 2: GT='Carol is a quimpus.' Pred='Carol is a rempus.' Correct=False
+    Progress: 100/1000 acc=0.7000
+    Progress: 200/1000 acc=0.6700
+    Progress: 300/1000 acc=0.6767
+    Progress: 400/1000 acc=0.6750
+    Progress: 500/1000 acc=0.6780
+    Progress: 600/1000 acc=0.6750
+    Progress: 700/1000 acc=0.6814
+    Progress: 800/1000 acc=0.6875
+    Progress: 900/1000 acc=0.6867
+    Progress: 1000/1000 acc=0.6840
+  m5 / ood_dense: accuracy=0.6840 (48.7s)
+
+Results saved to /lambda/nfs/experiment/results/v9_meta_fork/experiments/ood/results.json
+Detailed outputs saved to /lambda/nfs/experiment/results/v9_meta_fork/experiments/ood/detailed_outputs.json
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+Model   prosqa_test     ood_7hop        ood_8hop        ood_dag         ood_dense       
+----------------------------------------------------------------------------------------
+m1      0.8300          0.1070          0.0820          0.2820          0.1410          
+m3      0.9700          0.6600          0.6750          0.5920          0.6120          
+m5      0.9660          0.7540          0.7510          0.5190          0.6840          
+
+Verification:
+  m1_generates_cot: False
+  parser_accuracy: 0.98
+  thought_token_checks: {'m3': True, 'm5': True}
+  thought_token_count_correct: True
+
+Done.

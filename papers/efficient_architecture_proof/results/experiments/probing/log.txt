@@ -1,0 +1,184 @@
+======================================================================
+REPRESENTATION PROBING EXPERIMENT
+======================================================================
+Checkpoint dir:  /lambda/nfs/experiment/results/v9_meta_fork
+Data:            data/prosqa_test.json
+Num samples:     500
+Output dir:      /lambda/nfs/experiment/results/v9_meta_fork/experiments/probing/
+Seed:            0
+Num thoughts:    6
+N permutations:  0
+
+Loading data...
+  Loaded 500 samples
+
+Running synthetic probe verification...
+  Synthetic probe test: accuracy = 1.0000 (expect > 0.99)
+Bonferroni threshold: p < 0.000641
+
+============================================================
+Processing model: m3
+============================================================
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+[load_model] Resized embeddings: 50260 -> 50260
+[load_model] Coconut (continuous) loaded from /lambda/nfs/experiment/results/v9_meta_fork/prosqa-coconut/checkpoint_50
+  Missing keys: []
+  Unexpected keys: []
+  Extracting hidden states from 500 samples...
+    Extracted: 100/500 (skipped 0)
+    Extracted: 200/500 (skipped 0)
+    Extracted: 300/500 (skipped 0)
+    Extracted: 400/500 (skipped 0)
+    Extracted: 500/500 (skipped 0)
+  Total extracted: 500, skipped: 0
+  Extraction done in 19.3s
+  Running linear + nonlinear probes (13 layers x 6 positions)...
+    Position 0: 500 samples, 38 classes
+      Linear:    layer 8, acc=0.1300, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 1: 500 samples, 38 classes
+      Linear:    layer 12, acc=0.1000, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 2: 500 samples, 38 classes
+      Linear:    layer 12, acc=0.1900, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 3: 298 samples, 38 classes
+      Linear:    layer 0, acc=0.5537, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 4: 81 samples, 32 classes
+      Linear:    layer 0, acc=0.0000, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 5: 12 samples, 12 classes
+      Linear:    layer 0, acc=0.0000, sig=False
+      Nonlinear: layer 0, acc=0.0000
+  Probing done in 12.4s
+  Computing selectivity metric...
+  Selectivity done in 0.0s
+    Mean selectivity (positive cells): 0.0000
+    Max cross-position probe acc:      0.0000
+    Front-to-back leakage (t=0->t=5): 0.0000
+  Running input-position control probes...
+  Input-position extraction: 500 samples, skipped 0
+  Input-position control done in 31.7s
+    Mean thought-over-input advantage: 0.1052
+    Max input-position probe acc:      0.0500
+  Saved intermediate results to /lambda/nfs/experiment/results/v9_meta_fork/experiments/probing/m3_probing.json
+
+  Probe accuracy heatmap for m3:
+  Layer   t=0     t=1     t=2     t=3     t=4     t=5     
+  0       0.086  0.086  0.186  0.554  0.000  0.000  
+  1       0.088  0.088  0.160  0.547  0.000  0.000  
+  2       0.088  0.080  0.184  0.490  0.000  0.000  
+  3       0.080  0.072  0.146  0.466  0.000  0.000  
+  4       0.090  0.060  0.144  0.460  0.000  0.000  
+  5       0.076  0.074  0.140  0.430  0.000  0.000  
+  6       0.098  0.058  0.138  0.396  0.000  0.000  
+  7       0.072  0.064  0.122  0.379  0.000  0.000  
+  8       0.130  0.066  0.130  0.258  0.000  0.000  
+  9       0.090  0.076  0.118  0.279  0.000  0.000  
+  10      0.058  0.094  0.140  0.329  0.000  0.000  
+  11      0.076  0.094  0.174  0.527  0.000  0.000  
+  12      0.054  0.100  0.190  0.550  0.000  0.000  
+
+============================================================
+Processing model: m5
+============================================================
+[load_model] Resized embeddings: 50260 -> 50260
+[load_model] Coconut (pause_curriculum) loaded from /lambda/nfs/experiment/results/v9_meta_fork/prosqa-m5-pause/checkpoint_50
+  Missing keys: []
+  Unexpected keys: []
+  Extracting hidden states from 500 samples...
+    Extracted: 100/500 (skipped 0)
+    Extracted: 200/500 (skipped 0)
+    Extracted: 300/500 (skipped 0)
+    Extracted: 400/500 (skipped 0)
+    Extracted: 500/500 (skipped 0)
+  Total extracted: 500, skipped: 0
+  Extraction done in 9.6s
+  Running linear + nonlinear probes (13 layers x 6 positions)...
+    Position 0: 500 samples, 38 classes
+      Linear:    layer 8, acc=0.2360, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 1: 500 samples, 38 classes
+      Linear:    layer 11, acc=0.1040, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 2: 500 samples, 38 classes
+      Linear:    layer 12, acc=0.2200, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 3: 298 samples, 38 classes
+      Linear:    layer 12, acc=0.5705, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 4: 81 samples, 32 classes
+      Linear:    layer 0, acc=0.0000, sig=False
+      Nonlinear: layer 0, acc=0.0000
+    Position 5: 12 samples, 12 classes
+      Linear:    layer 0, acc=0.0000, sig=False
+      Nonlinear: layer 0, acc=0.0000
+  Probing done in 12.8s
+  Computing selectivity metric...
+  Selectivity done in 0.0s
+    Mean selectivity (positive cells): 0.0000
+    Max cross-position probe acc:      0.0000
+    Front-to-back leakage (t=0->t=5): 0.0000
+  Running input-position control probes...
+  Input-position extraction: 500 samples, skipped 0
+  Input-position control done in 23.0s
+    Mean thought-over-input advantage: 0.0396
+    Max input-position probe acc:      0.0620
+  Saved intermediate results to /lambda/nfs/experiment/results/v9_meta_fork/experiments/probing/m5_probing.json
+
+  Probe accuracy heatmap for m5:
+  Layer   t=0     t=1     t=2     t=3     t=4     t=5     
+  0       0.032  0.032  0.044  0.044  0.000  0.000  
+  1       0.036  0.018  0.050  0.064  0.000  0.000  
+  2       0.058  0.030  0.044  0.050  0.000  0.000  
+  3       0.050  0.030  0.042  0.074  0.000  0.000  
+  4       0.052  0.036  0.044  0.084  0.000  0.000  
+  5       0.068  0.030  0.058  0.114  0.000  0.000  
+  6       0.074  0.058  0.046  0.084  0.000  0.000  
+  7       0.104  0.040  0.034  0.047  0.000  0.000  
+  8       0.236  0.054  0.038  0.027  0.000  0.000  
+  9       0.146  0.092  0.068  0.030  0.000  0.000  
+  10      0.110  0.090  0.066  0.047  0.000  0.000  
+  11      0.100  0.104  0.216  0.530  0.000  0.000  
+  12      0.102  0.078  0.220  0.570  0.000  0.000  
+
+Final results saved to /lambda/nfs/experiment/results/v9_meta_fork/experiments/probing/results.json
+
+======================================================================
+PROBING RESULTS SUMMARY
+======================================================================
+
+m3:
+  Linear peak:    layer 0, pos 3, acc 0.5537
+  Nonlinear peak: layer 0, pos 0, acc 0.0000
+  NL>Linear by >10pp: 0 cells
+  Diagonal pattern: True
+  Significant cells: 0/78
+  Diagonal peak layers: [8, 12, 12, 0]
+  Mean selectivity:  0.0000
+  Max cross-pos acc: 0.0000
+  Front-to-back leakage: 0.0000
+  Mean thought-over-input advantage: 0.1052
+  Max input-position acc: 0.0500
+
+m5:
+  Linear peak:    layer 12, pos 3, acc 0.5705
+  Nonlinear peak: layer 0, pos 0, acc 0.0000
+  NL>Linear by >10pp: 0 cells
+  Diagonal pattern: True
+  Significant cells: 0/78
+  Diagonal peak layers: [8, 11, 12, 12]
+  Mean selectivity:  0.0000
+  Max cross-pos acc: 0.0000
+  Front-to-back leakage: 0.0000
+  Mean thought-over-input advantage: 0.0396
+  Max input-position acc: 0.0620
+
+Verification:
+  synthetic_probe_accuracy: 1.0
+  hidden_state_shape: [768]
+  all_finite: True
+  label_alignment_check: PASSED
+
+Done.

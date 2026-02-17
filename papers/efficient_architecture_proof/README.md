@@ -42,6 +42,29 @@ But that structure comes entirely from the curriculum. The 7-stage progressive r
 
 **For the latent reasoning community:** Stop optimizing mechanisms. Start optimizing curricula.
 
+## Data
+
+This study uses Meta's ProsQA dataset. All data files are tracked in `code/data/` and available after cloning. If they're missing, run the setup script to repopulate from the git submodule:
+
+```bash
+git submodule update --init --recursive
+bash setup_data.sh
+```
+
+**Expected files in `code/data/`:**
+
+| File | Samples | Description |
+|------|---------|-------------|
+| `prosqa_train.json` | 17,886 | Training set (~29 MB) |
+| `prosqa_valid.json` | 300 | Validation set |
+| `prosqa_test.json` | 500 | In-distribution test set |
+| `ood_7hop.json` | 1,000 | 7-hop chains (training uses 3-6 hops) |
+| `ood_8hop.json` | 1,000 | 8-hop chains |
+| `ood_dag.json` | 1,000 | DAG topology (training uses trees) |
+| `ood_dense.json` | 1,000 | Dense graphs (higher connectivity) |
+
+Each sample is a dict with keys: `question`, `answer`, `steps` (CoT), `edges`, `root`, `target`, `neg_target`. ProsQA data is subject to Meta's COCONUT repository license (MIT).
+
 ## Quick Start
 
 ```bash
@@ -138,13 +161,11 @@ This repo forks Meta's official COCONUT codebase with minimal modifications:
 
 ```
 ├── README.md                          # This file
-├── RESULTS.md                         # Full technical writeup with figures
-├── CHECKPOINTS.md                     # Checkpoint download & loading guide
 ├── reproduce.py                       # One-command reproduction script
-├── upload_checkpoints.py              # HuggingFace Hub upload script
 ├── requirements.txt                   # Python dependencies
 ├── requirements-lock.txt              # Pinned transitive dependencies
 ├── setup_data.sh                      # Data setup helper
+├── CHECKPOINTS.md                     # Checkpoint download & loading guide
 ├── manuscript/                        # Paper manuscript and figures
 ├── code/
 │   ├── run.py                         # Training script (+feedback_mode)

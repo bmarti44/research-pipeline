@@ -4,13 +4,13 @@ Pretrained model checkpoints for "The Curriculum Is the Mechanism"
 
 ## HuggingFace Hub
 
-**Repository**: [bmarti44/coconut-curriculum-checkpoints](https://huggingface.co/bmarti44/coconut-curriculum-checkpoints) *(upload pending)*
+**Repository**: [bmarti44/coconut-curriculum-checkpoints](https://huggingface.co/bmarti44/coconut-curriculum-checkpoints)
 
 | Model | Name | Feedback Mode | Best Epoch | Checkpoint | ProsQA Accuracy |
 |-------|------|--------------|:----------:|------------|:---------------:|
 | M2 | COCONUT | `continuous` | 49 | `coconut/checkpoint_best` | 97.0% |
 | M3 | Pause-Curriculum | `pause_curriculum` | 43 | `pause-curriculum/checkpoint_best` | 96.6% |
-| M4 | Pause-Multipass | `pause_multipass` | TBD | `pause-multipass/checkpoint_best` | *training* |
+| M4 | Pause-Multipass | `pause_multipass` | 30 | `pause-multipass/checkpoint_best` | 94.8% |
 
 **Note**: Best epoch is determined by peak validation accuracy via `find_best_epoch.py`.
 The `checkpoint_best` symlink points to the peak-validation epoch.
@@ -41,15 +41,11 @@ model, tokenizer, info = load_model_by_name("pause-curriculum", "results/", devi
 model, tokenizer, info = load_model_by_name("pause-multipass", "results/", device="cuda")
 ```
 
-## Upload (maintainer only)
+## Storage
 
-```bash
-# After training completes, upload checkpoints:
-python upload_checkpoints.py --repo bmarti44/coconut-curriculum-checkpoints
-
-# Dry run first:
-python upload_checkpoints.py --repo bmarti44/coconut-curriculum-checkpoints --dry-run
-```
+Checkpoints are stored on HuggingFace and are **not kept locally** in this repository.
+After downloading via `reproduce.py --from-checkpoints`, they appear under `results/<model>/checkpoint_best`.
+These files are `.gitignore`d due to their size (~769 MB each).
 
 ## Checkpoint Format
 

@@ -1,9 +1,0 @@
-{
-  "model": "m5",
-  "checkpoint": "checkpoint_best_epoch43",
-  "dataset": "prosqa_test",
-  "n_samples": 500,
-  "correct": 478,
-  "accuracy": 0.956,
-  "time_s": 25.1
-}

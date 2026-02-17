@@ -1,4 +1,5 @@
 {
+  "_ARTIFACT_WARNING": "These results are artifacts of the cold-start extraction methodology, which discards the KV-cache accumulated during M4's multi-pass loop. All values show chance-level accuracy (~2.4%) regardless of corruption level, including the zero-corruption control. These data do not reflect M4's true corruption robustness and should not be cited. See manuscript Section 4.2 note and Section 6 (M4 experimental coverage) for details.",
   "forward": {
     "0": 0.024,
     "1": 0.024,
