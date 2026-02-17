@@ -1,0 +1,27 @@
+{
+  "prosqa_test": {
+    "accuracy": 0.948,
+    "correct": 474,
+    "total": 500
+  },
+  "ood_7hop": {
+    "accuracy": 0.769,
+    "correct": 769,
+    "total": 1000
+  },
+  "ood_8hop": {
+    "accuracy": 0.752,
+    "correct": 752,
+    "total": 1000
+  },
+  "ood_dag": {
+    "accuracy": 0.598,
+    "correct": 598,
+    "total": 1000
+  },
+  "ood_dense": {
+    "accuracy": 0.648,
+    "correct": 648,
+    "total": 1000
+  }
+}

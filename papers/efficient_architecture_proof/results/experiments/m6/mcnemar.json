@@ -1,0 +1,205 @@
+{
+  "n_tests": 10,
+  "results": {
+    "m6_vs_m3_prosqa_test": {
+      "n": 500,
+      "target_acc": 0.948,
+      "ref_acc": 0.98,
+      "diff_pp": -3.2,
+      "ci_95": [
+        -5.1,
+        -1.3
+      ],
+      "contingency": {
+        "both_correct": 470,
+        "m6_only": 4,
+        "m3_only": 20,
+        "both_wrong": 6
+      },
+      "discordant": 24,
+      "p_value": 0.001543879508972168,
+      "odds_ratio": 0.2,
+      "p_bonferroni": 0.01543879508972168
+    },
+    "m6_vs_m3_ood_7hop": {
+      "n": 1000,
+      "target_acc": 0.769,
+      "ref_acc": 0.707,
+      "diff_pp": 6.2,
+      "ci_95": [
+        2.82,
+        9.58
+      ],
+      "contingency": {
+        "both_correct": 587,
+        "m6_only": 182,
+        "m3_only": 120,
+        "both_wrong": 111
+      },
+      "discordant": 302,
+      "p_value": 0.0004294605210459007,
+      "odds_ratio": 1.5166666666666666,
+      "p_bonferroni": 0.004294605210459007
+    },
+    "m6_vs_m3_ood_8hop": {
+      "n": 1000,
+      "target_acc": 0.752,
+      "ref_acc": 0.695,
+      "diff_pp": 5.7,
+      "ci_95": [
+        2.28,
+        9.12
+      ],
+      "contingency": {
+        "both_correct": 570,
+        "m6_only": 182,
+        "m3_only": 125,
+        "both_wrong": 123
+      },
+      "discordant": 307,
+      "p_value": 0.001354478357551105,
+      "odds_ratio": 1.456,
+      "p_bonferroni": 0.01354478357551105
+    },
+    "m6_vs_m3_ood_dag": {
+      "n": 1000,
+      "target_acc": 0.598,
+      "ref_acc": 0.597,
+      "diff_pp": 0.1,
+      "ci_95": [
+        -3.54,
+        3.74
+      ],
+      "contingency": {
+        "both_correct": 425,
+        "m6_only": 173,
+        "m3_only": 172,
+        "both_wrong": 230
+      },
+      "discordant": 345,
+      "p_value": 1.0,
+      "odds_ratio": 1.005813953488372,
+      "p_bonferroni": 1.0
+    },
+    "m6_vs_m3_ood_dense": {
+      "n": 1000,
+      "target_acc": 0.648,
+      "ref_acc": 0.629,
+      "diff_pp": 1.9,
+      "ci_95": [
+        -1.79,
+        5.59
+      ],
+      "contingency": {
+        "both_correct": 461,
+        "m6_only": 187,
+        "m3_only": 168,
+        "both_wrong": 184
+      },
+      "discordant": 355,
+      "p_value": 0.3394157064437944,
+      "odds_ratio": 1.1130952380952381,
+      "p_bonferroni": 1.0
+    },
+    "m6_vs_m5_prosqa_test": {
+      "n": 500,
+      "target_acc": 0.948,
+      "ref_acc": 0.956,
+      "diff_pp": -0.8,
+      "ci_95": [
+        -2.8,
+        1.2
+      ],
+      "contingency": {
+        "both_correct": 463,
+        "m6_only": 11,
+        "m5_only": 15,
+        "both_wrong": 11
+      },
+      "discordant": 26,
+      "p_value": 0.557197093963623,
+      "odds_ratio": 0.7333333333333333,
+      "p_bonferroni": 1.0
+    },
+    "m6_vs_m5_ood_7hop": {
+      "n": 1000,
+      "target_acc": 0.769,
+      "ref_acc": 0.719,
+      "diff_pp": 5.0,
+      "ci_95": [
+        1.69,
+        8.31
+      ],
+      "contingency": {
+        "both_correct": 600,
+        "m6_only": 169,
+        "m5_only": 119,
+        "both_wrong": 112
+      },
+      "discordant": 288,
+      "p_value": 0.003809189023554528,
+      "odds_ratio": 1.4201680672268908,
+      "p_bonferroni": 0.03809189023554528
+    },
+    "m6_vs_m5_ood_8hop": {
+      "n": 1000,
+      "target_acc": 0.752,
+      "ref_acc": 0.726,
+      "diff_pp": 2.6,
+      "ci_95": [
+        -0.79,
+        5.99
+      ],
+      "contingency": {
+        "both_correct": 589,
+        "m6_only": 163,
+        "m5_only": 137,
+        "both_wrong": 111
+      },
+      "discordant": 300,
+      "p_value": 0.14879255774103087,
+      "odds_ratio": 1.1897810218978102,
+      "p_bonferroni": 1.0
+    },
+    "m6_vs_m5_ood_dag": {
+      "n": 1000,
+      "target_acc": 0.598,
+      "ref_acc": 0.578,
+      "diff_pp": 2.0,
+      "ci_95": [
+        -1.66,
+        5.66
+      ],
+      "contingency": {
+        "both_correct": 413,
+        "m6_only": 185,
+        "m5_only": 165,
+        "both_wrong": 237
+      },
+      "discordant": 350,
+      "p_value": 0.3098201765186668,
+      "odds_ratio": 1.121212121212121,
+      "p_bonferroni": 1.0
+    },
+    "m6_vs_m5_ood_dense": {
+      "n": 1000,
+      "target_acc": 0.648,
+      "ref_acc": 0.684,
+      "diff_pp": -3.6,
+      "ci_95": [
+        -7.22,
+        0.02
+      ],
+      "contingency": {
+        "both_correct": 495,
+        "m6_only": 153,
+        "m5_only": 189,
+        "both_wrong": 163
+      },
+      "discordant": 342,
+      "p_value": 0.05825460914566845,
+      "odds_ratio": 0.8095238095238095,
+      "p_bonferroni": 0.5825460914566845
+    }
+  }
+}

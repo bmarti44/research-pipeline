@@ -1,0 +1,17 @@
+{
+  "model": "m6",
+  "checkpoint": "/lambda/nfs/experiment/results/v9_meta_fork/prosqa-m6-pause-multipass/checkpoint_best",
+  "feedback_mode": "pause_multipass",
+  "stages_run": [
+    "transplant"
+  ],
+  "results": {
+    "transplant": {
+      "matched": 0,
+      "unmatched": 0,
+      "total": 0,
+      "matched_rate": 0.0,
+      "unmatched_rate": 0.0
+    }
+  }
+}

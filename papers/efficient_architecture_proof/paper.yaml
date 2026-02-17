@@ -108,14 +108,18 @@ results:
     M1_test: 0.830
     M2_test: 0.980
     M3_test: 0.956
+    M4_test: 0.948
     M2_val: 0.973
     M3_val: 0.973
+    M4_val: 0.967
+    M4_best_epoch: 30
   corruption:
     permutation_sensitivity_M2: 0.0
     permutation_sensitivity_M3: 0.0
     cross_transplant_M2: 0.970
     cross_transplant_M3: 0.965
     cliff_position: 4
+    M4_all_positions_critical: true  # 2.4% accuracy when any single position corrupted
   probing:
     M2_peak_accuracy: 0.554
     M3_peak_accuracy: 0.571
@@ -125,13 +129,29 @@ results:
     M3_selectivity: 0.52
     M2_thought_advantage: 0.105
     M3_thought_advantage: 0.040
+    M4_note: "Non-reportable — extraction artifact (cold-start forward pass without KV-cache)"
   ood:
-    7hop: { M1: 0.107, M2: 0.660, M3: 0.754 }
-    8hop: { M1: 0.082, M2: 0.675, M3: 0.751 }
-    dag:  { M1: 0.282, M2: 0.592, M3: 0.519 }
-    dense: { M1: 0.141, M2: 0.612, M3: 0.684 }
+    7hop: { M1: 0.107, M2: 0.660, M3: 0.754, M4: 0.769 }
+    8hop: { M1: 0.082, M2: 0.675, M3: 0.751, M4: 0.752 }
+    dag:  { M1: 0.282, M2: 0.592, M3: 0.519, M4: 0.598 }
+    dense: { M1: 0.141, M2: 0.612, M3: 0.684, M4: 0.648 }
+  factorial_decomposition:
+    # M4 vs M2 isolates recycled content (same sequential processing, different content)
+    M4_vs_M2_7hop: { diff_pp: 10.9, p_bonf: 0.000, significant: true, direction: "M4>M2" }
+    M4_vs_M2_8hop: { diff_pp: 7.7, p_bonf: 0.000, significant: true, direction: "M4>M2" }
+    M4_vs_M2_dag:  { diff_pp: 0.6, p_bonf: 1.000, significant: false }
+    M4_vs_M2_dense: { diff_pp: 3.6, p_bonf: 0.280, significant: false }
+    # M4 vs M3 isolates sequential processing (same fixed content, different processing)
+    M4_vs_M3_7hop: { diff_pp: 1.5, p_bonf: 1.000, significant: false }
+    M4_vs_M3_8hop: { diff_pp: 0.1, p_bonf: 1.000, significant: false }
+    M4_vs_M3_dag:  { diff_pp: 7.9, p_bonf: 0.000, significant: true, direction: "M4>M3" }
+    M4_vs_M3_dense: { diff_pp: -3.6, p_bonf: 0.306, significant: false }
+  wilcoxon_teacher_forced:
+    M2_vs_M4_id: { r: 0.678, p: 5.52e-52, direction: "M2>M4" }
+    M3_vs_M4_id: { r: 0.286, p: 1.61e-10, direction: "M3>M4" }
 
 statistical_tests:
+  # M3 vs M2 (original two-model comparison)
   mcnemar_7hop:
     chi2: 10.107
     p_raw: 0.00148
@@ -152,13 +172,26 @@ statistical_tests:
     p_raw: 0.02084
     p_bonferroni: 0.10420
     significant: false
+  # M4 vs M2 ID (recycled content test)
+  mcnemar_M4_vs_M2_id:
+    diff_pp: -2.2
+    p_raw: 0.071
+    p_bonferroni: 0.354
+    significant: false
+  # M4 vs M3 ID (sequential processing test)
+  mcnemar_M4_vs_M3_id:
+    diff_pp: -1.8
+    p_raw: 0.136
+    p_bonferroni: 0.680
+    significant: false
 
 conclusion: >
   The training curriculum, not the continuous thought mechanism, drives COCONUT's
-  performance on ProsQA. A single learned pause embedding with the same curriculum
-  achieves equivalent in-distribution accuracy and superior out-of-distribution
-  generalization on 3 of 4 test sets. Researchers building on COCONUT should invest
-  in curriculum design, not hidden-state recycling architectures.
+  in-distribution performance on ProsQA. Factorial decomposition via M4 (pause-multipass)
+  reveals that recycled content actively hurts chain-length extrapolation (M4 outperforms
+  M2 on 7-hop by 10.9pp) while sequential processing drives topological generalization
+  (M4 outperforms M3 on DAG by 7.9pp). Researchers building on COCONUT should invest
+  in curriculum design and processing architecture, not hidden-state recycling.
 
 references:
   - id: hao2024

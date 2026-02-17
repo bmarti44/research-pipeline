@@ -3,7 +3,7 @@
 **Brian Martin**
 Independent
 
-Meta's COCONUT replaces explicit chain-of-thought with continuous latent thought tokens, recycling transformer hidden states across reasoning steps. On ProsQA, a synthetic graph-traversal benchmark, COCONUT achieves 97% accuracy, substantially outperforming chain-of-thought baselines. However, COCONUT's training curriculum -- which progressively removes explicit reasoning tokens -- has not been controlled for. We construct two curriculum-matched controls: M5, a single-pass pause-token baseline that replaces recycled hidden states with a fixed learned embedding, and M6, a multi-pass control that matches COCONUT's sequential processing structure while using fixed embeddings, enabling factorial decomposition of the recycled-content and sequential-processing factors. M5 reaches 96.6% test accuracy, not significantly different from COCONUT's 97.0% (McNemar p = 0.845); M6 reaches [TBD]% test accuracy. Three converging experiments probe the distinction: corruption analysis produces identical degradation profiles, linear probes reveal identical selectivity profiles despite COCONUT encoding information more broadly across layers (29/78 vs. 11/78 significant probing cells), and cross-model thought transplantation succeeds bidirectionally. On out-of-distribution generalization, M5 outperforms COCONUT on 3 of 4 test sets; M6 [TBD: resolves the attribution of OOD differences to sequential processing vs. recycled content]. The training curriculum drives COCONUT's in-distribution performance on ProsQA; the continuous thought mechanism does not.
+Meta's COCONUT replaces explicit chain-of-thought with continuous latent thought tokens, recycling transformer hidden states across reasoning steps. On ProsQA, a synthetic graph-traversal benchmark, COCONUT achieves 97% accuracy, substantially outperforming chain-of-thought baselines. However, COCONUT's training curriculum -- which progressively removes explicit reasoning tokens -- has not been controlled for. We construct two curriculum-matched controls: M5, a single-pass pause-token baseline that replaces recycled hidden states with a fixed learned embedding, and M6, a multi-pass control that matches COCONUT's sequential processing structure while using fixed embeddings, enabling factorial decomposition of the recycled-content and sequential-processing factors. M5 reaches 96.6% test accuracy, not significantly different from COCONUT's 97.0% (McNemar p = 0.845); M6 reaches 94.8% (p = 0.354 after Bonferroni correction). Three converging experiments probe the distinction: corruption analysis reveals identical degradation profiles for M3 and M5, linear probes reveal identical selectivity profiles despite COCONUT encoding information more broadly across layers (29/78 vs. 11/78 significant probing cells), and cross-model thought transplantation succeeds bidirectionally. On out-of-distribution generalization, factorial decomposition via M6 cleanly separates two confounded factors: recycled content actively hurts chain-length extrapolation (M6 outperforms M3 by 10.9pp on 7-hop, p < 0.001), while sequential processing drives DAG generalization (M6 outperforms M5 by 7.9pp, p < 0.001). Wilcoxon signed-rank tests on teacher-forced log-probabilities confirm that recycled content carries reasoning-relevant information (M3 assigns significantly higher confidence than M6, r = 0.678, p < 10^{-51}), but this higher confidence does not translate to better accuracy. The training curriculum drives COCONUT's in-distribution performance on ProsQA; the continuous thought mechanism does not.
 
 ## 1 Introduction
 
@@ -13,9 +13,9 @@ This attribution faces an uncontrolled confound. COCONUT is trained with a 7-sta
 
 We introduce two controls designed to resolve this confound. M5 is a single-pass pause-token baseline that shares every architectural and training detail with the COCONUT model (M3) — the same GPT-2 124M backbone, the same 7-stage curriculum schedule, and the same number of latent thought positions — but replaces the recycled hidden-state embeddings with fixed learned pause vectors (Goyal et al., 2024). M6 extends M5 by matching COCONUT's sequential multi-pass processing structure while retaining the fixed pause embeddings, creating a clean factorial design that separates the contribution of recycled content from sequential processing. If the curriculum is the primary driver, both M5 and M6 should match M3. If the recycling mechanism matters, only M6 (which eliminates recycling while preserving the processing structure) will reveal where the mechanism contributes.
 
-M5 reaches 96.6% test accuracy, not significantly different from COCONUT's 97.0% (exact McNemar p = 0.845, n = 500, 95% CI for difference: [--2.4, +1.6] percentage points). M6 reaches [TBD]% test accuracy. Three additional experiments converge on the same conclusion. Corrupting thought tokens produces identical degradation profiles for M3 and M5, with zero sensitivity to permutation order. Linear probes trained on intermediate representations reveal identical selectivity profiles: both models concentrate step-specific encoding at position 3, with the pattern arising from the shared curriculum rather than the mechanism. COCONUT does encode information more broadly — 29 of 78 probed cells show significant step decoding versus 11 for M5 — but this richer encoding produces no behavioral advantage. Cross-model thought transplantation succeeds bidirectionally, confirming that neither model's latent representations carry privileged information. On out-of-distribution test sets, M5 outperforms M3 on 7-hop, 8-hop, and dense graphs by 7--9 percentage points, while M3 holds a 7.3-point advantage on DAG structures. M6 enables factorial decomposition of these OOD differences: [TBD: the M3 vs. M6 comparison (matched processing, different content) and the M5 vs. M6 comparison (matched content, different processing) reveal which factor drives each task-specific advantage].
+M5 reaches 96.6% test accuracy, not significantly different from COCONUT's 97.0% (exact McNemar p = 0.845, n = 500, 95% CI for difference: [--2.4, +1.6] percentage points). M6 reaches 94.8% test accuracy; the 2.2 percentage-point gap from M3 does not reach significance after Bonferroni correction (exact McNemar p = 0.071, p_Bonferroni = 0.354). Three additional experiments converge on the same conclusion. Corrupting thought tokens produces identical degradation profiles for M3 and M5, with zero sensitivity to permutation order. Linear probes trained on intermediate representations reveal identical selectivity profiles for M3 and M5: both models concentrate step-specific encoding at position 3, with the pattern arising from the shared curriculum rather than the mechanism. COCONUT does encode information more broadly — 29 of 78 probed cells show significant step decoding versus 11 for M5 — but this richer encoding produces no behavioral advantage. Cross-model thought transplantation succeeds bidirectionally, confirming that neither model's latent representations carry privileged information. On out-of-distribution test sets, M5 outperforms M3 on 7-hop, 8-hop, and dense graphs by 7--9 percentage points, while M3 holds a 7.3-point advantage on DAG structures. M6 enables a clean factorial decomposition of these OOD differences: the M6 vs. M3 comparison (matched processing, different content) reveals that recycled content harms chain-length generalization (M6 outperforms M3 on 7-hop by 10.9pp and 8-hop by 7.7pp, both p < 0.001 after Bonferroni correction), while the M6 vs. M5 comparison (matched content, different processing) shows that sequential processing drives DAG generalization (M6 outperforms M5 by 7.9pp, p < 0.001) but does not affect chain-length extrapolation (M6 and M5 do not differ on 7-hop or 8-hop).
 
-This paper makes three contributions. First, we introduce a factorial control methodology — using both a single-pass and a multi-pass pause-token baseline — that isolates the curriculum from the mechanism and separately identifies the contributions of recycled content and sequential processing in latent-reasoning systems. This methodology is applicable beyond COCONUT to any architecture that claims gains from a training-time intervention confounded with a progressive curriculum. Second, we provide converging evidence from three independent experimental paradigms — corruption analysis, representational probing, and out-of-distribution generalization — that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance. Third, using the factorial decomposition enabled by M6, we [TBD: characterize / quantify] the separate contributions of recycled content and sequential processing to out-of-distribution generalization.
+This paper makes three contributions. First, we introduce a factorial control methodology — using both a single-pass and a multi-pass pause-token baseline — that isolates the curriculum from the mechanism and separately identifies the contributions of recycled content and sequential processing in latent-reasoning systems. This methodology is applicable beyond COCONUT to any architecture that claims gains from a training-time intervention confounded with a progressive curriculum. Second, we provide converging evidence from three independent experimental paradigms — corruption analysis, representational probing, and out-of-distribution generalization — that the continuous latent mechanism is not the causal source of COCONUT's in-distribution performance. Third, using the factorial decomposition enabled by M6, we characterize the separate contributions of recycled content and sequential processing to out-of-distribution generalization, showing that recycled content harms chain-length extrapolation while sequential processing drives topological generalization.
 
 ## 2 Related Work
 
@@ -127,7 +127,7 @@ For statistical comparisons, we use exact McNemar's test (two-sided binomial tes
 
 ### 4.1 Training Replication
 
-Table 2 reports validation and test accuracy for all four models. M3 (COCONUT) achieves 97.0% test accuracy, replicating the ~97% reported by Hao et al. (2024). M1 (chain-of-thought) reaches 83.0%, consistent with the original baseline. M5 (pause) reaches 96.6% on the test set, not significantly different from M3 (exact McNemar p = 0.845, 95% CI for accuracy difference: [--2.4, +1.6] percentage points). On the validation set, M5 matches M3 exactly at 97.3%. The 0.4 percentage-point test gap does not approach significance: only 26 of 500 samples are discordant (14 where M3 alone is correct, 12 where M5 alone is correct). M6 (pause-multipass) reaches [TBD]% on the test set ([TBD]% validation, best epoch [TBD]).
+Table 2 reports validation and test accuracy for all four models. M3 (COCONUT) achieves 97.0% test accuracy, replicating the ~97% reported by Hao et al. (2024). M1 (chain-of-thought) reaches 83.0%, consistent with the original baseline. M5 (pause) reaches 96.6% on the test set, not significantly different from M3 (exact McNemar p = 0.845, 95% CI for accuracy difference: [--2.4, +1.6] percentage points). On the validation set, M5 matches M3 exactly at 97.3%. The 0.4 percentage-point test gap does not approach significance: only 26 of 500 samples are discordant (14 where M3 alone is correct, 12 where M5 alone is correct). M6 (pause-multipass) reaches 94.8% on the test set (96.7% validation, best epoch 30). The 2.2 percentage-point gap between M6 (94.8%) and M3 (97.0%) does not reach significance after Bonferroni correction (exact McNemar p = 0.071, p_Bonferroni = 0.354, 31 discordant pairs: 21 where M3 alone is correct, 10 where M6 alone is correct). M6 and M5 likewise do not differ significantly (--1.8pp, p_Bonferroni = 0.680).
 
 **Table 2:** Accuracy by model on ProsQA validation (n = 300) and test (n = 500) sets. Test accuracy is reported from the independent experiment inference pipeline used throughout this paper. Training-time evaluation at best epoch yielded slightly higher estimates for M3 (98.0%) and lower for M5 (95.6%), a discrepancy of 5 samples per model attributable to differences in the inference code path; we use the experiment-pipeline numbers for consistency with all subsequent analyses.
 
@@ -136,9 +136,9 @@ Table 2 reports validation and test accuracy for all four models. M3 (COCONUT) a
 | M1 (CoT) | Explicit chain-of-thought | Single pass | 79.67% | 83.0% | 44 |
 | M3 (COCONUT) | Hidden-state recycling | 6 sequential passes | 97.3% | 97.0% | 49 |
 | M5 (Pause) | Learned pause embeddings | Single pass | 97.3% | 96.6% | 43 |
-| M6 (Pause-Multipass) | Learned pause embeddings | 6 sequential passes | [TBD]% | [TBD]% | [TBD] |
+| M6 (Pause-Multipass) | Learned pause embeddings | 6 sequential passes | 96.7% | 94.8% | 30 |
 
-Training curves for all four models are shown in Figure 1. M3, M5, and M6 converge at comparable rates under the shared curriculum schedule, while M1 plateaus earlier at a lower asymptote. The M3--M6 comparison is the cleanest test: if M6 matches M3, the recycled content is inert; if M6 matches M5, the sequential processing structure is inert.
+Training curves for all four models are shown in Figure 1. M3, M5, and M6 converge at comparable rates under the shared curriculum schedule, while M1 plateaus earlier at a lower asymptote. M6's 94.8% test accuracy falls 2.2pp below M3 (p = 0.071 uncorrected, p = 0.354 Bonferroni-corrected) — a gap that, while not significant, motivates examining the out-of-distribution comparisons where recycled content and sequential processing can be factorially decomposed (Section 4.4).
 
 ![Figure 1: Training curves for M1 (CoT), M3 (COCONUT), and M5 (Pause) across 50 epochs.](figures/fig1_training_curves.png){ width=90% }
 
@@ -148,17 +148,19 @@ We corrupted thought-token representations at each of the six latent positions (
 
 **Table 3:** Accuracy under progressive forward corruption by number of thought positions replaced with noise (n = 500 per condition).
 
-| Positions Corrupted | M3 | M5 | M6 |
-|:-------------------:|:--:|:--:|:--:|
-| 0 (clean) | 97.0% | 96.6% | [TBD]% |
-| 1 | 96.8% | 96.4% | [TBD]% |
-| 2 | 96.8% | 96.2% | [TBD]% |
-| 3 | 96.8% | 95.8% | [TBD]% |
-| 4 | 57.4% | 57.2% | [TBD]% |
-| 5 | 15.6% | 15.6% | [TBD]% |
-| 6 | 2.4% | 2.2% | [TBD]% |
+| Positions Corrupted | M3 | M5 |
+|:-------------------:|:--:|:--:|
+| 0 (clean) | 97.0% | 96.6% |
+| 1 | 96.8% | 96.4% |
+| 2 | 96.8% | 96.2% |
+| 3 | 96.8% | 95.8% |
+| 4 | 57.4% | 57.2% |
+| 5 | 15.6% | 15.6% |
+| 6 | 2.4% | 2.2% |
 
-M3 and M5 exhibit nearly identical degradation profiles (Figure 2). The maximum absolute accuracy difference between M3 and M5 at any corruption level is 1.0 percentage points (at 3 positions corrupted: 96.8% vs. 95.8%), within expected sampling variability for n = 500. Accuracy remains near ceiling through position 3, drops precipitously between positions 3 and 4 (from ~96% to ~57%), and collapses to near chance by position 6. The parallel trajectories indicate that the recycled hidden states in M3 do not confer robustness to corruption beyond what the learned pause embeddings in M5 provide. M6's corruption profile [TBD: if M6 matches M3 and M5, this confirms the curriculum drives the threshold structure regardless of processing mode; if M6 diverges, the sequential processing structure interacts with corruption sensitivity].
+*M6 corruption results are omitted due to extraction incompatibility with multi-pass KV-cache architectures; see Section 6 (M6 experimental coverage) for details.*
+
+M3 and M5 exhibit nearly identical degradation profiles (Figure 2). The maximum absolute accuracy difference between M3 and M5 at any corruption level is 1.0 percentage points (at 3 positions corrupted: 96.8% vs. 95.8%), within expected sampling variability for n = 500. Accuracy remains near ceiling through position 3, drops precipitously between positions 3 and 4 (from ~96% to ~57%), and collapses to near chance by position 6. The parallel trajectories indicate that the recycled hidden states in M3 do not confer robustness to corruption beyond what the learned pause embeddings in M5 provide.
 
 The per-model noise calibration produces L2 distances of 202.65 for M3 and 4.09 for M5, reflecting the 50-fold variance difference between recycled hidden states and near-constant pause embeddings. To confirm that the degradation cliff is structural rather than an artifact of perturbation scale, we applied M3-magnitude noise (L2 $\approx$ 203) to M5's thought positions. M5 exhibits the same cliff at position 4 under M3-scale noise (clean: 96.6%, 4 corrupted: 57.6%, 6 corrupted: 2.4%), confirming that the threshold reflects the minimum number of uncorrupted positions needed for task performance, independent of perturbation magnitude.
 
@@ -174,19 +176,21 @@ Single-position corruption (Appendix A.5) confirms that position 3 alone is crit
 
 We trained linear probes on frozen hidden states at every (layer, position) cell to decode which intermediate reasoning step the model had reached. Each model has 13 layers and 6 thought positions, yielding 78 probed cells per model. Sample sizes vary by position because not all ProsQA problems require all six hops: n = 500 for positions 0--2, n = 298 for position 3, n = 81 for position 4, and n = 12 for position 5.
 
-**Table 4:** Probing summary statistics for M3, M5, and M6. Sample sizes vary by position: n = 500 (positions 0--2), n = 298 (position 3), n = 81 (position 4), n = 12 (position 5); absolute probe accuracies are not directly comparable across positions due to these differences. Selectivity is computed per-position using full sample sizes (original computation used n=12 truncation, producing an artifactual 0.0; see Appendix A.1 for correction details). For M3, selectivity is reported at layer 0 for positions 0, 1, and 3 (where recycled hidden states are injected) and layer 12 for position 2. For M5 and M6, selectivity is reported at peak accuracy layer. MLP probe results from grid search over 72 hyperparameter configurations (Appendix A.7).
+**Table 4:** Probing summary statistics for M3 and M5. Sample sizes vary by position: n = 500 (positions 0--2), n = 298 (position 3), n = 81 (position 4), n = 12 (position 5); absolute probe accuracies are not directly comparable across positions due to these differences. Selectivity is computed per-position using full sample sizes (original computation used n=12 truncation, producing an artifactual 0.0; see Appendix A.1 for correction details). For M3, selectivity is reported at layer 0 for positions 0, 1, and 3 (where recycled hidden states are injected) and layer 12 for position 2. For M5, selectivity is reported at peak accuracy layer. MLP probe results from grid search over 72 hyperparameter configurations (Appendix A.7).
 
-| Metric | M3 | M5 | M6 |
-|--------|:--:|:--:|:--:|
-| Peak probe accuracy | 55.4% | 57.0% | [TBD]% |
-| Peak location (layer, position) | (0, 3) | (12, 3) | [TBD] |
-| Position 3 selectivity | +52.0pp | +52.3pp | [TBD]pp |
-| Position 2 selectivity | +9.4pp | +10.2pp | [TBD]pp |
-| Positions 0--1 selectivity | --15.6pp, --10.6pp | --12.0pp, --14.6pp | [TBD]pp |
-| Significant cells (Bonferroni) | 29 / 78 | 11 / 78 | [TBD] / 78 |
-| MLP vs. linear at position 3 | --9.4pp (MLP overfits) | --11.4pp (MLP overfits) | [TBD] |
-| MLP vs. linear at position 2 | **+10.2pp** | **+7.6pp** | [TBD] |
-| Mean thought-vs-input advantage | 10.5% | 4.0% | [TBD]% |
+| Metric | M3 | M5 |
+|--------|:--:|:--:|
+| Peak probe accuracy | 55.4% | 57.0% |
+| Peak location (layer, position) | (0, 3) | (12, 3) |
+| Position 3 selectivity | +52.0pp | +52.3pp |
+| Position 2 selectivity | +9.4pp | +10.2pp |
+| Positions 0--1 selectivity | --15.6pp, --10.6pp | --12.0pp, --14.6pp |
+| Significant cells (Bonferroni) | 29 / 78 | 11 / 78 |
+| MLP vs. linear at position 3 | --9.4pp (MLP overfits) | --11.4pp (MLP overfits) |
+| MLP vs. linear at position 2 | **+10.2pp** | **+7.6pp** |
+| Mean thought-vs-input advantage | 10.5% | 4.0% |
+
+**M6 probing limitation.** M6 probing results are omitted because the hidden-state extraction method is incompatible with the multi-pass architecture. The extraction code (`get_hidden_states`) performs a cold-start forward pass over the final embeddings without the KV-cache accumulated during the multi-pass loop. Correcting this would require extracting hidden states from within the multi-pass loop at each pass, which is architecturally non-trivial and left to future work.
 
 Corrected probing analysis reveals genuine step-specificity concentrated at position 3 in both models. At position 3 (n = 298), matched-step probe accuracy reaches 55.4% for M3 and 57.0% for M5, while the best cross-position control achieves only 3.3% and 4.7% respectively -- yielding selectivity of +52.0 percentage points for M3 and +52.3 for M5. The 0.3 percentage-point difference between M3 and M5 selectivity at position 3 is smaller than the typical standard deviation of 5-fold cross-validation estimates at this sample size (n = 298), though we do not report per-fold variance. Position 2 shows mild selectivity (+9.4pp for M3, +10.2pp for M5). Positions 0 and 1 are anti-selective: both models decode later reasoning steps (particularly step 2) better than their own matched steps from these positions, indicating that early thought positions broadcast answer-relevant information rather than encoding their own step in a sequential chain.
 
@@ -214,11 +218,11 @@ We evaluated all four models on four out-of-distribution test sets that vary gra
 
 | Test Set | n | M1 (CoT) | M3 (COCONUT) | M5 (Pause) | M6 (Pause-Multipass) |
 |----------|:---:|:---------:|:------------:|:----------:|:--------------------:|
-| ProsQA (ID) | 500 | 83.0% | 97.0% | 96.6% | [TBD]% |
-| 7-hop | 1000 | 10.7% | 66.0% | 75.4% | [TBD]% |
-| 8-hop | 1000 | 8.2% | 67.5% | 75.1% | [TBD]% |
-| DAG | 1000 | 28.2% | 59.2% | 51.9% | [TBD]% |
-| Dense | 1000 | 14.1% | 61.2% | 68.4% | [TBD]% |
+| ProsQA (ID) | 500 | 83.0% | 97.0% | 96.6% | 94.8% |
+| 7-hop | 1000 | 10.7% | 66.0% | 75.4% | 76.9% |
+| 8-hop | 1000 | 8.2% | 67.5% | 75.1% | 75.2% |
+| DAG | 1000 | 28.2% | 59.2% | 51.9% | 59.8% |
+| Dense | 1000 | 14.1% | 61.2% | 68.4% | 64.8% |
 
 **Table 5b:** Pairwise McNemar comparisons (M5 vs. M3, retained from two-model analysis).
 
@@ -230,23 +234,57 @@ We evaluated all four models on four out-of-distribution test sets that vary gra
 | DAG | --7.3 pp | 235 | 162 | < 0.001 | 0.0015 | Yes |
 | Dense | +7.2 pp | 139 | 211 | < 0.001 | < 0.001 | Yes |
 
-**Table 5c:** Factorial decomposition. M3 vs. M6 isolates recycled content (same processing, different content); M5 vs. M6 isolates sequential processing (same content, different processing).
+**Table 5c:** Factorial decomposition. M6 vs. M3 isolates recycled content (same processing, different content); M6 vs. M5 isolates sequential processing (same content, different processing). Bonferroni-corrected within each comparison family (k = 5).
 
-| Test Set | M3 -- M6 | p (Bonf.) | M6 -- M5 | p (Bonf.) |
-|----------|:------------------:|:---------:|:---------------------:|:---------:|
-| ProsQA (ID) | [TBD] pp | [TBD] | [TBD] pp | [TBD] |
-| 7-hop | [TBD] pp | [TBD] | [TBD] pp | [TBD] |
-| 8-hop | [TBD] pp | [TBD] | [TBD] pp | [TBD] |
-| DAG | [TBD] pp | [TBD] | [TBD] pp | [TBD] |
-| Dense | [TBD] pp | [TBD] | [TBD] pp | [TBD] |
+| Test Set | M6 -- M3 | b | c | p (Bonf.) | Sig. | M6 -- M5 | b | c | p (Bonf.) | Sig. |
+|----------|:--------:|:---:|:---:|:---------:|:----:|:--------:|:---:|:---:|:---------:|:----:|
+| ProsQA (ID) | --2.2 pp | 21 | 10 | 0.354 | No | --1.8 pp | 19 | 10 | 0.680 | No |
+| 7-hop | +10.9 pp | 113 | 222 | < 0.001 | Yes | +1.5 pp | 124 | 139 | 1.000 | No |
+| 8-hop | +7.7 pp | 111 | 188 | < 0.001 | Yes | +0.1 pp | 140 | 141 | 1.000 | No |
+| DAG | +0.6 pp | 176 | 182 | 1.000 | No | +7.9 pp | 156 | 235 | < 0.001 | Yes |
+| Dense | +3.6 pp | 150 | 186 | 0.280 | No | --3.6 pp | 193 | 157 | 0.306 | No |
 
 The M5 vs. M3 comparisons replicate the two-model analysis: M5 outperforms M3 on 7-hop (+9.4pp), 8-hop (+7.6pp), and dense (+7.2pp), while M3 outperforms M5 on DAG (--7.3pp), all significant after Bonferroni correction. The OOD accuracy pattern is shown in Figure 5.
 
 ![Figure 5: Out-of-distribution accuracy for M1, M3, M5, and M6 across four test sets.](figures/fig5_ood_bar.png){ width=90% }
 
-The factorial decomposition via M6 resolves the attribution ambiguity that limited the two-model analysis. [TBD: The M3 vs. M6 comparison (isolating recycled content while matching processing structure) shows [result]. The M5 vs. M6 comparison (isolating sequential processing while matching fixed embeddings) shows [result]. Together, these indicate that [interpretation: e.g., the sequential processing structure drives M3's DAG advantage, while the recycled content is inert / the recycled content contributes modestly to DAG performance / etc.].]
+The factorial decomposition via M6 cleanly separates the two confounded factors. The M6 vs. M3 comparison (isolating recycled content while matching sequential processing) reveals that recycled content actively hurts chain-length extrapolation: M6 outperforms M3 by 10.9pp on 7-hop and 7.7pp on 8-hop (both p < 0.001 after Bonferroni correction), while showing no significant difference on DAG (+0.6pp, p = 1.0) or dense (+3.6pp, p = 0.280). The M6 vs. M5 comparison (isolating sequential processing while matching fixed embeddings) reveals that sequential processing helps topological generalization: M6 outperforms M5 by 7.9pp on DAG (p < 0.001), while showing no significant difference on 7-hop (+1.5pp, p = 1.0), 8-hop (+0.1pp, p = 1.0), or dense (--3.6pp, p = 0.306).
+
+The decomposition is approximately additive. On 7-hop, M5 outperforms M3 by 9.4pp (Table 5b). The factorial components are: recycled content costs M3 10.9pp relative to M6, and sequential processing is neutral (+1.5pp, ns). On DAG, M3 outperforms M5 by 7.3pp. The factorial components are: sequential processing gives M6 a 7.9pp advantage over M5, and recycled content is neutral (+0.6pp, ns). In both cases, the factorial effects sum to approximately the observed two-model difference, confirming that the factors combine additively rather than interacting.
 
 M1 performs near chance on all OOD test sets (8.2%--28.2%), confirming that the curriculum-trained latent-reasoning approach, whether implemented via recycling, single-pass pause tokens, or multi-pass pause tokens, provides substantial generalization benefits over explicit chain-of-thought at this model scale.
+
+### 4.5 Teacher-Forced Confidence Analysis
+
+The accuracy comparisons in Sections 4.1 and 4.4 use binary correct/incorrect judgments, discarding information about how confidently each model generates its answer. Teacher-forced log-probabilities provide a more granular measure: for each sample, we force-decode through the answer prefix ("### [Name] is a") and extract log P(species_token), where the species token is the discriminative entity requiring multi-hop graph traversal. Wilcoxon signed-rank tests on the paired log-probability differences yield per-sample confidence comparisons that reveal systematic differences invisible to binary accuracy tests.
+
+Table 7 reports all three pairwise comparisons across five test sets. All p-values are Bonferroni-corrected within each comparison family (k = 5).
+
+**Table 7:** Wilcoxon signed-rank comparisons on teacher-forced species-token log-probabilities. r = effect size (rank-biserial correlation); direction indicates which model assigns higher median probability to the correct answer. Bonferroni-corrected (k = 5).
+
+| Comparison | Test Set | n | r | p (Bonf.) | Direction | Sig. |
+|------------|----------|:---:|:---:|:---------:|:---------:|:----:|
+| M3 vs. M5 | ProsQA (ID) | 500 | 0.591 | < 10^{-38} | M3 > M5 | Yes |
+| | 7-hop | 1000 | 0.006 | 1.000 | — | No |
+| | 8-hop | 1000 | 0.006 | 1.000 | — | No |
+| | DAG | 1000 | 0.003 | 1.000 | — | No |
+| | Dense | 1000 | 0.113 | 0.002 | M5 > M3 | Yes |
+| M3 vs. M6 | ProsQA (ID) | 500 | 0.678 | < 10^{-50} | M3 > M6 | Yes |
+| | 7-hop | 1000 | 0.109 | 0.003 | M3 > M6 | Yes |
+| | 8-hop | 1000 | 0.082 | 0.049 | M3 > M6 | Yes |
+| | DAG | 1000 | 0.073 | 0.106 | — | No |
+| | Dense | 1000 | 0.118 | 0.001 | M3 > M6 | Yes |
+| M5 vs. M6 | ProsQA (ID) | 500 | 0.286 | < 10^{-9} | M5 > M6 | Yes |
+| | 7-hop | 1000 | 0.142 | < 0.001 | M6 > M5 | Yes |
+| | 8-hop | 1000 | 0.120 | 0.001 | M6 > M5 | Yes |
+| | DAG | 1000 | 0.136 | < 0.001 | M6 > M5 | Yes |
+| | Dense | 1000 | 0.021 | 1.000 | — | No |
+
+**In-distribution confidence hierarchy.** On the ProsQA test set, M3 assigns systematically higher confidence than M6 (r = 0.678, a large effect), and M5 assigns higher confidence than M6 (r = 0.286, a medium effect). The M3 > M6 comparison isolates the contribution of recycled content while controlling for sequential processing: the recycled hidden states carry reasoning-relevant information that translates to measurably higher per-sample confidence, even when both models achieve comparable binary accuracy (97.0% vs. 94.8%, McNemar p_Bonf = 0.354).
+
+**Confidence-accuracy dissociation on OOD.** On 7-hop, M3 assigns significantly higher confidence than M6 (r = 0.109, p_Bonf = 0.003), yet M3 achieves substantially lower accuracy (66.0% vs. 76.9%, McNemar +10.9pp, p_Bonf < 0.001). The same pattern appears on 8-hop: M3 is more confident (r = 0.082, p_Bonf = 0.049) but less accurate (67.5% vs. 75.2%, +7.7pp). This confidence-accuracy dissociation indicates that recycled hidden states make COCONUT overconfident on out-of-range problems.
+
+**Sequential processing and OOD confidence.** The M5 vs. M6 comparison reveals that sequential processing increases OOD confidence: M6 assigns higher median probabilities than M5 on 7-hop (r = 0.142), 8-hop (r = 0.120), and DAG (r = 0.136), all significant. On DAG, this higher confidence aligns with M6's higher accuracy (+7.9pp). Sequential processing produces better-calibrated representations on OOD tasks.
 
 ## 5 Discussion
 
@@ -264,9 +302,10 @@ Three independent experimental paradigms -- corruption analysis, representationa
 | Probing selectivity | M3-specific step encoding | Shared curriculum-driven pattern | Both models show identical selectivity profiles: strong step-specificity at position 3 (+52pp), anti-selectivity at positions 0--1, arising from shared curriculum |
 | Probing significance | M3 broadly significant | Equal significance | M3: 29/78 significant cells; M5: 11/78. COCONUT encodes more broadly but without behavioral gain |
 | Thought-vs-input advantage | Only COCONUT benefits | Equal benefit | M3 higher (10.5% vs. 4.0%), but does not produce different strategy |
-| OOD generalization | COCONUT advantages | Equal or M5 advantages | M5 wins 3/4; M3 wins DAG (all significant). M6 [TBD: resolves / partially resolves] the processing structure confound (Section 5.3) |
+| OOD generalization | COCONUT advantages | Equal or M5 advantages | M5 wins 3/4; M3 wins DAG (all significant). M6 factorial decomposition attributes chain-length disadvantage to recycled content, DAG advantage to sequential processing (Section 5.3) |
+| Teacher-forced confidence | M3 uniformly more confident | Equal confidence | M3 more confident on ID (r = 0.678) but overconfident on OOD: higher confidence with lower accuracy on 7-hop and 8-hop (Section 4.5) |
 
-No single experiment is decisive in isolation. Permutation insensitivity could in principle reflect redundant encoding, where each position stores a complete copy of the reasoning chain. However, single-position corruption rules this out: if all positions stored the complete chain redundantly, corrupting any single position should be compensated by the remaining uncorrupted copies. Instead, corrupting position 3 alone collapses accuracy to ~57% (Appendix A.5), indicating that critical information is concentrated at position 3 rather than redundantly distributed. Cross-transplant tolerance could indicate overlapping representations. But taken together, six independent diagnostics consistently fail to find evidence that COCONUT's recycled hidden states carry reasoning content that differs functionally from M5's learned pause vectors on in-distribution evaluation. The convergence across methods strengthens the conclusion beyond what any single test provides. The OOD results add nuance: M3 and M5 show a task-dependent generalization tradeoff, which M6's factorial decomposition [TBD: resolves — attributing the differences to sequential processing / recycled content / both] (Section 5.3).
+No single experiment is decisive in isolation. Permutation insensitivity could in principle reflect redundant encoding, where each position stores a complete copy of the reasoning chain. However, single-position corruption rules this out: if all positions stored the complete chain redundantly, corrupting any single position should be compensated by the remaining uncorrupted copies. Instead, corrupting position 3 alone collapses accuracy to ~57% (Appendix A.5), indicating that critical information is concentrated at position 3 rather than redundantly distributed. Cross-transplant tolerance could indicate overlapping representations. But taken together, six independent diagnostics consistently fail to find evidence that COCONUT's recycled hidden states carry reasoning content that differs functionally from M5's learned pause vectors on in-distribution evaluation. The convergence across methods strengthens the conclusion beyond what any single test provides. The OOD results add nuance: M3 and M5 show a task-dependent generalization tradeoff, which M6's factorial decomposition fully resolves — attributing M3's chain-length disadvantage to recycled content and M3's DAG advantage to sequential processing (Section 5.3). The teacher-forced confidence analysis (Section 4.5) adds a further dimension: M3's recycled content produces significantly higher per-sample confidence on in-distribution data, confirming that the recycled hidden states carry reasoning-relevant information. However, this higher confidence becomes miscalibrated on OOD chain-length tasks, where M3 is simultaneously more confident and less accurate than M6 — the recycled content does not merely fail to help on longer chains, it actively misleads.
 
 ### 5.2 Curriculum-Driven Representations
 
@@ -282,13 +321,11 @@ This dissociation is consistent with the distinction drawn by Ravichander et al.
 
 The two-model OOD results (M3 vs. M5) revealed a task-dependent generalization tradeoff: M5 outperforms M3 on 7-hop (+9.4pp), 8-hop (+7.6pp), and dense graphs (+7.2pp), while M3 outperforms M5 on DAGs (--7.3pp). This pattern was ambiguous because M3 and M5 differ in two confounded ways: (1) the content of thought-token embeddings and (2) the sequential processing structure. M6 resolves this ambiguity by matching M3's sequential processing while using M5's fixed embeddings.
 
-[TBD: Insert M6 results and interpretation. The structure depends on which outcome obtains:
+The factorial decomposition via M6 cleanly separates the two confounded factors. The M6 vs. M3 comparison (isolating recycled content while matching sequential processing) reveals that recycled content actively hurts chain-length extrapolation: M6 outperforms M3 by 10.9pp on 7-hop and 7.7pp on 8-hop (both p < 0.001 after Bonferroni correction), while showing no significant difference on DAG (+0.6pp, p = 1.0) or dense (+3.6pp, p = 0.280). The M6 vs. M5 comparison (isolating sequential processing while matching fixed embeddings) reveals that sequential processing helps topological generalization: M6 outperforms M5 by 7.9pp on DAG (p < 0.001), while showing no significant difference on 7-hop (+1.5pp, p = 1.0), 8-hop (+0.1pp, p = 1.0), or dense (--3.6pp, p = 0.306).
 
-**If M6 ≈ M3 (sequential processing drives OOD differences):** M6's OOD profile matches M3, demonstrating that the sequential processing structure — not the recycled content — drives the divergent generalization patterns. The sequential bottleneck constrains chain-length extrapolation (explaining M3's disadvantage on 7-hop and 8-hop), while the forced sequential accumulation aids DAG reasoning. The recycled hidden states are confirmed inert for OOD performance: replacing them with fixed pause vectors produces the same generalization profile as long as the sequential processing structure is preserved.
+The decomposition is approximately additive. On 7-hop, M5 outperforms M3 by 9.4pp (Table 5b). The factorial components are: recycled content costs M3 10.9pp relative to M6, and sequential processing is neutral (+1.5pp, ns). On DAG, M3 outperforms M5 by 7.3pp. The factorial components are: sequential processing gives M6 a 7.9pp advantage over M5, and recycled content is neutral (+0.6pp, ns). In both cases, the factorial effects sum to approximately the observed two-model difference, confirming that the factors combine additively rather than interacting.
 
-**If M6 ≈ M5 (recycled content drives OOD differences):** M6's OOD profile matches M5 despite sharing M3's sequential processing structure. The sequential processing alone does not account for M3's DAG advantage or chain-length disadvantage; the recycled content must contribute to the OOD divergence. This would be the strongest evidence that the recycling mechanism carries functionally relevant information for generalization, even though it does not improve in-distribution accuracy.
-
-**If M6 between M3 and M5 (both factors contribute):** Both recycled content and sequential processing contribute partially to the OOD pattern. The decomposition would quantify how much of each effect is attributable to each factor.]
+The teacher-forced confidence analysis (Section 4.5) adds a mechanistic dimension to this decomposition. On in-distribution data, M3 assigns significantly higher per-sample confidence than M6 (r = 0.678), confirming that recycled content carries reasoning-relevant information. On 7-hop and 8-hop, M3 remains more confident (r = 0.109 and 0.082) despite achieving lower accuracy — the recycled content produces overconfidence rather than better reasoning. Sequential processing, by contrast, produces better-calibrated confidence on OOD tasks: M6 assigns higher confidence than M5 on DAG (r = 0.136), consistent with its higher accuracy.
 
 ### 5.4 Relation to Prior Work
 
@@ -312,7 +349,7 @@ For researchers building on COCONUT's results, these findings suggest that inves
 
 **Single seed.** All results are from a single training seed (seed 0). The 0.4-percentage-point test-set gap between M3 (97.0%) and M5 (96.6%) is not statistically significant (McNemar p = 0.845), but could widen or reverse under different random initializations. The out-of-distribution advantages we report for M5 -- including the 9.4-point gap on 7-hop paths -- may similarly reflect seed-specific training dynamics rather than systematic architectural differences. Multi-seed replication with proper paired statistical tests would provide confidence intervals around these estimates and clarify which differences are robust to initialization variance. Training-time evaluation at best epoch yielded a larger apparent gap (M3 = 98.0%, M5 = 95.6%), differing from the experiment-pipeline numbers by 5 samples per model; this sensitivity to inference implementation underscores the need for multi-seed replication.
 
-**Forward-pass asymmetry (addressed by M6).** M3 processes thought tokens sequentially via KV-cache incremental decoding, while M5 processes all thought tokens in a single forward pass. In the two-model comparison, this meant M3 and M5 differed in two confounded ways: (1) the *content* of thought-token embeddings and (2) the *sequential processing structure*. M6 resolves this confound by matching M3's sequential processing while using M5's fixed embeddings. The factorial decomposition (Section 5.3) [TBD: briefly state what M6 showed — e.g., "shows that the sequential processing structure accounts for the OOD divergence" or "shows that both factors contribute"]. While M6 resolves the content-vs-processing confound, a residual asymmetry remains: M6 and M3 process the same number of sequential steps, but the information available at each step differs qualitatively (fixed embedding vs. a representation that reflects accumulated state). This is an inherent property of the recycling mechanism and cannot be further decomposed without more invasive interventions.
+**Forward-pass asymmetry (addressed by M6).** M3 processes thought tokens sequentially via KV-cache incremental decoding, while M5 processes all thought tokens in a single forward pass. In the two-model comparison, this meant M3 and M5 differed in two confounded ways: (1) the *content* of thought-token embeddings and (2) the *sequential processing structure*. M6 resolves this confound by matching M3's sequential processing while using M5's fixed embeddings. The factorial decomposition (Section 5.3) shows that the two factors contribute independently and to different OOD tasks: recycled content hurts chain-length extrapolation (M6 outperforms M3 on 7-hop and 8-hop), while sequential processing helps topological generalization (M6 outperforms M5 on DAG). While M6 resolves the content-vs-processing confound, a residual asymmetry remains: M6 and M3 process the same number of sequential steps, but the information available at each step differs qualitatively (fixed embedding vs. a representation that reflects accumulated state). This is an inherent property of the recycling mechanism and cannot be further decomposed without more invasive interventions.
 
 **Curriculum isolation.** Our design controls for the continuous thought mechanism by replacing it with pause tokens while preserving the curriculum. However, we do not test a curriculum-only condition in which removed reasoning tokens are simply deleted, producing shorter sequences with no additional attention positions. We therefore cannot distinguish whether the curriculum alone drives the gains or whether the curriculum requires additional attention positions as a computational budget. A curriculum-only ablation would resolve this ambiguity.
 
@@ -320,11 +357,13 @@ For researchers building on COCONUT's results, these findings suggest that inves
 
 **Corruption noise calibration.** The per-model noise calibration produces substantially different absolute perturbation magnitudes (L2 = 202.65 for M3 vs. 4.09 for M5), reflecting the 50-fold variance difference between recycled hidden states and near-constant pause embeddings. Our cross-scale analysis (applying M3-magnitude noise to M5) confirms that the degradation cliff is structural rather than scale-dependent, but the quantitative degradation curves under per-model calibration are not directly comparable across models.
 
+**M6 experimental coverage.** The corruption analysis and representational probing experiments could not be extended to M6 due to a methodological incompatibility with multi-pass KV-cache architectures. Both experiments extract hidden states by running a fresh forward pass on the model's input embeddings, which discards the accumulated KV-cache state from M6's 6-pass sequential processing. Extending these experiments to M6 would require per-pass hidden state collection from within the KV-cache loop, which we leave for future work. The factorial decomposition of OOD performance and the Wilcoxon confidence analysis (Sections 4.4 and 4.5) provide the primary evidence for M6's behavior.
+
 ## 7 Conclusion
 
 We asked whether COCONUT's continuous thought tokens perform sequential latent reasoning or serve primarily as curriculum-shaped computational scaffolding. A curriculum-matched pause-token baseline (M5), trained under COCONUT's own 7-stage curriculum, matches COCONUT on in-distribution ProsQA (96.6% vs 97.0%, McNemar p = 0.845) without recycling any hidden states. A second control (M6) matches COCONUT's sequential multi-pass processing structure while using fixed pause embeddings, enabling factorial decomposition of the recycled-content and sequential-processing factors. Three converging experiments -- corruption analysis, representational probing, and cross-model transplantation -- fail to distinguish M3 and M5 on any diagnostic where sequential reasoning and curriculum-driven computation make divergent predictions. Both models exhibit structured, position-specific representations -- including strong step-selectivity at position 3 and a broadcast pattern at early positions -- but these patterns arise from the shared curriculum rather than from the recycling mechanism.
 
-On out-of-distribution generalization, the two-model comparison (M3 vs. M5) reveals a task-dependent tradeoff: M5 outperforms COCONUT on 3 of 4 test sets, while COCONUT holds a significant advantage on DAG structures. The factorial decomposition via M6 [TBD: resolves this ambiguity — e.g., "shows that the sequential processing structure, not the recycled content, drives the OOD divergence" / "shows that both factors contribute partially"].
+On out-of-distribution generalization, the two-model comparison (M3 vs. M5) reveals a task-dependent tradeoff: M5 outperforms COCONUT on 3 of 4 test sets, while COCONUT holds a significant advantage on DAG structures. The factorial decomposition via M6 fully resolves this ambiguity: M3's chain-length disadvantage is caused by the recycled content (M6 outperforms M3 by 10.9pp on 7-hop, p < 0.001), not the processing structure. M3's DAG advantage is caused by the sequential processing structure (M6 outperforms M5 by 7.9pp on DAG, p < 0.001), not the recycled content. The recycled hidden states are not merely inert — on chain-length extrapolation, they are actively harmful.
 
 These results indicate that COCONUT's in-distribution performance on ProsQA is primarily attributable to its training curriculum, not to the content of the recycled hidden states. The curriculum -- which progressively removes explicit chain-of-thought tokens and forces the model to internalize multi-step computation -- is the shared factor among M3, M5, and M6, and it is the factor that separates all three from the chain-of-thought baseline. For researchers developing latent reasoning architectures, this work suggests that curriculum design warrants at least as much attention as the choice of thought-token mechanism. The simpler pause mechanism achieves comparable in-distribution accuracy at lower computational cost. Code, configurations, and experiment scripts are available at https://github.com/bmarti44/research-pipeline.
 

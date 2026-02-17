@@ -27,13 +27,6 @@ if [[ "${1:-}" == "--dry-run" ]]; then
     DRY_RUN=true
 fi
 
-# Files to process (manuscript + figures captions if embedded)
-FILES=(
-    "$MANUSCRIPT_DIR/manuscript.md"
-    "$MANUSCRIPT_DIR/sections/"*.md 2>/dev/null || true
-    "$MANUSCRIPT_DIR/metadata.yaml" 2>/dev/null || true
-)
-
 # Collect only files that exist
 TARGETS=()
 for f in "$MANUSCRIPT_DIR/manuscript.md" \
