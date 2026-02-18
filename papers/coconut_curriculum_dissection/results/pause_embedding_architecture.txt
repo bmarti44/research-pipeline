@@ -1,6 +1,6 @@
 Pause Embedding Architecture Analysis
 ======================================
-Source file: papers/efficient_architecture_proof/code/coconut.py
+Source file: papers/coconut_curriculum_dissection/code/coconut.py
 
 1. PARAMETER DEFINITION (lines 47-52)
 --------------------------------------

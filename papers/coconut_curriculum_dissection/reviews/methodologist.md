@@ -161,7 +161,7 @@ The MLP probe grid search (Appendix A.7) resolves the original concern about tra
 
 The paper.yaml metadata file contains stale accuracy values from the training-time evaluation: M2_test: 0.980, M3_test: 0.956. The manuscript consistently uses the experiment-pipeline values (M2: 0.970, M3: 0.966). The paper.yaml abstract also references "95.6% vs 98.0% test" and "zero step-specific selectivity" (corrected to +52pp selectivity in the manuscript). These metadata inconsistencies do not affect the manuscript but could mislead automated tools or future researchers who read paper.yaml as the ground truth.
 
-**Location:** papers/efficient_architecture_proof/paper.yaml, lines 14, 108-110, 128-129
+**Location:** papers/coconut_curriculum_dissection/paper.yaml, lines 14, 108-110, 128-129
 
 **Recommendation:** Update paper.yaml to reflect the current manuscript values: M2_test: 0.970, M3_test: 0.966, selectivity: 0.52, and revise the abstract to match the manuscript.
 
@@ -304,7 +304,7 @@ I cross-checked every numerical claim in the manuscript against the correspondin
 
 The CHECKPOINTS.md file (line 13) still shows M4 as "TBD" best epoch and "*training*" status. The manuscript reports M4 best epoch = 30 and M4 test accuracy = 94.8%. The checkpoint table should be updated.
 
-**Location:** papers/efficient_architecture_proof/CHECKPOINTS.md, line 13
+**Location:** papers/coconut_curriculum_dissection/CHECKPOINTS.md, line 13
 
 **Proposed edit (CHECKPOINTS.md, line ~13):**
 ```

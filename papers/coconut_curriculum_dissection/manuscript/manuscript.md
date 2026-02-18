@@ -1,8 +1,5 @@
 # The Curriculum Is the Mechanism: Dissecting COCONUT's Latent Thought Gains on ProsQA
 
-**Anonymous Author(s)**
-Anonymous Institution
-
 COCONUT's training curriculum has not been isolated from its recycling mechanism. We construct a factorial control design: M4 matches COCONUT's sequential multi-pass processing but uses fixed embeddings instead of recycled hidden states; M3 uses the same fixed embeddings in a single forward pass. M3 reaches 96.6% test accuracy (McNemar p = 0.845 vs. COCONUT's 97.0%); M4 reaches 94.8%. Three converging experiments — corruption analysis, linear probing, and cross-model transplantation — fail to distinguish COCONUT from M3 on any diagnostic where sequential reasoning and curriculum-driven computation make divergent predictions. The factorial decomposition reveals that recycled content impairs chain-length extrapolation (M4 outperforms COCONUT by 10.9pp on 7-hop, p < 0.001), while sequential processing drives topological generalization (M4 outperforms M3 by 7.9pp on DAG, p < 0.001). Recycled content also produces higher confidence that becomes miscalibrated on extended chains. At GPT-2 124M scale, the training curriculum — not the continuous thought mechanism — drives COCONUT's accuracy on ProsQA.
 
 ## 1 Introduction

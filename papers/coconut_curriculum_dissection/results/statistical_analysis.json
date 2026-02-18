@@ -2,7 +2,7 @@
   "metadata": {
     "n_seeds": 1,
     "results_dirs": [
-      "papers/efficient_architecture_proof/results/v9_meta_fork/experiments"
+      "papers/coconut_curriculum_dissection/results/v9_meta_fork/experiments"
     ],
     "alpha": 0.05,
     "bootstrap_n": 10000

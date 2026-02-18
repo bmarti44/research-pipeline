@@ -13,7 +13,7 @@
 #       pip install -r requirements.txt
 #
 # Usage:
-#   cd papers/efficient_architecture_proof
+#   cd papers/coconut_curriculum_dissection
 #   bash setup_data.sh
 
 set -euo pipefail

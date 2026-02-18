@@ -410,7 +410,7 @@ paper.yaml contains multiple stale values that do not match the current manuscri
 5. Abstract claims "zero step-specific selectivity" (corrected to +52pp in manuscript)
 6. `statistical_tests` section contains chi-squared approximation values (chi2, p_raw) from the deprecated approximate McNemar analysis, not the exact test values used in the manuscript
 
-**Location:** papers/efficient_architecture_proof/paper.yaml
+**Location:** papers/coconut_curriculum_dissection/paper.yaml
 
 **Recommendation:** Update paper.yaml to match the current manuscript: use experiment-pipeline accuracies, paper M-numbering (M1-M4), corrected selectivity values, and exact McNemar statistics. paper.yaml serves as structured metadata and should be authoritative.
 
@@ -661,7 +661,7 @@ The utils.py file from Meta's original codebase contains set_seed which sets bot
 
 ### - [x] F024: reproducibility -- ROUND 2: DEFERRED
 
-The manuscript references 'Code, configurations, and experiment scripts are available at https://github.com/bmarti44/research-pipeline' but the actual code is in the local repository at papers/efficient_architecture_proof/code/. The GitHub URL should be verified to contain all necessary code files.
+The manuscript references 'Code, configurations, and experiment scripts are available at https://github.com/bmarti44/research-pipeline' but the actual code is in the local repository at papers/coconut_curriculum_dissection/code/. The GitHub URL should be verified to contain all necessary code files.
 
 **Location:** manuscript.md: final paragraph of Section 7
 

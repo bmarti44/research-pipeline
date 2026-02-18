@@ -19,7 +19,7 @@
 
 The PDF uses an ICML-style two-column layout. Because pandoc's default LaTeX output uses `longtable` (incompatible with two-column mode), a post-processing step patches the generated LaTeX before compilation.
 
-**All commands run from this directory** (`papers/efficient_architecture_proof/manuscript/`).
+**All commands run from this directory** (`papers/coconut_curriculum_dissection/manuscript/`).
 
 ### Step 1: Generate LaTeX from Markdown
 
