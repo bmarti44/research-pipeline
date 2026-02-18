@@ -20,19 +20,25 @@ We built two controls to find out:
 | M1 (CoT) | Explicit reasoning tokens | Human-readable | Single pass | 83.0% |
 | M2 (COCONUT) | Recycles hidden states | Rich, information-carrying | 6 sequential passes | 97.0% |
 | M3 (Pause) | Fixed learned embedding | Empty | Single pass | 96.6% |
-| M4 (Pause-Multipass) | Fixed learned embedding | Empty | 6 sequential passes | *training* |
+| M4 (Pause-Multipass) | Fixed learned embedding | Empty | 6 sequential passes | 94.8% |
 
 M3 matches COCONUT despite having no information flow between reasoning steps *and* using 1/6th the compute. Three independent experiments (corruption analysis, probing, cross-model transplant) fail to distinguish the two models on any diagnostic.
 
-On out-of-distribution tests, M3 actually outperforms COCONUT on 3 of 4 test sets:
+M4 enables factorial decomposition: it shares COCONUT's sequential processing but uses fixed embeddings (like M3), cleanly separating the recycled-content and sequential-processing factors.
 
-| Test Set | M1 (CoT) | M2 (COCONUT) | M3 (Pause) |
-|----------|------:|------:|------:|
-| ProsQA (in-dist) | 83.0% | 97.0% | 96.6% |
-| 7-hop | 10.7% | 66.0% | **75.4%** |
-| 8-hop | 8.2% | 67.5% | **75.1%** |
-| DAG | 28.2% | **59.2%** | 51.9% |
-| Dense | 14.1% | 61.2% | **68.4%** |
+On out-of-distribution tests, the factorial decomposition reveals that recycled content *hurts* chain-length extrapolation while sequential processing drives topological generalization:
+
+| Test Set | M1 (CoT) | M2 (COCONUT) | M3 (Pause) | M4 (Pause-Multipass) |
+|----------|------:|------:|------:|------:|
+| ProsQA (in-dist) | 83.0% | 97.0% | 96.6% | 94.8% |
+| 7-hop | 10.7% | 66.0% | 75.4% | **76.9%** |
+| 8-hop | 8.2% | 67.5% | 75.1% | **75.2%** |
+| DAG | 28.2% | 59.2% | 51.9% | **59.8%** |
+| Dense | 14.1% | 61.2% | **68.4%** | 64.8% |
+
+Key factorial findings:
+- **Recycled content hurts extrapolation**: M4 outperforms M2 by 10.9pp on 7-hop (p < 0.001) — same sequential processing, but without COCONUT's recycled hidden states
+- **Sequential processing helps DAG**: M4 outperforms M3 by 7.9pp on DAG (p < 0.001) — same fixed embeddings, but with 6 sequential passes instead of one
 
 ## What This Means
 
@@ -40,7 +46,7 @@ This is *not* a story about "models just buffer compute." Both M2 and M3 develop
 
 But that structure comes entirely from the curriculum. The 7-stage progressive removal of chain-of-thought tokens teaches the model to internalize reasoning into whatever computational substrate is available — recycled hidden states, empty sequential passes, or parallel empty tokens. The thought tokens provide a computational budget (extra attention positions). The curriculum teaches the model how to use it. What's *in* the tokens doesn't matter.
 
-**For the latent reasoning community:** Stop optimizing mechanisms. Start optimizing curricula.
+**For the latent reasoning community:** Stop optimizing mechanisms. Start optimizing curricula and processing architectures.
 
 ## Data
 
@@ -84,7 +90,7 @@ Requires Python 3.10+, CUDA 12.x, and an NVIDIA GPU with 40GB+ VRAM (H100/A100).
 
 ### Option A: From Pretrained Checkpoints
 
-Download pretrained model checkpoints from HuggingFace, then run experiments only. See [CHECKPOINTS.md](CHECKPOINTS.md) for checkpoint details.
+Download pretrained model checkpoints from [HuggingFace](https://huggingface.co/bmarti44/coconut-curriculum-checkpoints), then run experiments only. See [CHECKPOINTS.md](CHECKPOINTS.md) for checkpoint details.
 
 ```bash
 python reproduce.py --from-checkpoints
