@@ -5,11 +5,13 @@ Supports:
 - Anthropic Claude (via anthropic SDK)
 - OpenAI GPT (via openai SDK)
 - Google Gemini (via google-generativeai SDK)
+- MiniMax (via openai SDK, OpenAI-compatible API)
 
 Environment variables:
 - ANTHROPIC_API_KEY: Anthropic API key
 - OPENAI_API_KEY: OpenAI API key
 - GOOGLE_API_KEY: Google AI API key
+- MINIMAX_API_KEY: MiniMax API key
 """
 
 import os
@@ -24,6 +26,7 @@ class Provider(Enum):
     CLAUDE = "claude"
     OPENAI = "openai"
     GEMINI = "gemini"
+    MINIMAX = "minimax"
 
 
 @dataclass
@@ -52,6 +55,8 @@ MODELS = {
     "gpt-4o-mini": ModelConfig(Provider.OPENAI, "gpt-4o-mini"),
     "gemini-flash": ModelConfig(Provider.GEMINI, "gemini-2.0-flash"),
     "gemini-pro": ModelConfig(Provider.GEMINI, "gemini-1.5-pro"),
+    "minimax-m2.5": ModelConfig(Provider.MINIMAX, "MiniMax-M2.5"),
+    "minimax-m2.5-highspeed": ModelConfig(Provider.MINIMAX, "MiniMax-M2.5-highspeed"),
 }
 
 
@@ -230,6 +235,65 @@ def _call_gemini(
         return APIResponse(success=False, error=str(e), timestamp=timestamp, latency_ms=latency_ms)
 
 
+def _call_minimax(
+    prompt: str,
+    system_prompt: str,
+    config: ModelConfig,
+    timeout: int = 60,
+) -> APIResponse:
+    """Call MiniMax via OpenAI-compatible API with full metadata capture."""
+    timestamp = datetime.now(timezone.utc).isoformat()
+    start_time = time.perf_counter()
+
+    try:
+        import openai
+
+        api_key = os.environ.get("MINIMAX_API_KEY")
+        if not api_key:
+            return APIResponse(success=False, error="MINIMAX_API_KEY not set", timestamp=timestamp)
+
+        client = openai.OpenAI(
+            api_key=api_key,
+            base_url="https://api.minimax.io/v1",
+            timeout=timeout,
+        )
+
+        # MiniMax requires temperature in (0.0, 1.0] — clamp to avoid rejection
+        temperature = config.temperature
+        if temperature <= 0.0:
+            temperature = 0.01
+
+        response = client.chat.completions.create(
+            model=config.model_id,
+            max_tokens=config.max_tokens,
+            temperature=temperature,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt},
+            ],
+        )
+
+        latency_ms = int((time.perf_counter() - start_time) * 1000)
+        response_text = response.choices[0].message.content if response.choices else ""
+        finish_reason = response.choices[0].finish_reason if response.choices else None
+
+        return APIResponse(
+            success=True,
+            response=response_text,
+            model=config.model_id,
+            input_tokens=response.usage.prompt_tokens if response.usage else None,
+            output_tokens=response.usage.completion_tokens if response.usage else None,
+            request_id=response.id if hasattr(response, 'id') else None,
+            timestamp=timestamp,
+            latency_ms=latency_ms,
+            finish_reason=finish_reason,
+        )
+
+    except Exception as e:
+        latency_ms = int((time.perf_counter() - start_time) * 1000)
+        return APIResponse(success=False, error=str(e), timestamp=timestamp, latency_ms=latency_ms)
+
+
 def call_model(
     prompt: str,
     system_prompt: str = "",
@@ -262,6 +326,8 @@ def call_model(
         return _call_openai(prompt, system_prompt, config, timeout)
     elif config.provider == Provider.GEMINI:
         return _call_gemini(prompt, system_prompt, config, timeout)
+    elif config.provider == Provider.MINIMAX:
+        return _call_minimax(prompt, system_prompt, config, timeout)
     else:
         return APIResponse(success=False, error=f"Unsupported provider: {config.provider}")
 
@@ -335,6 +401,7 @@ def check_api_keys() -> dict[str, bool]:
         "anthropic": bool(os.environ.get("ANTHROPIC_API_KEY")),
         "openai": bool(os.environ.get("OPENAI_API_KEY")),
         "google": bool(os.environ.get("GOOGLE_API_KEY")),
+        "minimax": bool(os.environ.get("MINIMAX_API_KEY")),
     }
 
 
@@ -343,12 +410,16 @@ def list_available_models() -> list[str]:
     keys = check_api_keys()
     available = []
 
+    provider_key_map = {
+        Provider.CLAUDE: "anthropic",
+        Provider.OPENAI: "openai",
+        Provider.GEMINI: "google",
+        Provider.MINIMAX: "minimax",
+    }
+
     for name, config in MODELS.items():
-        if config.provider == Provider.CLAUDE and keys["anthropic"]:
-            available.append(name)
-        elif config.provider == Provider.OPENAI and keys["openai"]:
-            available.append(name)
-        elif config.provider == Provider.GEMINI and keys["google"]:
+        key_name = provider_key_map.get(config.provider)
+        if key_name and keys.get(key_name):
             available.append(name)
 
     return available

@@ -28,6 +28,7 @@ pip install -r requirements.txt
 export ANTHROPIC_API_KEY="your-key"
 export OPENAI_API_KEY="your-key"
 export GOOGLE_API_KEY="your-key"
+export MINIMAX_API_KEY="your-key"
 ```
 
 Requires Python 3.10+.
@@ -117,7 +118,7 @@ python -m pipeline replicate <original_study> <new_study> [--type direct|concept
 │   ├── orchestrator.py        #   Supervisor agent logic
 │   ├── manuscript.py          #   Manuscript generation
 │   ├── pdf_export.py          #   PDF generation from markdown
-│   ├── api.py                 #   LLM API wrappers (Anthropic, OpenAI, Google)
+│   ├── api.py                 #   LLM API wrappers (Anthropic, OpenAI, Google, MiniMax)
 │   ├── adaptive.py            #   Adaptive stopping rules (O'Brien-Fleming, Pocock)
 │   ├── replication.py         #   Replication framework (direct, conceptual, extension)
 │   ├── multimodel.py          #   Multi-model comparison support
